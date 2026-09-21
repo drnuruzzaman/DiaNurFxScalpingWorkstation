@@ -1,0 +1,1611 @@
+/* Layout for the workstation shell: top bar, two rails, chart, dock. */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg-void);
+}
+
+/* ---------------------------------------------------------------- topbar */
+.topbar {
+  height: var(--topbar-h);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--line);
+  user-select: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 12px;
+  border-right: 1px solid var(--line);
+  margin-right: 2px;
+}
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  display: block;
+  flex: 0 0 auto;
+}
+.brand-name {
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #e8eef6;
+}
+/* The FX half of the wordmark, in the mark's own magenta rather than the
+   theme bear colour - this is brand, not a direction reading. */
+.brand-name em {
+  font-style: normal;
+  color: #e31c79;
+}
+
+/* ------------------------------------------------------- dropdown menu */
+/* A checkmark gutter rather than checkboxes: at this density a native box is
+   mostly chrome, and the eye reads a column of ticks far faster than a column
+   of squares that are only different when you look straight at them. */
+.menu {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  z-index: 50;
+  min-width: 268px;
+  padding: 6px 0 4px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  box-shadow: 0 16px 40px #000b;
+}
+.menu-head {
+  padding: 7px 12px 4px;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px 12px 4px 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  font-size: 11px;
+  color: var(--ink-mid);
+  cursor: pointer;
+}
+.menu-item:hover { background: var(--bg-raise); }
+.menu-item.on { color: var(--ink-hi); }
+.menu-check {
+  flex: 0 0 22px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--bear);
+}
+.menu-label { flex: 0 0 auto; }
+/* Pushed hard right so the hints form their own column instead of ragging
+   along behind labels of different lengths. */
+.menu-hint {
+  margin-left: auto;
+  padding: 1px 6px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  color: var(--ink-low);
+  background: var(--bg-panel-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+}
+.menu-item.on .menu-hint { color: var(--ink-mid); border-color: var(--line); }
+/* Source-timeframe chips inside the indicators menu. */
+.menu-tfs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 2px 12px 4px 22px;
+}
+.tf-chip {
+  padding: 2px 7px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--ink-dim);
+  background: var(--bg-panel-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.tf-chip:hover { color: var(--ink); border-color: var(--line-strong); }
+.tf-chip.on {
+  color: var(--bear);
+  border-color: var(--bear-dim);
+  background: var(--bear-glow);
+}
+.menu-note {
+  padding: 1px 12px 5px 22px;
+  font-size: 8.5px;
+  line-height: 1.45;
+  color: var(--ink-low);
+}
+
+.menu-sep {
+  height: 1px;
+  margin: 6px 0 4px;
+  background: var(--line);
+}
+.menu-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 2px 22px;
+}
+.menu-action {
+  padding: 3px 0;
+  background: none;
+  border: 0;
+  font-size: 10.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.menu-action:hover { color: var(--bear); }
+.menu-action.dim { margin-left: auto; color: var(--ink-low); }
+.menu-action.dim:hover { color: var(--info); }
+
+/* Count of active studies, on the button that opens the menu. */
+.tool-count {
+  margin-left: 6px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--bear);
+  color: #0b0f18;
+  font-size: 8.5px;
+  font-weight: 800;
+}
+
+.symbol-pill {
+  cursor: pointer;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  background: var(--bg-raise);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink-hi);
+}
+
+.tf-group {
+  display: flex;
+  gap: 1px;
+  background: var(--line-soft);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+.tf-btn {
+  padding: 4px 8px;
+  background: var(--bg-panel-2);
+  color: var(--ink-low);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  transition: background 0.12s, color 0.12s;
+}
+.tf-btn:hover {
+  background: var(--bg-hover);
+  color: var(--ink);
+}
+.tf-btn.on {
+  background: var(--bear);
+  color: #05070e;
+}
+
+.tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4.5px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--bg-panel-2);
+  color: var(--ink-mid);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition: all 0.12s;
+}
+.tool-btn:hover {
+  border-color: var(--ink-dim);
+  color: var(--ink-hi);
+  background: var(--bg-hover);
+}
+.tool-btn.on {
+  color: var(--info);
+  border-color: var(--info-dim);
+  background: var(--info-glow);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mode-group {
+  display: flex;
+  gap: 1px;
+  background: var(--line-soft);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+.mode-btn {
+  padding: 5px 14px;
+  background: var(--bg-panel-2);
+  color: var(--ink-low);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+.mode-btn.on.live {
+  background: var(--bear);
+  color: #05070e;
+}
+.mode-btn.on.bt {
+  background: var(--info);
+  color: #05070e;
+}
+
+.conn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: var(--r-sm);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* ------------------------------------------------------------------ body */
+.body {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: var(--rail-left) 1fr var(--rail-right);
+  min-height: 0;
+  gap: 1px;
+  background: var(--line);
+}
+
+.rail {
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-height: 0;
+  overflow-y: auto;
+}
+.rail > section {
+  background: var(--bg-panel);
+  flex: 0 0 auto;
+}
+.rail > section.grow {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.centre {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--bg-base);
+  gap: 1px;
+}
+
+.chart-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--bg-base);
+}
+.chart-wrap canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.chart-legend {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  z-index: 3;
+  pointer-events: none;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-mid);
+  text-shadow: 0 1px 3px #000;
+  line-height: 1.6;
+}
+.chart-legend b {
+  color: var(--ink-hi);
+  font-weight: 700;
+}
+
+/* Sits clear of the news labels, which are drawn along the foot of the chart
+   just above the time axis. At bottom:30px these buttons landed straight on
+   top of them. */
+.chart-tools {
+  position: absolute;
+  right: 84px;
+  bottom: 52px;
+  z-index: 4;
+  display: flex;
+  gap: 4px;
+}
+.chart-tools button {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  color: var(--ink-mid);
+  font-size: 12px;
+}
+.chart-tools button:hover {
+  color: var(--ink-hi);
+  border-color: var(--ink-dim);
+}
+
+/* Hover card for a news mark. Anchored to the foot of the chart, where the
+   labels are, so it never covers the candles you are reading. */
+.news-card {
+  position: absolute;
+  z-index: 6;
+  width: 232px;
+  padding: 8px 10px 9px;
+  background: var(--bg-panel);
+  border: 1px solid var(--info-dim);
+  border-radius: var(--r);
+  box-shadow: 0 14px 34px #000b;
+  pointer-events: none;
+  color: var(--ink);
+}
+.news-card-h {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--ink-hi);
+  line-height: 1.35;
+  margin-bottom: 5px;
+}
+
+/* ------------------------------------------------------- symbol picker */
+.modal-back {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(3, 5, 10, 0.62);
+  display: grid;
+  place-items: start center;
+  padding-top: 8vh;
+}
+.picker {
+  width: min(560px, 92vw);
+  max-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 60px #000c;
+  overflow: hidden;
+}
+.picker-h {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.picker-input {
+  flex: 1;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--ink-hi);
+  background: var(--bg-input);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+}
+.picker-input:focus { outline: none; border-color: var(--info-dim); }
+.picker-list { overflow-y: auto; flex: 1; padding: 4px 0; }
+.picker-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 11.5px;
+  color: var(--ink);
+}
+.picker-row.sel { background: var(--bg-raise); }
+.picker-row.on .picker-name { color: var(--bear); }
+.picker-name { font-weight: 700; flex: 0 0 96px; }
+.picker-group {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--ink-low);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pin {
+  flex: 0 0 auto;
+  width: 18px;
+  background: none;
+  border: 0;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--ink-dim);
+  cursor: pointer;
+}
+.pin:hover { color: var(--warn); }
+.pin.on { color: var(--warn); }
+.picker-f {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 12px;
+  border-top: 1px solid var(--line);
+  font-size: 9.5px;
+}
+.link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 9.5px;
+  color: var(--ink-low);
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--info); }
+
+/* --------------------------------------------------------------- gauge */
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0 8px;
+}
+/* Names the band the needle is in, so the dial is not the only thing
+   carrying that reading - it is the part people actually quote. */
+.gauge-chip {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 999px;
+  margin-bottom: 2px;
+}
+.gauge-value {
+  font-family: var(--mono);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: -18px;
+}
+/* ------------------------------------------------------------ signal card */
+.signal-card {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  background: var(--bg-panel-2);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.signal-card.buy {
+  border-color: var(--bull-dim);
+}
+.signal-card.sell {
+  border-color: var(--bear-dim);
+}
+.signal-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+}
+.signal-card.buy .signal-head {
+  background: var(--bull-glow);
+}
+.signal-card.sell .signal-head {
+  background: var(--bear-glow);
+}
+.signal-side {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.signal-pb {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-mid);
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line-soft);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.price-cell {
+  background: var(--bg-panel);
+  padding: 6px 7px;
+  text-align: center;
+}
+.price-cell .l {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+.price-cell .v {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink-hi);
+  margin-top: 2px;
+}
+
+.evidence-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+.evidence-row .ic {
+  flex: 0 0 auto;
+  width: 11px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 10px;
+}
+
+/* ------------------------------------------------------------ pattern card */
+.pattern-card {
+  border: 1px solid var(--line);
+  border-left-width: 2.5px;
+  border-radius: var(--r-sm);
+  background: var(--bg-panel-2);
+  padding: 7px 9px;
+  margin-bottom: 6px;
+}
+.pattern-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.pattern-name {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+.pattern-meta {
+  display: flex;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--ink-low);
+}
+.pattern-meta b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ dock */
+.dock {
+  flex: 0 0 auto;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.dock-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--line-soft);
+  flex: 0 0 auto;
+}
+.dock-tab {
+  padding: 7px 12px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  color: var(--ink-dim);
+  border-bottom: 2px solid transparent;
+  transition: color 0.12s;
+}
+.dock-tab:hover {
+  color: var(--ink-mid);
+}
+.dock-tab.on {
+  color: var(--bear);
+  border-bottom-color: var(--bear);
+}
+.dock-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+/* The bottom panel is dense - boards, ledgers, history - so its tables run a
+   step smaller than the shared .tabular. Scoped here so Settings and other
+   tables keep their size. */
+.dock-body .tabular { font-size: 9.5px; }
+.dock-body .tabular th { font-size: 8px; padding: 3px 5px; }
+.dock-body .tabular td { padding: 2.5px 5px; }
+/* Badges in a dense table sized to the row, not the other way round. */
+.dock-body .tabular .chip { font-size: 8px; padding: 0 4px; line-height: 1.5; }
+
+/* ----------------------------------------------------------- status bar */
+.statusbar {
+  height: var(--statusbar-h);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 12px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--ink-mid);
+  user-select: none;
+}
+.statusbar b {
+  color: var(--ink-hi);
+  font-weight: 600;
+}
+/* One face, one size, one colour for everything on the footer - labels,
+   figures, tabs, the offline note. The MT5 state still reads from the band's
+   green/red tint and the words themselves; the text is not a second signal. */
+.statusbar,
+.statusbar *,
+.statusbar b,
+.statusbar .t-up,
+.statusbar .t-down,
+.statusbar .t-mid,
+.statusbar .t-dim,
+.statusbar .t-warn,
+.statusbar .acct-flag,
+.statusbar.acct-up .acct-flag,
+.statusbar.acct-down .acct-flag,
+.statusbar .foot-tab {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.statusbar .sep {
+  width: 1px;
+  height: 14px;
+  background: var(--line-strong);
+}
+
+/* The account ribbon carries the MT5 state as colour.
+   Green means every figure on it came from a live broker session; red means
+   nothing on it is current. The tint is deliberately shallow - this band sits
+   under the chart all day, so it has to read at a glance without shouting. */
+.statusbar.acct-up {
+  border-top-color: var(--bull-dim);
+  background: linear-gradient(var(--bull-glow), var(--bull-glow)), var(--bg-panel);
+}
+.statusbar.acct-down {
+  border-top-color: var(--bear-dim);
+  background: linear-gradient(var(--bear-glow), var(--bear-glow)), var(--bg-panel);
+}
+.statusbar.acct-up .sep { background: var(--bull-dim); }
+.statusbar.acct-down .sep { background: var(--bear-dim); }
+
+/* Leading state flag, so the colour is never the ONLY carrier of the state -
+   a red/green band alone is unreadable to the ~8% of men with a red-green
+   deficiency, and this bar is the one that says whether the money is real. */
+.acct-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.statusbar.acct-up .acct-flag { color: var(--bull); }
+.statusbar.acct-down .acct-flag { color: var(--bear); }
+.acct-flag .dot { box-shadow: 0 0 6px currentColor; background: currentColor; }
+
+/* Hide-figures toggle. Sits flush at the end of the ribbon so it reads as
+   part of the account block rather than another status field. */
+.eye-btn {
+  margin-left: -8px;
+  padding: 1px 5px;
+  line-height: 1;
+  font-size: 11px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  color: var(--ink-mid);
+  cursor: pointer;
+  opacity: 0.65;
+}
+.eye-btn:hover { opacity: 1; border-color: var(--line-strong); }
+
+/* Summary strip above a dock table - the totals for what is listed below. */
+.dock-strip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-panel-2);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-mid);
+  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.dock-strip b { color: var(--ink-hi); font-weight: 600; }
+.dock-strip .sep { width: 1px; height: 12px; background: var(--line-strong); }
+.win-group { display: flex; gap: 1px; }
+.win-btn {
+  padding: 2px 7px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  background: var(--bg-panel);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.win-btn:hover { color: var(--ink); border-color: var(--line-strong); }
+.win-btn.on {
+  color: var(--info);
+  border-color: var(--info-dim);
+  background: var(--info-glow);
+}
+.eye-btn[aria-pressed="true"] { opacity: 1; border-color: var(--line-strong); }
+
+/* ------------------------------------------------------------- agent */
+.agent {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+.agent-modes {
+  display: flex;
+  gap: 1px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line-soft);
+  flex: 0 0 auto;
+}
+.agent-mode {
+  flex: 1;
+  padding: 4px 0;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: var(--ink-dim);
+  background: var(--bg-panel-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+}
+.agent-mode.on {
+  color: var(--info);
+  border-color: var(--info-dim);
+  background: var(--info-glow);
+}
+.agent-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 9px 10px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.agent-body p {
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.agent-body h4 {
+  margin: 10px 0 5px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+.agent-ask {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 5px;
+  padding: 7px 8px;
+  border-top: 1px solid var(--line-soft);
+}
+.agent-ask input {
+  flex: 1;
+  min-width: 0;
+}
+
+.objection {
+  display: flex;
+  gap: 7px;
+  padding: 5px 7px;
+  border-radius: var(--r-sm);
+  margin-bottom: 4px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  background: var(--bg-panel-2);
+  border-left: 2px solid var(--line-strong);
+}
+.objection.severe {
+  border-left-color: var(--bear);
+  background: var(--bear-glow);
+}
+.objection.moderate {
+  border-left-color: var(--warn);
+  background: var(--warn-glow);
+}
+.objection.minor {
+  border-left-color: var(--ink-dim);
+}
+.objection .sev {
+  flex: 0 0 auto;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 1px;
+  min-width: 52px;
+}
+
+.gate-row {
+  display: grid;
+  grid-template-columns: 54px 44px 1fr;
+  gap: 7px;
+  align-items: baseline;
+  padding: 3px 0;
+  font-size: 10.5px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.gate-v {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+  padding: 1px 0;
+  border-radius: 2px;
+}
+.gate-PASS {
+  color: var(--bull);
+  background: var(--bull-glow);
+}
+.gate-WARN {
+  color: var(--warn);
+  background: var(--warn-glow);
+}
+.gate-BLOCK {
+  color: var(--bear);
+  background: var(--bear-glow);
+}
+
+/* --------------------------------------------------------- backtest view */
+.bt-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1px;
+  background: var(--line);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.bt-config {
+  background: var(--bg-panel);
+  padding: 10px;
+  overflow-y: auto;
+}
+.bt-main {
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 1px;
+}
+.bt-field {
+  margin-bottom: 9px;
+}
+.bt-field label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 3px;
+}
+.bt-field input,
+.bt-field select {
+  width: 100%;
+}
+.btn-primary {
+  width: 100%;
+  padding: 8px;
+  background: var(--info);
+  color: #05070e;
+  font-weight: 800;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  border-radius: var(--r-sm);
+  text-transform: uppercase;
+}
+.btn-primary:disabled {
+  background: var(--line-strong);
+  color: var(--ink-dim);
+  cursor: not-allowed;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: 1px;
+  background: var(--line-soft);
+}
+.stat-cell {
+  background: var(--bg-panel);
+  padding: 9px 11px;
+}
+.stat-cell .l {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+.stat-cell .v {
+  font-family: var(--mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink-hi);
+  margin-top: 2px;
+  line-height: 1.1;
+}
+.stat-cell .s {
+  font-size: 9.5px;
+  color: var(--ink-low);
+  margin-top: 1px;
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  min-height: 90px;
+  color: var(--ink-dim);
+  font-size: 11px;
+  text-align: center;
+  padding: 16px;
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------------- settings */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(3, 5, 10, 0.72);
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(2px);
+}
+.modal {
+  width: min(880px, 94vw);
+  height: min(640px, 92vh);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 70px #000b;
+  overflow: hidden;
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+.modal-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--line-soft);
+  flex: 0 0 auto;
+}
+.modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px 14px;
+}
+.modal-toast {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-raise);
+  color: var(--ink-hi);
+  font-size: 11px;
+}
+
+.set-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.set-head {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  margin: 16px 0 6px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.set-note {
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--ink-mid);
+  margin-bottom: 10px;
+}
+.set-note code {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--info);
+  background: var(--bg-raise);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.set-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--ink);
+}
+.set-toggle input { width: auto; }
+
+.set-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+/* Settings text is read carefully, not glanced at - these numbers move money.
+   It was 9px uppercase in the dimmest grey, which is hard to read on a dark
+   panel; now a readable size in a brighter grey, and no longer shouting. */
+.set-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.set-field input,
+.set-field select { width: 100%; font-size: 12px; padding: 5px 8px; }
+.set-hint {
+  font-size: 10.5px;
+  color: var(--ink-mid);
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+/* the instrument x timeframe grid */
+.grid {
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  user-select: none;
+}
+.grid th {
+  padding: 5px 9px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.grid th:hover { color: var(--info); }
+.grid-corner { cursor: default !important; color: var(--ink-dim) !important; }
+.grid-sym {
+  padding: 4px 9px 4px 2px;
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line-soft);
+}
+.grid-sym:hover { color: var(--info); }
+.grid-cell {
+  text-align: center;
+  padding: 4px 9px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line-soft);
+}
+.grid-cell:hover { background: #ffffff08; }
+.grid-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-input);
+  transition: background 0.12s, border-color 0.12s;
+}
+.grid-dot.on {
+  background: var(--bull);
+  border-color: var(--bull);
+  box-shadow: 0 0 7px var(--bull-glow);
+}
+
+.dest {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  margin-bottom: 6px;
+  border: 1px solid var(--line);
+  border-left-width: 2.5px;
+  border-left-color: var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--bg-panel-2);
+}
+.dest.on { border-left-color: var(--bull); }
+
+/* --- settings: instrument cards, pills, switches ---------------------- */
+.switch {
+  width: 30px;
+  height: 16px;
+  border-radius: 9px;
+  background: var(--line-strong);
+  position: relative;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background 0.15s;
+}
+.switch i {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ink-mid);
+  transition: left 0.15s, background 0.15s;
+}
+.switch.on { background: var(--bull-dim); }
+.switch.on i { left: 16px; background: var(--bull); }
+
+.inst-card {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--bg-panel-2);
+  padding: 9px 11px;
+  margin-bottom: 8px;
+}
+.inst-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.inst-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-hi);
+  letter-spacing: 0.02em;
+}
+.inst-x {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  color: var(--ink-dim);
+  font-size: 15px;
+  line-height: 1;
+}
+.inst-x:hover { color: var(--bear); background: var(--bear-glow); }
+.inst-foot {
+  font-size: 9.5px;
+  color: var(--ink-low);
+  margin-top: 6px;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.pill {
+  padding: 3px 11px;
+  border-radius: 11px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-input);
+  /* An OFF pill still has to be readable - it is a choice you might make.
+     --ink-low made it look disabled rather than merely unselected. */
+  color: var(--ink-mid);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  transition: all 0.12s;
+}
+.pill:hover { border-color: var(--ink-dim); color: var(--ink); }
+.pill.on {
+  background: var(--bull);
+  border-color: var(--bull);
+  color: #05070e;
+}
+/* the timeframe currently on the chart, so the two views agree */
+.pill.live { box-shadow: 0 0 0 1.5px var(--bear); }
+
+.dest { display: block; }
+.dest-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.modal-foot {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-panel-2);
+}
+.tool-btn.primary {
+  background: var(--info);
+  border-color: var(--info);
+  color: #05070e;
+}
+.tool-btn.primary:disabled {
+  background: var(--line-strong);
+  border-color: var(--line-strong);
+  color: var(--ink-dim);
+  cursor: not-allowed;
+}
+.tab-count {
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  background: var(--bg-raise);
+  color: var(--ink-mid);
+  font-size: 8.5px;
+  font-weight: 700;
+}
+
+/* The account ribbon: one pill whose colour answers "is MT5 attached?".
+   Slightly heavier than a plain .conn because it is the thing you glance at
+   before trusting any number on the screen. */
+.conn.acct {
+  padding: 4px 11px;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  border-width: 1px;
+}
+.conn.acct .mono {
+  letter-spacing: 0.02em;
+}
+
+/* --- chart empty / warming state ------------------------------------- */
+.chart-status {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 24px;
+}
+.chart-spin {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--info);
+  animation: spin 0.9s linear infinite;
+}
+.chart-status-msg {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  max-width: 460px;
+  line-height: 1.5;
+}
+.chart-status-detail {
+  font-size: 10.5px;
+  color: var(--ink-low);
+  max-width: 460px;
+  line-height: 1.5;
+}
+
+/* --- chart tabs ------------------------------------------------------- */
+.chart-tabs {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.chart-tabs::-webkit-scrollbar { height: 0; }
+.chart-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px 5px 11px;
+  background: var(--bg-panel-2);
+  border-top: 2px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+.chart-tab:hover { background: var(--bg-hover); }
+.chart-tab.on {
+  background: var(--bg-base);
+  border-top-color: var(--bear);
+}
+.chart-tab-sym {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-mid);
+}
+.chart-tab.on .chart-tab-sym { color: var(--ink-hi); }
+.chart-tab-tf {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-input);
+}
+.chart-tab.on .chart-tab-tf { color: var(--info); }
+.chart-tab-x {
+  width: 14px;
+  height: 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 3px;
+  color: var(--ink-dim);
+  font-size: 13px;
+  line-height: 1;
+}
+.chart-tab-x:hover { color: var(--bear); background: var(--bear-glow); }
+.chart-tab-add {
+  padding: 0 11px;
+  background: var(--bg-panel-2);
+  color: var(--ink-dim);
+  font-size: 14px;
+  font-weight: 700;
+}
+.chart-tab-add:hover { color: var(--info); background: var(--bg-hover); }
+
+/* --- snapshot menu ---------------------------------------------------- */
+/* Anchored to the button's right edge: measured at 1600px it overflowed the
+   window by 50px when hung from the left, clipping the labels. */
+.menu.snap {
+  left: auto;
+  right: 0;
+  /* Sized to its labels, not the 268px the indicator menu needs for its
+     hint column - that width left a dead band down the right side here. */
+  min-width: 0;
+  width: max-content;
+}
+.menu.snap .menu-item { padding-right: 18px; }
+.menu.snap .menu-item { padding-left: 12px; }
+.menu-sep {
+  height: 1px;
+  margin: 5px 0;
+  background: var(--line-soft);
+}
+.menu-tick {
+  flex: 0 0 12px;
+  color: var(--bear);
+  font-size: 10px;
+  font-weight: 800;
+}
+.menu.snap .menu-item.on { background: var(--bg-raise); }
+
+/* A settings group in its own panel (Risk and Gates share one tab).
+   Deliberately the same card as the Alerts tab's instrument cards - same
+   surface, border, radius and heading type - so every tab reads as one app.
+   The panels are still separate blocks with a gap between them. */
+.set-block {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--bg-panel-2);
+  padding: 9px 11px 11px;
+}
+.set-block + .set-block { margin-top: 12px; }
+.set-block-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+/* same type as .inst-name */
+.set-block-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink-hi);
+}
+/* same type as .set-note */
+.set-block-sub { font-size: 10.5px; color: var(--ink-mid); }
+.set-block .set-note { margin-top: 10px; margin-bottom: 0; }
+
+/* --- collapsible rails ------------------------------------------------ */
+.rail-wrap {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  background: var(--bg-base);
+}
+.rail-wrap > .rail { flex: 1 1 auto; min-width: 0; }
+.rail-handle {
+  flex: 0 0 10px;
+  border: 0;
+  padding: 0;
+  background: var(--bg-panel);
+  color: var(--ink-dim);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.rail-handle:hover { background: var(--bg-raise); color: var(--info); }
+.rail-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border: 0;
+  background: var(--bg-panel);
+  color: var(--ink-dim);
+  cursor: pointer;
+  min-height: 0;
+}
+.rail-strip:hover { background: var(--bg-raise); color: var(--info); }
+.rail-strip-chev { font-size: 15px; line-height: 1; }
+.rail-strip-label {
+  writing-mode: vertical-rl;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rail-strip.left .rail-strip-label { transform: rotate(180deg); }
+
+/* The bottom panel's tabs, living in the footer while the panel is hidden. */
+.foot-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.foot-tabs::-webkit-scrollbar { height: 0; }
+.foot-tab {
+  border: 0;
+  background: none;
+  padding: 2px 7px;
+  font-family: var(--sans);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.foot-tab:hover { color: var(--info); background: var(--bg-raise); }
+
+/* Footer tab hover preview: one tab's content, floating above the footer. */
+.foot-tab.on { background: var(--bg-raise); }
+.dock-peek {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(var(--statusbar-h) + 2px);
+  z-index: 60;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  box-shadow: 0 -10px 30px #000a;
+  overflow: hidden;
+}
+.dock-peek-inner { border-top: 0; }
+.dock-peek-head {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--info);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Sortable column headers (signal board). */
+.tabular th.sortable { cursor: pointer; user-select: none; }
+.tabular th.sortable:hover { color: var(--ink-mid); }
+.tabular th.sorted { color: var(--info); }
+
+/* The trend read beside the symbol: bold coloured text, no box - the same
+   look as the chart's channel and pattern labels. */
+.trend-read {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-left: 4px;
+}

@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "_note": "The web entry deliberately has NO command: a configuration with a url and no runtimeExecutable ATTACHES to an already-running server instead of spawning one. This project's documented workflow runs three processes by hand (bridge, API, vite), so the dev server is normally already up on 5180 and trying to start a second copy just collides. The port is fixed because server/main.py's CORS allowlist names http://127.0.0.1:5180 explicitly - moving the UI elsewhere makes the browser refuse its own API calls. Use the 'dianurfx-web-start' entry if you need one started.",
+  "configurations": [
+    {
+      "name": "dianurfx-web",
+      "url": "http://127.0.0.1:5180",
+      "port": 5180,
+      "autoPort": false
+    },
+    {
+      "name": "dianurfx-web-start",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "cwd": "web",
+      "port": 5180,
+      "autoPort": false
+    }
+  ]
+}

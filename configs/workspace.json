@@ -1,0 +1,68 @@
+{
+ "values": {
+  "dianur.tabs.v2": [
+   {
+    "id": "t0",
+    "symbol": "XAUUSD.a",
+    "tf": "3m"
+   },
+   {
+    "id": "tmuapcg2k",
+    "symbol": "USDJPY.a",
+    "tf": "1h"
+   }
+  ],
+  "dianur.activeTab": "t0",
+  "dianur.overlays": {
+   "mtfTrendlines": true,
+   "zigzag": false,
+   "macd": false,
+   "levels": true,
+   "trendlines": true,
+   "channels": true,
+   "patterns": false,
+   "swings": true,
+   "structure": true,
+   "events": false,
+   "liquidity": true,
+   "signal": false,
+   "volumeProfile": false,
+   "regimeBands": true,
+   "rsi": true,
+   "volume": false,
+   "ema": true
+  },
+  "dianur.layout": {
+   "grid": false,
+   "newsMarks": false,
+   "positions": false
+  },
+  "dianur.hideFigures": 0,
+  "dianur.watchlist": [
+   "XAUUSD.a",
+   "USDJPY.a"
+  ],
+  "dianur.theme": "navy",
+  "dianur.snapPanels.v2": [
+   "signal",
+   "gauge",
+   "trend",
+   "evidence"
+  ],
+  "dianur.panels": {
+   "left": false,
+   "right": true,
+   "bottom": false
+  },
+  "dianur.dockTab": "signals",
+  "dianur.boardSort": {
+   "key": "stage",
+   "dir": -1
+  },
+  "dianur.execSort": {
+   "key": "tf",
+   "dir": 1
+  }
+ },
+ "saved_ms": 1789996075497
+}

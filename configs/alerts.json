@@ -1,0 +1,115 @@
+{
+  "_note": "Written by the Settings modal in the DiaNurFx workstation and read by server/alerts.py on every signal. Safe to hand-edit; the UI rewrites the whole file, so a comment added here will not survive a save - put explanations in the per-cell `note` field, which does. The Telegram bot token is NOT in this file and never will be: it comes from TELEGRAM_BOT_TOKEN in the environment.",
+  "enabled": true,
+  "min_confidence": 55,
+  "statuses": [
+    "qualified"
+  ],
+  "cooldown_minutes": 15,
+  "quiet_hours_utc": {
+    "enabled": false,
+    "from": 22,
+    "to": 6
+  },
+  "include_challenge": true,
+  "watch": [
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "1h",
+      "enabled": true,
+      "note": "starting point, not a recommendation"
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "5m",
+      "enabled": true,
+      "note": "starting point, not a recommendation"
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "1m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "3m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "15m",
+      "enabled": true,
+      "note": "starting point, not a recommendation"
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "30m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "4h",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "XAUUSD.a",
+      "tf": "1d",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "1h",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "4h",
+      "enabled": true,
+      "note": ""
+    }
+  ],
+  "destinations": [
+    {
+      "id": "nur",
+      "channel": "telegram",
+      "label": "🙂 DiaNurFxBot",
+      "target": "686269315",
+      "enabled": true,
+      "kinds": []
+    },
+    {
+      "id": "d1789902854170",
+      "channel": "telegram",
+      "label": "Trade Like a Pro",
+      "target": "t.me/dianurfx",
+      "enabled": true,
+      "kinds": []
+    },
+    {
+      "id": "d1789902951857",
+      "channel": "telegram",
+      "label": "📊 Analytics & Signals",
+      "target": "t.me/rayo_scalper",
+      "enabled": true,
+      "kinds": [
+        "signals",
+        "news",
+        "scalper"
+      ]
+    }
+  ],
+  "news": {
+    "enabled": true,
+    "lead_minutes": 10,
+    "impact": "low"
+  },
+  "command_chats": [
+    "t.me/dianurfx"
+  ]
+}

@@ -1,0 +1,408 @@
+/*
+ * DiaNurFx - dark pro terminal theme.
+ *
+ * The palette is built around the near-black navy and magenta/lime accents in
+ * the reference design. Everything is a token so the whole terminal can be
+ * retuned from this block alone.
+ *
+ * Two rules the rest of the CSS obeys:
+ *   1. Colour carries meaning. Magenta = bearish/sell, lime = bullish/buy,
+ *      cyan = information, amber = caution. Nothing decorative uses those.
+ *   2. Text sits on --ink-* ramps, never on raw white, so the contrast against
+ *      the near-black stays under control on an OLED panel at 2am.
+ */
+
+:root {
+  /* --- surfaces ------------------------------------------------------- */
+  --bg-void: #05070e;
+  --bg-base: #080b14;
+  --bg-panel: #0b0f1b;
+  --bg-panel-2: #0e1322;
+  --bg-raise: #131a2c;
+  --bg-hover: #18203a;
+  --bg-input: #0a0e18;
+
+  /* --- lines ---------------------------------------------------------- */
+  --line: #1b2337;
+  --line-soft: #141a29;
+  --line-strong: #2a3450;
+
+  /* --- ink ------------------------------------------------------------ */
+  --ink-hi: #e8edf7;
+  --ink: #b6c1d6;
+  --ink-mid: #7d8aa5;
+  --ink-low: #55617a;
+  --ink-dim: #3a4457;
+
+  /* --- semantic accents ----------------------------------------------- */
+  --bull: #9fe547;
+  --bull-dim: #6d9e2f;
+  --bull-glow: rgba(159, 229, 71, 0.16);
+
+  --bear: #ff2d78;
+  --bear-dim: #b41b53;
+  --bear-glow: rgba(255, 45, 120, 0.16);
+
+  --info: #35d6ef;
+  --info-dim: #1d8ea1;
+  --info-glow: rgba(53, 214, 239, 0.14);
+
+  --warn: #ffb02e;
+  --warn-dim: #b87a14;
+  --warn-glow: rgba(255, 176, 46, 0.14);
+
+  --accent: #c264ff;
+  --accent-dim: #8339b3;
+
+  --live: #ff2d78;
+  --neutral: #6b7896;
+
+  /* --- chart ----------------------------------------------------------- */
+  --candle-up: #9fe547;
+  --candle-down: #ff2d78;
+  --candle-up-fill: #9fe547;
+  --candle-down-fill: #ff2d78;
+  --grid: #10162550;
+  --grid-strong: #1a2236;
+  --crosshair: #6b7896;
+
+  --zone-bull: rgba(159, 229, 71, 0.10);
+  --zone-bear: rgba(255, 45, 120, 0.10);
+  --zone-neutral: rgba(107, 120, 150, 0.10);
+
+  /* --- geometry -------------------------------------------------------- */
+  --r-sm: 3px;
+  --r: 5px;
+  --r-lg: 8px;
+  --rail-left: 232px;
+  --rail-right: 300px;
+  --topbar-h: 44px;
+  --statusbar-h: 30px;
+
+  --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Mono', Consolas,
+    'Courier New', monospace;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    sans-serif;
+}
+
+/* ---------------------------------------------------------------------- */
+/* alternate themes                                                       */
+/* ---------------------------------------------------------------------- */
+/*
+ * Only SURFACES, LINES and INK are re-tinted. The semantic accents - lime,
+ * magenta, cyan, amber - are deliberately identical in every theme, because
+ * rule 1 above still holds: those four carry meaning, and a theme that
+ * repainted "bearish" would make the same chart say something different.
+ *
+ * Applied as data-theme on <html>, so a single attribute swaps the terminal.
+ */
+
+/* Navy - the blue-forward variant. Lighter and cooler than Midnight: easier
+   in a bright room, where near-black surfaces wash out. */
+:root[data-theme='navy'] {
+  --bg-void: #061024;
+  --bg-base: #0a1730;
+  --bg-panel: #0d1d3b;
+  --bg-panel-2: #102546;
+  --bg-raise: #163156;
+  --bg-hover: #1d3d69;
+  --bg-input: #091b38;
+
+  --line: #1d3a63;
+  --line-soft: #142c4d;
+  --line-strong: #2f5488;
+
+  --ink-hi: #eaf2ff;
+  --ink: #b9cbe6;
+  --ink-mid: #7e93b4;
+  --ink-low: #5a6d8c;
+  --ink-dim: #3e4f6b;
+
+  --grid: #17305a66;
+  --grid-strong: #23406e;
+  --crosshair: #7e93b4;
+}
+
+/* Carbon - neutral greys, no colour cast at all. For long sessions where a
+   blue or navy field starts to tint everything you look at afterwards. */
+:root[data-theme='carbon'] {
+  --bg-void: #0a0a0c;
+  --bg-base: #100f12;
+  --bg-panel: #161519;
+  --bg-panel-2: #1b1a1f;
+  --bg-raise: #232228;
+  --bg-hover: #2c2b33;
+  --bg-input: #121115;
+
+  --line: #2a2930;
+  --line-soft: #201f25;
+  --line-strong: #3b3a44;
+
+  --ink-hi: #f0eff2;
+  --ink: #c3c1c9;
+  --ink-mid: #8b8994;
+  --ink-low: #66646e;
+  --ink-dim: #47454e;
+
+  --grid: #24232a66;
+  --grid-strong: #302f37;
+  --crosshair: #8b8994;
+}
+
+/* ---------------------------------------------------------------------- */
+/* reset                                                                  */
+/* ---------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-void);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-dim);
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+input,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink-hi);
+  background: var(--bg-input);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 4px 7px;
+  outline: none;
+}
+input:focus,
+select:focus {
+  border-color: var(--info-dim);
+}
+
+/* ---------------------------------------------------------------------- */
+/* shared primitives                                                      */
+/* ---------------------------------------------------------------------- */
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.t-up {
+  color: var(--bull);
+}
+.t-down {
+  color: var(--bear);
+}
+.t-info {
+  color: var(--info);
+}
+.t-warn {
+  color: var(--warn);
+}
+.t-dim {
+  color: var(--ink-low);
+}
+.t-mid {
+  color: var(--ink-mid);
+}
+.t-hi {
+  color: var(--ink-hi);
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  user-select: none;
+}
+
+.panel-body {
+  padding: 9px 10px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.chip-up {
+  color: var(--bull);
+  background: var(--bull-glow);
+  border-color: var(--bull-dim);
+}
+.chip-down {
+  color: var(--bear);
+  background: var(--bear-glow);
+  border-color: var(--bear-dim);
+}
+.chip-info {
+  color: var(--info);
+  background: var(--info-glow);
+  border-color: var(--info-dim);
+}
+.chip-warn {
+  color: var(--warn);
+  background: var(--warn-glow);
+  border-color: var(--warn-dim);
+}
+.chip-mute {
+  color: var(--ink-mid);
+  background: #ffffff08;
+  border-color: var(--line);
+}
+
+/* A labelled key/value row - the workhorse of every side panel. */
+.kv {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2.5px 0;
+}
+.kv-k {
+  color: var(--ink-low);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+.kv-v {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-hi);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Horizontal score bar, signed (-100..100) or unsigned (0..100). */
+.meter {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-raise);
+  overflow: hidden;
+}
+.meter-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 2px;
+  transition: width 0.25s ease, left 0.25s ease;
+}
+
+.scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.tabular {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 10.5px;
+}
+.tabular th {
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line-soft);
+  position: sticky;
+  top: 0;
+  background: var(--bg-panel);
+  z-index: 1;
+}
+.tabular td {
+  padding: 3.5px 6px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.tabular tbody tr:hover {
+  background: #ffffff06;
+}
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
