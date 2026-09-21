@@ -1,0 +1,94 @@
+2026-09-20T12:06:27+10:00  clock     server offset +0 ms (UTC+0.00h) confidence=assumed from 0 tick(s)
+2026-09-20T12:06:27+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T12:19:24+10:00  clock     server offset +0 ms (UTC+0.00h) confidence=assumed from 2 tick(s)
+2026-09-20T12:19:24+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T12:20:05+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T12:20:05+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T12:27:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:27:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:27:38+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:27:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:27:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:27:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:30:13+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:30:22+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:30:31+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T12:30:40+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T13:04:29+10:00  session   RECOVERED after sustained healthy probes (3700 symbols)
+2026-09-20T13:58:11+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T13:58:11+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T13:58:11+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T13:58:12+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T13:58:12+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T13:58:12+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:13:56+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:00+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:02+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:02+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:03+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:03+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:03+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:03+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:10+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:10+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:11+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:13+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:13+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:16+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:16+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /orders ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:14:37+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:15:33+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:15:33+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:15:33+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:15:33+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:15:33+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T14:15:34+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-20T18:01:07+10:00  clock     server offset +0 ms (UTC+0.00h) confidence=assumed from 4 tick(s)
+2026-09-20T18:01:07+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Live
+2026-09-20T18:01:15+10:00  stop      bridge shutting down
+2026-09-20T18:01:17+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T18:01:17+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Live
+2026-09-20T18:04:24+10:00  stop      bridge shutting down
+2026-09-20T18:19:25+10:00  clock     server offset +0 ms (UTC+0.00h) confidence=assumed from 3 tick(s)
+2026-09-20T18:19:25+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Live
+2026-09-20T18:58:58+10:00  stop      bridge shutting down
+2026-09-20T20:44:42+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T20:44:42+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Live
+2026-09-20T20:45:47+10:00  stop      bridge shutting down
+2026-09-20T21:07:16+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T21:07:16+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Live
+2026-09-20T21:55:40+10:00  error     /account RuntimeError: no account
+2026-09-20T21:55:40+10:00  error     /account RuntimeError: no account
+2026-09-20T22:01:30+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T22:01:30+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T22:08:06+10:00  error     /account RuntimeError: no account
+2026-09-20T22:08:06+10:00  error     /account RuntimeError: no account
+2026-09-20T22:52:47+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T22:52:47+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T22:59:39+10:00  stop      bridge shutting down
+2026-09-20T22:59:45+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T22:59:45+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T23:17:42+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T23:17:42+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T23:19:57+10:00  stop      bridge shutting down
+2026-09-20T23:20:02+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T23:20:02+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T23:40:04+10:00  error     /account RuntimeError: no account
+2026-09-20T23:40:04+10:00  error     /account RuntimeError: no account
+2026-09-20T23:40:35+10:00  stop      bridge shutting down
+2026-09-20T23:40:36+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T23:40:36+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=Pepperstone-MT5-Live01
+2026-09-20T23:42:36+10:00  stop      bridge shutting down
+2026-09-20T23:42:48+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T23:42:48+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-20T23:45:54+10:00  error     /account RuntimeError: no account
+2026-09-20T23:45:54+10:00  error     /account RuntimeError: no account
+2026-09-20T23:45:55+10:00  stop      bridge shutting down
+2026-09-20T23:45:59+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-20T23:45:59+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=Pepperstone-MT5-Live01

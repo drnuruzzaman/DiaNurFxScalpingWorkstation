@@ -1,17 +1,14 @@
 # --- secrets: never commit ---
-bridge/mt5_config.json
-bridge/mt5_config_live.json
-bridge/*_config*.json
 .env
 .env.*
 !.env.example
 
 # --- data & artefacts ---
-data/
-logs/
-runs/
+#data/
+#logs/
+#runs/
 cache/
-*.log
+#*.log
 
 # --- python ---
 __pycache__/
@@ -23,6 +20,6 @@ venv/
 
 # --- node ---
 node_modules/
-web/dist/
+#web/dist/
 web/.vite/
 npm-debug.log*
