@@ -13,9 +13,8 @@
  },
  "execution": {
   "min_lots": 0.01,
-  "max_lots": 0.03,
+  "max_lots": 0.02,
   "entry_tolerance_atr": 0.2,
-  "one_per_symbol_tf": true,
   "auto_timeframes": [
    "3m",
    "5m",
@@ -24,7 +23,8 @@
    "1h",
    "4h"
   ],
-  "auto": true
+  "auto": true,
+  "max_per_symbol_tf": 2
  },
  "gates": {
   "min_confidence": 55,
@@ -32,7 +32,7 @@
   "min_atr_cost_multiple": 4.0,
   "max_atr_percentile": 97.0,
   "min_mtf_score": 25,
-  "cooldown_bars": 5,
+  "cooldown_bars": 3,
   "disabled_playbooks": []
  }
 }

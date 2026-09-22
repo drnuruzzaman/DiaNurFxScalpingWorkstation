@@ -149,9 +149,14 @@ def resolve_offset(tick_times_ms: Iterable[float],
 
     # Cross-check: at least one other probe should agree, when we have others.
     lively = [t for t in ticks if abs((freshest - t)) <= AGREEMENT_MS]
-    if len(ticks) > 1 and len(lively) < 2:
-        # Only one symbol is actually live. Still usable, but say so if we have
-        # a stored value that disagrees materially.
+    if len(lively) < 2:
+        # Fewer than two symbols agree, so this rests on ONE timestamp. A
+        # single stale tick is indistinguishable from a timezone: one that is
+        # two hours old snaps cleanly to -2h and was returned as 'measured',
+        # overriding a correct stored offset with a confident wrong one.
+        #
+        # The guard used to require len(ticks) > 1, which skipped it in
+        # exactly the case it was written for - a lone tick.
         if known_offset_ms is not None and abs(known_offset_ms - snapped) > SNAP_MS:
             return int(known_offset_ms), (known_confidence or 'stale')
 

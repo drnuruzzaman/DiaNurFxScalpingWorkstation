@@ -78,7 +78,7 @@
     {
       "id": "nur",
       "channel": "telegram",
-      "label": "🙂 DiaNurFxBot",
+      "label": "\ud83d\ude42 DiaNurFxBot",
       "target": "686269315",
       "enabled": true,
       "kinds": []
@@ -94,7 +94,7 @@
     {
       "id": "d1789902951857",
       "channel": "telegram",
-      "label": "📊 Analytics & Signals",
+      "label": "\ud83d\udcca Analytics & Signals",
       "target": "t.me/rayo_scalper",
       "enabled": true,
       "kinds": [

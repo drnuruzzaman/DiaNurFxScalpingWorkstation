@@ -239,7 +239,7 @@ class ExecutionSettings:
     --enable-trading - two independent switches, one per process.
     """
     # Send FINAL, qualified watchlist signals without a click. Toggled at
-    # runtime through /api/execution/auto and remembered in run/execution.json.
+    # runtime through /api/execution/auto and remembered in order_ledger/execution.json.
     auto: bool = False
     # Entry policy: market when price is within this many ATR of the frozen
     # entry, otherwise a pending limit/stop AT the frozen entry.
@@ -251,7 +251,9 @@ class ExecutionSettings:
     # limits automation, not what you can do by hand.
     auto_timeframes: tuple = ('1m', '3m', '5m', '15m', '30m', '1h', '4h', '1d')
     # One live order or position per symbol AND timeframe.
-    one_per_symbol_tf: bool = True
+    # How many live orders one symbol+timeframe may hold at once. 0 = no cap.
+    # Was a bool named one_per_symbol_tf; _load_saved_settings() migrates it.
+    max_per_symbol_tf: int = 1
     # How often the executor walks the lifecycle and manages trailing stops.
     every_s: float = 2.0
     # The take-profit sent WITH the order, so MT5 itself holds it. The trailing

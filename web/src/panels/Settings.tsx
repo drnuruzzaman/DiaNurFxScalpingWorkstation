@@ -100,6 +100,46 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
     setDirty(true)
   }
 
+  /**
+   * Staged edits to configs/settings.json, per group.
+   *
+   * Risk & Gates used to POST on every blur, so a half-typed lot size was
+   * already live on the server before the field lost focus. It now behaves
+   * like the alert tabs: accumulate, show Save, write once.
+   */
+  const [pending, setPending] = useState<Record<string, any>>({})
+  const engineDirty = Object.values(pending).some(
+    (g: any) => g && Object.keys(g).length > 0)
+
+  const stage = (group: string) => (p: any) =>
+    setPending((cur) => ({ ...cur, [group]: { ...(cur[group] || {}), ...p } }))
+
+  /**
+   * Bumped whenever the staged set is dropped or reloaded.
+   *
+   * The inputs are uncontrolled (defaultValue), so discarding has to REMOUNT
+   * them - without a changing key they would keep showing the abandoned text
+   * while the server holds the old value.
+   */
+  const [formKey, setFormKey] = useState(0)
+
+  const discardEngine = () => {
+    setPending({})
+    setFormKey((k) => k + 1)
+  }
+
+  const saveEngine = async () => {
+    const res: any = await api.saveSettings(pending)
+    if (res?.errors?.length) {
+      flash(`Not saved: ${res.errors.join('; ')}`)
+      return false
+    }
+    setPending({})
+    setFormKey((k) => k + 1)
+    await load()
+    return true
+  }
+
   const toggleCell = (symbol: string, tf: string, enabled: boolean) => {
     setData((d) => d && ({
       ...d,
@@ -120,18 +160,39 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
     for (const tf of data.timeframes) toggleCell(symbol, tf, on)
   }
 
-  const save = async () => {
+  const saveAlerts = async () => {
+    const r = await api.alertsSave(draft)
+    setData((d) => (d ? { ...d, config: r.config, status: r.status } : d))
+    setDirty(false)
+    flash('Saved')
+  }
+
+  /**
+   * Both files, one button.
+   *
+   * The two tabs write to different places - alerts.json and settings.json -
+   * but a single Save is what the footer has always implied, and two buttons
+   * doing almost the same thing is how half a change gets left behind.
+   */
+  const anyDirty = dirty || engineDirty
+
+  const saveAll = async () => {
     setBusy(true)
     try {
-      const r = await api.alertsSave(draft)
-      setData((d) => (d ? { ...d, config: r.config, status: r.status } : d))
-      setDirty(false)
-      flash('Saved to configs/alerts.json')
-    } catch (e: any) { flash(e.message) } finally { setBusy(false) }
+      let ok = true
+      if (engineDirty) ok = await saveEngine()
+      // The alert draft is only written if the settings half succeeded, so a
+      // rejected lot size does not leave the two files half-applied.
+      if (ok && dirty) await saveAlerts()
+      else if (ok) flash('Saved')
+    } catch (e: any) {
+      flash(e.message)
+    } finally { setBusy(false) }
   }
 
   const cancel = () => {
-    if (dirty && !window.confirm('Discard unsaved changes?')) return
+    if (anyDirty && !window.confirm('Discard unsaved changes?')) return
+    discardEngine()
     onClose()
   }
 
@@ -157,6 +218,14 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
     if (!data || !draft) return <Empty>Loading settings…</Empty>
 
     if (tab === 'alerts') {
+      // The file path belongs here, beside the settings it describes. In the
+      // modal header it sat over every tab while naming only one of the two
+      // files the dialog writes - Risk & Gates goes to settings.json.
+      const pathNote = st?.config_path ? (
+        <div className="t-dim mono" style={{ fontSize: 9.5, marginBottom: 8 }}>
+          {st.config_path}
+        </div>
+      ) : null
       // Instruments you have configured lead, then anything with local
       // history, then the rest. Sixteen alphabetical cards buried XAUUSD.a -
       // the only one actually set up - at position sixteen.
@@ -174,6 +243,7 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
         : [...data.symbols].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b))
       return (
         <>
+          {pathNote}
           <div className="set-row">
             <label className="set-toggle" style={{ cursor: 'pointer' }}
               onClick={() => patch({ enabled: !cfg.enabled })}>
@@ -505,20 +575,21 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
       // at all, execution decides how it reaches MT5. One tab, three panels.
       // Every change is validated and saved on the server (configs/settings.json),
       // so it survives a restart - nothing here needs a console flag.
-      const r = engine.risk
-      const g = engine.gates
-      const x = engine.execution ?? {}
+      // Staged values win over what the server last returned, so a field the
+      // user has edited keeps showing their number rather than snapping back.
+      const r = { ...engine.risk, ...(pending.risk || {}) }
+      const g = { ...engine.gates, ...(pending.gates || {}) }
+      const x = { ...(engine.execution ?? {}), ...(pending.execution || {}) }
       const playbooks: string[] = engine.playbooks ?? []
       const disabled: string[] = g.disabled_playbooks ?? []
-      const save = (group: string) => (p: any) =>
-        api.saveSettings({ [group]: p }).then((res: any) => {
-          if (res?.errors?.length) flash(`Not saved: ${res.errors.join('; ')}`)
-          else flash('Saved')
-          load()
-        }).catch((e) => flash(e.message))
-      const saveRisk = save('risk')
-      const saveGates = save('gates')
-      const saveExec = save('execution')
+      // The bridge's ceiling is a different process's setting; it can only be
+      // compared, never edited from here.
+      const bridgeMax: number | null = engine.bridge_max_lots ?? null
+      const overLots = bridgeMax != null && Number(x.max_lots) > bridgeMax
+
+      const saveRisk = stage('risk')
+      const saveGates = stage('gates')
+      const saveExec = stage('execution')
       const togglePlaybook = (name: string) => {
         const next = disabled.includes(name)
           ? disabled.filter((d) => d !== name)
@@ -529,12 +600,24 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
         if (!x.auto && !window.confirm(
           'Turn AUTO trading on?\n\nEvery FINAL, qualified signal on a watchlist symbol will be ' +
           `sent to MT5 without asking - ${x.min_lots}-${x.max_lots} lots, ` +
-          `${x.one_per_symbol_tf ? 'one per symbol and timeframe, ' : ''}` +
+          `${x.max_per_symbol_tf > 0
+            ? `at most ${x.max_per_symbol_tf} per symbol and timeframe, ` : ''}` +
           `stop to +${r.trail_lock_r}R at TP1 then trailing ${r.trail_atr} ATR.`)) return
-        saveExec({ auto: !x.auto })
+        // APPLIED AT ONCE, unlike every other control on this tab. Staging it
+        // behind Save would let the switch read "AUTO TRADING OFF" while
+        // orders were still going out, which is the wrong way round for the
+        // one control that decides whether the machine trades by itself.
+        api.saveSettings({ execution: { auto: !x.auto } }).then((res: any) => {
+          if (res?.errors?.length) flash(`Not saved: ${res.errors.join('; ')}`)
+          else flash(!x.auto ? 'AUTO trading ON' : 'AUTO trading OFF')
+          load()
+        }).catch((e) => flash(e.message))
       }
       return (
-        <>
+        // Keyed so Cancel/Save REMOUNTS the fields. They are uncontrolled, so
+        // without this a discarded edit would stay on screen while the server
+        // still held the old value.
+        <React.Fragment key={formKey}>
           <section className="set-block">
             <div className="set-block-head">
               <span className="set-block-title">Execution</span>
@@ -564,8 +647,16 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                 <input type="number" step={0.01} min={0.01} defaultValue={x.min_lots}
                   onBlur={(e) => saveExec({ min_lots: +e.target.value })} />
               </Field>
-              <Field label="Max lots" hint="every order is at most this, whatever sizing says">
+              {/* The bridge keeps its own hard ceiling, fixed when it was
+                  launched. Exceed it and every order is refused at SEND time
+                  with nothing on screen to explain why - so say it here,
+                  while the number is still being chosen. */}
+              <Field label="Max lots"
+                hint={overLots
+                  ? `the bridge refuses anything above ${bridgeMax} — relaunch it to raise this`
+                  : 'every order is at most this, whatever sizing says'}>
                 <input type="number" step={0.01} min={0.01} defaultValue={x.max_lots}
+                  className={overLots ? 'bad' : undefined}
                   onBlur={(e) => saveExec({ max_lots: +e.target.value })} />
               </Field>
               <Field label="Entry tolerance (ATR)"
@@ -573,12 +664,13 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                 <input type="number" step={0.05} min={0} defaultValue={x.entry_tolerance_atr}
                   onBlur={(e) => saveExec({ entry_tolerance_atr: +e.target.value })} />
               </Field>
-              <Field label="One per symbol + timeframe" hint="a second signal waits for the slot">
-                <select defaultValue={x.one_per_symbol_tf ? 'yes' : 'no'}
-                  onChange={(e) => saveExec({ one_per_symbol_tf: e.target.value === 'yes' })}>
-                  <option value="yes">yes</option>
-                  <option value="no">no</option>
-                </select>
+              <Field label="Max per symbol + timeframe"
+                hint={x.max_per_symbol_tf > 0
+                  ? `further signals wait for a slot · 0 = no cap`
+                  : 'no cap — every qualified signal is sent'}>
+                <input type="number" min={0} max={20} step={1}
+                  defaultValue={x.max_per_symbol_tf}
+                  onBlur={(e) => saveExec({ max_per_symbol_tf: +e.target.value })} />
               </Field>
               <Field label="Exit" hint="trail: whole position, no fixed target">
                 <select defaultValue={r.exit_mode}
@@ -745,7 +837,7 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
             its on-switch outside the web page means no bug, stale tab or anyone else on this
             page can arm live trading.
           </div>
-        </>
+        </React.Fragment>
       )
     }
 
@@ -787,9 +879,6 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
           <span style={{ fontWeight: 800, letterSpacing: '0.1em', fontSize: 11 }}>
             SETTINGS
           </span>
-          <span className="t-dim mono" style={{ fontSize: 9.5 }}>
-            {st?.config_path}
-          </span>
           <span className="spacer" />
           <button className="tool-btn" onClick={cancel}>Close</button>
         </div>
@@ -811,12 +900,14 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
         <div className="modal-body">{body()}</div>
         {toast && <div className="modal-toast">{toast}</div>}
         <div className="modal-foot">
-          {dirty && <span className="t-warn" style={{ fontSize: 10.5 }}>
-            unsaved changes
+          {anyDirty && <span className="t-warn" style={{ fontSize: 10.5 }}>
+            unsaved changes in {[dirty && 'alerts', engineDirty && 'risk & gates']
+              .filter(Boolean).join(' and ')}
           </span>}
           <span className="spacer" />
           <button className="tool-btn" onClick={cancel}>Cancel</button>
-          <button className="tool-btn primary" onClick={save} disabled={busy || !dirty}>
+          <button className="tool-btn primary" onClick={saveAll}
+            disabled={busy || !anyDirty}>
             Save
           </button>
         </div>

@@ -258,7 +258,9 @@ export function LeftRail({
           {!tradingEnabled
             ? 'The bridge is read-only. It has no order_send path active, so nothing here can move money.'
             : autoExec
-              ? 'AUTO: every FINAL, qualified watchlist signal is sent without asking - one per symbol and timeframe.'
+              // The per-slot cap is configurable now, so this no longer
+              // states a number it cannot know. Settings shows the live value.
+              ? 'AUTO: every FINAL, qualified watchlist signal is sent without asking, up to the per-slot cap in Settings.'
               : 'The bridge is armed. Each FINAL signal needs its own confirmation.'}
         </div>
       </Panel>

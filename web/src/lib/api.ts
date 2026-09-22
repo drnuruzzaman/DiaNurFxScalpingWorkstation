@@ -88,6 +88,8 @@ export type ClosedTrade = {
   reason: number | null
   sl: number
   deals: number
+  /** The MT5 order comment, e.g. "DNX 3f2a1b9c04 PULLBACK". */
+  comment?: string
 }
 
 export type DealsPayload = {

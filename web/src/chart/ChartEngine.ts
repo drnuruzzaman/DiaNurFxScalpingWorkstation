@@ -297,9 +297,11 @@ export class ChartEngine {
    * Empty bar-widths between the last candle and the price axis.
    *
    * Wide enough that a projected target box or a signal rail has somewhere
-   * to be drawn without colliding with the axis labels.
+   * to be drawn without colliding with the axis labels, and that the live
+   * candle keeps clear air around it rather than sitting under the price tag
+   * and its countdown.
    */
-  private rightPadBars = 16
+  private rightPadBars = 20
 
   /** Set while a history request is in flight, so we ask once, not every frame. */
   private loadingHistory = false

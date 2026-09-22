@@ -732,13 +732,13 @@ export default function App() {
   const shownSources = mtfSources ?? mtfAvailable
 
   /**
-   * Render a money figure, or hide it behind the eye.
+   * A PERFORMANCE figure: profit today, this month.
    *
-   * Masking replaces the DIGITS rather than the whole field, so the ribbon
-   * keeps its shape and you can still see at a glance which figures exist.
+   * Never masked. Hiding the account is about not showing strangers the size
+   * of the account, and a day's P&L does not reveal that - while blanking it
+   * removes the one thing usually worth leaving on screen when sharing.
    */
-  const money = (v: any, dp = 2, withSign = false) =>
-    hideFigures ? '••••' : (withSign ? signed(v, dp) : fmt(v, dp))
+  const perf = (v: any) => signed(v, 2)
 
   const toggleFigures = () => setHideFigures((v) => {
     const next = !v
@@ -1137,27 +1137,38 @@ export default function App() {
             like an account with no money in it, so the bar says which it is. */}
         {mt5Up ? (
           <>
-            <span>BALANCE <b>{acct.currency ?? ''} {money(acct.balance)}</b></span>
-            <span className="sep" />
-            <span>FLOATING <b className={hideFigures ? '' : dirClass(acct.profit)}>
-              {money(acct.profit, 2, true)}</b></span>
-            <span className="sep" />
-            <span>FREE MARGIN <b>{money(acct.margin_free)}</b></span>
-            {/* Realised only. The open swing is FLOATING, two fields to the
-                left; adding it here would double-count it and make "today"
-                tick while nothing has been banked. */}
-            <span className="sep" />
+            {/* The whole field goes, label included - not just the digits.
+                A row of "BALANCE ••••" still announces that there IS a
+                balance worth hiding, which is the opposite of discreet. The
+                trailing separator travels with the group so nothing is left
+                dangling in front of PROFIT TODAY. */}
+            {!hideFigures && (
+              <>
+                <span>BALANCE <b>{acct.currency ?? ''} {fmt(acct.balance, 2)}</b></span>
+                <span className="sep" />
+                <span>FLOATING <b className={dirClass(acct.profit)}>
+                  {signed(acct.profit, 2)}</b></span>
+                <span className="sep" />
+                <span>FREE MARGIN <b>{fmt(acct.margin_free, 2)}</b></span>
+                {/* Realised only. The open swing is FLOATING, two fields to
+                    the left; adding it here would double-count it and make
+                    "today" tick while nothing has been banked. */}
+                <span className="sep" />
+              </>
+            )}
             <span title={pnl ? `${pnl.today_trades} closed today (broker day)` : ''}>
-              PROFIT TODAY <b className={hideFigures ? '' : dirClass(pnl?.today ?? 0)}>
-                {money(pnl?.today, 2, true)}</b>
+              PROFIT TODAY <b className={dirClass(pnl?.today ?? 0)}>
+                {perf(pnl?.today)}</b>
             </span>
             <span className="sep" />
             <span title={pnl ? `${pnl.month_trades} closed this month (broker month)` : ''}>
-              THIS MONTH <b className={hideFigures ? '' : dirClass(pnl?.month ?? 0)}>
-                {money(pnl?.month, 2, true)}</b>
+              THIS MONTH <b className={dirClass(pnl?.month ?? 0)}>
+                {perf(pnl?.month)}</b>
             </span>
             <button className="eye-btn" onClick={toggleFigures}
-              title={hideFigures ? 'Show account figures' : 'Hide account figures'}
+              title={hideFigures
+                ? 'Show balance, floating and free margin'
+                : 'Hide balance, floating and free margin'}
               aria-pressed={hideFigures}>
               {hideFigures ? '🙈' : '👁'}
             </button>

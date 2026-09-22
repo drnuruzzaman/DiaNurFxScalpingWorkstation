@@ -35,15 +35,64 @@ import webbrowser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-LOGS = ROOT / 'run' / 'logs'
+LOGS = ROOT / 'order_ledger' / 'logs'
 PREFS = ROOT / 'configs' / 'launch.json'
-UI_URL = 'http://127.0.0.1:5180'
+UI_URL = 'http://localhost:5180'
 
 # The launcher itself may run under pythonw (no console). Its children must run
 # under python.exe, or their prints have nowhere to go and some libraries fail.
 _exe = Path(sys.executable)
 PYTHON = str(_exe.with_name('python.exe')) if _exe.name.lower() == 'pythonw.exe' else str(_exe)
 NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
+
+
+def http_body(url: str, limit: int = 4096) -> str:
+    """The first few KB of a response, or '' if it did not answer."""
+    try:
+        with urllib.request.urlopen(url, timeout=1.5) as r:
+            return r.read(limit).decode('utf-8', 'replace')
+    except Exception:                                         # noqa: BLE001
+        return ''
+
+
+def listening_pid(port: int):
+    """
+    The PID holding a local port, via netstat. None if it cannot be read.
+
+    netstat rather than psutil: the launcher carries no third-party
+    dependencies and is the one tool that must run on a machine where nothing
+    else is set up yet.
+    """
+    try:
+        out = subprocess.run(['netstat', '-ano', '-p', 'TCP'],
+                             capture_output=True, text=True, timeout=5,
+                             creationflags=NO_WINDOW).stdout
+    except Exception:                                         # noqa: BLE001
+        return None
+    for line in out.splitlines():
+        parts = line.split()
+        if len(parts) >= 5 and parts[3].upper() == 'LISTENING':
+            if parts[1].rsplit(':', 1)[-1] == str(port):
+                try:
+                    return int(parts[4])
+                except ValueError:
+                    return None
+    return None
+
+
+def process_name(pid) -> str:
+    """A PID's image name, so a squatter can be named rather than guessed at."""
+    if not pid:
+        return ''
+    try:
+        out = subprocess.run(['tasklist', '/FI', 'PID eq %s' % pid, '/NH', '/FO', 'CSV'],
+                             capture_output=True, text=True, timeout=5,
+                             creationflags=NO_WINDOW).stdout.strip()
+    except Exception:                                         # noqa: BLE001
+        return ''
+    if ',' not in out:
+        return ''
+    return out.split(',')[0].strip('" ')
 
 
 def port_open(port: int) -> bool:
@@ -75,10 +124,13 @@ def save_prefs(p: dict) -> None:
 
 
 class Service:
-    def __init__(self, name, port, health_url, cmd_fn, cwd):
+    def __init__(self, name, port, health_url, cmd_fn, cwd, signature=''):
         self.name, self.port, self.health_url = name, port, health_url
         self.cmd_fn, self.cwd = cmd_fn, cwd
         self.proc = None          # only set when WE started it
+        # A string that must appear in the health response for this port to
+        # count as OUR service. "Something answers" is not the same question.
+        self.signature = signature
 
     def running(self) -> bool:
         return port_open(self.port)
@@ -86,9 +138,37 @@ class Service:
     def healthy(self) -> bool:
         return http_ok(self.health_url) if self.health_url else self.running()
 
+    def is_ours(self) -> bool:
+        """
+        Is the thing on this port the service it claims to be?
+
+        A port check alone answers "is something listening", which silently
+        adopts a stale copy left over from a crash, a second checkout, or an
+        unrelated program that happened to take the number. The launcher then
+        reports a green light for a backend it never started - and a browser
+        pointed at it keeps showing whatever that process serves.
+        """
+        if not self.health_url or not self.signature:
+            return True           # nothing to check against; assume ours
+        return self.signature in http_body(self.health_url)
+
+    def squatter(self) -> str:
+        """Who holds the port, for a message that can be acted on."""
+        pid = listening_pid(self.port)
+        if not pid:
+            return 'another process'
+        name = process_name(pid)
+        return f'{name or "a process"} (PID {pid})'
+
     def start(self, opts: dict) -> str:
         if self.running():
-            return f'{self.name}: already running on :{self.port} - left as is'
+            if self.is_ours():
+                return f'{self.name}: already running on :{self.port} - left as is'
+            # NOT started, and not pretended to be fine. Starting a second
+            # copy would fail to bind anyway; the useful thing is to name what
+            # is in the way.
+            return (f'{self.name}: :{self.port} is held by {self.squatter()}, '
+                    f'which is not the {self.name}. Stop it, then Start again.')
         LOGS.mkdir(parents=True, exist_ok=True)
         log = open(LOGS / f'{self.name.lower()}.log', 'a', encoding='utf-8')
         log.write(f'\n===== {time.strftime("%Y-%m-%d %H:%M:%S")} started by launcher =====\n')
@@ -111,20 +191,41 @@ class Service:
         return f'{self.name}: stopped'
 
 
+# HEADROOM, not the trading size. This is the bridge's hard refusal - a
+# separate process from the app, fixed at launch, unreachable from the UI -
+# and it exists to stop a runaway, not to set position size. Settings does
+# that (execution.max_lots).
+#
+# Set it just above the working range rather than equal to it: matched to the
+# trading size, every increase in Settings is silently refused at send time
+# until the bridge is relaunched. Do NOT simply drop the flag - argparse
+# defaults it to 5.0 lots, which on a live account is not a ceiling at all.
+BRIDGE_MAX_LOTS = 0.10
+
+
 def bridge_cmd(o):
     cmd = [PYTHON, '-u', 'bridge/mt5_bridge.py', '--port', '8765', '--attach-only',
-           '--max-lots', str(o.get('max_lots', 0.03))]
+           '--max-lots', str(o.get('max_lots', BRIDGE_MAX_LOTS))]
     if o.get('arm'):
         cmd.append('--enable-trading')
     return cmd
 
 
+# The signature is a string only THIS service's health response contains.
+# Kept deliberately boring - a key name, not a version - so it keeps matching
+# across releases while still failing against an unrelated server.
 SERVICES = [
-    Service('Bridge', 8765, 'http://127.0.0.1:8765/health', bridge_cmd, ROOT),
+    Service('Bridge', 8765, 'http://127.0.0.1:8765/health', bridge_cmd, ROOT,
+            signature='"session_probe"'),
     Service('API', 8770, 'http://127.0.0.1:8770/api/health',
-            lambda o: [PYTHON, '-u', '-m', 'server.main', '--port', '8770'], ROOT),
-    Service('UI', 5180, None,
-            lambda o: ['cmd', '/c', 'npm', 'run', 'dev'], ROOT / 'web'),
+            lambda o: [PYTHON, '-u', '-m', 'server.main', '--port', '8770'], ROOT,
+            signature='"trading_enabled"'),
+    # The UI now has a health URL too. It had none, so `healthy()` fell back to
+    # a bare port check - the weakest test of the three, on the process most
+    # likely to be a leftover dev server from another project.
+    Service('UI', 5180, UI_URL,
+            lambda o: ['cmd', '/c', 'npm', 'run', 'dev'], ROOT / 'web',
+            signature='DiaNurFx'),
 ]
 
 
@@ -173,7 +274,7 @@ def main() -> int:
     lots_row.pack(anchor='w', pady=(4, 0))
     tk.Label(lots_row, text='Bridge lot ceiling', fg=DIM, bg=BG,
              font=('Segoe UI', 9)).pack(side='left')
-    max_lots = tk.StringVar(value=str(prefs.get('max_lots', 0.03)))
+    max_lots = tk.StringVar(value=str(prefs.get('max_lots', BRIDGE_MAX_LOTS)))
     tk.Entry(lots_row, textvariable=max_lots, width=6, bg=PANEL, fg=FG,
              insertbackground=FG, relief='flat').pack(side='left', padx=6)
     tk.Label(opts, text='Demo accounts only - the demo guard stays on. Auto mode, lots, exits '
@@ -241,6 +342,15 @@ def main() -> int:
             for svc in SERVICES:
                 if not svc.running():
                     res[svc.name] = (DIM, 'stopped')
+                elif not svc.is_ours():
+                    # A light that says "running" for a port held by something
+                    # else is worse than a red one: it sends you looking for
+                    # the fault in the wrong place.
+                    # Amber, not red: the port IS answering, it is simply not
+                    # answering as us. Short form - the status field is 26
+                    # characters; start() gives the full name and the remedy.
+                    pid = listening_pid(svc.port)
+                    res[svc.name] = (WARN, f'not ours (PID {pid or "?"})')
                 elif svc.healthy():
                     detail = 'running'
                     if svc.name == 'Bridge':

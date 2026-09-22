@@ -1,0 +1,43 @@
+{
+ "set": "all",
+ "start": "2025-01-01",
+ "end": "2025-08-31",
+ "exit_mode": "trail",
+ "trades": 1859,
+ "win_rate": 49.0,
+ "profit_factor": 0.96,
+ "expectancy_r": 0.002,
+ "net_pnl": -3839.12,
+ "return_pct": -15.36,
+ "max_drawdown_pct": 35.77,
+ "by_playbook": {
+  "breakout_retest": {
+   "n": 240,
+   "exp": -0.023
+  },
+  "false_break_fade": {
+   "n": 55,
+   "exp": 0.135
+  },
+  "flag_continuation": {
+   "n": 23,
+   "exp": 0.242
+  },
+  "mtf_pullback": {
+   "n": 192,
+   "exp": 0.039
+  },
+  "pattern_break": {
+   "n": 489,
+   "exp": 0.017
+  },
+  "range_fade": {
+   "n": 17,
+   "exp": -0.464
+  },
+  "sweep_reversal": {
+   "n": 843,
+   "exp": -0.013
+  }
+ }
+}

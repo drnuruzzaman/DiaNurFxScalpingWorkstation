@@ -1,0 +1,132 @@
+
+===== 2026-09-22 11:39:19 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 11:44:56 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+* execution DISARMED - no order path is reachable (use --enable-trading to arm)
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot
+
+===== 2026-09-22 11:45:18 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 11:48:16 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+* execution DISARMED - no order path is reachable (use --enable-trading to arm)
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot
+
+===== 2026-09-22 11:50:05 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 11:54:33 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 51527502 on Pepperstone-MT5-Live01 (Mohammad Nuruzzaman #2 AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+* execution DISARMED - no order path is reachable (use --enable-trading to arm)
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot
+
+===== 2026-09-22 11:57:16 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 12:07:47 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 12:18:08 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 12:24:41 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-09-22 12:36:06 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send

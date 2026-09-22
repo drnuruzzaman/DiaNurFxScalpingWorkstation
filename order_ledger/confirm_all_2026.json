@@ -1,0 +1,43 @@
+{
+ "set": "all",
+ "start": "2026-01-01",
+ "end": "2026-08-21",
+ "exit_mode": "trail",
+ "trades": 1825,
+ "win_rate": 50.1,
+ "profit_factor": 1.08,
+ "expectancy_r": 0.046,
+ "net_pnl": 8784.63,
+ "return_pct": 35.14,
+ "max_drawdown_pct": 13.71,
+ "by_playbook": {
+  "breakout_retest": {
+   "n": 220,
+   "exp": 0.053
+  },
+  "false_break_fade": {
+   "n": 67,
+   "exp": 0.058
+  },
+  "flag_continuation": {
+   "n": 29,
+   "exp": 0.356
+  },
+  "mtf_pullback": {
+   "n": 201,
+   "exp": 0.213
+  },
+  "pattern_break": {
+   "n": 454,
+   "exp": -0.012
+  },
+  "range_fade": {
+   "n": 16,
+   "exp": -0.414
+  },
+  "sweep_reversal": {
+   "n": 838,
+   "exp": 0.031
+  }
+ }
+}

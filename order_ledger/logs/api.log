@@ -1,0 +1,306 @@
+
+===== 2026-09-22 12:07:50 started by launcher =====
+C:\Users\MohammadNuruzzaman\Downloads\DiaNurFxScalpingWorkstation\server\main.py:970: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+
+===== 2026-09-22 12:18:12 started by launcher =====
+C:\Users\MohammadNuruzzaman\Downloads\DiaNurFxScalpingWorkstation\server\main.py:970: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+
+===== 2026-09-22 12:24:44 started by launcher =====
+C:\Users\MohammadNuruzzaman\Downloads\DiaNurFxScalpingWorkstation\server\main.py:970: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+ERROR:    keepalive ping failed
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1231, in keepalive_ping
+    pong_waiter = await self.ping()
+                  ^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 841, in ping
+    await self.write_frame(True, OP_PING, data)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1182, in write_frame
+    await self.drain()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1165, in drain
+    await self._drain()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 326, in _drain
+    await self._drain_helper()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 306, in _drain_helper
+    assert waiter is None or waiter.cancelled()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+
+===== 2026-09-22 12:36:10 started by launcher =====
+C:\Users\MohammadNuruzzaman\Downloads\DiaNurFxScalpingWorkstation\server\main.py:970: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops

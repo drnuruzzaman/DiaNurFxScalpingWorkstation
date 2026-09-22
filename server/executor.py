@@ -32,7 +32,7 @@ from __future__ import annotations
 
 import time
 
-from .order_ledger import tag_for
+from .order_ledger import comment_for, tag_for
 from .signal_store import (CANCELLED, CLOSED, EXPIRED, FILLED, FINAL, REVERSED, SENT,
                            round_to_tick)
 
@@ -121,9 +121,17 @@ class Executor:
             return
         if now < rec.get('retry_after_ms', 0):
             return                  # a refusal is being waited out; its note stands
-        if self.cfg.execution.one_per_symbol_tf and self.ledger.live_for(rec['symbol'], rec['tf']):
-            self._wait(fid, f'waiting: {rec["symbol"]} {rec["tf"]} already has a live order')
-            return
+        # A CAP, not a flag: live_for() already returns every order holding
+        # this slot, so the only change from the old boolean is comparing the
+        # length instead of testing for any. 0 means no cap at all.
+        slot_cap = self.cfg.execution.max_per_symbol_tf
+        if slot_cap > 0:
+            held = len(self.ledger.live_for(rec['symbol'], rec['tf']))
+            if held >= slot_cap:
+                self._wait(fid, f'waiting: {rec["symbol"]} {rec["tf"]} already has '
+                                f'{held} live order{"" if held == 1 else "s"} '
+                                f'(cap {slot_cap})')
+                return
         if self.ledger.live_count() >= self.cfg.risk.max_concurrent:
             self._wait(fid, f'waiting: {self.cfg.risk.max_concurrent} orders already live')
             return
@@ -171,7 +179,8 @@ class Executor:
         code, body = self.bridge.trade(
             '/order/send', symbol=rec['symbol'], side=rec['side'], lots=lots,
             sl=stop, tp=request['tp'], kind=kind, price=price,
-            expiration_ms=request['expiration_ms'], comment=tag_for(fid),
+            expiration_ms=request['expiration_ms'],
+            comment=comment_for(fid, rec.get('playbook')),
             signal_id=fid, confirm=1)
         if code == 0:
             self.ledger.mark(fid, 'unknown', body.get('error', 'no answer'))

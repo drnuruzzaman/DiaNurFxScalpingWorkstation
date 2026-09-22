@@ -35,9 +35,51 @@ from pathlib import Path
 BLOCKING = ('sending', 'placed', 'unknown', 'filled', 'closed', 'cancelled', 'expired')
 
 
+# MT5 truncates an order comment at 31 characters. "DNX " plus 10 hex of the
+# signal id is 14, which leaves 17 - one separator and 16 for a playbook name.
+COMMENT_MAX = 31
+
+# Short forms for the names that do not fit. Only the long ones need an entry;
+# anything else is used as-is and truncated if it somehow overruns.
+PLAYBOOK_SHORT = {
+    'trend_continuation': 'TRENDCONT',
+    'flag_continuation': 'FLAGCONT',
+    'breakout_retest': 'BRKRETEST',
+    'sweep_reversal': 'SWEEPREV',
+    'false_break_fade': 'FBFADE',
+    'pattern_break': 'PATBREAK',
+    'mtf_pullback': 'MTFPULL',
+    'false_break': 'FBREAK',
+    'range_fade': 'RANGEFADE',
+    'last_break': 'LASTBREAK',
+}
+
+
 def tag_for(signal_id: str) -> str:
-    """The MT5 comment that ties an order back to its signal (31 chars max)."""
+    """
+    The prefix that ties an order back to its signal.
+
+    Reconciliation matches on this with startswith(), so it must stay at the
+    FRONT of the comment - anything added for a human goes after it.
+    """
     return 'DNX ' + hashlib.sha1(signal_id.encode('utf-8')).hexdigest()[:10]
+
+
+def comment_for(signal_id: str, playbook: str = '') -> str:
+    """
+    The full MT5 comment: the machine tag, then the playbook for a human.
+
+    Reading a broker statement or the terminal's own history, "DNX 3f2a…"
+    says which system placed the order but nothing about why. The playbook is
+    the why, and it is free to carry - the tag only used 14 of 31 characters.
+    """
+    tag = tag_for(signal_id)
+    name = (playbook or '').strip().lower()
+    if not name:
+        return tag
+    short = PLAYBOOK_SHORT.get(name, name.replace('_', '').upper())
+    room = COMMENT_MAX - len(tag) - 1
+    return f'{tag} {short[:room]}' if room > 0 else tag
 
 
 def _now() -> int:

@@ -49,7 +49,7 @@ sys.path.insert(0, ROOT)
 
 # One implementation of the server-clock guard, shared with tools/mt5_download.py.
 # It used to live in both places and the copies drifted; see sim/clock.py.
-from sim.clock import manifest_offset, resolve_offset    # noqa: E402
+from sim.clock import manifest_offset, resolve_offset, store_offset  # noqa: E402
 
 # Order execution lives in its own module and is DISARMED unless main() arms it
 # from --enable-trading. Importing it does not enable anything.
@@ -80,6 +80,7 @@ STATE = {
     'terminal': None,
     'time_offset_ms': 0,          # broker server clock - true UTC
     'offset_confidence': 'none',
+    'offset_retry_at': 0.0,       # throttle for the /health self-heal
     'account_type': None,         # DEMO | CONTEST | LIVE
     'healthy_probes': 0,          # consecutive alive probes, for recovery
 }
@@ -328,6 +329,16 @@ def measure_clock_offset():
     offset, confidence = resolve_offset(ticks, time.time() * 1000,
                                         known, known_confidence)
     STATE.update(time_offset_ms=offset, offset_confidence=confidence)
+
+    # PERSIST a live measurement. store_offset() existed and was never called
+    # from anywhere, so data/manifest.json was never written and the weekend
+    # fallback this function's own docstring promises could not fire: with no
+    # manifest, resolve_offset() falls back to ZERO and every timestamp the
+    # bridge serves silently becomes broker-local while still labelled UTC.
+    # That is what put a 5-minute candle timer on 3h03m.
+    if confidence == 'measured':
+        store_offset(os.path.join(ROOT, 'data'), offset, time.time() * 1000)
+
     log_event('clock', 'server offset %+d ms (UTC%+.2fh) confidence=%s from %d tick(s)'
               % (offset, offset / 3600000.0, confidence, len(ticks)))
     if confidence == 'stale':
@@ -1666,6 +1677,21 @@ class Handler(BaseHTTPRequestHandler):
                                    'note': 'live data calls block until this finishes'})
 
             if route == '/health':
+                # SELF-HEAL THE CLOCK. The offset is measured once at connect,
+                # and a session that recovers afterwards keeps whatever it had
+                # - which, if the first attempt fell back, is zero. Every
+                # timestamp then reads as broker-local while claiming UTC.
+                # Retried here, throttled, because /health is the one route
+                # that is always being polled.
+                if (not STATE['mock'] and STATE['connected']
+                        and STATE['offset_confidence'] != 'measured'
+                        and time.time() - STATE.get('offset_retry_at', 0) > 60):
+                    STATE['offset_retry_at'] = time.time()
+                    try:
+                        measure_clock_offset()
+                    except Exception as exc:                  # noqa: BLE001
+                        log_event('clock', 'retry failed: %s' % exc)
+
                 # PROBED, NOT REMEMBERED. The app decides whether to trust the
                 # feed from this endpoint, so it asks the terminal every time
                 # rather than reporting what was true when the process started.

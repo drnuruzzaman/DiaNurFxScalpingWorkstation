@@ -402,6 +402,18 @@
   margin-bottom: 5px;
 }
 
+/* A field holding a value something downstream will reject. Not an input
+   validation error - the number is well-formed, it just will not be honoured. */
+.set-field input.bad,
+.set-field select.bad {
+  border-color: var(--warn-dim);
+  background: var(--warn-glow);
+}
+.set-field input.bad + .set-hint,
+.set-field:has(input.bad) .set-hint {
+  color: var(--warn);
+}
+
 /* ------------------------------------------------------- symbol picker */
 .modal-back {
   position: fixed;

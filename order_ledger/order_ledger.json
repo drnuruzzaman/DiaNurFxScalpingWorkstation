@@ -1,0 +1,3486 @@
+{
+ "orders": {
+  "XAUUSD.a:1h:pattern_break:sell:1789970400000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1789970400000",
+   "tag": "DNX 80aa423b2a",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4342.81,
+    "sl": 4406.29,
+    "tp": 0.0,
+    "expiration_ms": 1790046000000
+   },
+   "ticket": 8818852,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789979346793,
+     "sending",
+     ""
+    ],
+    [
+     1789979347078,
+     "placed",
+     "stop ticket 8818852"
+    ],
+    [
+     1789979376852,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1789979346793,
+   "updated_ms": 1789979376852,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "USDJPY.a:1h:pattern_break:buy:1789970400000": {
+   "id": "USDJPY.a:1h:pattern_break:buy:1789970400000",
+   "tag": "DNX f7405b4780",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "1h",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 156.46,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8818911,
+   "position": 8818911,
+   "fill_price": 157.137,
+   "close_price": 157.136,
+   "outcome": "manual",
+   "r": -0.001,
+   "profit": -0.13,
+   "events": [
+    [
+     1789979432233,
+     "sending",
+     ""
+    ],
+    [
+     1789979432513,
+     "placed",
+     "market ticket 8818911"
+    ],
+    [
+     1789979434016,
+     "filled",
+     "position 8818911"
+    ],
+    [
+     1789979472481,
+     "closed",
+     "manual at 157.136"
+    ]
+   ],
+   "created_ms": 1789979432233,
+   "updated_ms": 1789979472481,
+   "symbol": "USDJPY.a",
+   "tf": "1h",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "USDJPY.a:15m:pattern_break:buy:1789973100000": {
+   "id": "USDJPY.a:15m:pattern_break:buy:1789973100000",
+   "tag": "DNX ed68870ea1",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 157.07,
+    "sl": 156.559,
+    "tp": 0.0,
+    "expiration_ms": 1789992000000
+   },
+   "ticket": 8819097,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789979887962,
+     "sending",
+     ""
+    ],
+    [
+     1789979888222,
+     "placed",
+     "limit ticket 8819097"
+    ],
+    [
+     1789986744159,
+     "reversed",
+     "opposite FINAL USDJPY.a:15m:sweep_reversal:sell:1789985700000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1789979887962,
+   "updated_ms": 1789986744159,
+   "symbol": "USDJPY.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:pattern_break:sell:1789979760000": {
+   "id": "XAUUSD.a:3m:pattern_break:sell:1789979760000",
+   "tag": "DNX b605331e61",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4349.64,
+    "sl": 4368.86,
+    "tp": 0.0,
+    "expiration_ms": 1789983540000
+   },
+   "ticket": 8819166,
+   "position": 8819166,
+   "fill_price": 4349.97,
+   "close_price": 4343.4,
+   "outcome": "target",
+   "r": 0.348,
+   "profit": 19.6,
+   "events": [
+    [
+     1789979959163,
+     "sending",
+     ""
+    ],
+    [
+     1789979959423,
+     "placed",
+     "stop ticket 8819166"
+    ],
+    [
+     1789981465415,
+     "filled",
+     "position 8819166"
+    ],
+    [
+     1789983142030,
+     "closed",
+     "target at 4343.4"
+    ]
+   ],
+   "created_ms": 1789979959163,
+   "updated_ms": 1789983142030,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1789977600000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1789977600000",
+   "tag": "DNX 96f53fe5e9",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4342.81,
+    "sl": 4406.25,
+    "tp": 0.0,
+    "expiration_ms": 1790053200000
+   },
+   "ticket": 8820891,
+   "position": 8820891,
+   "fill_price": 4342.81,
+   "close_price": 4355.21,
+   "outcome": "manual",
+   "r": -0.195,
+   "profit": -12.44,
+   "events": [
+    [
+     1789983901988,
+     "sending",
+     ""
+    ],
+    [
+     1789983902349,
+     "placed",
+     "stop ticket 8820891"
+    ],
+    [
+     1789988384110,
+     "filled",
+     "position 8820891"
+    ],
+    [
+     1789994160341,
+     "closed",
+     "manual at 4355.21"
+    ]
+   ],
+   "created_ms": 1789983901988,
+   "updated_ms": 1789994160341,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1789984620000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1789984620000",
+   "tag": "DNX c82347215a",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4344.74,
+    "sl": 4348.2,
+    "tp": 0.0,
+    "expiration_ms": 1789985880000
+   },
+   "ticket": 8821107,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789984918763,
+     "sending",
+     ""
+    ],
+    [
+     1789984919028,
+     "placed",
+     "stop ticket 8821107"
+    ],
+    [
+     1789984945499,
+     "cancelled",
+     "price went through the stop before the entry filled"
+    ]
+   ],
+   "created_ms": 1789984918763,
+   "updated_ms": 1789984945499,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "USDJPY.a:30m:pattern_break:buy:1789972200000": {
+   "id": "USDJPY.a:30m:pattern_break:buy:1789972200000",
+   "tag": "DNX da8a3fea4b",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 157.11,
+    "sl": 156.509,
+    "tp": 0.0,
+    "expiration_ms": 1790010000000
+   },
+   "ticket": 8821117,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789984940941,
+     "sending",
+     ""
+    ],
+    [
+     1789984941263,
+     "placed",
+     "limit ticket 8821117"
+    ],
+    [
+     1789994377992,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1789984940941,
+   "updated_ms": 1789994377992,
+   "symbol": "USDJPY.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:4h:mtf_pullback:sell:1789966800000": {
+   "id": "XAUUSD.a:4h:mtf_pullback:sell:1789966800000",
+   "tag": "DNX bb72aca743",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4412.36,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8821583,
+   "position": 8821583,
+   "fill_price": 4355.17,
+   "close_price": 4355.33,
+   "outcome": "manual",
+   "r": -0.003,
+   "profit": -0.2,
+   "events": [
+    [
+     1789985739841,
+     "sending",
+     ""
+    ],
+    [
+     1789985740163,
+     "placed",
+     "market ticket 8821583"
+    ],
+    [
+     1789985743170,
+     "filled",
+     "position 8821583"
+    ],
+    [
+     1789994160374,
+     "closed",
+     "manual at 4355.33"
+    ]
+   ],
+   "created_ms": 1789985739841,
+   "updated_ms": 1789994160374,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "USDJPY.a:1h:pattern_break:buy:1789977600000": {
+   "id": "USDJPY.a:1h:pattern_break:buy:1789977600000",
+   "tag": "DNX 0ccdfc469c",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "1h",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 156.464,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8821936,
+   "position": 8821936,
+   "fill_price": 157.206,
+   "close_price": 157.327,
+   "outcome": "manual",
+   "r": 0.163,
+   "profit": 2.2,
+   "events": [
+    [
+     1789986726605,
+     "sending",
+     ""
+    ],
+    [
+     1789986726866,
+     "placed",
+     "market ticket 8821936"
+    ],
+    [
+     1789986729640,
+     "filled",
+     "position 8821936"
+    ],
+    [
+     1789993628077,
+     "closed",
+     "manual at 157.327"
+    ]
+   ],
+   "created_ms": 1789986726605,
+   "updated_ms": 1789993628077,
+   "symbol": "USDJPY.a",
+   "tf": "1h",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:5m:sweep_reversal:sell:1789986300000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:sell:1789986300000",
+   "tag": "DNX 51e4a2ff5b",
+   "state": "closed",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 4357.9,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8821939,
+   "position": 8821939,
+   "fill_price": 4351.35,
+   "close_price": 4346.19,
+   "outcome": "trail",
+   "r": 0.788,
+   "profit": 15.37,
+   "events": [
+    [
+     1789986727209,
+     "sending",
+     ""
+    ],
+    [
+     1789986727216,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1789986759482,
+     "sending",
+     ""
+    ],
+    [
+     1789986759742,
+     "placed",
+     "market ticket 8821939"
+    ],
+    [
+     1789986762500,
+     "filled",
+     "position 8821939"
+    ],
+    [
+     1789988377941,
+     "filled",
+     "stop -> 4348.08"
+    ],
+    [
+     1789988400364,
+     "filled",
+     "stop -> 4346.55"
+    ],
+    [
+     1789988698470,
+     "filled",
+     "stop -> 4345.87"
+    ],
+    [
+     1789988726453,
+     "closed",
+     "trail at 4346.19"
+    ]
+   ],
+   "created_ms": 1789986727209,
+   "updated_ms": 1789988726453,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "USDJPY.a:15m:sweep_reversal:sell:1789985700000": {
+   "id": "USDJPY.a:15m:sweep_reversal:sell:1789985700000",
+   "tag": "DNX 8698d56b78",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 157.221,
+    "sl": 157.32,
+    "tp": 0.0,
+    "expiration_ms": 1789997400000
+   },
+   "ticket": 8821938,
+   "position": 8821938,
+   "fill_price": 157.221,
+   "close_price": 157.324,
+   "outcome": "stop",
+   "r": -1.04,
+   "profit": -2.07,
+   "events": [
+    [
+     1789986745073,
+     "sending",
+     ""
+    ],
+    [
+     1789986745336,
+     "placed",
+     "limit ticket 8821938"
+    ],
+    [
+     1789986892646,
+     "filled",
+     "position 8821938"
+    ],
+    [
+     1789993379037,
+     "closed",
+     "stop at 157.324"
+    ]
+   ],
+   "created_ms": 1789986745073,
+   "updated_ms": 1789993379037,
+   "symbol": "USDJPY.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "USDJPY.a:4h:breakout_retest:sell:1789966800000": {
+   "id": "USDJPY.a:4h:breakout_retest:sell:1789966800000",
+   "tag": "DNX f4b034bfb4",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 158.17,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8822034,
+   "position": 8822034,
+   "fill_price": 157.189,
+   "close_price": 157.342,
+   "outcome": "manual",
+   "r": -0.156,
+   "profit": -3.03,
+   "events": [
+    [
+     1789987135042,
+     "sending",
+     ""
+    ],
+    [
+     1789987135346,
+     "placed",
+     "market ticket 8822034"
+    ],
+    [
+     1789987138272,
+     "filled",
+     "position 8822034"
+    ],
+    [
+     1789994160406,
+     "closed",
+     "manual at 157.342"
+    ]
+   ],
+   "created_ms": 1789987135042,
+   "updated_ms": 1789994160406,
+   "symbol": "USDJPY.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:30m:sweep_reversal:buy:1789984800000": {
+   "id": "XAUUSD.a:30m:sweep_reversal:buy:1789984800000",
+   "tag": "DNX 8ef426ce97",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4350.95,
+    "sl": 4338.93,
+    "tp": 0.0,
+    "expiration_ms": 1790008200000
+   },
+   "ticket": 8822297,
+   "position": 8822297,
+   "fill_price": 4350.96,
+   "close_price": 4362.57,
+   "outcome": "manual",
+   "r": 0.965,
+   "profit": 34.72,
+   "events": [
+    [
+     1789988310377,
+     "sending",
+     ""
+    ],
+    [
+     1789988310764,
+     "placed",
+     "stop ticket 8822297"
+    ],
+    [
+     1789989350468,
+     "filled",
+     "position 8822297"
+    ],
+    [
+     1789990916915,
+     "closed",
+     "manual at 4362.57"
+    ]
+   ],
+   "created_ms": 1789988310377,
+   "updated_ms": 1789990916915,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:15m:sweep_reversal:buy:1789986600000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:buy:1789986600000",
+   "tag": "DNX 711e1a156a",
+   "state": "reversed",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4348.42,
+    "sl": 4341.34,
+    "tp": 0.0,
+    "expiration_ms": 1789998300000
+   },
+   "ticket": 8822301,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789988311109,
+     "sending",
+     ""
+    ],
+    [
+     1789988311117,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1789988344037,
+     "sending",
+     ""
+    ],
+    [
+     1789988344299,
+     "placed",
+     "stop ticket 8822301"
+    ],
+    [
+     1789988460710,
+     "reversed",
+     "opposite FINAL XAUUSD.a:15m:sweep_reversal:sell:1789987500000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1789988311109,
+   "updated_ms": 1789988460710,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1789988220000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1789988220000",
+   "tag": "DNX 1b1142efe9",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 4342.73,
+    "sl": 4349.8,
+    "tp": 0.0,
+    "expiration_ms": 1789990560000
+   },
+   "ticket": 8822363,
+   "position": 8822363,
+   "fill_price": 4342.99,
+   "close_price": 4349.93,
+   "outcome": "stop",
+   "r": -1.019,
+   "profit": -20.93,
+   "events": [
+    [
+     1789988416129,
+     "sending",
+     ""
+    ],
+    [
+     1789988416390,
+     "placed",
+     "limit ticket 8822363"
+    ],
+    [
+     1789988448406,
+     "filled",
+     "position 8822363"
+    ],
+    [
+     1789989319264,
+     "closed",
+     "stop at 4349.93"
+    ]
+   ],
+   "created_ms": 1789988416129,
+   "updated_ms": 1789989319264,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:15m:sweep_reversal:sell:1789987500000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:sell:1789987500000",
+   "tag": "DNX 63a6ac16b6",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4342.73,
+    "sl": 4358.88,
+    "tp": 0.0,
+    "expiration_ms": 1789999200000
+   },
+   "ticket": 8822469,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789988672883,
+     "sending",
+     ""
+    ],
+    [
+     1789988673154,
+     "placed",
+     "stop ticket 8822469"
+    ],
+    [
+     1789990279692,
+     "reversed",
+     "opposite FINAL XAUUSD.a:15m:false_break_fade:buy:1789989300000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1789988672883,
+   "updated_ms": 1789990279692,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:5m:sweep_reversal:sell:1789988700000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:sell:1789988700000",
+   "tag": "DNX 39938a250a",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4345.94,
+    "sl": 4350.89,
+    "tp": 0.0,
+    "expiration_ms": 1789992600000
+   },
+   "ticket": 8822565,
+   "position": 8822565,
+   "fill_price": 4345.86,
+   "close_price": 4350.96,
+   "outcome": "stop",
+   "r": -1.014,
+   "profit": -15.41,
+   "events": [
+    [
+     1789989053332,
+     "sending",
+     ""
+    ],
+    [
+     1789989053671,
+     "placed",
+     "stop ticket 8822565"
+    ],
+    [
+     1789989096859,
+     "filled",
+     "position 8822565"
+    ],
+    [
+     1789989350891,
+     "closed",
+     "stop at 4350.96"
+    ]
+   ],
+   "created_ms": 1789989053332,
+   "updated_ms": 1789989350891,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:5m:sweep_reversal:buy:1789989000000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:buy:1789989000000",
+   "tag": "DNX 787306355e",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 4348.33,
+    "sl": 4340.89,
+    "tp": 0.0,
+    "expiration_ms": 1789992900000
+   },
+   "ticket": 8822658,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789989361613,
+     "sending",
+     ""
+    ],
+    [
+     1789989362038,
+     "placed",
+     "limit ticket 8822658"
+    ],
+    [
+     1789992898746,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1789989361613,
+   "updated_ms": 1789992898746,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1789989840000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1789989840000",
+   "tag": "DNX 07b58c8007",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4352.76,
+    "sl": 4356.1,
+    "tp": 0.0,
+    "expiration_ms": 1789992180000
+   },
+   "ticket": 8822961,
+   "position": 8822961,
+   "fill_price": 4352.73,
+   "close_price": 4356.11,
+   "outcome": "stop",
+   "r": -1.003,
+   "profit": -10.25,
+   "events": [
+    [
+     1789990103842,
+     "sending",
+     ""
+    ],
+    [
+     1789990104111,
+     "placed",
+     "stop ticket 8822961"
+    ],
+    [
+     1789990205539,
+     "filled",
+     "position 8822961"
+    ],
+    [
+     1789990305768,
+     "closed",
+     "stop at 4356.11"
+    ]
+   ],
+   "created_ms": 1789990103842,
+   "updated_ms": 1789990305768,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:sweep_reversal:buy:1789990200000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:buy:1789990200000",
+   "tag": "DNX f37be58091",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 4355.87,
+    "sl": 4347.56,
+    "tp": 0.0,
+    "expiration_ms": 1789992540000
+   },
+   "ticket": 8823268,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789990547907,
+     "sending",
+     ""
+    ],
+    [
+     1789990548209,
+     "placed",
+     "limit ticket 8823268"
+    ],
+    [
+     1789992539501,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1789990547907,
+   "updated_ms": 1789992539501,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:15m:false_break_fade:buy:1789989300000": {
+   "id": "XAUUSD.a:15m:false_break_fade:buy:1789989300000",
+   "tag": "DNX ef42577095",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 4353.76,
+    "sl": 4345.75,
+    "tp": 0.0,
+    "expiration_ms": 1790001000000
+   },
+   "ticket": 8823298,
+   "position": 8823298,
+   "fill_price": 4353.69,
+   "close_price": 4352.43,
+   "outcome": "trail",
+   "r": -0.159,
+   "profit": -3.89,
+   "events": [
+    [
+     1789990602377,
+     "sending",
+     ""
+    ],
+    [
+     1789990602738,
+     "placed",
+     "limit ticket 8823298"
+    ],
+    [
+     1789993657809,
+     "filled",
+     "position 8823298"
+    ],
+    [
+     1789993662295,
+     "filled",
+     "stop -> 4352.46"
+    ],
+    [
+     1789993665129,
+     "closed",
+     "trail at 4352.43"
+    ]
+   ],
+   "created_ms": 1789990602377,
+   "updated_ms": 1789993665129,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:breakout_retest:sell:1789992540000": {
+   "id": "XAUUSD.a:3m:breakout_retest:sell:1789992540000",
+   "tag": "DNX 22e8baacc8",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 4372.38,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8824755,
+   "position": 8824755,
+   "fill_price": 4368.08,
+   "close_price": 4355.8,
+   "outcome": "manual",
+   "r": 2.856,
+   "profit": 36.73,
+   "events": [
+    [
+     1789992720466,
+     "sending",
+     ""
+    ],
+    [
+     1789992720852,
+     "placed",
+     "market ticket 8824755"
+    ],
+    [
+     1789992725568,
+     "filled",
+     "position 8824755"
+    ],
+    [
+     1789993215557,
+     "filled",
+     "stop -> 4365.93"
+    ],
+    [
+     1789993260609,
+     "filled",
+     "stop -> 4364.51"
+    ],
+    [
+     1789993439498,
+     "filled",
+     "stop -> 4362.03"
+    ],
+    [
+     1789993619082,
+     "filled",
+     "stop -> 4358.24"
+    ],
+    [
+     1789993628515,
+     "closed",
+     "manual at 4355.8"
+    ]
+   ],
+   "created_ms": 1789992720466,
+   "updated_ms": 1789993628515,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:5m:breakout_retest:buy:1789992900000": {
+   "id": "XAUUSD.a:5m:breakout_retest:buy:1789992900000",
+   "tag": "DNX fdfa21b805",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 4360.82,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8824867,
+   "position": 8824867,
+   "fill_price": 4367.12,
+   "close_price": 4360.77,
+   "outcome": "stop",
+   "r": -1.008,
+   "profit": -19.16,
+   "events": [
+    [
+     1789993198943,
+     "sending",
+     ""
+    ],
+    [
+     1789993199208,
+     "placed",
+     "market ticket 8824867"
+    ],
+    [
+     1789993202688,
+     "filled",
+     "position 8824867"
+    ],
+    [
+     1789993253488,
+     "closed",
+     "stop at 4360.77"
+    ]
+   ],
+   "created_ms": 1789993198943,
+   "updated_ms": 1789993253488,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1789993440000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1789993440000",
+   "tag": "DNX 834be8f07c",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 4374.13,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8825245,
+   "position": 8825245,
+   "fill_price": 4354.46,
+   "close_price": 4355.44,
+   "outcome": "manual",
+   "r": -0.05,
+   "profit": -3.05,
+   "events": [
+    [
+     1789993643262,
+     "sending",
+     ""
+    ],
+    [
+     1789993643541,
+     "placed",
+     "market ticket 8825245"
+    ],
+    [
+     1789993646633,
+     "filled",
+     "position 8825245"
+    ],
+    [
+     1789994163446,
+     "closed",
+     "manual at 4355.44"
+    ]
+   ],
+   "created_ms": 1789993643262,
+   "updated_ms": 1789994163446,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:5m:pattern_break:buy:1789993200000": {
+   "id": "XAUUSD.a:5m:pattern_break:buy:1789993200000",
+   "tag": "DNX 8c29f7a222",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4355.07,
+    "sl": 4339.69,
+    "tp": 0.0,
+    "expiration_ms": 1789999500000
+   },
+   "ticket": 8825292,
+   "position": 8825292,
+   "fill_price": 4355.09,
+   "close_price": 4355.55,
+   "outcome": "manual",
+   "r": 0.03,
+   "profit": 1.27,
+   "events": [
+    [
+     1789993708936,
+     "sending",
+     ""
+    ],
+    [
+     1789993709220,
+     "placed",
+     "stop ticket 8825292"
+    ],
+    [
+     1789993790324,
+     "filled",
+     "position 8825292"
+    ],
+    [
+     1789994157798,
+     "closed",
+     "manual at 4355.55"
+    ]
+   ],
+   "created_ms": 1789993708936,
+   "updated_ms": 1789994157798,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "USDJPY.a:15m:pattern_break:buy:1789992900000": {
+   "id": "USDJPY.a:15m:pattern_break:buy:1789992900000",
+   "tag": "DNX 2145c4047e",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 157.131,
+    "tp": 0.0,
+    "expiration_ms": 0
+   },
+   "ticket": 8825387,
+   "position": 8825387,
+   "fill_price": 157.342,
+   "close_price": 157.342,
+   "outcome": "manual",
+   "r": 0.0,
+   "profit": -0.11,
+   "events": [
+    [
+     1789993910942,
+     "sending",
+     ""
+    ],
+    [
+     1789993911209,
+     "placed",
+     "market ticket 8825387"
+    ],
+    [
+     1789993914449,
+     "filled",
+     "position 8825387"
+    ],
+    [
+     1789994152550,
+     "closed",
+     "manual at 157.342"
+    ]
+   ],
+   "created_ms": 1789993910942,
+   "updated_ms": 1789994152550,
+   "symbol": "USDJPY.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:15m:sweep_reversal:buy:1789992900000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:buy:1789992900000",
+   "tag": "DNX 16351bbf18",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4355.42,
+    "sl": 4339.35,
+    "tp": 4382.08,
+    "expiration_ms": 1790004600000
+   },
+   "ticket": 8825453,
+   "position": 8825453,
+   "fill_price": 4355.45,
+   "close_price": 4338.64,
+   "outcome": "stop",
+   "r": -1.044,
+   "profit": -50.54,
+   "events": [
+    [
+     1789994214336,
+     "sending",
+     ""
+    ],
+    [
+     1789994214839,
+     "placed",
+     "stop ticket 8825453"
+    ],
+    [
+     1789994365056,
+     "filled",
+     "position 8825453"
+    ],
+    [
+     1790035339505,
+     "closed",
+     "stop at 4338.64"
+    ]
+   ],
+   "created_ms": 1789994214336,
+   "updated_ms": 1790035339505,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "USDJPY.a:1h:pattern_break:buy:1789988400000": {
+   "id": "USDJPY.a:1h:pattern_break:buy:1789988400000",
+   "tag": "DNX 4d84cfd102",
+   "state": "cancelled",
+   "attempts": 62,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "1h",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 157.214,
+    "sl": 156.476,
+    "tp": 158.689,
+    "expiration_ms": 1790064000000
+   },
+   "ticket": 8836107,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789994384426,
+     "sending",
+     ""
+    ],
+    [
+     1789994384458,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994416118,
+     "sending",
+     ""
+    ],
+    [
+     1789994416156,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994447871,
+     "sending",
+     ""
+    ],
+    [
+     1789994447877,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994479503,
+     "sending",
+     ""
+    ],
+    [
+     1789994479534,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994511346,
+     "sending",
+     ""
+    ],
+    [
+     1789994511352,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994542359,
+     "sending",
+     ""
+    ],
+    [
+     1789994542391,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994573423,
+     "sending",
+     ""
+    ],
+    [
+     1789994573430,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994604726,
+     "sending",
+     ""
+    ],
+    [
+     1789994604731,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994636546,
+     "sending",
+     ""
+    ],
+    [
+     1789994636556,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994667514,
+     "sending",
+     ""
+    ],
+    [
+     1789994667541,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994699379,
+     "sending",
+     ""
+    ],
+    [
+     1789994699429,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994731556,
+     "sending",
+     ""
+    ],
+    [
+     1789994731562,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994763644,
+     "sending",
+     ""
+    ],
+    [
+     1789994763655,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994795046,
+     "sending",
+     ""
+    ],
+    [
+     1789994795053,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994827721,
+     "sending",
+     ""
+    ],
+    [
+     1789994827732,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994859184,
+     "sending",
+     ""
+    ],
+    [
+     1789994859200,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994891649,
+     "sending",
+     ""
+    ],
+    [
+     1789994891657,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994924116,
+     "sending",
+     ""
+    ],
+    [
+     1789994924123,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994954577,
+     "sending",
+     ""
+    ],
+    [
+     1789994954586,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789994985139,
+     "sending",
+     ""
+    ],
+    [
+     1789994985183,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995015684,
+     "sending",
+     ""
+    ],
+    [
+     1789995015691,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995045721,
+     "sending",
+     ""
+    ],
+    [
+     1789995045727,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995076639,
+     "sending",
+     ""
+    ],
+    [
+     1789995076646,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995107763,
+     "sending",
+     ""
+    ],
+    [
+     1789995107769,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995140629,
+     "sending",
+     ""
+    ],
+    [
+     1789995140680,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995171290,
+     "sending",
+     ""
+    ],
+    [
+     1789995171402,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995203759,
+     "sending",
+     ""
+    ],
+    [
+     1789995203773,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995236462,
+     "sending",
+     ""
+    ],
+    [
+     1789995236494,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995267081,
+     "sending",
+     ""
+    ],
+    [
+     1789995267092,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995302208,
+     "sending",
+     ""
+    ],
+    [
+     1789995302215,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995332759,
+     "sending",
+     ""
+    ],
+    [
+     1789995332767,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995363537,
+     "sending",
+     ""
+    ],
+    [
+     1789995363545,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995394601,
+     "sending",
+     ""
+    ],
+    [
+     1789995394610,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995425797,
+     "sending",
+     ""
+    ],
+    [
+     1789995425807,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995456686,
+     "sending",
+     ""
+    ],
+    [
+     1789995456692,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995489352,
+     "sending",
+     ""
+    ],
+    [
+     1789995489363,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995521980,
+     "sending",
+     ""
+    ],
+    [
+     1789995521987,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995554876,
+     "sending",
+     ""
+    ],
+    [
+     1789995554913,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995585320,
+     "sending",
+     ""
+    ],
+    [
+     1789995585326,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995616330,
+     "sending",
+     ""
+    ],
+    [
+     1789995616338,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995647480,
+     "sending",
+     ""
+    ],
+    [
+     1789995647486,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995678286,
+     "sending",
+     ""
+    ],
+    [
+     1789995678297,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995711122,
+     "sending",
+     ""
+    ],
+    [
+     1789995711157,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995741747,
+     "sending",
+     ""
+    ],
+    [
+     1789995741753,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995772801,
+     "sending",
+     ""
+    ],
+    [
+     1789995772835,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995804101,
+     "sending",
+     ""
+    ],
+    [
+     1789995804110,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995834139,
+     "sending",
+     ""
+    ],
+    [
+     1789995834146,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995865099,
+     "sending",
+     ""
+    ],
+    [
+     1789995865109,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995896542,
+     "sending",
+     ""
+    ],
+    [
+     1789995896548,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995927409,
+     "sending",
+     ""
+    ],
+    [
+     1789995927417,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995957450,
+     "sending",
+     ""
+    ],
+    [
+     1789995957479,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995987952,
+     "sending",
+     ""
+    ],
+    [
+     1789995987959,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996019053,
+     "sending",
+     ""
+    ],
+    [
+     1789996019083,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996049689,
+     "sending",
+     ""
+    ],
+    [
+     1789996049700,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996080026,
+     "sending",
+     ""
+    ],
+    [
+     1789996080039,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996110685,
+     "sending",
+     ""
+    ],
+    [
+     1789996110704,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996141287,
+     "sending",
+     ""
+    ],
+    [
+     1789996141294,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996172367,
+     "sending",
+     ""
+    ],
+    [
+     1789996172378,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996202819,
+     "sending",
+     ""
+    ],
+    [
+     1789996202825,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996234306,
+     "sending",
+     ""
+    ],
+    [
+     1789996234315,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996265575,
+     "sending",
+     ""
+    ],
+    [
+     1789996265595,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1790035357432,
+     "sending",
+     ""
+    ],
+    [
+     1790035357727,
+     "placed",
+     "limit ticket 8836107"
+    ],
+    [
+     1790040288419,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1789994384426,
+   "updated_ms": 1790040288419,
+   "symbol": "USDJPY.a",
+   "tf": "1h",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "USDJPY.a:4h:breakout_retest:sell:1789981200000": {
+   "id": "USDJPY.a:4h:breakout_retest:sell:1789981200000",
+   "tag": "DNX 13cbf9e2cf",
+   "state": "refused",
+   "attempts": 22,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 158.163,
+    "tp": 155.669,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789995602632,
+     "sending",
+     ""
+    ],
+    [
+     1789995602649,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995633442,
+     "sending",
+     ""
+    ],
+    [
+     1789995633449,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995664528,
+     "sending",
+     ""
+    ],
+    [
+     1789995664577,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995694579,
+     "sending",
+     ""
+    ],
+    [
+     1789995694587,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995725075,
+     "sending",
+     ""
+    ],
+    [
+     1789995725195,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995755698,
+     "sending",
+     ""
+    ],
+    [
+     1789995755707,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995787088,
+     "sending",
+     ""
+    ],
+    [
+     1789995787097,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995820023,
+     "sending",
+     ""
+    ],
+    [
+     1789995820033,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995850798,
+     "sending",
+     ""
+    ],
+    [
+     1789995850805,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995882634,
+     "sending",
+     ""
+    ],
+    [
+     1789995882647,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995913026,
+     "sending",
+     ""
+    ],
+    [
+     1789995913034,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995943711,
+     "sending",
+     ""
+    ],
+    [
+     1789995943718,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995974564,
+     "sending",
+     ""
+    ],
+    [
+     1789995974573,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996005583,
+     "sending",
+     ""
+    ],
+    [
+     1789996005591,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996035815,
+     "sending",
+     ""
+    ],
+    [
+     1789996035832,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996068328,
+     "sending",
+     ""
+    ],
+    [
+     1789996068361,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996099382,
+     "sending",
+     ""
+    ],
+    [
+     1789996099391,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996130056,
+     "sending",
+     ""
+    ],
+    [
+     1789996130088,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996161054,
+     "sending",
+     ""
+    ],
+    [
+     1789996161061,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996191774,
+     "sending",
+     ""
+    ],
+    [
+     1789996191798,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996222834,
+     "sending",
+     ""
+    ],
+    [
+     1789996222843,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996254027,
+     "sending",
+     ""
+    ],
+    [
+     1789996254036,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ]
+   ],
+   "created_ms": 1789995602632,
+   "updated_ms": 1789996254036,
+   "symbol": "USDJPY.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:4h:sweep_reversal:sell:1789981200000": {
+   "id": "XAUUSD.a:4h:sweep_reversal:sell:1789981200000",
+   "tag": "DNX 683c4d9484",
+   "state": "closed",
+   "attempts": 24,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 4359.79,
+    "sl": 4396.18,
+    "tp": 4287.01,
+    "expiration_ms": 1790168400000
+   },
+   "ticket": 8836155,
+   "position": 8836155,
+   "fill_price": 4359.79,
+   "close_price": 4345.64,
+   "outcome": "manual",
+   "r": 0.389,
+   "profit": 28.23,
+   "events": [
+    [
+     1789995602755,
+     "sending",
+     ""
+    ],
+    [
+     1789995602769,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995633564,
+     "sending",
+     ""
+    ],
+    [
+     1789995633570,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995664744,
+     "sending",
+     ""
+    ],
+    [
+     1789995664755,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995694705,
+     "sending",
+     ""
+    ],
+    [
+     1789995694712,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995725484,
+     "sending",
+     ""
+    ],
+    [
+     1789995725500,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995755823,
+     "sending",
+     ""
+    ],
+    [
+     1789995755831,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995787209,
+     "sending",
+     ""
+    ],
+    [
+     1789995787218,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995820147,
+     "sending",
+     ""
+    ],
+    [
+     1789995820154,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995850976,
+     "sending",
+     ""
+    ],
+    [
+     1789995851125,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995882708,
+     "sending",
+     ""
+    ],
+    [
+     1789995882714,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995913290,
+     "sending",
+     ""
+    ],
+    [
+     1789995913308,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995943808,
+     "sending",
+     ""
+    ],
+    [
+     1789995943830,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789995974708,
+     "sending",
+     ""
+    ],
+    [
+     1789995974724,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996005744,
+     "sending",
+     ""
+    ],
+    [
+     1789996005752,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996035923,
+     "sending",
+     ""
+    ],
+    [
+     1789996035941,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996068467,
+     "sending",
+     ""
+    ],
+    [
+     1789996068477,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996099492,
+     "sending",
+     ""
+    ],
+    [
+     1789996099501,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996130223,
+     "sending",
+     ""
+    ],
+    [
+     1789996130233,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996161209,
+     "sending",
+     ""
+    ],
+    [
+     1789996161217,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996191863,
+     "sending",
+     ""
+    ],
+    [
+     1789996191875,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996222940,
+     "sending",
+     ""
+    ],
+    [
+     1789996222966,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996254145,
+     "sending",
+     ""
+    ],
+    [
+     1789996254153,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1790035358185,
+     "sending",
+     ""
+    ],
+    [
+     1790035358328,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1790035388997,
+     "sending",
+     ""
+    ],
+    [
+     1790035389240,
+     "placed",
+     "stop ticket 8836155"
+    ],
+    [
+     1790036303654,
+     "filled",
+     "position 8836155"
+    ],
+    [
+     1790047050234,
+     "closed",
+     "manual at 4345.64"
+    ]
+   ],
+   "created_ms": 1789995602755,
+   "updated_ms": 1790047050234,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.02
+  },
+  "XAUUSD.a:5m:pattern_break:buy:1789993800000": {
+   "id": "XAUUSD.a:5m:pattern_break:buy:1789993800000",
+   "tag": "DNX 6a81bbf74f",
+   "state": "refused",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.02,
+    "price": 4357.72,
+    "sl": 4339.41,
+    "tp": 4394.34,
+    "expiration_ms": 1790000100000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1789995999391,
+     "sending",
+     ""
+    ],
+    [
+     1789995999424,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ],
+    [
+     1789996030190,
+     "sending",
+     ""
+    ],
+    [
+     1789996030200,
+     "refused",
+     "account 51527502 is a LIVE account and the demo guard is on. Nothing was sent. Disable DEMO_ONLY in bridge/execution.py only when you intend to trade real money."
+    ]
+   ],
+   "created_ms": 1789995999391,
+   "updated_ms": 1789996030200,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.02
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1790045820000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1790045820000",
+   "tag": "DNX ad0b84e29a",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.03,
+    "price": 4373.64,
+    "sl": 4357.34,
+    "tp": 4406.24,
+    "expiration_ms": 1790049600000
+   },
+   "ticket": 8836091,
+   "position": 8836091,
+   "fill_price": 4373.56,
+   "close_price": 4357.18,
+   "outcome": "stop",
+   "r": -1.01,
+   "profit": -49.25,
+   "events": [
+    [
+     1790035352999,
+     "sending",
+     ""
+    ],
+    [
+     1790035353294,
+     "placed",
+     "limit ticket 8836091"
+    ],
+    [
+     1790035383774,
+     "filled",
+     "position 8836091"
+    ],
+    [
+     1790037054890,
+     "closed",
+     "stop at 4357.18"
+    ]
+   ],
+   "created_ms": 1790035352999,
+   "updated_ms": 1790037054890,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.03
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1790042400000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1790042400000",
+   "tag": "DNX 055425a4f5",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 4369.01,
+    "sl": 4402.86,
+    "tp": 4310.99,
+    "expiration_ms": 1790118000000
+   },
+   "ticket": 8836134,
+   "position": 8836134,
+   "fill_price": 4369.01,
+   "close_price": 4345.64,
+   "outcome": "manual",
+   "r": 0.69,
+   "profit": 46.67,
+   "events": [
+    [
+     1790035359458,
+     "sending",
+     ""
+    ],
+    [
+     1790035359761,
+     "placed",
+     "stop ticket 8836134"
+    ],
+    [
+     1790036106713,
+     "filled",
+     "position 8836134"
+    ],
+    [
+     1790047050287,
+     "closed",
+     "manual at 4345.64"
+    ]
+   ],
+   "created_ms": 1790035359458,
+   "updated_ms": 1790047050287,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.02
+  },
+  "XAUUSD.a:15m:sweep_reversal:buy:1790034300000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:buy:1790034300000",
+   "tag": "DNX 6a180b141c",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4368.85,
+    "sl": 4347.23,
+    "tp": 4412.1,
+    "expiration_ms": 1790046000000
+   },
+   "ticket": 8836510,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790036143425,
+     "sending",
+     ""
+    ],
+    [
+     1790036143691,
+     "placed",
+     "stop ticket 8836510"
+    ],
+    [
+     1790037898080,
+     "reversed",
+     "opposite FINAL XAUUSD.a:15m:sweep_reversal:sell:1790037000000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1790036143425,
+   "updated_ms": 1790037898080,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:30m:sweep_reversal:buy:1790040600000": {
+   "id": "XAUUSD.a:30m:sweep_reversal:buy:1790040600000",
+   "tag": "DNX 49839cfaf4",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 4335.92,
+    "tp": 4410.81,
+    "expiration_ms": 0
+   },
+   "ticket": 8836594,
+   "position": 8836594,
+   "fill_price": 4361.48,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790036291769,
+     "sending",
+     ""
+    ],
+    [
+     1790036292053,
+     "placed",
+     "market ticket 8836594"
+    ],
+    [
+     1790036295265,
+     "filled",
+     "position 8836594"
+    ]
+   ],
+   "created_ms": 1790036291769,
+   "updated_ms": 1790036295265,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1790037720000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1790037720000",
+   "tag": "DNX 25a2fba9be",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.03,
+    "price": 4361.52,
+    "sl": 4336.73,
+    "tp": 4411.1,
+    "expiration_ms": 1790041500000
+   },
+   "ticket": 8837282,
+   "position": 8837282,
+   "fill_price": 4361.87,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790037912451,
+     "sending",
+     ""
+    ],
+    [
+     1790037912730,
+     "placed",
+     "stop ticket 8837282"
+    ],
+    [
+     1790039011198,
+     "filled",
+     "position 8837282"
+    ]
+   ],
+   "created_ms": 1790037912451,
+   "updated_ms": 1790039011198,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.03
+  },
+  "XAUUSD.a:15m:sweep_reversal:sell:1790037000000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:sell:1790037000000",
+   "tag": "DNX de67840aa0",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.03,
+    "price": 0.0,
+    "sl": 4378.24,
+    "tp": 4309.54,
+    "expiration_ms": 0
+   },
+   "ticket": 8837287,
+   "position": 8837287,
+   "fill_price": 4356.16,
+   "close_price": 4345.58,
+   "outcome": "manual",
+   "r": 0.479,
+   "profit": 31.63,
+   "events": [
+    [
+     1790037915562,
+     "sending",
+     ""
+    ],
+    [
+     1790037915805,
+     "placed",
+     "market ticket 8837287"
+    ],
+    [
+     1790037918479,
+     "filled",
+     "position 8837287"
+    ],
+    [
+     1790047050323,
+     "closed",
+     "manual at 4345.58"
+    ]
+   ],
+   "created_ms": 1790037915562,
+   "updated_ms": 1790047050323,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.03
+  },
+  "XAUUSD.a:5m:pattern_break:buy:1790038200000": {
+   "id": "XAUUSD.a:5m:pattern_break:buy:1790038200000",
+   "tag": "DNX aaaf606f8a",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 4357.0,
+    "sl": 4335.41,
+    "tp": 4400.18,
+    "expiration_ms": 1790044500000
+   },
+   "ticket": 8837876,
+   "position": 8837876,
+   "fill_price": 4357.45,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790039511739,
+     "sending",
+     ""
+    ],
+    [
+     1790039511988,
+     "placed",
+     "stop ticket 8837876"
+    ],
+    [
+     1790039541695,
+     "filled",
+     "position 8837876"
+    ]
+   ],
+   "created_ms": 1790039511739,
+   "updated_ms": 1790039541695,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.02
+  },
+  "USDJPY.a:15m:pattern_break:buy:1790039700000": {
+   "id": "USDJPY.a:15m:pattern_break:buy:1790039700000",
+   "tag": "DNX 971f67bcf6",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.02,
+    "price": 0.0,
+    "sl": 157.223,
+    "tp": 157.937,
+    "expiration_ms": 0
+   },
+   "ticket": 8838210,
+   "position": 8838210,
+   "fill_price": 157.455,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790041207016,
+     "sending",
+     ""
+    ],
+    [
+     1790041207336,
+     "placed",
+     "market ticket 8838210"
+    ],
+    [
+     1790041210243,
+     "filled",
+     "position 8838210"
+    ]
+   ],
+   "created_ms": 1790041207016,
+   "updated_ms": 1790041210243,
+   "symbol": "USDJPY.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.02
+  },
+  "USDJPY.a:1h:pattern_break:buy:1790035200000": {
+   "id": "USDJPY.a:1h:pattern_break:buy:1790035200000",
+   "tag": "DNX ef1c358e38",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "1h",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 157.528,
+    "sl": 157.133,
+    "tp": 158.264,
+    "expiration_ms": 1790110800000
+   },
+   "ticket": 8838214,
+   "position": 8838214,
+   "fill_price": 157.528,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790041224168,
+     "sending",
+     ""
+    ],
+    [
+     1790041224414,
+     "placed",
+     "stop ticket 8838214"
+    ],
+    [
+     1790041522039,
+     "filled",
+     "position 8838214"
+    ]
+   ],
+   "created_ms": 1790041224168,
+   "updated_ms": 1790041522039,
+   "symbol": "USDJPY.a",
+   "tf": "1h",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.02
+  },
+  "XAUUSD.a:4h:sweep_reversal:buy:1790024400000": {
+   "id": "XAUUSD.a:4h:sweep_reversal:buy:1790024400000",
+   "tag": "DNX e14d583c5d",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 4360.1,
+    "sl": 4312.11,
+    "tp": 4436.69,
+    "expiration_ms": 1790211600000
+   },
+   "ticket": 8838312,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790041530796,
+     "sending",
+     ""
+    ],
+    [
+     1790041531039,
+     "placed",
+     "stop ticket 8838312"
+    ],
+    [
+     1790042076145,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1790041530796,
+   "updated_ms": 1790042076145,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.02
+  },
+  "XAUUSD.a:30m:sweep_reversal:sell:1790038800000": {
+   "id": "XAUUSD.a:30m:sweep_reversal:sell:1790038800000",
+   "tag": "DNX 4334837aa0",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.02,
+    "price": 4355.92,
+    "sl": 4379.41,
+    "tp": 4308.94,
+    "expiration_ms": 1790062200000
+   },
+   "ticket": 8838431,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790041818002,
+     "sending",
+     ""
+    ],
+    [
+     1790041818262,
+     "placed",
+     "limit ticket 8838431"
+    ],
+    [
+     1790042076177,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1790041818002,
+   "updated_ms": 1790042076177,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.02
+  },
+  "USDJPY.a:30m:pattern_break:buy:1790040600000": {
+   "id": "USDJPY.a:30m:pattern_break:buy:1790040600000",
+   "tag": "DNX 3867481be8",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.02,
+    "price": 0.0,
+    "sl": 157.19,
+    "tp": 158.198,
+    "expiration_ms": 0
+   },
+   "ticket": 8838637,
+   "position": 8838637,
+   "fill_price": 157.526,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790042446397,
+     "sending",
+     ""
+    ],
+    [
+     1790042446752,
+     "placed",
+     "market ticket 8838637"
+    ],
+    [
+     1790042451444,
+     "filled",
+     "position 8838637"
+    ]
+   ],
+   "created_ms": 1790042446397,
+   "updated_ms": 1790042451444,
+   "symbol": "USDJPY.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.02
+  },
+  "XAUUSD.a:30m:sweep_reversal:sell:1790040600000": {
+   "id": "XAUUSD.a:30m:sweep_reversal:sell:1790040600000",
+   "tag": "DNX f7ba3f2f0b",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.02,
+    "price": 0.0,
+    "sl": 4379.46,
+    "tp": 4286.34,
+    "expiration_ms": 0
+   },
+   "ticket": 8838641,
+   "position": 8838641,
+   "fill_price": 4350.2,
+   "close_price": 4345.21,
+   "outcome": "manual",
+   "r": 0.171,
+   "profit": 9.91,
+   "events": [
+    [
+     1790042452086,
+     "sending",
+     ""
+    ],
+    [
+     1790042452436,
+     "placed",
+     "market ticket 8838641"
+    ],
+    [
+     1790042455529,
+     "filled",
+     "position 8838641"
+    ],
+    [
+     1790047062794,
+     "closed",
+     "manual at 4345.21"
+    ]
+   ],
+   "created_ms": 1790042452086,
+   "updated_ms": 1790047062794,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.02
+  },
+  "XAUUSD.a:15m:sweep_reversal:buy:1790045100000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:buy:1790045100000",
+   "tag": "DNX faca138bb4",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.02,
+    "price": 0.0,
+    "sl": 4336.37,
+    "tp": 4361.12,
+    "expiration_ms": 0
+   },
+   "ticket": 8840952,
+   "position": 8840952,
+   "fill_price": 4345.34,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790047051731,
+     "sending",
+     ""
+    ],
+    [
+     1790047051987,
+     "placed",
+     "market ticket 8840952"
+    ],
+    [
+     1790047055027,
+     "filled",
+     "position 8840952"
+    ]
+   ],
+   "created_ms": 1790047051731,
+   "updated_ms": 1790047055027,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.02
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1790045100000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1790045100000",
+   "tag": "DNX f940fcdea8",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 4344.03,
+    "sl": 4355.54,
+    "tp": 4321.01,
+    "expiration_ms": 1790047440000
+   },
+   "ticket": 8840960,
+   "position": 8840960,
+   "fill_price": 4344.01,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790047082838,
+     "sending",
+     ""
+    ],
+    [
+     1790047083083,
+     "placed",
+     "stop ticket 8840960"
+    ],
+    [
+     1790047155962,
+     "filled",
+     "position 8840960"
+    ]
+   ],
+   "created_ms": 1790047082838,
+   "updated_ms": 1790047155962,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.02
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790047500000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790047500000",
+   "tag": "DNX 7a86a98054",
+   "state": "placed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.02,
+    "price": 4339.36,
+    "sl": 4356.74,
+    "tp": 4304.6,
+    "expiration_ms": 1790053800000
+   },
+   "ticket": 8841111,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790047800113,
+     "sending",
+     ""
+    ],
+    [
+     1790047800358,
+     "placed",
+     "stop ticket 8841111"
+    ]
+   ],
+   "created_ms": 1790047800113,
+   "updated_ms": 1790047800358,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.02
+  }
+ },
+ "saved_ms": 1790047800358
+}

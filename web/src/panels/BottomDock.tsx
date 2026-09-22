@@ -121,6 +121,32 @@ const CLOSE_REASON: Record<number, string> = {
 
 const HISTORY_WINDOWS = [1, 7, 30, 90]
 
+/**
+ * The MT5 comment, made readable.
+ *
+ * Our own orders carry "DNX <10 hex> PLAYBOOK": the tag exists so the engine
+ * can find its order again, and means nothing to a person. The playbook is
+ * the half worth reading, so that leads and the tag is dimmed beside it.
+ * Anything else - a manual trade, a broker's own note - is shown untouched.
+ */
+function Comment({ text }: { text?: string }) {
+  const raw = (text || '').trim()
+  if (!raw) return <span className="t-dim">—</span>
+  const m = raw.match(/^(DNX\s+[0-9a-f]{6,})\s*(.*)$/i)
+  if (!m) return <span className="t-mid" title={raw}>{raw}</span>
+  const [, tag, rest] = m
+  const id = tag.split(/\s+/)[1]
+  return (
+    <span title={raw} className="mono" style={{ fontSize: 9 }}>
+      {/* Orders placed before playbooks were added to the comment have only
+          the tag. Showing the id beats showing a bare "DNX" - it is still
+          what ties the row to a signal. */}
+      {rest && <b className="t-hi">{rest} </b>}
+      <span className="t-dim">{id}</span>
+    </span>
+  )
+}
+
 function impactClass(impact: string): string {
   if (impact === 'high') return 't-down'
   if (impact === 'medium') return 't-warn'
@@ -267,6 +293,7 @@ export function BottomDock({
                 <th className="num">Entry</th><th className="num">Exit</th>
                 <th className="num">Gross</th><th className="num">Comm</th>
                 <th className="num">Swap</th><th className="num">Net</th><th>Why</th>
+                <th>Comment</th>
               </tr></thead>
               <tbody>
                 {hist.trades.map((t) => (
@@ -286,6 +313,7 @@ export function BottomDock({
                     <td className="t-mid">
                       {t.reason != null ? CLOSE_REASON[t.reason] ?? `code ${t.reason}` : '—'}
                     </td>
+                    <td><Comment text={t.comment} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -366,7 +394,7 @@ export function BottomDock({
               <th className="num">Open</th><th className="num">Current</th>
               <th className="num">SL</th><th className="num">TP</th>
               <th className="num">Swap</th>
-              <th className="num">P/L</th><th>Opened</th>
+              <th className="num">P/L</th><th>Opened</th><th>Comment</th>
             </tr></thead>
             <tbody>
               {positions.map((p: any, i: number) => {
@@ -394,6 +422,7 @@ export function BottomDock({
                     </td>
                     <td className={`num ${dirClass(p.profit)}`}><b>{signed(p.profit, 2)}</b></td>
                     <td className="t-dim">{p.time_ms ? dateUTC(p.time_ms) : '—'}</td>
+                    <td><Comment text={p.comment} /></td>
                   </tr>
                 )
               })}
@@ -410,7 +439,7 @@ export function BottomDock({
           <thead><tr>
             <th>Symbol</th><th>Type</th><th className="num">Volume</th>
             <th className="num">Price</th><th className="num">SL</th>
-            <th className="num">TP</th><th>Placed</th>
+            <th className="num">TP</th><th>Placed</th><th>Comment</th>
           </tr></thead>
           <tbody>
             {orders.map((o: any, i: number) => (
@@ -426,6 +455,7 @@ export function BottomDock({
                 <td className="num t-down">{o.sl ? fmt(o.sl) : '—'}</td>
                 <td className="num t-up">{o.tp ? fmt(o.tp) : '—'}</td>
                 <td className="t-dim">{o.time_ms ? dateUTC(o.time_ms) : '—'}</td>
+                <td><Comment text={o.comment} /></td>
               </tr>
             ))}
           </tbody>

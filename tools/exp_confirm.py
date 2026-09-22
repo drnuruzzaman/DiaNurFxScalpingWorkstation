@@ -53,8 +53,8 @@ def main() -> int:
                                  'net_pnl', 'return_pct', 'max_drawdown_pct')},
            'by_playbook': {k: {'n': v['trades'], 'exp': v['expectancy_r']}
                            for k, v in r['by_playbook'].items()}}
-    Path(ROOT / 'run').mkdir(exist_ok=True)
-    (ROOT / 'run' / f'confirm_{a.set}_{a.start[:4]}.json').write_text(json.dumps(out, indent=1))
+    Path(ROOT / 'order_ledger').mkdir(exist_ok=True)
+    (ROOT / 'order_ledger' / f'confirm_{a.set}_{a.start[:4]}.json').write_text(json.dumps(out, indent=1))
     print(json.dumps(out))
     return 0
 

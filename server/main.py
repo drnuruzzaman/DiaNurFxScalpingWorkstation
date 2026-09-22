@@ -31,7 +31,7 @@ import threading
 import time
 import traceback
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
@@ -158,9 +158,12 @@ class State:
 
 STATE = State()
 
-RUN = Path(__file__).resolve().parent.parent / 'run'
-STORE = SignalStore(RUN / 'signal_store.json')
-LEDGER = OrderLedger(RUN / 'order_ledger.json')
+# Named for what it holds rather than when it is written. `RUN` sat one letter
+# from `RUN_DIR` (runs/, the backtest outputs) and the two were easy to swap by
+# eye - one is the live audit trail, the other is disposable analysis.
+LEDGER_DIR = Path(__file__).resolve().parent.parent / 'order_ledger'
+STORE = SignalStore(LEDGER_DIR / 'signal_store.json')
+LEDGER = OrderLedger(LEDGER_DIR / 'order_ledger.json')
 
 
 def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
@@ -245,10 +248,18 @@ def profit_reply() -> str:
     """
     The /profit answer.
 
-    Same numbers as the ribbon, from the same realised_pnl() - a bot that
-    disagreed with the screen would be worse than no bot. Wrapped in <pre> so
-    Telegram renders it monospaced and the two figures line up; in ordinary
-    HTML mode the runs of spaces collapse and the columns stagger.
+    Same numbers as the status ribbon, from the same realised_pnl() - a bot
+    that disagreed with the screen would be worse than no bot.
+
+    NOT wrapped in <pre>. That rendered the reply as a CODE BLOCK, complete
+    with a "copy" button, which reads like a snippet rather than a report. The
+    only thing <pre> bought was column alignment, and Telegram's proportional
+    font cannot align columns anyway once the tag is gone - so the layout puts
+    each figure on its own line instead of pretending to be a table.
+
+    Account numbers and broker names are deliberately absent: /profit is
+    answerable in a public group, and the figures are the answer - the
+    identifiers are not.
     """
     raw = (BRIDGE.deals(35) or {}).get('deals') or []
     pnl = realised_pnl(raw, BRIDGE.health())
@@ -258,18 +269,44 @@ def profit_reply() -> str:
     def money(v: float) -> str:
         return f'{v:+,.2f}{tail}'
 
+    def arrow(v: float) -> str:
+        # Direction as a glyph as well as a sign. Telegram has no colour in
+        # message text, so the sign alone is easy to skim past.
+        return '\U0001F53A' if v > 0 else '\U0001F53B' if v < 0 else '\u25AB\uFE0F'
+
+    today, week, month = pnl['today'], pnl['week'], pnl['month']
+    stamp = datetime.now(timezone.utc).strftime('%d %b %H:%M')
+
+    def trades(n: int) -> str:
+        # "0 trades" beside a non-zero figure reads as a broken report. It is
+        # not: a day with nothing closed can still show a number, because
+        # commission and swap on OPEN positions have already moved the
+        # balance. Saying so is clearer than printing a zero count.
+        if n == 0:
+            return 'no closed trades'
+        return f"{n} trade{'' if n == 1 else 's'}"
+
     return (
-        '<pre>'
-        f'Profit today: {money(pnl["today"])}\n'
-        f'This month:   {money(pnl["month"])}'
-        '</pre>'
+        f'\U0001F4CA <b>PROFIT</b>\n'
+        f'\n'
+        f'{arrow(today)} <b>Today</b>\n'
+        f'    <b>{money(today)}</b>  ·  {trades(pnl["today_trades"])}\n'
+        f'\n'
+        f'{arrow(week)} <b>This week</b>\n'
+        f'    <b>{money(week)}</b>  ·  {trades(pnl["week_trades"])}\n'
+        f'\n'
+        f'{arrow(month)} <b>This month</b>\n'
+        f'    <b>{money(month)}</b>  ·  {trades(pnl["month_trades"])}\n'
+        f'\n'
+        f'<i>Realised P&amp;L, closed trades only \u00b7 {stamp} UTC</i>'
     )
 
 
 COMMAND_HELP = (
-    '<b>DiaNurFx</b>\n'
-    '/profit - realised P&amp;L today and this month\n'
-    '/help - this list'
+    '\U0001F4C8 <b>DiaNurFx</b>\n'
+    '\n'
+    '/profit \u2014 realised P&amp;L, today and month to date\n'
+    '/help \u2014 this list'
 )
 
 
@@ -1158,11 +1195,17 @@ def realised_pnl(deals, bridge: dict = None) -> dict:
     now = datetime.fromtimestamp((time.time() * 1000 + off) / 1000.0, tz=timezone.utc)
     day_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     month_start = day_start.replace(day=1)
+    # The trading week, not the calendar one: Monday 00:00 on the BROKER's
+    # clock. The session actually opens late Sunday UTC, which on a UTC+3
+    # server is already Monday, so a Monday cut takes the whole week without
+    # slicing the Sunday-evening open off the front of it.
+    week_start = day_start - timedelta(days=day_start.weekday())
     day_ms = day_start.timestamp() * 1000 - off
+    week_ms = week_start.timestamp() * 1000 - off
     month_ms = month_start.timestamp() * 1000 - off
 
-    today = month = 0.0
-    day_n = month_n = 0
+    today = week = month = 0.0
+    day_n = week_n = month_n = 0
     for d in deals or []:
         if d.get('side') not in _TRADE_SIDES:
             continue
@@ -1175,16 +1218,22 @@ def realised_pnl(deals, bridge: dict = None) -> dict:
         closed = int(d.get('entry') or 0) != 0
         month += net
         month_n += closed
+        if t >= week_ms:
+            week += net
+            week_n += closed
         if t >= day_ms:
             today += net
             day_n += closed
 
     return {
         'today': round(today, 2),
+        'week': round(week, 2),
         'month': round(month, 2),
         'today_trades': day_n,
+        'week_trades': week_n,
         'month_trades': month_n,
         'day_start_ms': int(day_ms),
+        'week_start_ms': int(week_ms),
         'month_start_ms': int(month_ms),
         'offset_ms': off,
     }
@@ -1209,6 +1258,7 @@ def closed_trades(deals) -> list:
             'open_ms': None, 'close_ms': None, 'profit': 0.0,
             'commission': 0.0, 'swap': 0.0, 'net': 0.0,
             'reason': None, 'sl': d.get('position_sl') or 0.0, 'deals': 0,
+            'comment': '',
         })
         t['deals'] += 1
         t['profit'] += float(d.get('profit') or 0.0)
@@ -1216,7 +1266,13 @@ def closed_trades(deals) -> list:
         t['swap'] += float(d.get('swap') or 0.0)
         t['net'] = round(t['profit'] + t['commission'] + t['swap'], 2)
         ms = float(d.get('time_ms') or 0)
+        # Take the comment from whichever leg has one. The OPENING deal
+        # carries what we sent; a close driven by SL/TP gets the broker's own
+        # text instead, which would otherwise overwrite ours.
+        if not t['comment'] and d.get('comment'):
+            t['comment'] = str(d['comment'])
         if int(d.get('entry') or 0) == 0:
+            t['comment'] = str(d.get('comment') or t['comment'])
             # Opening leg. Its side is the side of the TRADE; the closing deal
             # carries the opposite one and would label every long a short.
             t['side'] = d.get('side')
@@ -1645,6 +1701,8 @@ def _check_setting(group: str, key: str, v):
         ('execution', 'min_lots'): (0.01, 5.0),
         ('execution', 'max_lots'): (0.01, 5.0),
         ('execution', 'entry_tolerance_atr'): (0.0, 2.0),
+        # 0 disables the cap; above 20 per slot is not a setting, it is a typo.
+        ('execution', 'max_per_symbol_tf'): (0, 20),
         ('execution', 'every_s'): (1.0, 60.0),
         ('risk', 'risk_per_trade_pct'): (0.01, 5.0),
         ('risk', 'max_concurrent'): (1, 50),
@@ -1736,6 +1794,10 @@ def apply_settings(patch: dict, persist: bool = True) -> tuple:
         for dotted, value in applied.items():
             group, key = dotted.split('.', 1)
             saved.setdefault(group, {})[key] = value
+        # Strip superseded keys on the way out, or a renamed setting keeps its
+        # dead twin in the file forever - and a later edit that removed the new
+        # key would let the old one spring back to life on the next load.
+        saved = _migrate_settings(saved)
         SETTINGS_FILE.parent.mkdir(parents=True, exist_ok=True)
         tmp = SETTINGS_FILE.with_suffix('.json.tmp')
         tmp.write_text(json.dumps(saved, indent=1), encoding='utf-8')
@@ -1743,14 +1805,30 @@ def apply_settings(patch: dict, persist: bool = True) -> tuple:
     return applied, errors
 
 
+def _migrate_settings(saved: dict) -> dict:
+    """
+    Carry old keys onto their replacements.
+
+    one_per_symbol_tf (bool) -> max_per_symbol_tf (int). Dropping the old key
+    silently would have been the dangerous option: a saved `false` means "no
+    cap", and losing it would fall back to the default of 1 and quietly
+    TIGHTEN a live execution gate the owner had deliberately opened.
+    """
+    ex = (saved or {}).get('execution')
+    if isinstance(ex, dict) and 'one_per_symbol_tf' in ex:
+        legacy = ex.pop('one_per_symbol_tf')
+        ex.setdefault('max_per_symbol_tf', 1 if legacy else 0)
+    return saved
+
+
 def _load_saved_settings() -> None:
     """Re-apply what was saved from the UI. Startup, before anything reads CONFIG."""
     try:
-        saved = json.loads(SETTINGS_FILE.read_text(encoding='utf-8'))
+        saved = _migrate_settings(json.loads(SETTINGS_FILE.read_text(encoding='utf-8')))
     except (OSError, ValueError):
         saved = {}
     # Carry over the auto switch from its old home, once.
-    legacy = RUN / 'execution.json'
+    legacy = LEDGER_DIR / 'execution.json'
     if legacy.exists() and 'auto' not in (saved.get('execution') or {}):
         try:
             saved.setdefault('execution', {})['auto'] = bool(
@@ -1780,6 +1858,10 @@ def get_settings():
         'trading_enabled': _trading_enabled(),
         'symbol': CONFIG.symbol,
         'saved_to': str(SETTINGS_FILE),
+        # The BRIDGE's own hard ceiling, so Settings can warn before a size is
+        # saved that the bridge will refuse at send time. None when the bridge
+        # is unreachable - absence is not the same as "no limit".
+        'bridge_max_lots': ((BRIDGE.health() or {}).get('execution') or {}).get('max_lots'),
     }
 
 
@@ -1850,7 +1932,7 @@ TELEGRAM_COMMANDS = TelegramCommands(
     token_fn=lambda: alerts_mod.bot_token(),
     allowed_fn=lambda: private_destinations(alerts_mod.load()),
     profit_fn=_profit_now,
-    state_path=RUN / 'telegram_offset.json',
+    state_path=LEDGER_DIR / 'telegram_offset.json',
 )
 
 
@@ -1899,7 +1981,7 @@ def execution_state(limit: int = Query(100, ge=1, le=1000)):
         'settings': {
             'entry_tolerance_atr': CONFIG.execution.entry_tolerance_atr,
             'lots': [CONFIG.execution.min_lots, CONFIG.execution.max_lots],
-            'one_per_symbol_tf': CONFIG.execution.one_per_symbol_tf,
+            'max_per_symbol_tf': CONFIG.execution.max_per_symbol_tf,
             'max_concurrent': CONFIG.risk.max_concurrent,
             'exit': {'mode': CONFIG.risk.exit_mode, 'lock_r': CONFIG.risk.trail_lock_r,
                      'trail_atr': CONFIG.risk.trail_atr},

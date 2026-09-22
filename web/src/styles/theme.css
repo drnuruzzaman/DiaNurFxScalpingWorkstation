@@ -387,6 +387,18 @@ select:focus {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+/*
+ * A numeric HEADER has to be re-pointed explicitly.
+ *
+ * `.tabular th` sets text-align:left and, being a class plus an element,
+ * outranks the bare `.num` class - so `<th class="num">` stayed left while the
+ * cells under it went right, and every numeric column read with its title
+ * floating off to one side of its own figures. This selector carries the same
+ * class-plus-element weight plus one, so it wins.
+ */
+.tabular th.num {
+  text-align: right;
+}
 
 @keyframes pulse {
   0%,

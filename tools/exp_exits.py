@@ -59,7 +59,7 @@ from server.engine.signals import generate                         # noqa: E402
 SYMBOL = 'XAUUSD.a'
 TF = '5m'
 WINDOW = 600
-OUT = ROOT / 'run'
+OUT = ROOT / 'order_ledger'
 
 
 def _ms(s: str) -> int:
