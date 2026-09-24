@@ -834,11 +834,47 @@ export function download(canvas: HTMLCanvasElement, name: string): void {
  * falls back to a plain download, because the person asked for an image and
  * should get one even when the nice path is unavailable.
  */
+const PICKER_BLOCKED = 'dianur.savePickerBlocked'
+
+/**
+ * Has the file dialog already proved useless in this browser?
+ *
+ * Remembered rather than re-discovered, because discovering it costs the
+ * person a dialog that cannot save anything. See saveAs.
+ */
+function pickerBlocked(): boolean {
+  try {
+    if (localStorage.getItem(PICKER_BLOCKED) === '1') return true
+  } catch { /* private mode: fall through to the hint below */ }
+  // A HINT, not a gate.
+  //
+  // Learning from the failure still costs one wasted dialog, and the shells
+  // this fails in are the ones this app actually runs in. Naming them skips
+  // that first bad dialog too. Being wrong is cheap in both directions: a
+  // false positive means a plain download instead of a folder prompt, and a
+  // false negative just falls back to the remembered failure a moment later.
+  return /\bElectron\/|\bClaude\//i.test(navigator.userAgent)
+}
+
 export async function saveAs(
   canvas: HTMLCanvasElement, name: string,
 ): Promise<'dialog' | 'downloads'> {
   const w = window as any
-  if (typeof w.showSaveFilePicker !== 'function') {
+  // TWO DIALOGS, ONE SAVE.
+  //
+  // In an embedded browser - the Claude desktop pane, an Electron shell -
+  // showSaveFilePicker exists and opens a real dialog, hands back a real
+  // handle, and then refuses createWritable. The fallback below is a plain
+  // anchor download, which in those same shells opens the shell's OWN save
+  // dialog. So the person picked a file, nothing was written, and then a
+  // second dialog appeared that did work.
+  //
+  // It cannot be detected in advance: the picker is present, and even a probe
+  // through OPFS succeeds because that is a different permission path. The
+  // only reliable signal is the failure itself - so it is remembered, and the
+  // dead dialog is never shown twice on the same machine. Clearing site data
+  // makes it try again, which is the right escape hatch if a shell is fixed.
+  if (typeof w.showSaveFilePicker !== 'function' || pickerBlocked()) {
     download(canvas, name)
     return 'downloads'
   }
@@ -872,7 +908,11 @@ export async function saveAs(
     await stream.close()
     return 'dialog'
   } catch {
-    download(canvas, name)
+    // The handle is unusable here. Record it so the next save skips straight
+    // to the download, and fall back using the name the person actually
+    // chose in the dialog rather than the one suggested to them.
+    try { localStorage.setItem(PICKER_BLOCKED, '1') } catch { /* private mode */ }
+    download(canvas, handle?.name || name)
     return 'downloads'
   }
 }

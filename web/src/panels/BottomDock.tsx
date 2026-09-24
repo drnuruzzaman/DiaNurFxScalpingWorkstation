@@ -99,17 +99,23 @@ function useSavedSort(key: string): [Sort, (k: BoardKey) => void] {
 export type DockTab = 'positions' | 'orders' | 'history' | 'calendar' | 'execution'
   | 'signals' | 'matrix' | 'levels' | 'events' | 'liquidity'
 
-export const DOCK_TABS: { key: DockTab; label: string }[] = [
-  { key: 'positions', label: 'POSITIONS' },
-  { key: 'orders', label: 'ORDERS' },
-  { key: 'history', label: 'HISTORY' },
-  { key: 'calendar', label: 'CALENDAR' },
-  { key: 'signals', label: 'SIGNAL BOARD' },
-  { key: 'execution', label: 'EXECUTION' },
-  { key: 'matrix', label: 'TF MATRIX' },
-  { key: 'levels', label: 'LEVELS' },
-  { key: 'events', label: 'EVENTS' },
-  { key: 'liquidity', label: 'LIQUIDITY' },
+/**
+ * The panels, in one flat row.
+ *
+ * The hint is the tooltip, not bar text: "TF MATRIX" can say what it is on
+ * hover without spending the width to say it always.
+ */
+export const DOCK_TABS: { key: DockTab; label: string; hint: string }[] = [
+  { key: 'positions', label: 'POSITIONS', hint: 'open trades' },
+  { key: 'orders', label: 'ORDERS', hint: 'pending at the broker' },
+  { key: 'history', label: 'HISTORY', hint: 'closed round trips' },
+  { key: 'calendar', label: 'CALENDAR', hint: 'macro releases' },
+  { key: 'signals', label: 'SIGNAL BOARD', hint: 'every symbol and timeframe' },
+  { key: 'execution', label: 'EXECUTION', hint: 'the order ledger' },
+  { key: 'matrix', label: 'TF MATRIX', hint: 'agreement across frames' },
+  { key: 'levels', label: 'LEVELS', hint: 'scored support and resistance' },
+  { key: 'events', label: 'EVENTS', hint: 'structure and sweeps' },
+  { key: 'liquidity', label: 'LIQUIDITY', hint: 'resting stops' },
 ]
 
 /** How a position actually ended. MT5 reports this on the closing deal. */
@@ -289,6 +295,22 @@ export function BottomDock({
     })
     return () => cancelAnimationFrame(id)
   }, [tab, cal])
+
+  /**
+   * The live count for a panel, or 0 when it has nothing to say.
+   *
+   * The tab row carried these in brackets. They are worth keeping - "orders"
+   * and "orders (3)" are different facts - so they move onto the button for
+   * the open panel and onto each row of the menu.
+   */
+  const count = (k: DockTab): number => (
+    k === 'positions' ? positions?.length ?? 0
+      : k === 'orders' ? orders?.length ?? 0
+        : k === 'history' ? hist?.summary.count ?? 0
+          : k === 'signals' ? board?.signals.length ?? 0
+            : 0)
+
+
 
   // History and calendar are fetched only while their tab is on screen, and
   // on a slow clock. Both are expensive reads on the bridge - deals walks a
@@ -904,19 +926,27 @@ export function BottomDock({
       {/* Double-click anywhere on the bar - a tab or the empty space - to hide
           the panel; its tabs then move to the footer, where a double-click
           brings it back. */}
+      {/* All ten, in the toolbar's own visual language. No groups and no
+          separators: ten short labels in a row read fine on their own, and
+          dividing them asked you to learn a taxonomy to find a tab you could
+          already see. */}
       <div className="dock-tabs" onDoubleClick={() => onToggle?.()}
         title="Double-click to hide the bottom panel">
-        {DOCK_TABS.map((t) => (
-          <button key={t.key} className={`dock-tab ${tab === t.key ? 'on' : ''}`}
-            onClick={() => setTab(t.key)}>
-            {t.label}
-            {t.key === 'positions' && positions?.length ? ` (${positions.length})` : ''}
-            {t.key === 'orders' && orders?.length ? ` (${orders.length})` : ''}
-            {t.key === 'history' && hist?.summary.count ? ` (${hist.summary.count})` : ''}
-            {t.key === 'signals' && board?.signals.length ? ` (${board.signals.length})` : ''}
-            {t.key === 'matrix' && board && !board.complete ? ' \u2026' : ''}
-          </button>
-        ))}
+        {DOCK_TABS.map((t) => {
+          const on = tab === t.key
+          const n = count(t.key)
+          return (
+            <button key={t.key} className={`tool-btn ${on ? 'on' : ''}`}
+              onClick={() => setTab(t.key)}
+              aria-current={on ? 'page' : undefined}
+              title={t.hint}>
+              {t.label}
+              {n ? <span className="tool-count">{n}</span> : null}
+              {t.key === 'matrix' && board && !board.complete
+                ? <span className="t-dim">{'\u2026'}</span> : null}
+            </button>
+          )
+        })}
         <span className="spacer" />
       </div>
       <div className="dock-body" ref={bodyRef}>{content()}</div>

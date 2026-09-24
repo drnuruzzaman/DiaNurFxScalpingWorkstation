@@ -12,6 +12,7 @@ import { BacktestView, EMPTY_RUN, type BacktestRun } from './panels/BacktestView
 import { BottomDock, DOCK_TABS, type DockTab } from './panels/BottomDock'
 import { LeftRail } from './panels/LeftRail'
 import { RightRail } from './panels/RightRail'
+import { SessionFlyout } from './panels/SessionFlyout'
 import { Settings } from './panels/Settings'
 import { SymbolPicker } from './panels/SymbolPicker'
 
@@ -510,6 +511,39 @@ export default function App() {
     setDataStatus('loading')
     loadingHistory.current = false
     requestedBefore.current = 0
+
+    /**
+     * Paint the candles without waiting for the analysis.
+     *
+     * The live socket sends bars and snapshot in ONE frame, and the server
+     * builds that frame by running the whole engine first - levels, patterns,
+     * trendlines, the multi-timeframe read. Measured on this machine that is
+     * 100ms on a hot symbol and up to 2.5s on one MetaTrader has not charted
+     * before, while /api/bars answers in about 45ms.
+     *
+     * So the first sight of a new instrument used to cost a full engine pass
+     * for information the candles do not need. This asks for the bars
+     * directly, in parallel, and draws them the moment they land; the
+     * overlays arrive a beat later when the socket's first frame does.
+     *
+     * MERGED, not assigned: if the socket wins the race its bars are already
+     * in state and are the fresher of the two, and mergeBars is the same
+     * reconciliation used for scroll-back history.
+     */
+    let alive = true
+    if (!cached.length) {
+      api.bars(symbol, tf, 600, true).then((r) => {
+        if (!alive) return            // switched away again before it landed
+        const early = toBars(r.bars as any)
+        if (!early.length) return
+        setBars((prev) => {
+          const next = mergeBars(prev, early)
+          barcache.put(symbol, tf, next)
+          return next
+        })
+      }).catch(() => { /* the socket is still coming; nothing to report */ })
+    }
+
     const f = new LiveFeed(symbol, tf)
     f.onState = setConn
     f.onMessage = (p: LivePayload) => {
@@ -538,7 +572,7 @@ export default function App() {
     }
     f.connect()
     feed.current = f
-    return () => { f.close(); feed.current = null }
+    return () => { alive = false; f.close(); feed.current = null }
   }, [mode, symbol, tf])
 
   // Keep the selected signal valid across ticks: signal ids are stable per bar,
@@ -1036,16 +1070,25 @@ export default function App() {
             + `${panels.right ? 'calc(var(--rail-right) + 10px)' : '22px'}`,
         }}>
           {!panels.left ? (
-            <RailStrip side="left" label="Watchlist · Market · Execution"
+            <RailStrip side="left" label="Watchlist · Fear & Greed · AI analyst"
               onOpen={() => togglePanel('left')} />
           ) : (
           <div className="rail-wrap">
-          <LeftRail
-            snap={snap} quote={quote} symbols={watchlistShown}
-            quotes={wlQuotes} onEditWatchlist={() => setShowPicker(true)}
-            symbol={symbol} onSymbol={openTab}
-            nowMs={now}
-          />
+          {/* Watchlist and Fear & Greed on top, the AI Analyst filling the
+              rest. It moved here from the right rail, which now gives its
+              full height to signals and patterns - the things you act on. */}
+          <div className="rail" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: '0 0 auto', maxHeight: '55%', overflowY: 'auto' }}>
+              <LeftRail
+                snap={snap} quote={quote} symbols={watchlistShown}
+                quotes={wlQuotes} onEditWatchlist={() => setShowPicker(true)}
+                symbol={symbol} onSymbol={openTab}
+              />
+            </div>
+            <div style={{ flex: '1 1 auto', minHeight: 0, background: 'var(--bg-panel)', borderTop: '1px solid var(--line)' }}>
+              <AgentDock snap={snap} signal={selected} symbol={symbol} tf={tf} />
+            </div>
+          </div>
           <RailHandle side="left" onClose={() => togglePanel('left')} />
           </div>
           )}
@@ -1117,21 +1160,18 @@ export default function App() {
           </div>
 
           {!panels.right ? (
-            <RailStrip side="right" label="Signals · Patterns · AI analyst"
+            <RailStrip side="right" label="Signals · Patterns · Trend"
               onOpen={() => togglePanel('right')} />
           ) : (
           <div className="rail-wrap">
           <RailHandle side="right" onClose={() => togglePanel('right')} />
           <div className="rail" style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ flex: '0 0 auto', maxHeight: '58%', overflowY: 'auto' }}>
+            <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto' }}>
               <RightRail
                 snap={snap} signals={signals} selectedId={selected?.id ?? null}
                 onSelect={setSelectedId} onPlace={placeOrder}
                 tradingEnabled={tradingEnabled}
               />
-            </div>
-            <div style={{ flex: '1 1 auto', minHeight: 0, background: 'var(--bg-panel)', borderTop: '1px solid var(--line)' }}>
-              <AgentDock snap={snap} signal={selected} symbol={symbol} tf={tf} />
             </div>
           </div>
           </div>
@@ -1151,6 +1191,11 @@ export default function App() {
           if ((e.target as HTMLElement).closest('button')) return
           if (mode === 'live') togglePanel('bottom')
         }}>
+        {/* Sessions, at the left-hand end. A hover card rather than a panel:
+            which session is open is standing context, not something acted on,
+            so the trigger carries the live dots and the detail is one hover
+            away instead of holding rail height all day. */}
+        <SessionFlyout snap={snap} nowMs={now} />
         {/* The bottom panel is hidden: its tabs live here instead. Clicking
             one opens the panel on that tab. */}
         {mode === 'live' && !panels.bottom && (

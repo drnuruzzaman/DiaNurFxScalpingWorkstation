@@ -254,3 +254,220 @@
 2026-09-24T11:37:48+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
 2026-09-24T11:37:48+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
 2026-09-24T11:37:48+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T11:41:14+10:00  order     MODIFY position=8900305 sl 157.804 -> 157.954
+2026-09-24T11:41:14+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T11:45:59+10:00  order     SEND stop buy USDJPY.a 0.01 lots @157.918 sl=157.832 tp=158.09 signal=USDJPY.a:5m:breakout_retest:buy:1790214000000 account=23011660
+2026-09-24T11:45:59+10:00  order     RESULT ok=True retcode=10009 ticket=8900754 price=0.0 comment='Request executed'
+2026-09-24T11:55:49+10:00  order     SEND stop buy XAUUSD.a 0.01 lots @4293.33 sl=4279.06 tp=4321.86 signal=XAUUSD.a:5m:pattern_break:buy:1790214000000 account=23011660
+2026-09-24T11:55:49+10:00  order     RESULT ok=True retcode=10009 ticket=8901216 price=0.0 comment='Request executed'
+2026-09-24T11:57:45+10:00  order     CANCEL order=8901216
+2026-09-24T11:57:45+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T12:39:39+10:00  order     SEND limit buy XAUUSD.a 0.01 lots @4286.01 sl=4281.14 tp=4295.76 signal=XAUUSD.a:5m:sweep_reversal:buy:1790216700000 account=23011660
+2026-09-24T12:39:40+10:00  order     RESULT ok=True retcode=10009 ticket=8902715 price=0.0 comment='Request executed'
+2026-09-24T12:55:00+10:00  order     CANCEL order=8902715
+2026-09-24T12:55:01+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T13:00:00+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4291.02 sl=4306.34 tp=4259.87 signal=XAUUSD.a:1h:breakout_retest:sell:1790215200000 account=23011660
+2026-09-24T13:00:00+10:00  order     RESULT ok=True retcode=10009 ticket=8903145 price=4291.06 comment='Request executed'
+2026-09-24T13:00:49+10:00  order     SEND stop buy USDJPY.a 0.01 lots @157.895 sl=157.777 tp=158.13 signal=USDJPY.a:5m:breakout_retest:buy:1790218500000 account=23011660
+2026-09-24T13:00:50+10:00  order     RESULT ok=True retcode=10009 ticket=8903164 price=0.0 comment='Request executed'
+2026-09-24T13:01:33+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4290.85 sl=4303.92 tp=4264.72 signal=XAUUSD.a:30m:sweep_reversal:sell:1790217000000 account=23011660
+2026-09-24T13:01:33+10:00  order     RESULT ok=True retcode=10009 ticket=8903175 price=0.0 comment='Request executed'
+2026-09-24T13:28:19+10:00  order     MODIFY position=8903164 sl 157.777 -> 157.964
+2026-09-24T13:28:19+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T13:30:04+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:30:04+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:30:04+10:00  error     /spec ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:30:04+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:30:04+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:30:06+10:00  order     MODIFY position=8903164 sl 157.964 -> 157.97
+2026-09-24T13:30:06+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T13:34:56+10:00  order     MODIFY position=8903164 sl 157.97 -> 158.0
+2026-09-24T13:34:56+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T13:34:56+10:00  order     SEND stop buy XAUUSD.a 0.01 lots @4287.51 sl=4283.06 tp=4296.4 signal=XAUUSD.a:5m:sweep_reversal:buy:1790220000000 account=23011660
+2026-09-24T13:34:56+10:00  order     RESULT ok=True retcode=10009 ticket=8903707 price=0.0 comment='Request executed'
+2026-09-24T13:36:55+10:00  order     CANCEL order=8903707
+2026-09-24T13:36:55+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T13:39:52+10:00  order     SEND market buy XAUUSD.a 0.01 lots @4285.27 sl=4270.52 tp=4318.6 signal=XAUUSD.a:30m:sweep_reversal:buy:1790218800000 account=23011660
+2026-09-24T13:39:53+10:00  order     RESULT ok=True retcode=10009 ticket=8903818 price=4285.27 comment='Request executed'
+2026-09-24T13:39:59+10:00  order     MODIFY position=8903164 sl 158.0 -> 158.027
+2026-09-24T13:39:59+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T13:47:31+10:00  error     /spec ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-09-24T13:48:26+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:48:26+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:48:26+10:00  error     /deals ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:48:26+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:48:26+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T13:48:26+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T14:00:20+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T14:00:20+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=Pepperstone-MT5-Live01
+2026-09-24T14:00:20+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T14:03:59+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T14:03:59+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T14:03:59+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T14:04:06+10:00  order     SEND market buy USDJPY.a 0.01 lots @158.055 sl=157.901 tp=158.368 signal=USDJPY.a:15m:sweep_reversal:buy:1790221500000 account=23011660
+2026-09-24T14:04:07+10:00  order     RESULT ok=True retcode=10009 ticket=8904317 price=158.055 comment='Request executed'
+2026-09-24T15:15:51+10:00  order     SEND stop buy XAUUSD.a 0.01 lots @4293.69 sl=4285.1 tp=4310.88 signal=XAUUSD.a:5m:sweep_reversal:buy:1790226300000 account=23011660
+2026-09-24T15:15:51+10:00  order     RESULT ok=True retcode=10009 ticket=8905927 price=0.0 comment='Request executed'
+2026-09-24T15:20:53+10:00  order     CANCEL order=8905927
+2026-09-24T15:20:54+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T15:34:56+10:00  clock     server offset +5400000 ms (UTC+1.50h) confidence=measured from 5 tick(s)
+2026-09-24T15:34:56+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T15:34:56+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T15:34:57+10:00  order     MODIFY position=8903145 sl 4306.34 -> 4285.34
+2026-09-24T15:34:57+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T15:34:57+10:00  order     MODIFY position=8903175 sl 4303.92 -> 4285.24
+2026-09-24T15:34:58+10:00  order     MODIFY RESULT ok=False retcode=10016
+2026-09-24T15:34:58+10:00  order     SEND stop buy XAUUSD.a 0.01 lots @4290.7 sl=4285.25 tp=4301.59 signal=XAUUSD.a:5m:sweep_reversal:buy:1790227500000 account=23011660
+2026-09-24T15:34:58+10:00  order     RETRY as GTC: broker refused the expiry
+2026-09-24T15:34:58+10:00  order     RESULT ok=True retcode=10009 ticket=8906433 price=0.0 comment='Request executed'
+2026-09-24T15:35:02+10:00  order     MODIFY position=8903175 sl 4303.92 -> 4285.45
+2026-09-24T15:35:02+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T15:35:02+10:00  order     CANCEL order=8906433
+2026-09-24T15:35:03+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T15:35:05+10:00  order     MODIFY position=8903175 sl 4285.45 -> 4285.29
+2026-09-24T15:35:05+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T15:35:08+10:00  order     MODIFY position=8903175 sl 4285.29 -> 4285.05
+2026-09-24T15:35:08+10:00  order     MODIFY RESULT ok=False retcode=10016
+2026-09-24T15:35:11+10:00  order     MODIFY position=8903175 sl 4285.29 -> 4285.21
+2026-09-24T15:35:11+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T15:35:11+10:00  order     SEND stop buy XAUUSD.a 0.01 lots @4290.7 sl=4279.79 tp=4312.52 signal=XAUUSD.a:15m:sweep_reversal:buy:1790232300000 account=23011660
+2026-09-24T15:35:11+10:00  order     RESULT ok=True retcode=10009 ticket=8906438 price=0.0 comment='Request executed'
+2026-09-24T15:44:41+10:00  clock     server offset +5400000 ms (UTC+1.50h) confidence=stale from 5 tick(s)
+2026-09-24T15:44:41+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T15:45:02+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T15:45:04+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:06+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:09+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:11+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:14+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:16+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:18+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:21+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:23+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:26+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:28+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:31+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:33+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:35+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:38+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:40+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:42+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:45+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:47+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:49+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:52+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:54+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:56+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:45:59+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:01+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:03+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:06+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:08+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:10+10:00  stop      bridge shutting down
+2026-09-24T15:46:40+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T15:46:40+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T15:46:43+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:45+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:48+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:50+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:46:58+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:01+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:03+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:08+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:10+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:12+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:15+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:17+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:20+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:22+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:24+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:27+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:29+10:00  order     REFUSED execution is disabled. Nothing was changed.
+2026-09-24T15:47:31+10:00  stop      bridge shutting down
+2026-09-24T15:47:45+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T15:47:45+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T15:47:45+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T15:47:49+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:47:51+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:47:55+10:00  order     CANCEL order=8906438
+2026-09-24T15:47:56+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T15:47:56+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:47:56+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:47:56+10:00  order     SEND limit sell XAUUSD.a 0.01 lots @4289.54 sl=4304.39 tp=4259.84 signal=XAUUSD.a:1h:breakout_retest:sell:1790222400000 account=23011660
+2026-09-24T15:47:56+10:00  order     RESULT ok=True retcode=10009 ticket=8906889 price=0.0 comment='Request executed'
+2026-09-24T15:48:01+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:48:21+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:48:48+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:48:49+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:48:51+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:48:53+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:49:01+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:49:21+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:49:51+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:50:01+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:50:21+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:50:51+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:51:01+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:51:21+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:51:51+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:52:01+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T15:52:21+10:00  error     /calendar HTTPError: HTTP Error 429: Too Many Requests
+2026-09-24T16:00:51+10:00  order     CANCEL order=8906889
+2026-09-24T16:00:51+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T16:30:41+10:00  order     SEND limit buy USDJPY.a 0.01 lots @158.272 sl=157.787 tp=159.242 signal=USDJPY.a:5m:pattern_break:buy:1790230500000 account=23011660
+2026-09-24T16:30:41+10:00  order     RESULT ok=True retcode=10009 ticket=8908416 price=0.0 comment='Request executed'
+2026-09-24T16:31:05+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4279.18 sl=4299.92 tp=4237.69 signal=XAUUSD.a:30m:sweep_reversal:sell:1790227800000 account=23011660
+2026-09-24T16:31:05+10:00  order     RESULT ok=True retcode=10009 ticket=8908440 price=0.0 comment='Request executed'
+2026-09-24T16:35:43+10:00  order     CANCEL order=8908416
+2026-09-24T16:35:43+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T16:40:47+10:00  order     SEND limit buy USDJPY.a 0.01 lots @158.443 sl=158.297 tp=158.735 signal=USDJPY.a:5m:breakout_retest:buy:1790231700000 account=23011660
+2026-09-24T16:40:47+10:00  order     RESULT ok=True retcode=10009 ticket=8908741 price=0.0 comment='Request executed'
+2026-09-24T18:15:10+10:00  order     SEND stop buy XAUUSD.a 0.01 lots @4282.62 sl=4274.57 tp=4298.72 signal=XAUUSD.a:5m:sweep_reversal:buy:1790237100000 account=23011660
+2026-09-24T18:15:10+10:00  order     RESULT ok=True retcode=10009 ticket=8911535 price=0.0 comment='Request executed'
+2026-09-24T18:15:37+10:00  order     CANCEL order=8911535
+2026-09-24T18:15:38+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T18:15:59+10:00  order     MODIFY position=8884507 sl 4315.6 -> 4281.25
+2026-09-24T18:15:59+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T18:16:26+10:00  order     SEND stop sell USDJPY.a 0.01 lots @158.186 sl=158.49 tp=157.765 signal=USDJPY.a:15m:sweep_reversal:sell:1790235000000 account=23011660
+2026-09-24T18:16:26+10:00  order     RESULT ok=True retcode=10009 ticket=8911629 price=0.0 comment='Request executed'
+2026-09-24T18:19:56+10:00  order     MODIFY position=8884507 sl 4281.25 -> 4274.55
+2026-09-24T18:19:56+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T18:23:34+10:00  order     SEND stop buy USDJPY.a 0.01 lots @158.35 sl=158.089 tp=158.872 signal=USDJPY.a:5m:sweep_reversal:buy:1790237700000 account=23011660
+2026-09-24T18:23:35+10:00  order     RESULT ok=True retcode=10009 ticket=8911919 price=0.0 comment='Request executed'
+2026-09-24T18:24:27+10:00  order     MODIFY position=8884548 sl 4317.59 -> 4280.04
+2026-09-24T18:24:27+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T18:24:55+10:00  order     MODIFY position=8884507 sl 4274.55 -> 4271.11
+2026-09-24T18:24:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T18:29:55+10:00  order     MODIFY position=8884507 sl 4271.11 -> 4269.21
+2026-09-24T18:29:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T18:29:56+10:00  order     MODIFY position=8884548 sl 4280.04 -> 4271.4
+2026-09-24T18:29:56+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T18:31:27+10:00  order     CANCEL order=8911629
+2026-09-24T18:31:27+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T18:34:58+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4268.02 sl=4290.35 tp=4221.57 signal=XAUUSD.a:5m:pattern_break:sell:1790238600000 account=23011660
+2026-09-24T18:34:59+10:00  order     RESULT ok=True retcode=10009 ticket=8912378 price=4268.05 comment='Request executed'
+2026-09-24T18:46:32+10:00  order     SEND market buy USDJPY.a 0.01 lots @158.403 sl=158.032 tp=159.205 signal=USDJPY.a:15m:sweep_reversal:buy:1790237700000 account=23011660
+2026-09-24T18:46:32+10:00  order     RESULT ok=True retcode=10009 ticket=8912732 price=158.403 comment='Request executed'
+2026-09-24T18:46:45+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4268.11 sl=4277.14 tp=4250.05 signal=XAUUSD.a:15m:breakout_retest:sell:1790238600000 account=23011660
+2026-09-24T18:46:45+10:00  order     RESULT ok=True retcode=10009 ticket=8912744 price=0.0 comment='Request executed'
+2026-09-24T18:57:51+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T18:57:51+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T18:57:51+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T18:58:06+10:00  order     SEND limit buy USDJPY.a 0.01 lots @158.211 sl=157.776 tp=159.082 signal=USDJPY.a:1h:sweep_reversal:buy:1790233200000 account=23011660
+2026-09-24T18:58:06+10:00  order     RESULT ok=True retcode=10009 ticket=8913271 price=0.0 comment='Request executed'
+2026-09-24T19:00:41+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4261.92 sl=4292.29 tp=4213.5 signal=XAUUSD.a:1h:pattern_break:sell:1790236800000 account=23011660
+2026-09-24T19:00:41+10:00  order     RESULT ok=True retcode=10009 ticket=8913530 price=4261.88 comment='Request executed'
+2026-09-24T19:02:04+10:00  order     MODIFY position=8911919 sl 158.089 -> 158.482
+2026-09-24T19:02:04+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:03:55+10:00  order     MODIFY position=8880510 sl 157.217 -> 158.273
+2026-09-24T19:03:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:04:54+10:00  order     MODIFY position=8911919 sl 158.482 -> 158.568
+2026-09-24T19:04:54+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:05:06+10:00  order     MODIFY position=8912744 sl 4277.14 -> 4263.54
+2026-09-24T19:05:06+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:09:55+10:00  order     MODIFY position=8911919 sl 158.568 -> 158.592
+2026-09-24T19:09:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:10:09+10:00  order     SEND market buy USDJPY.a 0.01 lots @158.59 sl=158.305 tp=159.198 signal=USDJPY.a:5m:sweep_reversal:buy:1790240700000 account=23011660
+2026-09-24T19:10:09+10:00  order     RESULT ok=True retcode=10009 ticket=8913686 price=158.591 comment='Request executed'
+2026-09-24T19:14:58+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4262.97 sl=4277.19 tp=4234.54 signal=XAUUSD.a:15m:breakout_retest:sell:1790240400000 account=23011660
+2026-09-24T19:14:58+10:00  order     RESULT ok=True retcode=10009 ticket=8913767 price=4263.08 comment='Request executed'

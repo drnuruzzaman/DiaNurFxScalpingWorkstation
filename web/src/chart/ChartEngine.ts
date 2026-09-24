@@ -272,6 +272,15 @@ function shade(hex: string, amount: number): string {
 
 const NUM_FONT = "Consolas, 'Cascadia Mono', ui-monospace, monospace"
 
+/**
+ * How many patterns get a name, an envelope and a target box on the chart.
+ *
+ * Exported because the side panel marks exactly these, and the two agreeing
+ * is the whole point - a reader should never have to work out why the list
+ * and the chart disagree about what is worth looking at.
+ */
+export const FEATURED_PATTERNS = 2
+
 const PRICE_AXIS_W = 74
 
 /** Height of a price chip on the axis. */
@@ -311,6 +320,8 @@ export class ChartEngine {
    * carry both - so it needs no cooperation from the payload.
    */
   private snapOffset = 0
+  /** Set when the timeframe changes; consumed by the next setBars(). */
+  private resetOnNextBars = false
 
   private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true }
   private news: NewsMark[] = []
@@ -414,6 +425,25 @@ export class ChartEngine {
     const prevLen = this.bars.length
     const prevFirstT = prevLen ? this.bars[0].t : 0
     this.bars = bars
+
+    // A new TIMEFRAME is a new chart, not a scroll within the old one.
+    //
+    // The viewport is kept in BARS and the price scale can be dragged
+    // manually, and both used to survive a timeframe switch. Zoom out on the
+    // daily to see a year, switch to 3m, and the chart asks for the same
+    // number of bars over a price range from the daily - so four hundred 3m
+    // candles crush into an unreadable stripe inside a 4000-4800 scale that
+    // nothing on screen occupies.
+    //
+    // Handled here rather than in setTimeframe because the order of the two
+    // is not guaranteed: the bars for the new timeframe are fetched, so they
+    // can land either side of the tf prop changing. Whichever arrives second
+    // finishes the job.
+    if (this.resetOnNextBars) {
+      this.resetOnNextBars = false
+      keepView = false
+      this.priceAuto = true
+    }
 
     if (!keepView || prevLen === 0) {
       const span = Math.min(DEFAULT_SPAN, bars.length || DEFAULT_SPAN)
@@ -586,7 +616,18 @@ export class ChartEngine {
    * where a UTC+3 broker session does not line up with UTC boundaries.
    */
   setTimeframe(ms: number) {
-    this.tfMs = ms > 0 ? ms : 0
+    const next = ms > 0 ? ms : 0
+    // Only a CHANGE counts, and only after a first timeframe is known - the
+    // opening call goes from 0 to the real value and must not be read as the
+    // user switching away from something.
+    if (this.tfMs && next && next !== this.tfMs) {
+      this.resetOnNextBars = true
+      // Put the current frame right immediately too. The new bars may be a
+      // fetch away, and leaving the old zoom on screen until they land is the
+      // unreadable stripe the flag exists to prevent, just briefly.
+      this.resetChart()
+    }
+    this.tfMs = next
     if (this.tfMs && this.clock == null) {
       this.clock = window.setInterval(() => {
         if (this.bars.length) this.scheduleBase()
@@ -1641,15 +1682,25 @@ export class ChartEngine {
     // Draw the least relevant first so the best pattern ends up on top, and cap
     // how many get the full treatment: six shaded envelopes plus six projected
     // target boxes overlapped into an unreadable wash of translucent colour.
-    const ranked = [...s.patterns].sort((a, b) => b.relevance - a.relevance)
-    const featured = new Set(ranked.slice(0, 2).map((p) => p.label + p.end_t))
+    //
+    // FILTER THEN TAKE, in that order - this is what the panel does too, and
+    // the two must agree. Taking the top two of everything and then requiring
+    // `actionable` meant a pattern that had already played out could occupy a
+    // badge slot and leave it empty, so the chart named one pattern while the
+    // panel listed a different pair. Same list, same order, same top two.
+    const featured = new Set(
+      s.patterns
+        .filter((p) => p.actionable)
+        .sort((a, b) => b.relevance - a.relevance)
+        .slice(0, FEATURED_PATTERNS)
+        .map((p) => p.label + p.end_t))
     const ordered = [...s.patterns].sort((a, b) => a.relevance - b.relevance)
     for (const p of ordered) {
       const bull = p.direction === 'bullish'
       const col = p.direction === 'neutral' ? this.theme.info : bull ? this.theme.up : this.theme.down
       const pts = p.points.map((pt) => ({ x: this.xOfTime(pt.t), y: this.yOf(pt.price), role: pt.role }))
       if (pts.length < 2) continue
-      const prominent = featured.has(p.label + p.end_t) && p.actionable
+      const prominent = featured.has(p.label + p.end_t)
 
       // 1. the shaded envelope of the formation
       if (prominent && p.zone && (p.zone.price_top !== undefined || p.zone.upper_now !== undefined)) {

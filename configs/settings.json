@@ -7,8 +7,8 @@
   "trail_lock_r": 0.5,
   "exit_mode": "trail",
   "risk_per_trade_pct": 0.5,
-  "max_daily_loss_pct": 5.0,
-  "max_daily_trades": 500,
+  "max_daily_loss_pct": 2.0,
+  "max_daily_trades": 24,
   "min_rr": 1.0
  },
  "execution": {
@@ -23,7 +23,7 @@
    "1h"
   ],
   "auto": true,
-  "max_per_symbol_tf": 1,
+  "max_per_symbol_tf": 2,
   "broker_tp": "tp2"
  },
  "gates": {

@@ -163,14 +163,33 @@
 .menu-action.dim:hover { color: var(--info); }
 
 /* Count of active studies, on the button that opens the menu. */
+/*
+ * A COUNT, not an alarm.
+ *
+ * This was a solid --bear pill, which is the colour this app uses for
+ * bearish and for sell - so "5 positions" and "11 indicators" arrived
+ * looking like a warning about something going wrong. Counts carry no
+ * direction and no urgency; they are just how many.
+ *
+ * Light and neutral instead: a translucent white fill that picks up whatever
+ * surface it sits on, so it works on all four themes without a per-theme
+ * override, and reads as part of the button rather than a sticker on it.
+ */
 .tool-count {
   margin-left: 6px;
-  padding: 0 4px;
+  padding: 0 5px;
   border-radius: 999px;
-  background: var(--bear);
-  color: #0b0f18;
+  background: rgba(255, 255, 255, 0.11);
+  color: var(--ink);
   font-size: 8.5px;
-  font-weight: 800;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+/* On the selected tab the button itself has already lifted, so the badge
+   lifts with it rather than staying dimmer than its own label. */
+.tool-btn.on .tool-count {
+  background: rgba(255, 255, 255, 0.17);
+  color: var(--ink-hi);
 }
 
 .symbol-pill {
@@ -509,25 +528,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4px 0 8px;
+  padding: 0 0 8px;
 }
 /* Names the band the needle is in, so the dial is not the only thing
    carrying that reading - it is the part people actually quote. */
+/* The current band, now in the Fear & Greed panel header - sized to the
+   header row rather than to the dial it used to sit above. */
 .gauge-chip {
-  font-size: 8.5px;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  padding: 2px 8px;
+  /* Same shape as every other header chip (.chip) - squared corners, not a
+     pill - so it reads as one of the family; only the colour is the band's. */
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
   border: 1px solid;
-  border-radius: 999px;
-  margin-bottom: 2px;
+  border-radius: var(--r-sm);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 .gauge-value {
   font-family: var(--mono);
-  font-size: 30px;
+  font-size: 34px;
   font-weight: 700;
   line-height: 1;
-  margin-top: -18px;
+  /* Tucks the number up under the needle hub; scaled with the dial (x1.18). */
+  margin-top: -21px;
 }
 /* ------------------------------------------------------------ signal card */
 .signal-card {
@@ -1754,4 +1780,95 @@
   letter-spacing: 0.14em;
   color: var(--warn);
   white-space: nowrap;
+}
+
+/* A menu that opens UPWARD, for anything anchored near the foot of the
+   screen. Unused by the dock now that its tabs are all visible, but the
+   rule is two lines and the next menu down there will want it. */
+.menu.menu-up {
+  top: auto;
+  bottom: 30px;
+}
+
+/* The dock bar runs the full width and its buttons are denser than the
+   toolbar's - ten of them have to fit beside the drag handle. */
+.dock-tabs .tool-btn {
+  padding: 3.5px 7px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+.dock-tabs .tool-btn.on {
+  color: var(--ink-hi);
+  border-color: var(--line-strong);
+  background: var(--bg-raise);
+}
+
+/* --------------------------------------------------- sessions, on the bar */
+/* The card is positioned against this, and it opens UPWARD - the status bar
+   is the last row on screen, so anything hanging below it is off the page. */
+.sess {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.sess-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink-mid);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  cursor: default;
+}
+.sess:hover .sess-trigger {
+  border-color: var(--line);
+  background: var(--bg-raise);
+  color: var(--ink);
+}
+.sess-label { font-weight: 700; }
+.sess-primary {
+  color: var(--ink-hi);
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-left: 2px;
+}
+.sess-card {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 6px);
+  z-index: 60;
+  min-width: 250px;
+  padding: 9px 11px 11px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  box-shadow: 0 -14px 40px #000b;
+  cursor: default;
+}
+/* Bridges the 6px gap between trigger and card, so moving the pointer up to
+   the card does not cross a dead strip and dismiss it. */
+.sess-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 8px;
+}
+.sess-card-h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ink-low);
 }

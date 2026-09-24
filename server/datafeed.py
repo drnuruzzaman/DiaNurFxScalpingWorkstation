@@ -421,6 +421,8 @@ class Feed:
         self.bridge = bridge or BRIDGE
         self._cache: dict = {}
         self._cache_at: dict = {}
+        self._spec: dict = {}
+        self._spec_at: dict = {}
         self._lock = threading.Lock()
 
     def bars(self, symbol: str, tf: str, count: int = 600,
@@ -490,7 +492,41 @@ class Feed:
                 'digits': CONFIG.instrument.digits, 'point': CONFIG.instrument.point,
                 'time_ms': int(s.t[-1]), 'synthetic': True}
 
+    # How long an instrument spec is trusted.
+    #
+    # Everything that matters here is a CONTRACT fact - digits, tick size and
+    # value, lot step, the broker's minimum stop distance. Those do not change
+    # while the market is open; a broker changing its contract size mid-session
+    # is not a thing this cache needs to be fast about.
+    #
+    # It was being re-fetched from the bridge on every engine pass, which is
+    # every socket frame, for every symbol on the board. Measured at 37-112ms a
+    # call, that was the single largest recurring cost in the pass - larger
+    # than the analysis it was feeding.
+    #
+    # The one field that does move is spread_points_now, and qualify.py reads
+    # it only as a THIRD fallback, after the live quote and the bar's own
+    # recorded spread. A minute-old value in that position is still better than
+    # the "assume 20 points" default it would otherwise reach.
+    SPEC_TTL_S = 60.0
+
     def spec(self, symbol: str) -> dict:
+        now = time.time()
+        with self._lock:
+            hit = self._spec.get(symbol)
+            if hit is not None and now - self._spec_at.get(symbol, 0) < self.SPEC_TTL_S:
+                return hit
+        out = self._spec_uncached(symbol)
+        # Only a spec the BRIDGE answered is worth keeping. Caching the
+        # defaults would pin a symbol to placeholder contract values for a
+        # minute every time MetaTrader is slow to answer once.
+        if out.get('source') == 'mt5':
+            with self._lock:
+                self._spec[symbol] = out
+                self._spec_at[symbol] = now
+        return out
+
+    def _spec_uncached(self, symbol: str) -> dict:
         live = self.bridge.spec(symbol)
         base = CONFIG.instrument
         out = {

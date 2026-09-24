@@ -84,6 +84,23 @@ def _status(broke: bool, failed: bool) -> str:
 # was 300 bars back - technically true, useless to trade.
 CONFIRM_WINDOW = 30
 
+# How much two same-kind patterns must share before one is a duplicate.
+#
+# A third of the shorter span. Low enough to catch the same shape found at two
+# window sizes, which typically share far more than that, and high enough that
+# two formations merely touching at the edges - the tail of one being the head
+# of the next - are still reported as the two setups they are.
+DUP_OVERLAP = 0.34
+
+
+def _overlap(a, b) -> float:
+    """How much of the SHORTER pattern the two share, 0..1."""
+    lo = max(a.start_idx, b.start_idx)
+    hi = min(a.end_idx, b.end_idx)
+    shared = max(0, hi - lo)
+    shortest = min(a.end_idx - a.start_idx, b.end_idx - b.start_idx)
+    return shared / shortest if shortest > 0 else 0.0
+
 
 def _broke_within(series: np.ndarray, start: int, level, above: bool,
                   window: int = CONFIRM_WINDOW) -> bool:
@@ -575,10 +592,25 @@ def detect_patterns(swings, h, l, c, t, atr_val, min_quality: int = 48,
     found = keep
 
     # Deduplicate: the same shape often gets found at two window sizes.
+    #
+    # On OVERLAP, not on where the two happen to end.
+    #
+    # The old test dropped a pattern only when another of the same kind ended
+    # within four bars of it. Two scans of one shape rarely agree that closely:
+    # a wider window picks up a later swing and finishes five or ten bars on,
+    # so both survived. Measured on live 4h gold that put three Triple Tops in
+    # a list of eight, two of them sharing 67% of their candles - one shape,
+    # counted twice, crowding out the patterns that were actually different.
+    #
+    # Comparing the SPANS answers the real question. Two formations that share
+    # most of their candles are one formation; two that share none are two,
+    # however close their end bars happen to fall. That second half matters as
+    # much as the first - a downtrend legitimately prints the same shape again
+    # at a lower level, and merging those would hide a real setup.
     found.sort(key=lambda p: (-p.quality, -p.end_idx))
     kept: list = []
     for p in found:
-        if any(k.kind == p.kind and abs(k.end_idx - p.end_idx) < 4 for k in kept):
+        if any(k.kind == p.kind and _overlap(k, p) >= DUP_OVERLAP for k in kept):
             continue
         kept.append(p)
 

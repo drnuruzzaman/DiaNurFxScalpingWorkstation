@@ -120,9 +120,21 @@ def _widen_to_noise_floor(sig: Signal) -> Signal:
     risk = abs(sig.entry - sig.stop)
     if risk >= floor:
         return sig
+    # Keep a STRUCTURAL TP2 across the widening.
+    #
+    # Targets are re-derived because R changed, but the old call passed no
+    # structural objective - so every widened signal fell back to a flat 2R
+    # TP2 and the prior swing it was aiming at was silently discarded. A TP2
+    # that is not the fixed multiple of the old risk WAS structural; it is
+    # offered back to _targets, which re-checks it against the new, wider R
+    # (1.2R-6R) exactly as it would for any other signal.
+    t_sign = 1.0 if sig.side == 'buy' else -1.0
+    fixed_tp2 = sig.entry + t_sign * risk * CONFIG.risk.tp2_r
+    structural = (None if abs(sig.tp2 - fixed_tp2) <= 1e-6 * max(1.0, abs(fixed_tp2))
+                  else sig.tp2)
     sign = -1.0 if sig.side == 'buy' else 1.0
     sig.stop = sig.entry + sign * floor
-    sig.tp1, sig.tp2 = _targets(sig.entry, sig.stop, sig.side)
+    sig.tp1, sig.tp2 = _targets(sig.entry, sig.stop, sig.side, structural)
     sig.evidence.append(
         _ev(f'stop widened to the {CONFIG.risk.min_stop_atr:.1f} ATR noise floor '
             f'({risk / atr_v:.2f} ATR was inside normal fluctuation)',

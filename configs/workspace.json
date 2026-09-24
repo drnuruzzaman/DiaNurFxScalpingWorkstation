@@ -2,14 +2,9 @@
  "values": {
   "dianur.tabs.v2": [
    {
-    "id": "t0",
+    "id": "tmuezst9z",
     "symbol": "XAUUSD.a",
     "tf": "15m"
-   },
-   {
-    "id": "tmueragjp",
-    "symbol": "USDJPY.a",
-    "tf": "1h"
    }
   ],
   "dianur.activeTab": "t0",
@@ -18,19 +13,19 @@
    "zigzag": false,
    "macd": false,
    "levels": true,
-   "trendlines": true,
+   "trendlines": false,
    "channels": true,
    "patterns": true,
-   "fvg": true,
-   "zones": true,
-   "fib": true,
+   "fvg": false,
+   "zones": false,
+   "fib": false,
    "swings": true,
    "structure": true,
    "events": false,
    "liquidity": true,
    "signal": true,
    "volumeProfile": false,
-   "regimeBands": false,
+   "regimeBands": true,
    "rsi": true,
    "volume": false
   },
@@ -46,17 +41,17 @@
   ],
   "dianur.theme": "glossy",
   "dianur.snapPanels.v2": [
+   "signal",
    "gauge",
    "trend",
-   "evidence",
-   "signal"
+   "evidence"
   ],
   "dianur.panels": {
    "left": true,
    "right": true,
    "bottom": false
   },
-  "dianur.dockTab": "calendar",
+  "dianur.dockTab": "signals",
   "dianur.boardSort": {
    "key": "symbol",
    "dir": 1
@@ -66,5 +61,5 @@
    "dir": 1
   }
  },
- "saved_ms": 1790213872837
+ "saved_ms": 1790240670626
 }

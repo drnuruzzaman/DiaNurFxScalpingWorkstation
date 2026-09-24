@@ -74,7 +74,9 @@
   --r-sm: 3px;
   --r: 5px;
   --r-lg: 8px;
-  --rail-left: 232px;
+  /* 272, up from 232, since the AI Analyst moved into the left rail: its
+     five tabs need 239px unsqueezed, and at 232 every one was compressed. */
+  --rail-left: 272px;
   --rail-right: 300px;
   --topbar-h: 44px;
   --statusbar-h: 30px;

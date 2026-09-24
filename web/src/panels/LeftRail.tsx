@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Snapshot } from '../chart/types'
-import { clockUTC, dirClass, fmt, pct, signed } from '../lib/format'
-import { Empty, KV, Meter, Panel, ScoreRow } from './common'
+import { fmt, signed } from '../lib/format'
+import { Empty, Panel, ScoreRow } from './common'
 
 /**
  * The Fear/Greed dial.
@@ -34,19 +34,29 @@ const BANDS: Band[] = [
   { lo: 80, hi: 100, col: '#9fe547', lines: ['EXTREME', 'GREED'], ink: '#0d1405' },
 ]
 
-const SESSION_ROWS = [
-  { key: 'sydney', label: 'Sydney', open: 21, close: 6 },
-  { key: 'tokyo', label: 'Tokyo', open: 0, close: 9 },
-  { key: 'london', label: 'London', open: 7, close: 16 },
-  { key: 'newyork', label: 'New York', open: 12, close: 21 },
-]
-
 const bandFor = (v: number): Band =>
   BANDS.find((b) => v >= b.lo && v <= b.hi) ?? BANDS[2]
+
+/** The current band as a coloured chip, for the panel header. */
+function BandChip({ value }: { value: number }) {
+  const b = bandFor(Math.max(0, Math.min(100, value)))
+  return (
+    <span className="gauge-chip" style={{
+      color: b.col, borderColor: b.col, background: `${b.col}1f`,
+    }}>{b.lines.join(' ')}</span>
+  )
+}
 
 function Gauge({ value, label }: { value: number; label: string }) {
   const W = 206, H = 126, CX = W / 2, CY = 104, R = 72, BW = 23
   const START = 190, SWEEP = 160
+  // Drawn larger than its own coordinate space. The rail widened to 272 for
+  // the AI Analyst, and the dial had stayed at 206px with 6.4px band names -
+  // legible only if you leaned in. Scaling the whole SVG keeps every angle,
+  // arc and label position exactly as designed; only the pixels grow.
+  const SCALE = 1.18
+  // Top of the drawing: the outermost arc edge, less a unit of breathing room.
+  const TOP = Math.floor(CY - R - (BW + 3) / 2) - 1
 
   const clamped = Math.max(0, Math.min(100, value))
   const deg = (v: number) => START + (Math.max(0, Math.min(100, v)) / 100) * SWEEP
@@ -67,11 +77,13 @@ function Gauge({ value, label }: { value: number; label: string }) {
 
   return (
     <div className="gauge-wrap">
-      <div className="gauge-chip" style={{
-        color: active.col, borderColor: active.col, background: `${active.col}1f`,
-      }}>{active.lines.join(' ')}</div>
+      {/* The band chip that sat here moved to the panel header. */}
 
-      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="img"
+      {/* Cropped at the top. The arc's outer edge - the active band is drawn
+          3 units thicker - sits TOP units below the old origin, and that band
+          of nothing was showing as a gap under the header. */}
+      <svg width={Math.round(W * SCALE)} height={Math.round((H - TOP) * SCALE)}
+        viewBox={`0 ${TOP} ${W} ${H - TOP}`} role="img"
         aria-label={`Fear and greed ${clamped} of 100, ${active.lines.join(' ')}`}>
         <defs>
           {BANDS.map((b, i) => (
@@ -85,7 +97,7 @@ function Gauge({ value, label }: { value: number; label: string }) {
                 // stacked name reads bottom-up.
                 const offset = b.lines.length === 1
                   ? -3
-                  : (li === 0 ? 3.5 : -4.5)
+                  : (li === 0 ? 4 : -5)
                 return (
                   <path key={`p${i}-${li}`} id={`fg-arc-${i}-${li}`} fill="none"
                     d={path(deg(b.lo) + 1.2, deg(b.hi) - 1.2, R + offset)} />
@@ -105,7 +117,7 @@ function Gauge({ value, label }: { value: number; label: string }) {
         })}
 
         {BANDS.map((b, i) => b.lines.map((line, li) => (
-          <text key={`t${i}-${li}`} fill={b.ink} fontSize="6.4" fontWeight="800"
+          <text key={`t${i}-${li}`} fill={b.ink} fontSize="7.2" fontWeight="800"
             letterSpacing="0.06em" opacity={b === active ? 1 : 0.72}>
             <textPath href={`#fg-arc-${i}-${li}`} startOffset="50%"
               textAnchor="middle">{line}</textPath>
@@ -115,7 +127,7 @@ function Gauge({ value, label }: { value: number; label: string }) {
         {[0, 25, 50, 75, 100].map((v) => {
           const [tx, ty] = polar(deg(v), R - BW / 2 - 9)
           return (
-            <text key={v} x={tx} y={ty} fill="#55617a" fontSize="7.5"
+            <text key={v} x={tx} y={ty} fill="#7d8aa5" fontSize="8.5"
               textAnchor="middle" dominantBaseline="middle">{v}</text>
           )
         })}
@@ -134,7 +146,7 @@ function Gauge({ value, label }: { value: number; label: string }) {
 }
 
 export function LeftRail({
-  snap, quote, symbols, symbol, onSymbol, nowMs,
+  snap, quote, symbols, symbol, onSymbol,
   quotes = {}, onEditWatchlist,
 }: {
   snap: Snapshot | null
@@ -142,14 +154,11 @@ export function LeftRail({
   symbols: string[]
   symbol: string
   onSymbol: (s: string) => void
-  nowMs: number
   /** Live bid/ask per symbol, so every row has a price - not just the active one. */
   quotes?: Record<string, any>
   onEditWatchlist?: () => void
 }) {
   const gauge = snap?.gauge
-  const vol = snap?.regime?.volatility
-  const active: string[] = snap?.session?.active ?? []
 
   return (
     <aside className="rail">
@@ -197,7 +206,10 @@ export function LeftRail({
         )}
       </Panel>
 
-      <Panel title="Fear & Greed" right={<span className="chip chip-mute">{snap?.tf ?? '—'}</span>}>
+      {/* The band in the header, not the timeframe. The timeframe is already
+          on the chart, the toolbar and the tab; the band is the one-word
+          answer this panel exists to give, so it sits where the eye lands. */}
+      <Panel title="Fear & Greed" right={gauge ? <BandChip value={gauge.value} /> : null}>
         {gauge ? (
           <>
             <Gauge value={gauge.value} label={gauge.label} />
@@ -214,58 +226,6 @@ export function LeftRail({
         ) : <Empty>Waiting for analysis…</Empty>}
       </Panel>
 
-      <Panel title="Volatility">
-        {vol ? (
-          <>
-            <KV k="State" v={<span className={
-              vol.state === 'extreme' || vol.state === 'high' ? 't-warn' : 't-info'
-            }>{vol.label}</span>} />
-            <KV k="ATR" v={`${fmt(vol.atr_points, 0)} pts`} />
-            <KV k="Percentile" v={`${fmt(vol.atr_percentile, 0)}th`} />
-            <div style={{ margin: '4px 0 6px' }}><Meter value={vol.atr_percentile} signed={false} /></div>
-            <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-              {vol.squeeze && <span className="chip chip-warn">Squeeze</span>}
-              {vol.expanding && <span className="chip chip-up">Expanding</span>}
-              {vol.contracting && <span className="chip chip-mute">Contracting</span>}
-            </div>
-          </>
-        ) : <Empty>—</Empty>}
-      </Panel>
-
-      {/* Session sits last: it is standing context you glance at, not
-          something you act on, so it belongs below the signals and the read. */}
-      <Panel title="Session" right={<span className="mono t-dim">{clockUTC(nowMs)} UTC</span>}>
-        {SESSION_ROWS.map((s) => {
-          const on = active.includes(s.key)
-          return (
-            <div className="kv" key={s.key}>
-              <span className="kv-k" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span className="dot" style={{
-                  background: on ? 'var(--bull)' : 'var(--ink-dim)',
-                  boxShadow: on ? '0 0 6px var(--bull)' : 'none',
-                }} />
-                <span style={{ color: on ? 'var(--ink-hi)' : undefined }}>{s.label}</span>
-              </span>
-              <span className="kv-v t-dim" style={{ fontSize: 10 }}>
-                {String(s.open).padStart(2, '0')}:00–{String(s.close).padStart(2, '0')}:00
-              </span>
-            </div>
-          )
-        })}
-        {/* snap?.session, not snap. A snapshot that failed to analyse - too
-            few bars while the engine is starting, say - carries only {ok,
-            reason}, and reaching into .session on one of those threw during
-            render and blanked the ENTIRE app, rails and chart included. */}
-        {snap?.session && (
-          <div style={{ marginTop: 7, paddingTop: 7, borderTop: '1px solid var(--line-soft)' }}>
-            <KV k="Primary" v={snap.session.primary} />
-            <div style={{ marginTop: 4 }}>
-              <div className="kv-k" style={{ marginBottom: 3 }}>Tradeability</div>
-              <Meter value={snap.session.quality * 100} />
-            </div>
-          </div>
-        )}
-      </Panel>
 
     </aside>
   )

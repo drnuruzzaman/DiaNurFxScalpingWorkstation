@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Pattern, Signal, Snapshot } from '../chart/types'
+import { FEATURED_PATTERNS } from '../chart/ChartEngine'
 import { biasClass, chipFor, dirClass, fmt, signed, stageChip } from '../lib/format'
 import { Empty, KV, Meter, Panel, ScoreRow } from './common'
 
@@ -108,7 +109,7 @@ function SignalCard({ sig, onSelect, selected, onPlace, tradingEnabled }: {
   )
 }
 
-function PatternCard({ p }: { p: Pattern }) {
+function PatternCard({ p, onChart }: { p: Pattern; onChart?: boolean }) {
   const col = p.direction === 'bullish' ? 'var(--bull)'
     : p.direction === 'bearish' ? 'var(--bear)' : 'var(--info)'
   return (
@@ -117,6 +118,10 @@ function PatternCard({ p }: { p: Pattern }) {
     <div className="pattern-card" style={{ borderLeftColor: col }}>
       <div className="pattern-top">
         <span className="pattern-name" style={{ color: col }}>{p.label}</span>
+        {/* Which of these the chart has actually named. Without it the two
+            read as contradicting each other: the panel lists five, the chart
+            labels two, and nothing says they are the same ranking. */}
+        {onChart && <span className="chip chip-mute" title="Named on the chart">on chart</span>}
         <span className={p.status === 'confirmed' ? 'chip chip-up' : 'chip chip-warn'}>
           {p.status}
         </span>
@@ -201,7 +206,11 @@ export function RightRail({
               ? 'Nothing live - every pattern found has already played out.'
               : 'No pattern above the quality floor.'}
           </Empty>
-        ) : livePatterns.slice(0, 5).map((p, i) => <PatternCard key={i} p={p} />)}
+        ) : livePatterns.slice(0, 5).map((p, i) => (
+          // The same ordering the chart features from, so the first
+          // FEATURED_PATTERNS rows here are exactly the ones badged there.
+          <PatternCard key={i} p={p} onChart={i < FEATURED_PATTERNS} />
+        ))}
       </Panel>
 
       <Panel title="Trend Read">

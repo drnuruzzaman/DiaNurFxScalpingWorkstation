@@ -117,6 +117,12 @@ class State:
         # Refreshed once per bar, which is not a cache tradeoff but the
         # definition: closed-bar facts do not change between closes.
         self.closed: dict = {}             # (symbol, tf) -> snapshot, no forming bar
+        # See context(): one second of reuse for the three bridge calls
+        # behind it. Locked because the socket, the board workers and the
+        # executor all reach for it from different threads.
+        self._ctx: dict | None = None
+        self._ctx_at: float = 0.0
+        self._ctx_lock = threading.Lock()
         self.signals: dict = {}            # (symbol, tf) -> [Signal]
         self.signal_index: dict = {}       # id -> Signal
         self.backtests: dict = {}          # run_id -> {status, progress, result}
@@ -138,7 +144,32 @@ class State:
         # disk so alerts keep flowing when no browser is open.
         self.watchlist: list = load_watchlist()
 
+    # How long one trading context is reused.
+    #
+    # Building it costs three bridge round trips - account, positions, quotes -
+    # and it is rebuilt by every engine pass that is not handed one. The push
+    # socket runs about once a second and the board sweeps eight timeframes, so
+    # the same three calls were being made many times for answers that are
+    # identical within the same second.
+    #
+    # One second, not longer: these are the numbers the risk gates read, and a
+    # context older than the loop that consumes it would let a filled position
+    # or a blown-out spread go unseen for a tick. This makes nothing staler
+    # than the cadence it was already sampled at - it only stops the same
+    # instant being paid for repeatedly.
+    CONTEXT_TTL_S = 1.0
+
     def context(self) -> dict:
+        now = time.time()
+        with self._ctx_lock:
+            if self._ctx is not None and now - self._ctx_at < self.CONTEXT_TTL_S:
+                return self._ctx
+        built = self._context_uncached()
+        with self._ctx_lock:
+            self._ctx, self._ctx_at = built, now
+        return built
+
+    def _context_uncached(self) -> dict:
         """What qualify.py needs that the chart cannot know."""
         acct = BRIDGE.account() or {}
         positions = BRIDGE.positions() or []
@@ -1989,11 +2020,20 @@ async def ws_live(ws: WebSocket, symbol: str = None, tf: str = '5m'):
                 await asyncio.sleep(3)
                 continue
 
-            acct = await asyncio.to_thread(BRIDGE.account)
-            positions = await asyncio.to_thread(BRIDGE.positions)
-            orders = await asyncio.to_thread(BRIDGE.orders)
-            quote = await asyncio.to_thread(FEED.quote, sym)
-            bridge_health = await asyncio.to_thread(BRIDGE.health)
+            # Five INDEPENDENT reads, so they go together.
+            #
+            # Awaited one after another they cost the sum of their latencies -
+            # measured at ~100ms for the set. The bridge answers them
+            # concurrently without contention (~11ms for the same five), so
+            # sequencing them was buying nothing and spending 90ms of every
+            # frame this socket pushes.
+            acct, positions, orders, quote, bridge_health = await asyncio.gather(
+                asyncio.to_thread(BRIDGE.account),
+                asyncio.to_thread(BRIDGE.positions),
+                asyncio.to_thread(BRIDGE.orders),
+                asyncio.to_thread(FEED.quote, sym),
+                asyncio.to_thread(BRIDGE.health),
+            )
 
             if (isinstance(acct, dict)
                     and time.time() - pnl_cache['at'] > PNL_EVERY_S):
