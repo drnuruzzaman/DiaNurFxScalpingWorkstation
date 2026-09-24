@@ -182,6 +182,8 @@ export type Snapshot = {
   nearest: { above: Level | null; below: Level | null }
   session_levels: Record<string, number>
   liquidity: LiquidityPool[]
+  fvg: PriceArea[]
+  zones: PriceArea[]
   equal_highs: any[]
   equal_lows: any[]
   trendlines: Trendline[]
@@ -267,6 +269,45 @@ export type NewsHover = {
   y: number
 } | null
 
+/**
+ * A band of price rather than a line: a fair value gap, or a supply/demand
+ * base. Both come from server/engine/zones.py and are drawn the same way.
+ */
+export type PriceArea = {
+  kind: 'fvg' | 'zone'
+  /** fvg: bullish | bearish.  zone: demand | supply. */
+  side: string
+  low: number
+  high: number
+  mid: number
+  /** Bar index in the SNAPSHOT's series, not the chart's - see snapX(). */
+  idx: number
+  to_idx?: number
+  t: number
+  size_atr?: number
+  impulse_atr?: number
+  /** Times price has come back to test the band since it formed. */
+  touches?: number
+  /** 0 untouched, 1 fully traded through. */
+  filled: number
+}
+
+/**
+ * What a price distance is worth, for the money figure on the signal rails.
+ *
+ * `tickValue` is the broker's own trade_tick_value: one tick on ONE lot, in
+ * the account currency. Money is then (distance / tickSize) * tickValue *
+ * lots, which needs no contract table and no cross rate.
+ */
+export type MoneyModel = {
+  tickSize: number
+  tickValue: number
+  /** The size the chart prices its labels at - see LOTS_FOR in App. */
+  lots: number
+  /** Currency prefix, e.g. "$", "A$", "€". */
+  symbol: string
+}
+
 export type Overlays = {
   mtfTrendlines: boolean
   zigzag: boolean
@@ -279,6 +320,12 @@ export type Overlays = {
   structure: boolean
   events: boolean
   liquidity: boolean
+  /** Three-bar imbalances price has not yet filled. */
+  fvg: boolean
+  /** Supply and demand bases - where strong moves departed from. */
+  zones: boolean
+  /** Retracement levels of the current impulse leg. */
+  fib: boolean
   signal: boolean
   volumeProfile: boolean
   regimeBands: boolean
@@ -294,6 +341,12 @@ export const DEFAULT_OVERLAYS: Overlays = {
   trendlines: true,
   channels: true,
   patterns: true,
+  // Off by default, all three. Each draws a BAND rather than a line, and
+  // three sets of bands on top of the levels and channels already there is
+  // an unreadable chart. They are switched on to answer a question.
+  fvg: false,
+  zones: false,
+  fib: false,
   swings: true,
   structure: true,
   events: true,

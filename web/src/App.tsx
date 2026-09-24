@@ -57,6 +57,17 @@ const OVERLAY_GROUPS: { title: string; rows: OverlayRow[] }[] = [
     ],
   },
   {
+    // Bands, not lines - kept in their own group because switching two of
+    // them on at once is already a lot of chart, and that is easier to see
+    // when they are listed together.
+    title: 'Areas',
+    rows: [
+      { key: 'zones', label: 'Supply / demand', hint: 'bases strong moves left' },
+      { key: 'fvg', label: 'Fair value gaps', hint: 'unfilled imbalances' },
+      { key: 'fib', label: 'Fibonacci', hint: 'retracement of the last leg' },
+    ],
+  },
+  {
     title: 'Higher timeframe',
     rows: [
       { key: 'mtfTrendlines', label: 'Projected trendlines', hint: 'from coarser frames' },
@@ -78,6 +89,7 @@ const THEMES: { key: string; label: string; hint: string }[] = [
   { key: 'midnight', label: 'Midnight', hint: 'near-black navy' },
   { key: 'navy', label: 'Navy', hint: 'blue, brighter' },
   { key: 'carbon', label: 'Carbon', hint: 'neutral grey' },
+  { key: 'glossy', label: 'Glossy', hint: 'Ausloans, lacquered' },
 ]
 
 const LAYOUT_ROWS: { key: keyof LayoutOpts; label: string; hint: string }[] = [
@@ -235,22 +247,6 @@ export default function App() {
     () => localStorage.getItem('dianur.hideFigures') === '1')
   const [board, setBoard] = useState<Board | null>(null)
   const [tradingEnabled, setTradingEnabled] = useState(false)
-  // Automatic sending of FINAL qualified watchlist signals. Server-side state;
-  // it still needs the bridge armed to send anything.
-  const [autoExec, setAutoExec] = useState(false)
-  const toggleAuto = async () => {
-    const next = !autoExec
-    if (next && !window.confirm(
-      'Turn AUTO execution on?\n\nEvery FINAL, qualified signal on a watchlist symbol ' +
-      'will be sent to MT5 without asking - 0.01-0.03 lots, one per symbol and ' +
-      'timeframe, trailing stop after TP1.\n\nNothing is sent unless the bridge was ' +
-      'started with --enable-trading.')) return
-    try {
-      const r = await api.setAuto(next)
-      setAutoExec(r.auto)
-    } catch (e: any) { setToast(`Could not switch: ${e.message}`) }
-  }
-
   const [selectedId, setSelectedId] = useState<string | null>(null)
   // The Indicators menu is a considered setup, not a scratch state. It used
   // to be the one menu that did NOT persist, so every reload threw the whole
@@ -288,7 +284,7 @@ export default function App() {
     () => loadPref<string[]>('dianur.watchlist', []))
   const [wlQuotes, setWlQuotes] = useState<Record<string, any>>({})
   const [theme, setTheme] = useState<string>(
-    () => loadPref('dianur.theme', 'midnight'))
+    () => loadPref('dianur.theme', 'glossy'))
   const [showSettings, setShowSettings] = useState(false)
   const [dockH, setDockH] = useState(180)
   // Which panels are open. Part of the saved workspace, so a layout you chose
@@ -539,7 +535,6 @@ export default function App() {
       setMtfLines(p.mtf_trendlines ?? [])
       if (p.board) setBoard(p.board)
       setTradingEnabled(!!(p as any).trading_enabled)
-      setAutoExec(!!(p as any).auto_execute)
     }
     f.connect()
     feed.current = f
@@ -718,6 +713,39 @@ export default function App() {
   // would render any FX pair three decimals short. The polled quote always
   // has it, so it backs the stream up.
   const digits = quote?.digits ?? wlQuotes[symbol]?.digits ?? 2
+
+  /**
+   * The size the chart prices its labels at.
+   *
+   * A fixed reference size, NOT the size an order would actually be sent at -
+   * that comes from the risk model and changes with the stop. The point of
+   * the money figure on a rail is to make "how far is this target" concrete
+   * in the unit a person thinks in, and a number that moved with every
+   * recalculated stop would not be comparable between one signal and the next.
+   *
+   * Gold is a fifth of the size because one lot is 100 ounces against a
+   * major's 100,000 units, so the two carry money per pip at very different
+   * rates; 0.01 of gold and 0.05 of a major are the same order of magnitude.
+   */
+  const chartLots = /^xau/i.test(symbol) ? 0.01 : 0.05
+
+  const money = useMemo(() => {
+    const q = quote ?? wlQuotes[symbol]
+    if (!q?.tick_size || !q?.tick_value) return null
+    // Anything without a well-known symbol falls back to its code: "$" on an
+    // AUD account is a lie that costs nothing to avoid.
+    const code = acct?.currency ?? ''
+    const SYMBOLS: Record<string, string> = {
+      USD: '$', AUD: 'A$', NZD: 'NZ$', CAD: 'C$',
+      EUR: '€', GBP: '£', JPY: '¥',
+    }
+    return {
+      tickSize: q.tick_size,
+      tickValue: q.tick_value,
+      lots: chartLots,
+      symbol: SYMBOLS[code] ?? (code ? `${code} ` : '$'),
+    }
+  }, [quote, wlQuotes, symbol, acct?.currency, chartLots])
   // Offer only frames the board has actually scanned, rather than a hardcoded
   // ladder that lists timeframes with nothing behind them.
   const mtfAvailable = useMemo(() => {
@@ -952,20 +980,31 @@ export default function App() {
             className={mt5?.recovering ? 'dot pulse' : 'dot'}
             style={{ background: connColour, boxShadow: `0 0 6px ${connColour}` }}
           />
+          {/* The SERVER, not the login.
+              A bare account number tells you nothing you can act on - you
+              cannot read "is this the right broker" or "am I on the live box"
+              off eight digits. The server name says both. The number itself
+              is still one click away, in Settings > Risk & Gates, where it is
+              wanted for reconciling a statement rather than glanced at.
+
+              DEMO/LIVE stays. Most server names carry it, but not all do, and
+              this is the one label on screen that says whether an order
+              spends real money - it does not get dropped on the assumption
+              that a broker named their server helpfully. */}
           {mt5Up ? (
             <>
               <span style={{ color: acctKind === 'LIVE' ? 'var(--bear)' : undefined }}>
                 {acctKind}
               </span>
-              {mt5?.login ? <span className="mono" style={{ opacity: 0.8, fontWeight: 400 }}>
-                {' '}{mt5.login}
+              {mt5?.server ? <span className="mono" style={{ opacity: 0.8, fontWeight: 400 }}>
+                {' '}{mt5.server}
               </span> : null}
             </>
           ) : (
             <>
               MT5 OFFLINE
-              {mt5?.login ? <span className="mono" style={{ opacity: 0.6, fontWeight: 400 }}>
-                {' '}{acctKind} {mt5.login}
+              {mt5?.server ? <span className="mono" style={{ opacity: 0.6, fontWeight: 400 }}>
+                {' '}{acctKind} {mt5.server}
               </span> : null}
             </>
           )}
@@ -1002,11 +1041,10 @@ export default function App() {
           ) : (
           <div className="rail-wrap">
           <LeftRail
-            snap={snap} quote={quote} account={acct} symbols={watchlistShown}
+            snap={snap} quote={quote} symbols={watchlistShown}
             quotes={wlQuotes} onEditWatchlist={() => setShowPicker(true)}
             symbol={symbol} onSymbol={openTab}
-            tradingEnabled={tradingEnabled} nowMs={now}
-            autoExec={autoExec} onToggleAuto={toggleAuto}
+            nowMs={now}
           />
           <RailHandle side="left" onClose={() => togglePanel('left')} />
           </div>
@@ -1015,7 +1053,7 @@ export default function App() {
           <div className="centre">
             <ChartPane
               bars={bars} snapshot={snap} signal={overlays.signal ? selected : null}
-              overlays={overlays} digits={digits}
+              overlays={overlays} digits={digits} money={money}
               onNeedHistory={loadOlderBars} status={chartStatus}
               onEngine={(e) => { chartEngine.current = e }}
               tfMs={TF_MS[tf] ?? 0}
@@ -1218,7 +1256,7 @@ export default function App() {
       )}
 
       {showSettings && <Settings onClose={() => setShowSettings(false)} liveTf={tf}
-        watchlist={watchlistShown} />}
+        watchlist={watchlistShown} mt5={mt5} />}
 
       {toast && (
         <div className="panel" style={{

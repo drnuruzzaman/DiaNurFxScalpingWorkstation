@@ -418,3 +418,196 @@ select:focus {
     transform: rotate(360deg);
   }
 }
+
+/* ---------------------------------------------------------------------- */
+/* Glossy - Ausloans brand, lacquered                                      */
+/* ---------------------------------------------------------------------- */
+/*
+ * The one theme that breaks the rule above, and says so.
+ *
+ * Midnight, Navy and Carbon re-tint surfaces only, because lime/magenta/cyan/
+ * amber carry meaning and a theme that repainted "bearish" would make the same
+ * chart say something different. Glossy keeps that meaning but moves the two
+ * DIRECTIONAL hues onto the Ausloans brand: Ausloans Green becomes bullish and
+ * Ausloans Pink becomes bearish. That is the same semantic pairing - green up,
+ * pink-red down - read the same way without thinking, so nothing a trader
+ * relies on changes. Amber moves to Ausloans Orange for the same reason.
+ *
+ * Cyan and violet stay as they are. The brand has no equivalent of either, and
+ * inventing one would be a decorative choice dressed up as a brand decision.
+ *
+ * The gloss itself is a light model, not a texture: one overhead source, so
+ * every raised surface gets a bright hairline along its top edge, a short
+ * highlight falling down its face, and a shadow beneath it. Applied that way
+ * consistently, the terminal reads as stacked lacquered panels rather than as
+ * flat blocks with a gradient stuck on.
+ */
+:root[data-theme='glossy'] {
+  /* Ausloans brand, exactly as specified */
+  --aus-pink: #e31c79;
+  --aus-navy: #171c8f;
+  --aus-grey: #b1b3b3;
+  --aus-green: #93c90f;
+  --aus-orange: #ff9e1b;
+  --aus-dark-navy: #041e42;
+  --aus-cool-gray: #d9d9d6;
+
+  /* Derived tint - NOT a brand colour. Ausloans Navy is unreadable as a line
+     on the dark navy field, so a lightened tint of it carries the brand into
+     the places a line or a focus ring has to be seen. */
+  --tint-navy: #6c74e8;
+
+  /* --- surfaces ------------------------------------------------------- */
+  --bg-void: #02101f;
+  --bg-base: #041e42;
+  --bg-panel: #062951;
+  --bg-panel-2: #08325f;
+  --bg-raise: #0b3d70;
+  --bg-hover: #10538f;
+  --bg-input: #03182f;
+
+  /* --- lines ---------------------------------------------------------- */
+  --line: rgba(177, 179, 179, 0.18);
+  --line-soft: rgba(177, 179, 179, 0.08);
+  --line-strong: rgba(177, 179, 179, 0.34);
+
+  /* --- ink ------------------------------------------------------------ */
+  --ink-hi: #ffffff;
+  --ink: #d9d9d6;
+  --ink-mid: #9db3cf;
+  --ink-low: #7089a8;
+  --ink-dim: #4d6584;
+
+  /* --- semantic accents ----------------------------------------------- */
+  --bull: #93c90f;
+  --bull-dim: #6b9209;
+  --bull-glow: rgba(147, 201, 15, 0.16);
+
+  --bear: #e31c79;
+  --bear-dim: #a11255;
+  --bear-glow: rgba(227, 28, 121, 0.16);
+
+  --warn: #ff9e1b;
+  --warn-dim: #b86c07;
+  --warn-glow: rgba(255, 158, 27, 0.16);
+
+  --live: #e31c79;
+  --neutral: #8fa4bd;
+
+  /* --- chart ----------------------------------------------------------- */
+  --candle-up: #93c90f;
+  --candle-down: #e31c79;
+  --candle-up-fill: #93c90f;
+  --candle-down-fill: #e31c79;
+  --grid: #1b447155;
+  --grid-strong: #1b4471;
+  --crosshair: #9db3cf;
+
+  --zone-bull: rgba(147, 201, 15, 0.10);
+  --zone-bear: rgba(227, 28, 121, 0.10);
+  --zone-neutral: rgba(143, 164, 189, 0.10);
+
+  /* --- the light model ------------------------------------------------- */
+  /* Declared once here so every glossy rule below shares the same source.
+     Retune the sheen for the whole terminal by editing these four values. */
+  --gloss-face: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.075) 0%,
+    rgba(255, 255, 255, 0.022) 42%,
+    rgba(0, 0, 0, 0.10) 100%
+  );
+  --gloss-edge: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  --gloss-drop: 0 2px 10px rgba(1, 8, 18, 0.55);
+  --gloss-brand: linear-gradient(90deg, #171c8f, #e31c79);
+}
+
+/*
+ * Everything below is scoped to the theme, so the other three are untouched.
+ * `background-image` is layered over the existing `background-color` rather
+ * than replacing it: the colour tokens above still do the work, and the sheen
+ * is a film on top. That keeps a panel readable if the gradient is ever
+ * dropped, and means a new panel added to app.css inherits the right colour
+ * without needing a glossy rule of its own.
+ */
+:root[data-theme='glossy'] .topbar,
+:root[data-theme='glossy'] .statusbar,
+:root[data-theme='glossy'] .dock,
+:root[data-theme='glossy'] .rail > section,
+:root[data-theme='glossy'] .menu,
+:root[data-theme='glossy'] .picker,
+:root[data-theme='glossy'] .news-card,
+:root[data-theme='glossy'] .signal-card,
+:root[data-theme='glossy'] .pattern-card {
+  background-image: var(--gloss-face);
+  box-shadow: var(--gloss-edge);
+}
+
+/* Floating surfaces also cast. A menu with no shadow sits IN the page; the
+   shadow is what says it is above it and can be dismissed. */
+:root[data-theme='glossy'] .menu,
+:root[data-theme='glossy'] .picker,
+:root[data-theme='glossy'] .news-card {
+  box-shadow: var(--gloss-edge), var(--gloss-drop);
+}
+
+/* The brand gradient, used once, along the edge where the app meets its
+   chrome. Repeating it on every border would turn a brand device into
+   wallpaper. */
+:root[data-theme='glossy'] .topbar {
+  border-bottom: 2px solid transparent;
+  border-image: var(--gloss-brand) 1;
+}
+
+/* Controls get the same light from the same direction - convex when raised,
+   and the highlight removed on press so they read as pushed in. */
+:root[data-theme='glossy'] .tool-btn,
+:root[data-theme='glossy'] .tf-btn,
+:root[data-theme='glossy'] .tf-chip,
+:root[data-theme='glossy'] .mode-btn,
+:root[data-theme='glossy'] .symbol-pill,
+:root[data-theme='glossy'] .chart-tools button,
+:root[data-theme='glossy'] .dock-tab {
+  background-image: var(--gloss-face);
+  box-shadow: var(--gloss-edge), 0 1px 2px rgba(1, 8, 18, 0.45);
+}
+:root[data-theme='glossy'] .tool-btn:active,
+:root[data-theme='glossy'] .tf-btn:active,
+:root[data-theme='glossy'] .tf-chip:active,
+:root[data-theme='glossy'] .chart-tools button:active {
+  background-image: none;
+  box-shadow: inset 0 1px 3px rgba(1, 8, 18, 0.6);
+}
+
+/* An active control is lit from within rather than from above: the sheen is
+   dropped and the accent's own glow takes its place, so "on" is a change of
+   state and not just a change of colour. */
+:root[data-theme='glossy'] .tf-btn.on,
+:root[data-theme='glossy'] .tf-chip.on,
+:root[data-theme='glossy'] .tool-btn.on,
+:root[data-theme='glossy'] .dock-tab.on {
+  background-image: none;
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.06);
+}
+
+/* Inputs are the one place the light inverts: a field is a recess, so the
+   shadow goes at the top and there is no face highlight at all. */
+:root[data-theme='glossy'] input,
+:root[data-theme='glossy'] select,
+:root[data-theme='glossy'] textarea,
+:root[data-theme='glossy'] .picker-input {
+  box-shadow: inset 0 1px 3px rgba(1, 8, 18, 0.55);
+}
+:root[data-theme='glossy'] .picker-input:focus,
+:root[data-theme='glossy'] input:focus {
+  border-color: var(--tint-navy);
+  box-shadow: inset 0 1px 3px rgba(1, 8, 18, 0.55),
+    0 0 0 2px rgba(108, 116, 232, 0.28);
+}
+
+/* The chart pane stays matte. Gloss over the candles would put a gradient
+   between the eye and the data, which is the one surface where that is not a
+   trade worth making. */
+:root[data-theme='glossy'] .chart-wrap {
+  background-image: none;
+  box-shadow: none;
+}

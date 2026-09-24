@@ -26,6 +26,7 @@ from . import patterns as pat
 from . import regime as rg
 from . import structure as st
 from . import trendlines as tl
+from . import zones as zn
 from .indicators import (atr, candle_stats, ema, last_valid, macd, rolling_percentile,
                          roc, rsi, volume_profile)
 
@@ -198,6 +199,12 @@ def analyse(series: Series, mtf_reads: dict = None,
     sess_levels = lv.session_levels(t, h, l, c)
     pools = lv.liquidity_pools(swings, eq_highs, eq_lows, price, atr_now)
 
+    # --- areas ------------------------------------------------------------- #
+    # Bands rather than lines: imbalances price skipped, and the bases strong
+    # moves left from. See zones.py for why each is size-tested against ATR.
+    fvgs = zn.fair_value_gaps(o, h, l, c, t, atr_arr)
+    sd_zones = zn.supply_demand(o, h, l, c, t, atr_arr)
+
     # --- geometry ---------------------------------------------------------- #
     # Geometry gets a STRUCTURAL window, not the whole buffer. The price arrays
     # stay full so touches and breaks are still tested against all history, and
@@ -286,6 +293,8 @@ def analyse(series: Series, mtf_reads: dict = None,
         },
         'session_levels': sess_levels,
         'liquidity': pools,
+        'fvg': fvgs,
+        'zones': sd_zones,
         'equal_highs': eq_highs[:5],
         'equal_lows': eq_lows[:5],
 

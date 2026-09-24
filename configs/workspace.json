@@ -4,7 +4,12 @@
    {
     "id": "t0",
     "symbol": "XAUUSD.a",
-    "tf": "5m"
+    "tf": "15m"
+   },
+   {
+    "id": "tmueragjp",
+    "symbol": "USDJPY.a",
+    "tf": "1h"
    }
   ],
   "dianur.activeTab": "t0",
@@ -16,48 +21,50 @@
    "trendlines": true,
    "channels": true,
    "patterns": true,
+   "fvg": true,
+   "zones": true,
+   "fib": true,
    "swings": true,
    "structure": true,
    "events": false,
    "liquidity": true,
    "signal": true,
    "volumeProfile": false,
-   "regimeBands": true,
+   "regimeBands": false,
    "rsi": true,
-   "volume": false,
-   "ema": true
+   "volume": false
   },
   "dianur.layout": {
    "grid": false,
    "newsMarks": false,
    "positions": false
   },
-  "dianur.hideFigures": 1,
+  "dianur.hideFigures": 0,
   "dianur.watchlist": [
    "XAUUSD.a",
    "USDJPY.a"
   ],
-  "dianur.theme": "navy",
+  "dianur.theme": "glossy",
   "dianur.snapPanels.v2": [
-   "signal",
    "gauge",
    "trend",
-   "evidence"
+   "evidence",
+   "signal"
   ],
   "dianur.panels": {
    "left": true,
    "right": true,
-   "bottom": true
+   "bottom": false
   },
-  "dianur.dockTab": "liquidity",
+  "dianur.dockTab": "calendar",
   "dianur.boardSort": {
-   "key": "stage",
-   "dir": -1
+   "key": "symbol",
+   "dir": 1
   },
   "dianur.execSort": {
    "key": "tf",
    "dir": 1
   }
  },
- "saved_ms": 1790047458347
+ "saved_ms": 1790213872837
 }

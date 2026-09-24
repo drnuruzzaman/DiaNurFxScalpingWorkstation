@@ -103,6 +103,20 @@ class State:
 
     def __init__(self):
         self.snapshots: dict = {}          # (symbol, tf) -> snapshot
+        # The same analysis run WITHOUT the forming bar, kept separately.
+        #
+        # Detection is already closed-bar only (see signal_store.py), but
+        # every later judgement - re-qualifying before sending, and now
+        # re-qualifying a pending order - read `snapshots`, which includes
+        # the bar currently being built. So a signal found on closed data
+        # could be sent or cancelled on a half-formed candle whose high, low
+        # and close all still move. These two dicts keep the distinction the
+        # rest of the system already relies on: `snapshots` is what the chart
+        # shows, `closed` is what decisions are made on.
+        #
+        # Refreshed once per bar, which is not a cache tradeoff but the
+        # definition: closed-bar facts do not change between closes.
+        self.closed: dict = {}             # (symbol, tf) -> snapshot, no forming bar
         self.signals: dict = {}            # (symbol, tf) -> [Signal]
         self.signal_index: dict = {}       # id -> Signal
         self.backtests: dict = {}          # run_id -> {status, progress, result}
@@ -214,6 +228,7 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
             closed = series.slice(0, len(series) - 1)
             snap_c = analyse(closed, mtf, spec)
             if snap_c.get('ok'):
+                STATE.closed[(symbol, tf)] = snap_c
                 STORE.finalize(symbol, tf, generate(snap_c, closed), spec,
                                int(closed.t[-1]), int(TF_SECONDS.get(tf, 300) * 1000))
         detected = STORE.view(symbol, tf)
@@ -244,128 +259,16 @@ def account_currency() -> str:
     return str(acct.get('currency') or '').strip()
 
 
-def profit_reply() -> str:
-    """
-    The /profit answer.
-
-    Same numbers as the status ribbon, from the same realised_pnl() - a bot
-    that disagreed with the screen would be worse than no bot.
-
-    NOT wrapped in <pre>. That rendered the reply as a CODE BLOCK, complete
-    with a "copy" button, which reads like a snippet rather than a report. The
-    only thing <pre> bought was column alignment, and Telegram's proportional
-    font cannot align columns anyway once the tag is gone - so the layout puts
-    each figure on its own line instead of pretending to be a table.
-
-    Account numbers and broker names are deliberately absent: /profit is
-    answerable in a public group, and the figures are the answer - the
-    identifiers are not.
-    """
-    raw = (BRIDGE.deals(35) or {}).get('deals') or []
-    pnl = realised_pnl(raw, BRIDGE.health())
-    ccy = account_currency()
-    tail = f' {ccy}' if ccy else ''
-
-    def money(v: float) -> str:
-        return f'{v:+,.2f}{tail}'
-
-    def arrow(v: float) -> str:
-        # Direction as a glyph as well as a sign. Telegram has no colour in
-        # message text, so the sign alone is easy to skim past.
-        return '\U0001F53A' if v > 0 else '\U0001F53B' if v < 0 else '\u25AB\uFE0F'
-
-    today, week, month = pnl['today'], pnl['week'], pnl['month']
-    stamp = datetime.now(timezone.utc).strftime('%d %b %H:%M')
-
-    def trades(n: int) -> str:
-        # "0 trades" beside a non-zero figure reads as a broken report. It is
-        # not: a day with nothing closed can still show a number, because
-        # commission and swap on OPEN positions have already moved the
-        # balance. Saying so is clearer than printing a zero count.
-        if n == 0:
-            return 'no closed trades'
-        return f"{n} trade{'' if n == 1 else 's'}"
-
-    return (
-        f'\U0001F4CA <b>PROFIT</b>\n'
-        f'\n'
-        f'{arrow(today)} <b>Today</b>\n'
-        f'    <b>{money(today)}</b>  ·  {trades(pnl["today_trades"])}\n'
-        f'\n'
-        f'{arrow(week)} <b>This week</b>\n'
-        f'    <b>{money(week)}</b>  ·  {trades(pnl["week_trades"])}\n'
-        f'\n'
-        f'{arrow(month)} <b>This month</b>\n'
-        f'    <b>{money(month)}</b>  ·  {trades(pnl["month_trades"])}\n'
-        f'\n'
-        f'<i>Realised P&amp;L, closed trades only \u00b7 {stamp} UTC</i>'
-    )
-
-
-COMMAND_HELP = (
-    '\U0001F4C8 <b>DiaNurFx</b>\n'
-    '\n'
-    '/profit \u2014 realised P&amp;L, today and month to date\n'
-    '/help \u2014 this list'
-)
-
-
-async def telegram_command_worker() -> None:
-    """
-    Answer commands sent TO the bot.
-
-    One long poll at a time against Telegram's getUpdates. The offset is
-    advanced past every update seen, answered or not - leaving an unauthorised
-    message unacknowledged would have it redelivered forever.
-    """
-    offset = 0
-    # Drain anything queued before startup. Answering a /profit from three
-    # days ago on boot is noise, and on a shared channel it is confusing.
-    first_pass = True
-
-    while True:
-        try:
-            cfg = alerts_mod.load()
-            if not alerts_mod.telegram_ready():
-                await asyncio.sleep(30)
-                continue
-
-            body = await asyncio.to_thread(alerts_mod.get_updates, offset)
-            if not body.get('ok'):
-                await asyncio.sleep(5)
-                continue
-
-            for upd in body.get('result') or []:
-                offset = max(offset, int(upd.get('update_id', 0)) + 1)
-                if first_pass:
-                    continue
-                msg = upd.get('message') or {}
-                chat = msg.get('chat') or {}
-                cmd = alerts_mod.parse_command(msg.get('text'))
-                if not cmd:
-                    continue
-
-                chat_id = chat.get('id')
-                if not alerts_mod.authorised_chat(cfg, chat_id, chat.get('username'),
-                                                  chat.get('type')):
-                    # Silence, not a refusal message: replying at all confirms
-                    # the bot is live and attached to an account.
-                    print(f'! telegram: ignored /{cmd} from unauthorised chat {chat_id}')
-                    continue
-
-                if cmd == 'profit':
-                    text = await asyncio.to_thread(profit_reply)
-                elif cmd in ('help', 'start'):
-                    text = COMMAND_HELP
-                else:
-                    continue
-
-                await asyncio.to_thread(alerts_mod.send_telegram, str(chat_id), text)
-
-            first_pass = False
-        except Exception as exc:                              # noqa: BLE001
-            print(f'! telegram command worker: {type(exc).__name__}: {exc}')
-            await asyncio.sleep(5)
+# The /profit command lives in server/telegram_commands.py.
+#
+# It used to live here TOO - an inline asyncio worker with its own copy of the
+# long poll, the authorisation check and the reply text - and both were
+# started. Telegram allows exactly ONE getUpdates consumer per bot, so the two
+# of them fought: one won, the other logged a 409 every sixty seconds forever
+# and /profit ran on whichever happened to win the race at startup. The
+# dedicated module is the one kept - it persists its update offset across
+# restarts and refuses to answer a command older than two minutes, neither of
+# which the inline copy did.
 
 
 async def news_alert_worker() -> None:
@@ -908,7 +811,14 @@ def _refresh_news_cache() -> None:
     try:
         cfg = alerts_mod.load().get('news') or {}
         minutes = None
-        if cfg.get('enabled'):
+        # Either consumer is reason enough to fetch.
+        #
+        # This used to fetch only when NEWS ALERTS were enabled, which quietly
+        # made the trading gate depend on a setting about Telegram messages:
+        # turn alerts off and minutes_to_high_impact() returned None forever,
+        # so the news gate passed every signal and nothing said why. The gate
+        # now keeps its own reason to look.
+        if cfg.get('enabled') or CONFIG.gates.news_blocks:
             data = news(impact=cfg.get('impact', 'high'), within_hours=6)
             minutes = data.get('minutes_to_next')
         with _NEWS_LOCK:
@@ -978,7 +888,6 @@ async def _start_workers() -> None:
     in front of the terminal, so they cannot wait for a page load.
     """
     asyncio.create_task(news_alert_worker())
-    asyncio.create_task(telegram_command_worker())
     asyncio.create_task(board_supervisor())
     asyncio.create_task(executor_loop())
     TELEGRAM_COMMANDS.start()
@@ -1102,7 +1011,19 @@ def quotes(symbols: str = ''):
     if not names:
         return {'quotes': {}}
     payload = BRIDGE.quotes(names) or {}
-    return {'quotes': payload.get('quotes', payload)}
+    rows = payload.get('quotes', payload)
+    # Enrich with the contract facts, so a caller can turn a price DISTANCE
+    # into money without a second round trip per symbol. tick_value is
+    # already in the account currency, which is what makes this work across
+    # instruments: no cross rate has to be guessed at this end.
+    for name, row in (rows or {}).items():
+        if not isinstance(row, dict):
+            continue
+        spec = FEED.spec(name) or {}
+        for k in ('tick_size', 'tick_value', 'contract_size'):
+            if spec.get(k) is not None:
+                row.setdefault(k, spec[k])
+    return {'quotes': rows}
 
 
 @app.get('/api/news/headlines')
@@ -1712,6 +1633,9 @@ def _check_setting(group: str, key: str, v):
         ('risk', 'trail_atr'): (0.2, 5.0),
         ('risk', 'min_stop_atr'): (0.1, 5.0),
         ('gates', 'min_confidence'): (0, 100),
+        # 0 means "never blackout"; beyond two hours it is not a news window,
+        # it is switching the system off for the session.
+        ('gates', 'news_blackout_min'): (0, 120),
     }
     lo_hi = rules.get((group, key))
     if lo_hi and not (lo_hi[0] <= v <= lo_hi[1]):
@@ -1872,6 +1796,7 @@ async def set_settings(patch: dict):
     # showing stale ones against new rules.
     if applied:
         STATE.snapshots.clear()
+        STATE.closed.clear()
         STATE.signals.clear()
     return {'ok': not errors, 'applied': applied, 'errors': errors,
             'settings': get_settings()}
@@ -1895,13 +1820,29 @@ def _requalify(rec: dict):
     """
     from .engine.qualify import qualify
     from .engine.signals import Signal
-    snap = STATE.snapshots.get((rec['symbol'], rec['tf']))
+    # The CLOSED-bar snapshot, not the live one.
+    #
+    # A signal is detected on closed bars; judging it again on a bar still
+    # being built means the verdict can flip with a wick that is not there a
+    # second later. Falling back to the live snapshot would quietly reinstate
+    # exactly that, so there is no fallback: no closed analysis, no decision.
+    snap = STATE.closed.get((rec['symbol'], rec['tf']))
     if not snap or not snap.get('ok'):
         return None
-    if time.time() * 1000 - float(snap.get('generated_ms') or 0) > 3 * board_ttl(rec['tf']) * 1000:
+    # Staleness is measured in BARS here. The closed snapshot is rebuilt once
+    # per close, so on 1h it is legitimately an hour old and the board's
+    # seconds-based TTL would reject every one of them.
+    bar_ms = TF_SECONDS.get(rec['tf'], 300) * 1000
+    if time.time() * 1000 - float(snap.get('generated_ms') or 0) > 2.5 * bar_ms:
         return None
     sig = Signal(**{k: v for k, v in rec['signal'].items() if k in Signal.__dataclass_fields__})
-    return qualify(sig, snap, FEED.spec(rec['symbol']), STATE.context())
+    out = qualify(sig, snap, FEED.spec(rec['symbol']), STATE.context())
+    # Which closed bar this verdict belongs to. The executor re-judges a
+    # pending order once per bar, and needs to tell a new verdict from the
+    # same one handed back two seconds later.
+    if out is not None:
+        out.judged_bar_ms = int(snap.get('bar_time_ms') or 0)
+    return out
 
 
 def _on_sent(rec: dict) -> None:

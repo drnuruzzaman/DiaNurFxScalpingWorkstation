@@ -22,7 +22,7 @@
     {
       "symbol": "XAUUSD.a",
       "tf": "5m",
-      "enabled": true,
+      "enabled": false,
       "note": "starting point, not a recommendation"
     },
     {
@@ -46,7 +46,7 @@
     {
       "symbol": "XAUUSD.a",
       "tf": "30m",
-      "enabled": false,
+      "enabled": true,
       "note": ""
     },
     {
@@ -64,7 +64,7 @@
     {
       "symbol": "USDJPY.a",
       "tf": "1h",
-      "enabled": false,
+      "enabled": true,
       "note": ""
     },
     {
@@ -81,7 +81,9 @@
       "label": "\ud83d\ude42 DiaNurFxBot",
       "target": "686269315",
       "enabled": true,
-      "kinds": []
+      "kinds": [
+        "scalper"
+      ]
     },
     {
       "id": "d1789902854170",

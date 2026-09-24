@@ -59,6 +59,16 @@ export type Quote = {
   ask: number
   digits?: number
   point?: number
+  /**
+   * Contract facts, for turning a price distance into money.
+   *
+   * `tick_value` is what one tick is worth on ONE lot, already in the account
+   * currency - so no cross rate has to be worked out in the browser, and a
+   * yen pair on an AUD account comes out right without a special case.
+   */
+  tick_size?: number
+  tick_value?: number
+  contract_size?: number
 }
 
 export type Pnl = {

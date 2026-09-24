@@ -1,9 +1,51 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { api } from '../lib/api'
 import { dateUTC, fmt } from '../lib/format'
 import { Empty } from './common'
 
 type Tab = 'alerts' | 'news' | 'destinations' | 'risk' | 'log'
+
+/**
+ * What each exit plan actually does, and what the measurements said.
+ *
+ * The numbers are from tools/exp_exits.py, run 2026-09-21 with spread charged
+ * over the same entries. They are quoted here because "which exit should I
+ * use" is exactly the question this dropdown asks, and the answer is already
+ * known. See RiskSettings.exit_mode in server/config.py.
+ */
+const EXIT_HINT: Record<string, string> = {
+  trail:
+    'at TP1 the stop locks in, then follows price by the trail distance on '
+    + 'closed bars. Whole position, no fixed target — TP2 becomes an '
+    + 'objective, not an order',
+  partial:
+    'half closed at TP1, stop to break-even, the rest runs to TP2. Measured '
+    + 'worse than trail in 2026 and level in 2025 — never better',
+}
+
+/**
+ * The take-profit sent WITH the order, so MT5 holds it.
+ *
+ * The distinction that matters: the trailing stop runs in THIS server, and a
+ * position keeps only what MT5 holds if the server or the PC is off. Every
+ * option here is a different answer to "what happens if this is not running
+ * while the trade is".
+ */
+const BROKER_TP_HINT: Record<string, string> = {
+  tp1:
+    'all out at 1R, so the trailing stop never gets to act — MT5 closes '
+    + 'first. The worst exit measured in both 2025 and 2026: only ~36% of '
+    + 'trades reach +1R',
+  tp2:
+    'banks the objective even with this system off, at the cost of capping '
+    + 'every winner at TP2',
+  cap:
+    'a far target that is rarely hit, so it barely changes the tested exit '
+    + 'while still covering a disconnect',
+  none:
+    'stop only — exactly the tested exit, but nothing is taken if this '
+    + 'system is off when the trade runs',
+}
 
 const TABS: { key: Tab; label: string }[] = [
   { key: 'alerts', label: 'ALERTS' },
@@ -34,11 +76,21 @@ type AlertsPayload = {
  * usually noise on 1m. Row and column headers toggle whole lines so filling it
  * in does not take forty clicks.
  */
-export function Settings({ onClose, liveTf, watchlist = [] }: {
+export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
   onClose: () => void
   liveTf?: string
   /** Signals only exist for these, so they are the only rows worth showing. */
   watchlist?: string[]
+  /**
+   * Which MT5 account these settings will actually drive.
+   *
+   * The ribbon shows the server, because that is what you glance at. The
+   * number belongs here: this is the screen where you arm auto trading and
+   * set a lot size, and "which account am I about to do that to" is a
+   * question worth answering on the same screen rather than from memory.
+   */
+  mt5?: { login: number | null; server: string | null;
+          account_type?: string; connected?: boolean } | null
 }) {
   const [tab, setTab] = useState<Tab>('alerts')
   const [data, setData] = useState<AlertsPayload | null>(null)
@@ -61,7 +113,13 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
       setDraft(JSON.parse(JSON.stringify(a.config)))
       setDirty(false)
       setEngine(s)
-      for (const d of a.config.destinations ?? []) if (d.target) resolve(d.target, d.bot)
+      // Destinations are NOT resolved here. Each one is three Telegram round
+      // trips - getChat, getChatMember, getMe - and takes about four seconds;
+      // firing one per destination the moment this modal opens put ~12s of
+      // outbound calls in front of whatever you actually came here to do.
+      // Anything clicked in that window queued behind them, which is how the
+      // AUTO switch came to look broken: the request was fine, it was just
+      // waiting. They are resolved when the Destinations tab is opened.
     } catch (e: any) { setToast(e.message) }
   }
 
@@ -73,19 +131,40 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
    * been added to it.
    */
   const rkey = (target: string, bot?: string) => `${bot || 'default'}|${target}`
+  // Keys with a lookup already in the air. `resolved` only fills in when an
+  // answer lands, and each of these takes about four seconds - long enough
+  // for the effect below to run again and ask a second time for the same
+  // chat. Without this the Destinations tab fired six Telegram round trips
+  // for three destinations.
+  const inFlight = useRef<Set<string>>(new Set())
+
   const resolve = async (target: string, bot?: string) => {
     if (!target) return
+    const key = rkey(target, bot)
+    if (inFlight.current.has(key)) return
+    inFlight.current.add(key)
     try {
       const r = await api.alertsResolve(target, bot)
-      setResolved((m) => ({ ...m, [rkey(target, bot)]: r }))
+      setResolved((m) => ({ ...m, [key]: r }))
     } catch { /* leave it unresolved */ }
+    finally { inFlight.current.delete(key) }
   }
 
   useEffect(() => { load() }, [])
   useEffect(() => {
     if (tab === 'log') api.alertsLog().then((r) => setLog(r.entries)).catch(() => {})
     if (tab === 'news') fetchNews()
-  }, [tab])
+    // Resolved on arrival, and only for the ones not already known, so
+    // switching back to this tab costs nothing.
+    if (tab === 'destinations') {
+      for (const d of draft?.destinations ?? []) {
+        if (d.target && !resolved[rkey(d.target, d.bot)]) resolve(d.target, d.bot)
+      }
+    }
+    // `resolved` is deliberately not a dependency: it changes as each lookup
+    // lands, and listing it would re-run this for every answer received.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, draft])
 
   const fetchNews = async () => {
     try { setNews(await api.news(draft?.news?.impact ?? 'high')) }
@@ -123,6 +202,37 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
    */
   const [formKey, setFormKey] = useState(0)
 
+  /**
+   * True while the "turn AUTO on" confirmation is showing.
+   *
+   * This used to be a window.confirm(). Turning auto OFF took one click and
+   * always worked; turning it back ON needed the dialog - and a browser that
+   * has suppressed dialogs for a page ("prevent this page from creating
+   * additional dialogs", which anyone dismissing a few of these eventually
+   * ticks) makes confirm() return FALSE without showing anything at all. The
+   * code read that as "the user declined" and did nothing, silently. The
+   * switch simply stopped working in one direction, with no error and nothing
+   * in the console to explain it.
+   *
+   * An in-page confirmation cannot be suppressed, so the one control that
+   * decides whether this machine trades by itself can no longer be disabled
+   * by a checkbox in a browser menu.
+   */
+  const [armingAuto, setArmingAuto] = useState(false)
+
+  /**
+   * The state being switched TO while the request is in flight, or null.
+   *
+   * Not an optimistic update - the switch does not claim to be on before the
+   * server says so, because this is the control that decides whether the
+   * machine trades by itself. It says "TURNING ON…" instead: the click
+   * registered, the answer has not arrived. Without it a request that took a
+   * couple of seconds looked exactly like a control that did nothing, which
+   * invites a second click on the one switch that should never be clicked
+   * twice by accident.
+   */
+  const [autoBusy, setAutoBusy] = useState<boolean | null>(null)
+
   const discardEngine = () => {
     setPending({})
     setFormKey((k) => k + 1)
@@ -134,9 +244,18 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
       flash(`Not saved: ${res.errors.join('; ')}`)
       return false
     }
+    // Reload BEFORE clearing the draft and remounting.
+    //
+    // The other order - clear, remount, then load - batches the remount into
+    // the same render as the cleared draft, so the fields rebuild against the
+    // engine state that was there BEFORE the save. They are uncontrolled, so
+    // whatever they mount with is what stays: a dropdown would sit showing the
+    // old value after a successful save, while its own hint (which reads the
+    // merged state) showed the new one. Reloading first means the remount can
+    // only ever see what the server actually stored.
+    await load()
     setPending({})
     setFormKey((k) => k + 1)
-    await load()
     return true
   }
 
@@ -191,6 +310,7 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
   }
 
   const cancel = () => {
+    setArmingAuto(false)
     if (anyDirty && !window.confirm('Discard unsaved changes?')) return
     discardEngine()
     onClose()
@@ -471,14 +591,16 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
             </span>
           </label>
           <div className="set-note">
-            When on, a signal inside the blackout window around a release is
-            <b> rejected</b>, not just flagged — it is the news gate in the
-            qualification ledger, so what this page shows and what actually
-            vetoes a trade are the same number.
+            This switch is about <b>being told</b>: it sends a Telegram message
+            ahead of a release, and the minutes below are how far ahead. It is
+            not the number that vetoes a trade — the blackout that rejects a
+            signal is <b>Block on high-impact news</b> in Risk &amp; Gates, with
+            its own window. This page used to claim they were the same number;
+            they never were.
           </div>
 
           <div className="set-grid">
-            <Field label="Blackout (minutes)" hint="either side of the release">
+            <Field label="Alert lead (minutes)" hint="how long before a release to message">
               <input type="number" min={0} max={120}
                 value={n.lead_minutes ?? 10}
                 onChange={(e) => patch({ news: { ...n, lead_minutes: +e.target.value } })} />
@@ -596,23 +718,30 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
           : [...disabled, name]
         saveGates({ disabled_playbooks: next })
       }
-      const toggleAuto = () => {
-        if (!x.auto && !window.confirm(
-          'Turn AUTO trading on?\n\nEvery FINAL, qualified signal on a watchlist symbol will be ' +
-          `sent to MT5 without asking - ${x.min_lots}-${x.max_lots} lots, ` +
-          `${x.max_per_symbol_tf > 0
-            ? `at most ${x.max_per_symbol_tf} per symbol and timeframe, ` : ''}` +
-          `stop to +${r.trail_lock_r}R at TP1 then trailing ${r.trail_atr} ATR.`)) return
-        // APPLIED AT ONCE, unlike every other control on this tab. Staging it
-        // behind Save would let the switch read "AUTO TRADING OFF" while
-        // orders were still going out, which is the wrong way round for the
-        // one control that decides whether the machine trades by itself.
-        api.saveSettings({ execution: { auto: !x.auto } }).then((res: any) => {
-          if (res?.errors?.length) flash(`Not saved: ${res.errors.join('; ')}`)
-          else flash(!x.auto ? 'AUTO trading ON' : 'AUTO trading OFF')
+      // APPLIED AT ONCE, unlike every other control on this tab. Staging it
+      // behind Save would let the switch read "AUTO TRADING OFF" while orders
+      // were still going out, which is the wrong way round for the one
+      // control that decides whether the machine trades by itself.
+      const setAuto = (on: boolean) => {
+        setArmingAuto(false)
+        setAutoBusy(on)
+        api.saveSettings({ execution: { auto: on } }).then((res: any) => {
+          if (res?.errors?.length) { flash(`Not saved: ${res.errors.join('; ')}`); return }
+          flash(on ? 'AUTO trading ON' : 'AUTO trading OFF')
+          // Move the switch from the answer the server just gave, rather than
+          // waiting on load(). load() refetches the alerts config too, and
+          // for those extra seconds the switch sat in its old position after
+          // a change that had already succeeded. load() still runs, to
+          // reconcile everything else.
+          setEngine((e: any) => (e ? { ...e, execution: { ...e.execution, auto: on } } : e))
           load()
-        }).catch((e) => flash(e.message))
+        }).catch((e) => flash(`Could not switch: ${e.message}`))
+          .finally(() => setAutoBusy(null))
       }
+
+      // Off is immediate - stopping the machine trading should never need a
+      // second click. On asks first, in the page.
+      const toggleAuto = () => (x.auto ? setAuto(false) : setArmingAuto(true))
       return (
         // Keyed so Cancel/Save REMOUNTS the fields. They are uncontrolled, so
         // without this a discarded edit would stay on screen while the server
@@ -622,16 +751,35 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
             <div className="set-block-head">
               <span className="set-block-title">Execution</span>
               <span className="set-block-sub">how a FINAL signal reaches MT5</span>
+              <span className="spacer" />
+              {/* What "armed" MEANS, on the heading line.
+                  It used to sit at the foot of the block, four rows of numbers
+                  away from the chip it explains - so the one line telling you
+                  orders can leave this machine was the last thing read, if at
+                  all. Level with the heading it is read first; the chip below
+                  states the state itself. */}
+              <span className="set-armed-note">
+                {engine.trading_enabled
+                  ? 'The bridge is armed. With auto on, qualified FINAL signals are '
+                    + 'sent as soon as they appear.'
+                  : 'The bridge is read-only, so nothing is sent whatever these say. '
+                    + 'Arming it is the one switch kept outside this page, on purpose '
+                    + '- see the note below.'}
+              </span>
             </div>
             <div className="set-row" style={{ marginBottom: 12 }}>
               {/* The whole label is the target, not just the 30px pill: the big
                   "AUTO TRADING OFF" text reads as the button, and clicking it
                   used to do nothing. */}
-              <label className="set-toggle" onClick={toggleAuto} style={{ cursor: 'pointer' }}>
+              <label className="set-toggle"
+                onClick={autoBusy === null ? toggleAuto : undefined}
+                style={{ cursor: autoBusy === null ? 'pointer' : 'progress' }}>
                 <span className={`switch ${x.auto ? 'on' : ''}`}><i /></span>
-                <span className={x.auto ? 't-warn' : 't-dim'}
+                <span className={autoBusy !== null ? 't-mid' : x.auto ? 't-warn' : 't-dim'}
                   style={{ fontWeight: 800, letterSpacing: '0.08em' }}>
-                  {x.auto ? 'AUTO TRADING ON' : 'AUTO TRADING OFF'}
+                  {autoBusy !== null
+                    ? `TURNING ${autoBusy ? 'ON' : 'OFF'}…`
+                    : x.auto ? 'AUTO TRADING ON' : 'AUTO TRADING OFF'}
                 </span>
               </label>
               <span className="spacer" />
@@ -642,6 +790,35 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                 bridge {engine.trading_enabled ? 'ARMED' : 'read-only'}
               </span>
             </div>
+            {armingAuto && (
+              // Deliberately spells out the settings it is about to hand the
+              // machine, because those numbers ARE what "auto" means - and
+              // they are on this very page, so they can be checked first.
+              <div className="set-arm">
+                <div className="set-arm-text">
+                  <b className="t-warn">Turn AUTO trading on?</b>{' '}
+                  {/* One string, not text interleaved with expressions across
+                      several lines: JSX turns each of those line breaks into a
+                      space, which left double gaps mid-sentence ("stop to
+                      +0.5R at TP1") that no amount of CSS would close. */}
+                  {'Every FINAL, qualified signal on a watchlist symbol is sent to MT5 '
+                    + `without asking — ${x.min_lots}–${x.max_lots} lots`
+                    + (x.max_per_symbol_tf > 0
+                      ? `, at most ${x.max_per_symbol_tf} per symbol and timeframe` : '')
+                    + `, stop to +${r.trail_lock_r}R at TP1 then trailing ${r.trail_atr} ATR.`
+                    + (engine.trading_enabled ? ''
+                      : ' The bridge is read-only, so nothing will be sent until it is armed.')}
+                </div>
+                {/* No spacer: the text itself now takes the slack, so a
+                    second flexible element would only compete with it. */}
+                <button className="tool-btn" onClick={() => setArmingAuto(false)}>
+                  Cancel
+                </button>
+                <button className="tool-btn primary" onClick={() => setAuto(true)}>
+                  Turn on
+                </button>
+              </div>
+            )}
             <div className="set-grid">
               <Field label="Min lots" hint="every order is at least this">
                 <input type="number" step={0.01} min={0.01} defaultValue={x.min_lots}
@@ -672,7 +849,11 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                   defaultValue={x.max_per_symbol_tf}
                   onBlur={(e) => saveExec({ max_per_symbol_tf: +e.target.value })} />
               </Field>
-              <Field label="Exit" hint="trail: whole position, no fixed target">
+              {/* These three fields describe ONE mechanism between them, and a
+                  hint that only names the field leaves you to work out how
+                  they interact. Each now explains the option actually
+                  selected, so the text changes as the choice does. */}
+              <Field label="Exit" hint={EXIT_HINT[r.exit_mode] ?? ''}>
                 <select defaultValue={r.exit_mode}
                   onChange={(e) => saveRisk({ exit_mode: e.target.value })}>
                   <option value="trail">trail after TP1</option>
@@ -680,7 +861,12 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                 </select>
               </Field>
               <Field label="Take-profit at the broker"
-                hint="held by MT5 itself - protects a trade while this system is off">
+                hint={r.exit_mode === 'partial'
+                  // Worth saying plainly: in partial mode the executor sends
+                  // TP2 whatever this says. A setting that silently does
+                  // nothing is worse than one that is missing.
+                  ? 'not used while Exit is "50% at TP1" — that plan always sends TP2 as the order target'
+                  : BROKER_TP_HINT[x.broker_tp ?? 'tp2'] ?? ''}>
                 <select defaultValue={x.broker_tp ?? 'tp2'}
                   onChange={(e) => saveExec({ broker_tp: e.target.value })}>
                   <option value="tp1">TP1 (all out at 1R - trailing never acts)</option>
@@ -695,7 +881,14 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                     onBlur={(e) => saveExec({ broker_tp_r: +e.target.value })} />
                 </Field>
               )}
-              <Field label="Lock at TP1 (R)" hint="the stop moves here when TP1 prints">
+              <Field label="Lock at TP1 (R)"
+                hint={r.exit_mode === 'partial'
+                  ? 'not used while Exit is "50% at TP1" — that plan moves the stop to break-even instead'
+                  : +r.trail_lock_r > 0
+                    ? `when price touches TP1 the stop jumps to +${r.trail_lock_r}R above your fill, `
+                      + 'so that much is banked however the trade ends'
+                    : 'break-even: when price touches TP1 the stop moves to your fill, '
+                      + 'so the trade can no longer lose'}>
                 <input type="number" step={0.1} min={0} defaultValue={r.trail_lock_r}
                   onBlur={(e) => saveRisk({ trail_lock_r: +e.target.value })} />
               </Field>
@@ -707,12 +900,6 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
                 <input type="number" min={1} defaultValue={r.max_concurrent}
                   onBlur={(e) => saveRisk({ max_concurrent: +e.target.value })} />
               </Field>
-            </div>
-            <div className="set-note">
-              {engine.trading_enabled
-                ? 'The bridge is armed. With auto on, qualified FINAL signals are sent as soon as they appear.'
-                : 'The bridge is read-only, so nothing is sent whatever these say. Arming it is the one ' +
-                  'switch kept outside this page, on purpose - see the note below.'}
             </div>
           </section>
 
@@ -754,7 +941,36 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
               <span className="set-block-title">Gates</span>
               <span className="set-block-sub">whether a signal qualifies at all</span>
             </div>
+            {/* The news blackout, where the veto lives.
+                The NEWS tab has a switch with a similar name, but that one is
+                about Telegram messages and its "blackout (minutes)" is the
+                alert lead, not this window. This is the one the qualification
+                ledger reads. */}
+            <div className="set-row" style={{ marginBottom: 12 }}>
+              <label className="set-toggle" style={{ cursor: 'pointer' }}
+                onClick={() => saveGates({ news_blocks: !g.news_blocks })}>
+                <span className={`switch ${g.news_blocks ? 'on' : ''}`}><i /></span>
+                <span className={g.news_blocks ? 't-up' : 't-dim'}
+                  style={{ fontWeight: 800, letterSpacing: '0.08em' }}>
+                  BLOCK ON HIGH-IMPACT NEWS
+                </span>
+              </label>
+              <span className="spacer" />
+              <span className="set-armed-note">
+                {g.news_blocks
+                  ? `A signal within ${g.news_blackout_min} minutes either side of a `
+                    + 'high-impact release is rejected outright.'
+                  : `A release within ${g.news_blackout_min} minutes is still flagged and `
+                    + 'still costs the setup confidence, but no longer vetoes the trade.'}
+              </span>
+            </div>
             <div className="set-grid">
+              <Field label="News blackout (minutes)"
+                hint={g.news_blocks ? 'either side of the release'
+                  : 'the window is still measured — it just does not block'}>
+                <input type="number" min={0} max={120} defaultValue={g.news_blackout_min}
+                  onBlur={(e) => saveGates({ news_blackout_min: +e.target.value })} />
+              </Field>
               <Field label="Min confidence" hint="below this a signal is 'watch', not 'qualified'">
                 <input type="number" defaultValue={g.min_confidence}
                   onBlur={(e) => saveGates({ min_confidence: +e.target.value })} />
@@ -880,6 +1096,23 @@ export function Settings({ onClose, liveTf, watchlist = [] }: {
             SETTINGS
           </span>
           <span className="spacer" />
+          {/* Which account every tab in here acts on - so it is answered once,
+              at the top, rather than per tab.
+
+              Identity, not status: the dot and the colour live in the ribbon,
+              and repeating them would be a second source of truth for whether
+              MT5 is up. This says only WHICH account, and dims when the bridge
+              is not attached so it is never read as a live confirmation. */}
+          <span className="set-acct" title={mt5?.connected
+            ? 'The account these settings drive'
+            : 'Last known account - MT5 is not attached'}
+            style={{ opacity: mt5?.connected ? 1 : 0.55 }}>
+            <b className={mt5?.account_type === 'LIVE' ? 't-down' : 't-mid'}>
+              {mt5?.account_type ?? 'UNKNOWN'}
+            </b>
+            <span className="mono">{mt5?.login ?? '—'}</span>
+            <span className="mono t-dim">{mt5?.server ?? '—'}</span>
+          </span>
           <button className="tool-btn" onClick={cancel}>Close</button>
         </div>
         <div className="modal-tabs">

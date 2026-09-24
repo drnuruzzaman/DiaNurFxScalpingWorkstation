@@ -112,7 +112,9 @@ function PatternCard({ p }: { p: Pattern }) {
   const col = p.direction === 'bullish' ? 'var(--bull)'
     : p.direction === 'bearish' ? 'var(--bear)' : 'var(--info)'
   return (
-    <div className="pattern-card" style={{ borderLeftColor: col, opacity: p.actionable ? 1 : 0.62 }}>
+    // No opacity for `actionable` any more: the panel filters on it, so every
+    // card that reaches here is live and they all draw at full strength.
+    <div className="pattern-card" style={{ borderLeftColor: col }}>
       <div className="pattern-top">
         <span className="pattern-name" style={{ color: col }}>{p.label}</span>
         <span className={p.status === 'confirmed' ? 'chip chip-up' : 'chip chip-warn'}>
@@ -147,6 +149,22 @@ export function RightRail({
   tradingEnabled: boolean
 }) {
   const live = signals.filter((s) => s.status !== 'rejected')
+  /**
+   * Patterns you can still do something about.
+   *
+   * `actionable` is false once a pattern is confirmed AND more than
+   * CONFIRM_WINDOW bars have passed since it completed - it broke, the move
+   * ran, and what is left is history. Those used to be listed at 62%
+   * opacity, which asks the panel to be read twice: once to see the cards,
+   * again to work out which of them still mean anything. The count in the
+   * header was counting them too, so "8" could be eight patterns none of
+   * which were live.
+   *
+   * They are dropped rather than collapsed behind a toggle. A pattern that
+   * has already played out is not a thing you go looking for in a side
+   * panel; the level it left behind is already carried by levels and zones.
+   */
+  const livePatterns = (snap?.patterns ?? []).filter((p: Pattern) => p.actionable)
   const mom = snap?.momentum
   const mtf = snap?.mtf
   const trend = snap?.trend
@@ -175,11 +193,15 @@ export function RightRail({
       </Panel>
 
       <Panel title="Detected Patterns" right={
-        <span className="chip chip-mute">{snap?.patterns?.length ?? 0}</span>
+        <span className="chip chip-mute">{livePatterns.length}</span>
       }>
-        {!snap?.patterns?.length ? (
-          <Empty>No pattern above the quality floor.</Empty>
-        ) : snap.patterns.slice(0, 5).map((p, i) => <PatternCard key={i} p={p} />)}
+        {!livePatterns.length ? (
+          <Empty>
+            {snap?.patterns?.length
+              ? 'Nothing live - every pattern found has already played out.'
+              : 'No pattern above the quality floor.'}
+          </Empty>
+        ) : livePatterns.slice(0, 5).map((p, i) => <PatternCard key={i} p={p} />)}
       </Panel>
 
       <Panel title="Trend Read">

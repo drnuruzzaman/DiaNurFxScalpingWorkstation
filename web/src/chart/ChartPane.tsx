@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ChartEngine, type HoverInfo } from './ChartEngine'
-import type { Bar, LayoutOpts, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot } from './types'
+import type { Bar, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot } from './types'
 import { fmt } from '../lib/format'
 
 /**
@@ -99,16 +99,18 @@ function NewsCard({ hit, width }: { hit: NewsHover; width: number }) {
 }
 
 export function ChartPane({
-  bars, snapshot, signal, overlays, digits, badge, onNeedHistory, status, onEngine,
+  bars, snapshot, signal, overlays, digits, money, badge, onNeedHistory, status, onEngine,
   tfMs = 0,
   mtfLines = [], mtfSources = [], layout, news = [], positions = [],
-  theme = 'midnight',
+  theme = 'glossy',
 }: {
   bars: Bar[]
   snapshot: Snapshot | null
   signal: Signal | null
   overlays: Overlays
   digits: number
+  /** Contract facts for the money figure on the signal rails. */
+  money?: MoneyModel | null
   /** Higher-timeframe trendlines, already in time space. Optional: the
       backtest chart has no live board behind it to project from. */
   mtfLines?: MtfTrendline[]
@@ -201,6 +203,7 @@ export function ChartPane({
   useEffect(() => { engine.current?.setTheme(theme) }, [theme])
   useEffect(() => { engine.current?.setOverlays(overlays) }, [overlays])
   useEffect(() => { engine.current?.setDigits(digits) }, [digits])
+  useEffect(() => { engine.current?.setMoney(money ?? null) }, [money])
   useEffect(() => { engine.current?.setTimeframe(tfMs) }, [tfMs])
 
   const b = hover?.bar

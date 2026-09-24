@@ -37,6 +37,19 @@ from .signal_store import (CANCELLED, CLOSED, EXPIRED, FILLED, FINAL, REVERSED, 
                            round_to_tick)
 
 RETRY_AFTER_REFUSAL_MS = 30_000
+
+# A pending order is re-judged ONCE PER CLOSED BAR.
+#
+# Not on every pass. The executor ticks every couple of seconds, and a verdict
+# taken that often is a verdict taken on a bar still being built: a wick that
+# is not there a moment later blocks a gate, the order is cancelled, and the
+# setup it was waiting for goes on to work. Judging at the close is the same
+# discipline the rest of the system already keeps - detection is closed-bar,
+# qualification is closed-bar, and now so is the decision to pull an order.
+#
+# It also removes the need to sort gates into "real" and "momentary". A spread
+# spike during a news print is simply not sampled; only what is true when the
+# bar closes counts.
 UNKNOWN_GIVE_UP_MS = 60_000
 
 
@@ -180,7 +193,7 @@ class Executor:
             '/order/send', symbol=rec['symbol'], side=rec['side'], lots=lots,
             sl=stop, tp=request['tp'], kind=kind, price=price,
             expiration_ms=request['expiration_ms'],
-            comment=comment_for(fid, rec.get('playbook')),
+            comment=comment_for(fid, rec.get('playbook'), rec.get('tf')),
             signal_id=fid, confirm=1)
         if code == 0:
             self.ledger.mark(fid, 'unknown', body.get('error', 'no answer'))
@@ -189,8 +202,15 @@ class Executor:
             self.ledger.mark(fid, 'placed', f'{kind} ticket {body.get("ticket")}',
                              ticket=body.get('ticket'),
                              fill_price=body.get('price') if kind == 'market' else None)
+            # Seed the per-bar check with the bar that just qualified it.
+            #
+            # Without this the first _sent() pass re-judges the SAME closed
+            # bar the send was decided on, seconds later and against a live
+            # context - so a spread spike immediately after placing could
+            # cancel an order on the very bar that justified it.
             self.store.move(fid, SENT, f'{kind} {lots} lots, ticket {body.get("ticket")}',
-                            lots=lots, kind=kind)
+                            lots=lots, kind=kind,
+                            checked_bar_ms=int(getattr(q, 'judged_bar_ms', 0) or 0))
             self.on_sent(rec)
         else:
             self.ledger.mark(fid, 'refused', body.get('error', f'HTTP {code}'))
@@ -272,6 +292,8 @@ class Executor:
                 if bid and ask and ((rec['side'] == 'buy' and bid <= stop)
                                     or (rec['side'] == 'sell' and ask >= stop)):
                     why = (CANCELLED, 'price went through the stop before the entry filled')
+                else:
+                    why = self._still_valid(rec)
             if why:
                 code, body = self.bridge.trade('/order/cancel', ticket=pend['ticket'], confirm=1)
                 if body.get('ok') or 'no pending order' in str(body.get('error', '')):
@@ -295,6 +317,47 @@ class Executor:
         note = 'no longer at the broker' + (' (expired)' if stage == EXPIRED else '')
         self.ledger.mark(fid, stage.lower(), note)
         self.store.move(fid, stage, note)
+
+    def _still_valid(self, rec):
+        """
+        Does the setup behind a PENDING order still hold? None if it does.
+
+        An order resting at a level can wait a long time, and the market does
+        not wait with it. The signal was qualified once, at send time, and
+        then left alone until it filled or the clock ran out. Between those
+        two points the structure it was built on can break and the order sits
+        there anyway, waiting to buy a level that no longer means anything.
+
+        So it is re-judged - but only when a new bar has closed, and only
+        against that closed bar. `checked_bar_ms` records which bar the last
+        verdict came from, so the same bar is never judged twice however
+        often the executor ticks.
+
+        A FILLED position is never touched by this. Once money is at risk the
+        stop owns the trade; re-deciding it from a fresh opinion is how a
+        system talks itself out of a loss and into a bigger one.
+        """
+        q = self.requalify(rec)
+        if q is None:
+            # No fresh closed-bar analysis. Nothing is known, so nothing is
+            # done - an order is never cancelled on an absence of data.
+            return None
+
+        # Which closed bar this verdict came from. Without it there is no way
+        # to tell a new judgement from the same one seen again two seconds
+        # later, and "once per bar" would collapse back into "every tick".
+        bar = int(getattr(q, 'judged_bar_ms', 0) or 0)
+        if not bar or bar == int(rec.get('checked_bar_ms') or 0):
+            return None
+
+        if getattr(q, 'status', None) == 'qualified':
+            self.store.update(rec['id'], checked_bar_ms=bar)
+            return None
+
+        blocks = [g for g in (getattr(q, 'gates', None) or [])
+                  if g.get('verdict') == 'BLOCK']
+        why = blocks[0]['detail'] if blocks else getattr(q, 'reason', 'no longer qualified')
+        return (CANCELLED, f'invalidated on the closed bar - {why}')
 
     # --------------------------------------------------------------- FILLED
     def _filled(self, rec, positions) -> None:

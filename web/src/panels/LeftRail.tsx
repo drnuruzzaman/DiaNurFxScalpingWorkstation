@@ -134,19 +134,14 @@ function Gauge({ value, label }: { value: number; label: string }) {
 }
 
 export function LeftRail({
-  snap, quote, account, symbols, symbol, onSymbol, tradingEnabled, nowMs,
-  autoExec = false, onToggleAuto,
+  snap, quote, symbols, symbol, onSymbol, nowMs,
   quotes = {}, onEditWatchlist,
 }: {
   snap: Snapshot | null
   quote: any
-  account: any
   symbols: string[]
   symbol: string
   onSymbol: (s: string) => void
-  tradingEnabled: boolean
-  autoExec?: boolean
-  onToggleAuto?: () => void
   nowMs: number
   /** Live bid/ask per symbol, so every row has a price - not just the active one. */
   quotes?: Record<string, any>
@@ -235,34 +230,6 @@ export function LeftRail({
             </div>
           </>
         ) : <Empty>—</Empty>}
-      </Panel>
-
-      <Panel title="Execution Control">
-        <KV k="Order routing" v={
-          tradingEnabled
-            ? <span className="t-warn">ARMED</span>
-            : <span className="t-up">DISABLED</span>
-        } />
-        <KV k="Mode" v={
-          <button className={`chip ${autoExec ? 'chip-warn' : 'chip-mute'}`}
-            style={{ cursor: 'pointer', border: 0 }} onClick={onToggleAuto}
-            title="Switch between sending FINAL signals automatically and confirming each">
-            {autoExec ? 'AUTO' : 'confirm each'}
-          </button>
-        } />
-        <KV k="Lots" v={<span className="mono">0.01 - 0.03</span>} />
-        <KV k="Exit" v={<span className="mono" style={{ fontSize: 9.5 }}>TP1 &rarr; +0.5R, trail 1 ATR</span>} />
-        <KV k="Account" v={<span className="mono">{account?.login ?? '—'}</span>} />
-        <KV k="Server" v={<span className="mono" style={{ fontSize: 9.5 }}>{account?.server ?? '—'}</span>} />
-        <div className="t-dim" style={{ fontSize: 9.5, marginTop: 7, lineHeight: 1.5 }}>
-          {!tradingEnabled
-            ? 'The bridge is read-only. It has no order_send path active, so nothing here can move money.'
-            : autoExec
-              // The per-slot cap is configurable now, so this no longer
-              // states a number it cannot know. Settings shows the live value.
-              ? 'AUTO: every FINAL, qualified watchlist signal is sent without asking, up to the per-slot cap in Settings.'
-              : 'The bridge is armed. Each FINAL signal needs its own confirmation.'}
-        </div>
       </Panel>
 
       {/* Session sits last: it is standing context you glance at, not

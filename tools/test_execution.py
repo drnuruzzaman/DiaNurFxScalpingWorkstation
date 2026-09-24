@@ -22,8 +22,8 @@ from server.config import CONFIG                                     # noqa: E40
 from server.engine.signals import Signal                             # noqa: E402
 from server.executor import Executor                                 # noqa: E402
 from server.order_ledger import OrderLedger, tag_for                 # noqa: E402
-from server.signal_store import (CLOSED, EXPIRED, FILLED, FINAL,      # noqa: E402
-                                 REVERSED, SENT, SignalStore)
+from server.signal_store import (CANCELLED, CLOSED, EXPIRED, FILLED,  # noqa: E402
+                                 FINAL, REVERSED, SENT, SignalStore)
 
 TF = '5m'
 TF_MS = 300_000
@@ -122,7 +122,15 @@ def rig(auto=True, armed=True, verdict='qualified', lots=0.02):
     state = {'auto': auto, 'armed': armed, 'verdict': verdict, 'lots': lots}
 
     def requalify(rec):
+        if state.get('verdict') is None:
+            return None                     # no fresh closed-bar analysis
         return SimpleNamespace(status=state['verdict'], reason='test',
+                               gates=state.get('gates') or [],
+                               # Which closed bar the verdict came from. The
+                               # executor judges a pending order once per bar,
+                               # so a test that wants a second verdict has to
+                               # advance this the way a real close would.
+                               judged_bar_ms=state.get('judged_bar_ms', 0),
                                sizing={'lots': state['lots']})
 
     ex = Executor(store, ledger, bridge, feed, CONFIG, requalify=requalify,
@@ -198,7 +206,16 @@ def run(check) -> None:
     check('the order carries the take-profit the setting asks for',
           bool(sent) and sent[0][1]['tp'] == (4025.0 if CONFIG.execution.broker_tp == 'tp2'
                                              else sent[0][1]['tp']))
-    check('the order carries the signal tag', bool(sent) and sent[0][1]['comment'] == tag_for(fid))
+    # The CONTRACT is that the tag leads, not that it is the whole comment -
+    # reconciliation matches with startswith(). Asserting equality made this
+    # test fail the moment the playbook was appended, which is a change the
+    # contract always allowed.
+    comment = sent[0][1]['comment'] if sent else ''
+    check('the order comment leads with the signal tag',
+          comment.startswith(tag_for(fid)), comment)
+    check('...and carries the timeframe and the playbook',
+          f' {TF} ' in comment and comment.endswith('PATBREAK'), comment)
+    check('...within the 31 characters MT5 keeps', len(comment) <= 31, f'{len(comment)}')
     r.ex.step()
     check('the position is found: SENT -> FILLED', r.store.get(fid)['stage'] == FILLED)
     r.ex.step()
@@ -306,6 +323,80 @@ def run(check) -> None:
     check('an expired pending order is cancelled: EXPIRED',
           r7.store.get(f7)['stage'] == EXPIRED and r7.bridge.orders_ == []
           and any(c[0] == '/order/cancel' for c in r7.bridge.calls))
+
+    # -------------------- a pending order is re-judged on every CLOSED bar
+    def gate(name, detail='gone'):
+        return {'name': name, 'verdict': 'BLOCK', 'detail': detail, 'penalty': 0}
+
+    def pending(**kw):
+        """A rig with one order resting at its entry, unfilled."""
+        r = rig(**kw)
+        r.state['judged_bar_ms'] = bar
+        fid = r.store.finalize('XAUUSD.a', TF, [signal()], SPEC, bar, TF_MS)[0]
+        r.bridge.quote = {'bid': 4005.7, 'ask': 4006.0}   # above entry -> LIMIT
+        r.ex.step()
+        return r, fid
+
+    # invalidated on a closed bar: pulled
+    r9, f9 = pending()
+    r9.state['verdict'] = 'rejected'
+    r9.state['gates'] = [gate('mtf', 'higher timeframes now disagree')]
+    r9.state['judged_bar_ms'] = bar + TF_MS          # a bar closed
+    r9.ex.step()
+    check('a pending order is cancelled when the closed bar invalidates it',
+          r9.store.get(f9)['stage'] == CANCELLED and r9.bridge.orders_ == [],
+          r9.store.get(f9)['history'][-1][2])
+
+    # the SAME bar is never judged twice, however often the executor ticks
+    r10, f10 = pending()
+    r10.state['verdict'] = 'qualified'
+    r10.state['judged_bar_ms'] = bar + TF_MS
+    r10.ex.step()                                    # judges that bar: fine
+    r10.state['verdict'] = 'rejected'                # mid-bar wobble
+    r10.state['gates'] = [gate('spread', 'spread 180 points')]
+    r10.ex.step(); r10.ex.step(); r10.ex.step()
+    check('a mid-bar change does not re-judge the same closed bar',
+          r10.store.get(f10)['stage'] == SENT and len(r10.bridge.orders_) == 1)
+    # ...until the next bar actually closes with it still blocked
+    r10.state['judged_bar_ms'] = bar + 2 * TF_MS
+    r10.ex.step()
+    check('...and is cancelled when the NEXT bar closes still blocked',
+          r10.store.get(f10)['stage'] == CANCELLED and r10.bridge.orders_ == [],
+          r10.store.get(f10)['history'][-1][2])
+
+    # a setup that recovers before the close is never pulled
+    r11, f11 = pending()
+    r11.state['verdict'] = 'rejected'
+    r11.state['gates'] = [gate('spread')]
+    r11.ex.step()                                    # same bar as the send
+    r11.state['verdict'] = 'qualified'
+    r11.state['gates'] = []
+    r11.state['judged_bar_ms'] = bar + TF_MS
+    r11.ex.step()
+    check('a setup that recovers by the close keeps its order',
+          r11.store.get(f11)['stage'] == SENT and len(r11.bridge.orders_) == 1)
+
+    # silence is not invalidation
+    r12, f12 = pending()
+    r12.state['verdict'] = None          # no closed-bar snapshot at all
+    r12.ex.step()
+    r12.ex.step()
+    check('no fresh analysis never cancels an order',
+          r12.store.get(f12)['stage'] == SENT and len(r12.bridge.orders_) == 1)
+
+    # once filled, the stop owns the trade
+    r13 = rig()
+    r13.state['judged_bar_ms'] = bar
+    f13 = r13.store.finalize('XAUUSD.a', TF, [signal()], SPEC, bar, TF_MS)[0]
+    r13.bridge.quote = {'bid': 3999.9, 'ask': 4000.0}     # fills at market
+    r13.ex.step()
+    r13.ex.step()
+    r13.state['verdict'] = 'rejected'
+    r13.state['gates'] = [gate('mtf')]
+    r13.state['judged_bar_ms'] = bar + TF_MS
+    r13.ex.step()
+    check('a FILLED position is never closed by re-qualification',
+          r13.store.get(f13)['stage'] == FILLED and len(r13.bridge.positions_) == 1)
 
     # ------------------------------------------------------------ trailing
     r8 = rig()

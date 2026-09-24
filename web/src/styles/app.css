@@ -656,10 +656,50 @@
 .dock-tabs {
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 0 8px;
+  gap: 5px;
+  padding: 6px 8px;
   border-bottom: 1px solid var(--line-soft);
   flex: 0 0 auto;
+  flex-wrap: wrap;
+}
+
+/* The dock's tabs, in the toolbar's own language.
+ *
+ * Scoped to `.dock-tabs` on purpose: the Settings modal shares the .dock-tab
+ * class for ALERTS / NEWS / RISK & GATES, and those live in a dialog where
+ * the underline reads correctly. Restyling the bare class would have dragged
+ * them along for a change that was only ever about the bottom panel.
+ *
+ * Matches .tool-btn rather than copying it, so the two cannot drift: the same
+ * padding, border, radius and weight Indicators and Layout use.
+ */
+.dock-tabs .dock-tab {
+  padding: 4.5px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  border-bottom-width: 1px;
+  background: var(--bg-panel-2);
+  color: var(--ink-mid);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  transition: all 0.12s;
+}
+.dock-tabs .dock-tab:hover {
+  border-color: var(--ink-dim);
+  color: var(--ink-hi);
+  background: var(--bg-hover);
+}
+/* Active is INFO, not the bearish magenta it used to be.
+ *
+ * The old underline borrowed --bear, which the palette reserves for "this is
+ * a sell / this is losing money". Spending it on "this tab is open" is the
+ * one thing the theme file asks nobody to do, and it put a red marker on the
+ * footer of a terminal where red means something else entirely. */
+.dock-tabs .dock-tab.on {
+  color: var(--info);
+  border-color: var(--info-dim);
+  background: var(--info-glow);
 }
 .dock-tab {
   padding: 7px 12px;
@@ -1620,4 +1660,98 @@
   font-weight: 800;
   letter-spacing: 0.04em;
   margin-left: 4px;
+}
+
+/* The account identity in the Risk & Gates header. Three parts at three
+   weights - type, number, server - so the eye lands on LIVE first and the
+   server last, which is the order they matter in when you are about to arm
+   auto trading. */
+.set-acct {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 10.5px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--bg-input);
+}
+.set-acct b {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+.set-acct .mono { color: var(--ink); }
+
+/* The sentence explaining what "armed" means, on the Execution heading line.
+   Right-aligned and capped in width so it reads as a caption on that heading
+   rather than a paragraph pushing the title around. */
+.set-armed-note {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--ink-mid);
+  max-width: 44ch;
+  text-align: right;
+}
+
+/* The in-page confirmation for arming AUTO trading. Bordered in the caution
+   colour and sitting directly under the switch it belongs to, so it reads as
+   part of that control rather than as a notice that happens to be nearby. */
+.set-arm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 9px 11px;
+  border: 1px solid var(--warn-dim);
+  border-left-width: 3px;
+  border-radius: var(--r-sm);
+  background: var(--warn-glow);
+}
+/* Once the text took the slack, the buttons were the only thing left to
+   shrink - and they did, wrapping "TURN ON" onto two rows. They are the
+   fixed part of this row; the sentence beside them is what flexes. */
+.set-arm > button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.set-arm-text {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  /* No width cap. The cap was there to stop a long sentence running the full
+     width of a wide modal, but it was narrow enough to push this one onto a
+     third and fourth line - and the buttons beside it already bound the text
+     to the space actually available. Two lines at the modal's real width is
+     what it should be. */
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The NOW line in the calendar: where what has happened stops and what is
+   coming starts. A full-width rule with the clock set into it, rather than a
+   highlighted row - it marks a BOUNDARY between two rows, not a row itself,
+   and a coloured row would read as an event. */
+.cal-now td {
+  padding: 5px 5px !important;
+}
+.cal-now td {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cal-now-line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--warn), transparent);
+  opacity: 0.55;
+}
+.cal-now-tag {
+  flex: 0 0 auto;
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--warn);
+  white-space: nowrap;
 }

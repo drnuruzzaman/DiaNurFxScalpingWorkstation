@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { Signal, Snapshot } from '../chart/types'
 import { api, type Board, type CalEvent, type DealsPayload } from '../lib/api'
-import { ago, dateUTC, dirClass, fmt, signed, stageChip } from '../lib/format'
+import { ago, clockUTC, dateUTC, dirClass, fmt, signed, stageChip } from '../lib/format'
 import { Empty } from './common'
 import { scheduleSave } from '../lib/workspace'
 
@@ -136,12 +136,22 @@ function Comment({ text }: { text?: string }) {
   if (!m) return <span className="t-mid" title={raw}>{raw}</span>
   const [, tag, rest] = m
   const id = tag.split(/\s+/)[1]
+  // "15m MTFPULL" - the timeframe leads, so it splits off cleanly. Orders
+  // placed before the timeframe was added have only the playbook, and the
+  // pattern simply does not match, which is the right outcome: nothing is
+  // invented for a row that never carried it.
+  // The playbook half is optional: a signal with no playbook still carries
+  // its timeframe, and that row should show the chip, not the word "15m".
+  const parts = rest.match(/^(\d+[mhd])(?:\s+(.*))?$/i)
+  const tf = parts?.[1] ?? ''
+  const play = parts ? (parts[2] ?? '') : rest
   return (
     <span title={raw} className="mono" style={{ fontSize: 9 }}>
       {/* Orders placed before playbooks were added to the comment have only
           the tag. Showing the id beats showing a bare "DNX" - it is still
           what ties the row to a signal. */}
-      {rest && <b className="t-hi">{rest} </b>}
+      {tf && <span className="chip chip-mute" style={{ marginRight: 4 }}>{tf}</span>}
+      {play && <b className="t-hi">{play} </b>}
       <span className="t-dim">{id}</span>
     </span>
   )
@@ -152,6 +162,42 @@ function impactClass(impact: string): string {
   if (impact === 'medium') return 't-warn'
   if (impact === 'holiday') return 't-dim'
   return 't-mid'
+}
+
+/**
+ * The impact, as a filled dot before the word.
+ *
+ * The column was colour-on-text, which is the weakest way to carry a
+ * three-value scale: the words are different lengths, so the eye has to read
+ * each one to place it, and on a list of forty rows that is forty reads to
+ * find the two that matter. A solid dot is the same size on every row, so
+ * the column can be scanned rather than read.
+ *
+ * The word stays. The dot is the fast path, not a replacement - red alone
+ * would have to be learned, and anyone colour-blind would lose the scale
+ * entirely.
+ */
+const IMPACT_COLOUR: Record<string, string> = {
+  high: 'var(--bear)',
+  medium: 'var(--warn)',
+  low: 'var(--ink-low)',
+  holiday: 'var(--ink-dim)',
+}
+
+function Impact({ impact, muted }: { impact: string; muted?: boolean }) {
+  const colour = IMPACT_COLOUR[impact] ?? 'var(--ink-dim)'
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+      title={`${impact} impact`}>
+      <span className="dot" style={{
+        background: colour,
+        // High impact gets a halo. It is the one value that changes what you
+        // do, and it should find you rather than wait to be looked for.
+        boxShadow: impact === 'high' && !muted ? `0 0 5px ${colour}` : 'none',
+      }} />
+      <span className={impactClass(impact)}>{impact}</span>
+    </span>
+  )
 }
 
 export function BottomDock({
@@ -180,6 +226,10 @@ export function BottomDock({
   peek?: boolean
 }) {
   const [ownTab, setOwnTab] = useState<DockTab>('signals')
+  // The scrolling box, and the NOW divider inside the calendar. Opening the
+  // tab parks the divider in view - see the effect below.
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const nowRef = useRef<HTMLTableRowElement>(null)
   const [esort, execSortBy] = useSavedSort('dianur.execSort')
   // Signal board sort. Saved with the workspace so it survives a restart.
   const [bsort, setBsort] = useState<{ key: BoardKey; dir: 1 | -1 }>(() => {
@@ -215,6 +265,30 @@ export function BottomDock({
   const [cal, setCal] = useState<CalEvent[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [loadErr, setLoadErr] = useState<string | null>(null)
+
+  /**
+   * Park the NOW divider near the top when the calendar opens.
+   *
+   * The window is a week either side, so the table opens on releases from
+   * three or four days ago and the next one - the only reason the tab is
+   * open - sits below the fold. Scrolling the container directly rather than
+   * calling scrollIntoView(): that walks every scrollable ancestor and would
+   * drag the whole app layout, and this row lives inside a dock the user has
+   * sized deliberately.
+   *
+   * A quarter of the box is left above the line so the last few releases
+   * stay visible - what just happened is context for what is coming.
+   */
+  useEffect(() => {
+    if (tab !== 'calendar' || !cal?.length) return
+    const box = bodyRef.current
+    const row = nowRef.current
+    if (!box || !row) return
+    const id = requestAnimationFrame(() => {
+      box.scrollTop = Math.max(0, row.offsetTop - box.clientHeight * 0.25)
+    })
+    return () => cancelAnimationFrame(id)
+  }, [tab, cal])
 
   // History and calendar are fetched only while their tab is on screen, and
   // on a slow clock. Both are expensive reads on the bridge - deals walks a
@@ -340,8 +414,23 @@ export function BottomDock({
               // next few are the ones that get the highlight.
               const past = e.minutes < 0
               const imminent = !past && e.minutes <= 60
+              // The first row that has not happened yet. A week of calendar
+              // either side of today opens on row one - three or four days
+              // of releases that already landed - and the next one, which is
+              // the only reason the tab is open, is somewhere below the fold.
+              const first = !past && (i === 0 || cal[i - 1].minutes < 0)
               return (
-                <tr key={`${e.ts}-${i}`} className={past ? 't-dim' : ''}>
+                <React.Fragment key={`${e.ts}-${i}`}>
+                {first && (
+                  <tr className="cal-now" ref={nowRef}>
+                    <td colSpan={7}>
+                      <span className="cal-now-line" />
+                      <span className="cal-now-tag">NOW · {clockUTC(Date.now())} UTC</span>
+                      <span className="cal-now-line" />
+                    </td>
+                  </tr>
+                )}
+                <tr className={past ? 't-dim' : ''}>
                   <td className={imminent ? 't-warn' : 't-mid'}>
                     {e.time_known === false ? <span className="t-dim">—</span>
                       : past ? `${ago(e.ts)} ago`
@@ -357,11 +446,12 @@ export function BottomDock({
                       : dateUTC(e.ts)}
                   </td>
                   <td className="t-hi">{e.currency}</td>
-                  <td className={impactClass(e.impact)}>{e.impact}</td>
+                  <td><Impact impact={e.impact} muted={past} /></td>
                   <td className={past ? '' : 't-hi'}>{e.title}</td>
                   <td className="num">{e.forecast || '—'}</td>
                   <td className="num t-dim">{e.previous || '—'}</td>
                 </tr>
+                </React.Fragment>
               )
             })}
           </tbody>
@@ -802,7 +892,7 @@ export function BottomDock({
     return (
       <div className="dock dock-peek-inner" style={{ height }}>
         <div className="dock-peek-head">{label}</div>
-        <div className="dock-body">{content()}</div>
+        <div className="dock-body" ref={bodyRef}>{content()}</div>
       </div>
     )
   }
@@ -829,7 +919,7 @@ export function BottomDock({
         ))}
         <span className="spacer" />
       </div>
-      <div className="dock-body">{content()}</div>
+      <div className="dock-body" ref={bodyRef}>{content()}</div>
     </div>
   )
 }

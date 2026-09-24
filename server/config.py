@@ -154,6 +154,12 @@ class GateSettings:
     max_atr_percentile: float = 97.0      # top 3% of its own range = news spike
     min_confidence: int = 55
     news_blackout_min: int = 15           # minutes either side of high impact
+    # Whether that blackout BLOCKS a signal or merely warns, in the same shape
+    # as session_blocks and exposure_blocks below. Off: the release is still
+    # detected and still costs the setup confidence - a spread that triples
+    # through a print is a real risk and the score should say so - it just no
+    # longer vetoes the trade outright.
+    news_blocks: bool = True
     # 24-hour operation. The four sessions between them cover every hour of
     # the trading week (sydney 21-06, tokyo 00-09, london 07-16, ny 12-21),
     # so with sydney included there is no hour without a live session.

@@ -21,7 +21,8 @@
  */
 
 import type {
-  Bar, LayoutOpts, MtfTrendline, NewsHover, NewsMark, Overlays, Snapshot, Signal, Viewport,
+  Bar, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, PriceArea,
+  Snapshot, Signal, Viewport,
 } from './types'
 
 export type ChartTheme = {
@@ -45,6 +46,23 @@ export type ChartTheme = {
   plateRgb: string
   /** Ink for text sitting ON a saturated chip (price tag, crosshair label). */
   chipInk: string
+  /**
+   * Light the candle bodies instead of flat-filling them.
+   *
+   * Opt-in per theme rather than always on. A gradient across a 6px body is
+   * decoration on most palettes; it only reads as lacquer when the surface
+   * behind it is deep enough for the highlight to have somewhere to fall.
+   */
+  gloss?: boolean
+  /**
+   * The price-axis strip, when it should differ from the translucent plate.
+   *
+   * Left undefined, the axis keeps the old behaviour - a wash of plateRgb
+   * over the chart background, which reads as the same surface as the candles
+   * rather than as the ruler beside them.
+   */
+  axisFill?: string
+  axisLine?: string
 }
 
 /**
@@ -103,6 +121,34 @@ export const CHART_THEMES: Record<string, ChartTheme> = {
     line: '#2a2930',
     plateRgb: '8,11,20',
     chipInk: '#05070e',
+  },
+  // Glossy is the one theme that moves the directional colours: Ausloans
+  // Green for up, Ausloans Pink for down. The pairing a trader reads is
+  // unchanged - green up, pink-red down - so the chart still says the same
+  // thing. Amber follows to Ausloans Orange; cyan and violet stay, because
+  // the brand has no equivalent of either.
+  glossy: {
+    bg: '#041e42',
+    grid: 'rgba(27,68,113,0.55)',
+    gridStrong: '#1b4471',
+    text: '#d9d9d6',
+    textDim: '#7089a8',
+    up: '#93c90f',
+    down: '#e31c79',
+    info: '#35d6ef',
+    warn: '#ff9e1b',
+    accent: '#c264ff',
+    crosshair: '#9db3cf',
+    line: '#1b4471',
+    plateRgb: '2,16,31',
+    chipInk: '#02101f',
+    gloss: true,
+    // The axis is a separate object from the chart, so it gets its own face:
+    // a lighter navy panel, lit from the left the way every other raised
+    // surface in the terminal is, and divided from the candles by a line in
+    // the brand navy tint rather than the same grey as the grid.
+    axisFill: 'rgba(9,45,86,0.94)',
+    axisLine: 'rgba(108,116,232,0.55)',
   },
 }
 
@@ -205,9 +251,40 @@ const DEFAULT_SPAN = 300
  * fallbacks cover everything else.
  */
 const UI_FONT = "'Segoe UI', Inter, system-ui, sans-serif"
+/**
+ * A hex colour moved toward white (amount > 0) or black (amount < 0).
+ *
+ * Deliberately a straight sRGB lerp rather than a perceptual one. The output
+ * is the two ends of a gradient across a few pixels of candle body, where
+ * what matters is that the step looks even - and sRGB is what the eye is
+ * already calibrated to on a screen full of sRGB candles.
+ */
+function shade(hex: string, amount: number): string {
+  const h = hex.replace('#', '')
+  const n = parseInt(h.length === 3 ? h.replace(/./g, (c) => c + c) : h, 16)
+  if (!Number.isFinite(n)) return hex
+  const to = amount >= 0 ? 255 : 0
+  const k = Math.abs(amount)
+  const mix = (v: number) => Math.round(v + (to - v) * k)
+  const r = mix((n >> 16) & 255), g = mix((n >> 8) & 255), b = mix(n & 255)
+  return `rgb(${r},${g},${b})`
+}
+
 const NUM_FONT = "Consolas, 'Cascadia Mono', ui-monospace, monospace"
 
 const PRICE_AXIS_W = 74
+
+/** Height of a price chip on the axis. */
+const TAG_H = 16
+/**
+ * Minimum distance between two chip centres.
+ *
+ * TAG_H alone lets two sit exactly flush, and two flush chips of the same
+ * colour - a stop and a support, both bullish green - render as one tall
+ * block with two numbers in it. The extra two pixels keep a line of axis
+ * showing between them, so a chip always reads as one price.
+ */
+const TAG_GAP = TAG_H + 2
 const TIME_AXIS_H = 22
 const PANE_GAP = 6
 
@@ -256,6 +333,14 @@ export class ChartEngine {
   private overlays: Overlays
   private theme: ChartTheme = DARK_THEME
   private digits = 2
+  /**
+   * What a price distance is worth, and in what.
+   *
+   * Null until the quote carrying the contract facts arrives - the label then
+   * shows the pip count alone rather than inventing a number. A wrong money
+   * figure on a trading chart is worse than no money figure.
+   */
+  private money: MoneyModel | null = null
   /** Bar length in ms, for the candle countdown. 0 = no countdown. */
   private tfMs = 0
   /** 1 Hz repaint while a countdown is showing. */
@@ -455,7 +540,7 @@ export class ChartEngine {
 
   /** Swap the canvas palette to match the UI theme. */
   setTheme(name: string) {
-    this.theme = CHART_THEMES[name] ?? CHART_THEMES.midnight
+    this.theme = CHART_THEMES[name] ?? CHART_THEMES.glossy
     this.scheduleBase()
     this.scheduleTop()
   }
@@ -510,6 +595,11 @@ export class ChartEngine {
       clearInterval(this.clock)
       this.clock = null
     }
+    this.scheduleBase()
+  }
+
+  setMoney(m: MoneyModel | null) {
+    this.money = m
     this.scheduleBase()
   }
 
@@ -768,6 +858,11 @@ export class ChartEngine {
     if (this.overlays.regimeBands) this.drawRegimeBand()
 
     if (this.overlays.channels) this.drawChannels()
+    // Areas sit UNDER everything structural. They are the widest marks on
+    // the chart, and a band drawn over a trendline hides the line.
+    if (this.overlays.zones) this.drawAreas(this.snap?.zones, false)
+    if (this.overlays.fvg) this.drawAreas(this.snap?.fvg, true)
+    if (this.overlays.fib) this.drawFib()
     if (this.overlays.patterns) this.drawPatterns()
     if (this.overlays.levels) this.drawLevels()
     if (this.overlays.liquidity) this.drawLiquidity()
@@ -814,7 +909,7 @@ export class ChartEngine {
 
     ctx.strokeStyle = this.theme.grid
     ctx.beginPath()
-    for (const p of this.priceTicks()) {
+    for (const { p } of this.priceTicks()) {
       const y = Math.round(this.yOf(p)) + 0.5
       if (y < this.pane.y || y > this.pane.y + this.pane.h) continue
       ctx.moveTo(0, y); ctx.lineTo(this.pane.w, y)
@@ -981,16 +1076,38 @@ export class ChartEngine {
   }
 
   // --- grid ---------------------------------------------------------- //
-  private priceTicks(): number[] {
+  /**
+   * The price ladder, with the round levels marked.
+   *
+   * `major` is the same idea the time axis already uses: a tick that lands on
+   * a rounder multiple than its neighbours. On gold that is 4,300 and 4,350
+   * against 4,310 and 4,320 - the numbers a trader actually quotes, and the
+   * ones worth being able to find without reading the whole column.
+   *
+   * The major step is chosen to land one every few labels whatever the zoom:
+   * with a 1x step the fifth tick is round, with 2x the fifth, and with 5x
+   * every second one is already a .00 or .000.
+   */
+  private priceTicks(): { p: number; major: boolean }[] {
     const span = this.priceMax - this.priceMin
     if (span <= 0) return []
     const target = Math.max(3, Math.floor(this.pane.h / 52))
     const raw = span / target
     const mag = Math.pow(10, Math.floor(Math.log10(raw)))
     const norm = raw / mag
-    const step = (norm >= 5 ? 5 : norm >= 2 ? 2 : 1) * mag
-    const out: number[] = []
-    for (let p = Math.ceil(this.priceMin / step) * step; p <= this.priceMax; p += step) out.push(p)
+    const mult = norm >= 5 ? 5 : norm >= 2 ? 2 : 1
+    const step = mult * mag
+    const majorStep = (mult === 1 ? 5 : 10) * mag
+    // Half a step of slack. The ladder is built by repeated addition, so a
+    // tick that should be exactly 4350 arrives as 4349.999999999999 and an
+    // equality test would call it minor. The tolerance is far smaller than
+    // the gap between ticks, so it cannot promote the wrong one.
+    const eps = step * 1e-6
+    const out: { p: number; major: boolean }[] = []
+    for (let p = Math.ceil(this.priceMin / step) * step; p <= this.priceMax; p += step) {
+      const r = Math.abs(p / majorStep - Math.round(p / majorStep)) * majorStep
+      out.push({ p, major: r <= eps })
+    }
     return out
   }
 
@@ -1076,10 +1193,64 @@ export class ChartEngine {
 
       const top = Math.min(yO, yC)
       const hgt = Math.max(1, Math.abs(yC - yO))
+      const bx = Math.round(x - body / 2)
+      const bwid = Math.round(body)
+      const bh = Math.round(hgt)
+
+      if (this.theme.gloss && bwid >= 3) {
+        // Lit from the left, like every raised surface in the terminal. The
+        // gradient is built once per width in candle-local coordinates and
+        // reused for every bar by translating the canvas onto it - a fresh
+        // CanvasGradient for each of three hundred candles, every frame, is
+        // allocation the raster loop does not need.
+        ctx.save()
+        ctx.translate(bx, 0)
+        ctx.fillStyle = this.bodyGloss(up, bwid)
+        ctx.fillRect(0, Math.round(top), bwid, bh)
+        // A single bright pixel along the top edge. This is what separates a
+        // lacquered body from a body with a gradient on it: the eye reads the
+        // hard highlight as a surface catching the light, and the gradient
+        // below it as the curve falling away.
+        if (bh >= 3) {
+          ctx.fillStyle = 'rgba(255,255,255,0.30)'
+          ctx.fillRect(0, Math.round(top), bwid, 1)
+        }
+        ctx.restore()
+        continue
+      }
+
       ctx.fillStyle = col
-      ctx.fillRect(Math.round(x - body / 2), Math.round(top), Math.round(body), Math.round(hgt))
+      ctx.fillRect(bx, Math.round(top), bwid, bh)
     }
     ctx.restore()
+  }
+
+  /**
+   * The lit face of a candle body, in local coordinates 0..w.
+   *
+   * Cached on width because that is the only thing it depends on - the caller
+   * translates the canvas rather than rebuilding the gradient at each bar's x.
+   * Two gradients are held, up and down, and both are dropped the moment the
+   * width or the palette changes.
+   */
+  private glossCache: { w: number; theme: ChartTheme;
+                        up: CanvasGradient; down: CanvasGradient } | null = null
+
+  private bodyGloss(up: boolean, w: number): CanvasGradient {
+    const c = this.glossCache
+    if (c && c.w === w && c.theme === this.theme) return up ? c.up : c.down
+    const make = (col: string) => {
+      const g = this.bctx.createLinearGradient(0, 0, w, 0)
+      g.addColorStop(0, shade(col, 0.42))
+      g.addColorStop(0.30, shade(col, 0.10))
+      g.addColorStop(0.62, col)
+      g.addColorStop(1, shade(col, -0.30))
+      return g
+    }
+    const next = { w, theme: this.theme, up: make(this.theme.up),
+                   down: make(this.theme.down) }
+    this.glossCache = next
+    return up ? next.up : next.down
   }
 
   // --- levels --------------------------------------------------------- //
@@ -1175,6 +1346,140 @@ export class ChartEngine {
       ctx.textAlign = 'right'
       ctx.textBaseline = 'middle'
       ctx.fillText(`≋ ${p.label}`, this.pane.w - 4, y - 5)
+    }
+    ctx.restore()
+  }
+
+  /**
+   * Price AREAS: fair value gaps and supply/demand bases.
+   *
+   * One routine for both, because they are the same shape and are read the
+   * same way - a band that starts where it formed and runs to the right edge
+   * until price eats it. Only the colour and the tag differ.
+   *
+   * Two details that matter more than they look:
+   *
+   * FADED BY FILL. A zone price has half traded through is half the zone it
+   * was, and drawing it at full strength alongside an untouched one says they
+   * are equally interesting. Opacity carries `filled` so the chart ranks them
+   * without a number.
+   *
+   * SNAPSHOT SPACE. `idx` counts bars in the snapshot's series, which is not
+   * this chart's series - scroll back far enough and the two diverge. snapX()
+   * is the existing correction; using xOf() directly would slide every box.
+   */
+  private drawAreas(list: PriceArea[] | undefined, fvg: boolean) {
+    if (!list?.length) return
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    ctx.textBaseline = 'middle'
+    ctx.font = '9px ui-sans-serif, system-ui'
+
+    for (const a of list) {
+      const yHi = this.yOf(a.high)
+      const yLo = this.yOf(a.low)
+      if (yLo < -40 || yHi > this.pane.h + 40) continue
+      const bullish = a.side === 'bullish' || a.side === 'demand'
+      const col = bullish ? this.theme.up : this.theme.down
+      const x0 = Math.max(0, this.snapX(a.to_idx ?? a.idx))
+      const w = this.pane.w - x0
+      if (w <= 0) continue
+      const h = Math.max(1, yLo - yHi)
+
+      // An untouched band is worth looking at; one mostly eaten is almost
+      // gone. The floor keeps a nearly-filled zone faintly visible rather
+      // than vanishing, because "it held once" is still information.
+      const live = Math.max(0.12, 1 - a.filled)
+      ctx.globalAlpha = (fvg ? 0.13 : 0.16) * live
+      ctx.fillStyle = col
+      ctx.fillRect(x0, yHi, w, h)
+
+      ctx.globalAlpha = 0.55 * live + 0.2
+      ctx.strokeStyle = col
+      ctx.lineWidth = 1
+      // The gap is bounded by two prices that were never traded between, so
+      // its edges are real. A base is an area of interest, not a boundary -
+      // dashed, so it is not read as a level.
+      ctx.setLineDash(fvg ? [] : [4, 3])
+      ctx.strokeRect(Math.round(x0) + 0.5, Math.round(yHi) + 0.5,
+                     Math.round(w) - 1, Math.round(h))
+      ctx.setLineDash([])
+
+      // Label only where there is room for it, at the left edge where the
+      // band begins. A tag on a 3px sliver is unreadable and covers the
+      // candles either side of it.
+      if (h >= 11) {
+        // A TEST COUNT, in the same idiom the levels already use ("SUPPORT
+        // x2"). The impulse that formed the zone is why it exists, but it is
+        // one old number; how often price has come back says how well known
+        // the band is now, which is what you are deciding against. "fresh"
+        // rather than "x0", because a count of nothing reads as a mistake.
+        const n = a.touches ?? 0
+        const tag = fvg
+          ? `FVG ${a.size_atr ?? ''}`
+          : `${a.side === 'demand' ? 'DEMAND' : 'SUPPLY'} ${n ? `×${n}` : 'fresh'}`
+        ctx.globalAlpha = 0.85 * live + 0.15
+        ctx.fillStyle = col
+        ctx.textAlign = 'left'
+        ctx.fillText(tag.trim(), x0 + 4, yHi + h / 2)
+      }
+    }
+    ctx.restore()
+  }
+
+  /**
+   * Retracement of the current impulse leg.
+   *
+   * The engine already measures this - it is what the pullback playbook
+   * reasons over - so the chart draws the SAME numbers rather than fitting
+   * its own. A Fibonacci overlay that disagreed with the signal that cites
+   * it would be worse than none.
+   *
+   * The 0.618-0.786 band is shaded because that is the one the playbook calls
+   * the pocket; the rest are hairlines. Drawing seven equally weighted lines
+   * would bury the only two that carry a rule.
+   */
+  private drawFib() {
+    const f = this.snap?.fib
+    if (!f?.valid || !f.levels) return
+    const ctx = this.bctx
+    const x0 = Math.max(0, this.xOfTime(f.from_t))
+    const x1 = this.pane.w
+    if (x1 - x0 <= 0) return
+
+    const up = f.direction === 'up'
+    const col = up ? this.theme.up : this.theme.down
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+
+    const y618 = this.yOf(f.levels['0.618'])
+    const y786 = this.yOf(f.levels['0.786'])
+    if (Number.isFinite(y618) && Number.isFinite(y786)) {
+      ctx.globalAlpha = f.in_pocket ? 0.16 : 0.08
+      ctx.fillStyle = this.theme.warn
+      ctx.fillRect(x0, Math.min(y618, y786), x1 - x0, Math.abs(y786 - y618))
+    }
+
+    ctx.font = '9px ui-sans-serif, system-ui'
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'middle'
+    for (const [k, v] of Object.entries(f.levels as Record<string, number>)) {
+      const y = this.yOf(v)
+      if (y < 0 || y > this.pane.h) continue
+      // 0 and 1 are the leg itself; the pocket edges carry the rule. The
+      // rest are context and are drawn as such.
+      const strong = k === '0.618' || k === '0.786' || k === '0.5'
+      ctx.globalAlpha = strong ? 0.75 : 0.35
+      ctx.strokeStyle = strong ? this.theme.warn : col
+      ctx.lineWidth = 1
+      ctx.setLineDash(strong ? [] : [2, 4])
+      const py = Math.round(y) + 0.5
+      ctx.beginPath(); ctx.moveTo(x0, py); ctx.lineTo(x1, py); ctx.stroke()
+      ctx.setLineDash([])
+      ctx.globalAlpha = strong ? 0.95 : 0.5
+      ctx.fillStyle = strong ? this.theme.warn : col
+      ctx.fillText(k, x0 + 4, y - 6)
     }
     ctx.restore()
   }
@@ -1522,6 +1827,41 @@ export class ChartEngine {
   }
 
   // --- the live signal -------------------------------------------------- //
+  /**
+   * A price distance in pips.
+   *
+   * A pip is ten points: 0.1 on a 2-digit quote like gold, 0.0001 on a
+   * 5-digit FX pair, 0.01 on a 3-digit yen pair. Derived from the
+   * instrument's own digits rather than assumed, because a constant 0.0001
+   * would report gold in units a hundred times too small.
+   */
+  private pips(distance: number): string {
+    const pip = Math.pow(10, -(Math.max(1, this.digits) - 1))
+    const v = distance / pip
+    return (v >= 100 ? Math.round(v) : Math.round(v * 10) / 10).toLocaleString('en-US')
+  }
+
+  /**
+   * What that distance is worth at the size this chart assumes, or ''.
+   *
+   * Worked from the broker's own tick_value, which is quoted per lot IN THE
+   * ACCOUNT CURRENCY. That one fact is what lets a single line of arithmetic
+   * cover gold, a yen cross and an index without a table of contract sizes
+   * or a cross rate - the broker has already done the conversion.
+   *
+   * Returns empty rather than guessing when the contract facts have not
+   * arrived. A plausible-looking wrong number is the failure worth avoiding
+   * here; a missing one is merely unhelpful.
+   */
+  private cash(distance: number): string {
+    const m = this.money
+    if (!m || !(m.tickSize > 0) || !(m.tickValue > 0) || !(m.lots > 0)) return ''
+    const v = (distance / m.tickSize) * m.tickValue * m.lots
+    if (!Number.isFinite(v)) return ''
+    const n = v >= 100 ? v.toFixed(0) : v.toFixed(2)
+    return `${m.symbol}${n}`
+  }
+
   private drawSignal() {
     const sig = this.signal
     if (!sig) return
@@ -1539,13 +1879,13 @@ export class ChartEngine {
     ctx.save()
     ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
 
-    // reward zone
-    ctx.globalAlpha = 0.10
-    ctx.fillStyle = col
-    ctx.fillRect(x0, Math.min(yE, yT2), x1 - x0, Math.abs(yT2 - yE))
-    // risk zone
-    ctx.fillStyle = buy ? this.theme.down : this.theme.up
-    ctx.fillRect(x0, Math.min(yE, yS), x1 - x0, Math.abs(yS - yE))
+    // No shaded risk and reward blocks.
+    //
+    // They tinted a third of the chart to say something the four rails
+    // already say, and they said it by colouring the CANDLES - the one part
+    // of the chart that should carry no wash at all. What is between entry
+    // and stop is the space between two labelled lines; it does not need to
+    // be painted to be seen, and the price axis now tags all four prices.
 
     const rail = (y: number, colour: string, label: string, dashed = false) => {
       ctx.globalAlpha = 0.95
@@ -1563,10 +1903,19 @@ export class ChartEngine {
       ctx.fillText(label, x1 - tw - 7, y)
     }
 
-    rail(yT2, col, `TP2 ${sig.tp2.toFixed(this.digits)}`, true)
-    rail(yT1, col, `TP1 ${sig.tp1.toFixed(this.digits)}`, true)
-    rail(yE, this.theme.warn, `ENTRY ${sig.entry.toFixed(this.digits)}`)
-    rail(yS, buy ? this.theme.down : this.theme.up, `SL ${sig.stop.toFixed(this.digits)}`)
+    // DISTANCE, not price. The axis chip beside each rail already carries the
+    // price; repeating it here spent the label on a number you can read two
+    // inches to the right. What the label can say that the axis cannot is how
+    // far away it is - which is the question actually being asked of a target.
+    const away = (name: string, p: number, sign: string) => {
+      const d = Math.abs(p - sig.entry)
+      const cash = this.cash(d)
+      return `${name} ${sign}${this.pips(d)}p${cash ? `  ${sign}${cash}` : ''}`
+    }
+    rail(yT2, col, away('TP2', sig.tp2, '+'), true)
+    rail(yT1, col, away('TP1', sig.tp1, '+'), true)
+    rail(yE, this.theme.warn, 'ENTRY')
+    rail(yS, buy ? this.theme.down : this.theme.up, away('SL', sig.stop, '-'))
 
     // direction marker at the signal bar
     ctx.globalAlpha = 1
@@ -1906,21 +2255,42 @@ export class ChartEngine {
     const ctx = this.bctx
     const x = this.pane.w
     ctx.save()
-    ctx.fillStyle = `rgba(${this.theme.plateRgb},0.75)`
+    ctx.fillStyle = this.theme.axisFill ?? `rgba(${this.theme.plateRgb},0.75)`
     ctx.fillRect(x, 0, PRICE_AXIS_W, this.height)
-    ctx.strokeStyle = this.theme.line
+    ctx.strokeStyle = this.theme.axisLine ?? this.theme.line
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, this.height); ctx.stroke()
 
-    ctx.font = `11px ${NUM_FONT}`
-    // The axis is read constantly; the dim grey made the numbers the hardest
-    // thing on screen to pick out.
-    ctx.fillStyle = this.theme.text
+    // Two weights, not one.
+    //
+    // Every label at full strength is a solid column of digits that all look
+    // equally important, and finding "where is 4,300" means reading the lot.
+    // The round levels are drawn bright and slightly heavier; the ticks
+    // between them drop to the dim ink and act as a scale you measure
+    // against rather than text you read. Nothing is hidden - a number you
+    // need is still there, it just stops competing.
+    // The prices that MEAN something get a chip; the ladder behind them does
+    // not. Placed before the tick labels so a label sitting under a chip can
+    // be dropped rather than drawn through it.
+    const tags = this.axisTags()
+
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
-    for (const p of this.priceTicks()) {
+    for (const { p, major } of this.priceTicks()) {
       const y = this.yOf(p)
       if (y < 8 || y > this.pane.h - 4) continue
+      // A chip already says what this row is, and more usefully.
+      if (tags.some((t) => Math.abs(t.y - y) < TAG_H)) continue
+      ctx.font = major ? `600 11px ${NUM_FONT}` : `11px ${NUM_FONT}`
+      ctx.fillStyle = major ? this.theme.text : this.theme.textDim
       ctx.fillText(p.toFixed(this.digits), x + 7, y)
+    }
+
+    for (const t of tags) {
+      ctx.fillStyle = t.colour
+      ctx.fillRect(x, t.y - TAG_H / 2, PRICE_AXIS_W, TAG_H)
+      ctx.fillStyle = this.theme.chipInk
+      ctx.font = `700 10.5px ${NUM_FONT}`
+      ctx.fillText(t.price.toFixed(this.digits), x + 7, t.y)
     }
     // No MANUAL badge. It sat permanently over the lowest price labels to
     // explain a gesture you only need once; double-clicking anywhere on the
@@ -1928,11 +2298,88 @@ export class ChartEngine {
     ctx.restore()
   }
 
+  /**
+   * The prices worth reading off the axis, as chips.
+   *
+   * A price axis is a ruler, and a ruler tells you nothing about which of its
+   * marks matter. The ones that do are not round numbers at all - they are
+   * the levels the chart has already drawn a line at: where the signal enters
+   * and stops out, where it is aiming, and the support and resistance the
+   * engine scored. Those are the numbers you would otherwise read off a line
+   * by eye and then hunt for in the column beside it.
+   *
+   * Everything here is already ON the chart as a line. This puts its price
+   * where prices live, in the colour it was drawn in, so the line and the
+   * number are the same object.
+   */
+  private axisTags(): { y: number; price: number; colour: string }[] {
+    const out: { y: number; price: number; colour: string }[] = []
+    const want: { price: number; colour: string }[] = []
+
+    // Order is priority: the first one placed at a given height wins it.
+    // A signal's own levels beat generic structure, because they are the
+    // four numbers a decision is actually made on.
+    const sig = this.overlays.signal ? this.signal : null
+    if (sig) {
+      const buy = sig.side === 'buy'
+      const side = buy ? this.theme.up : this.theme.down
+      want.push({ price: sig.entry, colour: this.theme.warn })
+      want.push({ price: sig.stop, colour: buy ? this.theme.down : this.theme.up })
+      want.push({ price: sig.tp1, colour: side })
+      want.push({ price: sig.tp2, colour: side })
+    }
+
+    if (this.overlays.levels) {
+      // The same set drawLevels renders, in the same order and the same
+      // colours - so a chip can never appear for a line that is not there.
+      const shown = [...(this.snap?.levels ?? [])]
+        .filter((lv: any) => lv.score >= 50)
+        .sort((a: any, b: any) => b.score - a.score)
+        .slice(0, 8)
+      for (const lv of shown) {
+        want.push({
+          price: lv.price,
+          colour: lv.kind === 'resistance' ? this.theme.down
+            : lv.kind === 'support' ? this.theme.up : this.theme.warn,
+        })
+      }
+    }
+
+    // The live price chip is drawn last of all, over the top of this axis.
+    // Its row is claimed up front so a tag is never placed where it will be
+    // buried - which would read as a level silently missing.
+    const last = this.bars.length ? this.bars[this.bars.length - 1] : null
+    const taken: number[] = []
+    if (last) {
+      const ly = this.yOf(last.c)
+      if (ly >= 0 && ly <= this.pane.h) {
+        taken.push(ly)
+        // The bar countdown rides directly under the price tag - or over it
+        // near the foot of the pane - and is painted after this too. Both of
+        // its possible homes are claimed, because a level buried under a
+        // clock is worse than a level that simply moved down the axis.
+        if (this.tfMs) taken.push(ly + 24 > this.pane.h ? ly - 16 : ly + 16)
+      }
+    }
+
+    for (const w of want) {
+      if (!Number.isFinite(w.price)) continue
+      const y = this.yOf(w.price)
+      // Half a chip of margin at each end, so one is never clipped by the
+      // top of the pane or the time axis.
+      if (y < TAG_H / 2 || y > this.pane.h - TAG_H / 2) continue
+      if (taken.some((t) => Math.abs(t - y) < TAG_GAP)) continue
+      taken.push(y)
+      out.push({ y, price: w.price, colour: w.colour })
+    }
+    return out
+  }
+
   private drawTimeAxis() {
     const ctx = this.bctx
     const y = this.height - TIME_AXIS_H
     ctx.save()
-    ctx.strokeStyle = this.theme.line
+    ctx.strokeStyle = this.theme.axisLine ?? this.theme.line
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(0, y + 0.5); ctx.lineTo(this.width, y + 0.5); ctx.stroke()
     ctx.font = `11px ${NUM_FONT}`

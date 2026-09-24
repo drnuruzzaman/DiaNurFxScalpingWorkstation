@@ -357,9 +357,17 @@ def qualify(sig, snap: dict, spec: dict, context: dict = None):
     # --- 10. news blackout ---------------------------------------------------- #
     minutes_to_news = ctx.get('minutes_to_high_impact')
     if minutes_to_news is not None and abs(float(minutes_to_news)) <= g.news_blackout_min:
-        gates.append(_gate('news', 'BLOCK',
-                           f'high-impact release in {float(minutes_to_news):.0f} '
-                           f'minutes - inside the {g.news_blackout_min} min blackout'))
+        if g.news_blocks:
+            gates.append(_gate('news', 'BLOCK',
+                               f'high-impact release in {float(minutes_to_news):.0f} '
+                               f'minutes - inside the {g.news_blackout_min} min blackout'))
+        else:
+            # Same fact, no veto - and a heavy penalty, because the risk being
+            # described is a stop that gets jumped rather than filled.
+            gates.append(_gate('news', 'WARN',
+                               f'high-impact release in {float(minutes_to_news):.0f} '
+                               f'minutes - inside the {g.news_blackout_min} min '
+                               f'blackout, which is not set to block', 20))
     elif minutes_to_news is not None and abs(float(minutes_to_news)) <= g.news_blackout_min * 3:
         gates.append(_gate('news', 'WARN',
                            f'high-impact release in {float(minutes_to_news):.0f} '

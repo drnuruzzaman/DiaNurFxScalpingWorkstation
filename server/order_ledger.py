@@ -65,21 +65,39 @@ def tag_for(signal_id: str) -> str:
     return 'DNX ' + hashlib.sha1(signal_id.encode('utf-8')).hexdigest()[:10]
 
 
-def comment_for(signal_id: str, playbook: str = '') -> str:
+def comment_for(signal_id: str, playbook: str = '', tf: str = '') -> str:
     """
-    The full MT5 comment: the machine tag, then the playbook for a human.
+    The full MT5 comment: the machine tag, then the trade's story for a human.
 
-    Reading a broker statement or the terminal's own history, "DNX 3f2a…"
-    says which system placed the order but nothing about why. The playbook is
-    the why, and it is free to carry - the tag only used 14 of 31 characters.
+    Reading a broker statement or the terminal's own history, "DNX 3f2a..."
+    says which system placed the order but nothing about why. The timeframe
+    and the playbook are the why, and they are free to carry - the tag only
+    used 14 of the 31 characters MT5 allows.
+
+    Order is deliberate: tag, then timeframe, then playbook.
+
+      THE TAG stays at the front because reconciliation matches on it with
+      startswith(). Nothing may be inserted before it.
+      THE TIMEFRAME comes next because it is two or three characters and must
+      survive whole - "15m" truncated to "15" is a different claim. Putting
+      it after the playbook would make it the first thing MT5 cut off.
+      THE PLAYBOOK takes whatever is left and is truncated if it overruns,
+      which is the right thing to lose: "BRKRETES" still reads.
     """
     tag = tag_for(signal_id)
+    parts = [tag]
+    room = COMMENT_MAX - len(tag)
+
+    slot = (tf or '').strip().lower()
+    if slot and room >= len(slot) + 1:
+        parts.append(slot)
+        room -= len(slot) + 1
+
     name = (playbook or '').strip().lower()
-    if not name:
-        return tag
-    short = PLAYBOOK_SHORT.get(name, name.replace('_', '').upper())
-    room = COMMENT_MAX - len(tag) - 1
-    return f'{tag} {short[:room]}' if room > 0 else tag
+    if name and room > 1:
+        short = PLAYBOOK_SHORT.get(name, name.replace('_', '').upper())
+        parts.append(short[:room - 1])
+    return ' '.join(parts)
 
 
 def _now() -> int:
