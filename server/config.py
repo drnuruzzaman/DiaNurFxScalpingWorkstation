@@ -189,6 +189,16 @@ class GateSettings:
     # Only applied when no explicit playbook list is passed, so an experiment
     # asking for a playbook by name still gets it.
     disabled_playbooks: tuple = ('sweep_reversal', 'breakout_retest', 'range_fade')
+    # Block the three ways of FADING a leg that lost in all three years of
+    # Phase 0b (tools/phase0b_leg_position.py): after a 0.5-1.0 ATR pullback,
+    # once the leg has run >= 4 ATR, and against the 1h impulse while it is in
+    # progress. Phase 1 (tools/phase1_tpsl.py), with the three playbooks above
+    # off: 2026 +0.080 -> +0.075 R/trade, 2025 -0.009 -> -0.002, 2024 flat, and
+    # max drawdown lower in every year (852 -> 693, 753 -> 617, 371 -> 335 $
+    # at 0.01 lots). Measured on 5m; other timeframes use the same ATR rules
+    # untested. Off: the leg read still shows on the signal, it just no
+    # longer vetoes it.
+    avoid_fades: bool = True
 
 
 @dataclass
@@ -250,9 +260,16 @@ class ExecutionSettings:
     # Entry policy: market when price is within this many ATR of the frozen
     # entry, otherwise a pending limit/stop AT the frozen entry.
     entry_tolerance_atr: float = 0.2
-    # Lot size is always clamped into this range, whatever risk sizing says.
-    min_lots: float = 0.01
-    max_lots: float = 0.03
+    # FIXED lot sizes - every order is sent at one of these, whatever the
+    # risk model would have sized it at. Two numbers, not one, because the
+    # contracts are not comparable: 0.01 of gold is 1 oz, 0.01 of a major is
+    # 1,000 units, and one size for both would make one trivial or oversized.
+    #
+    # Replaces min_lots / max_lots. Those clamped a risk-sized lot into a
+    # range, and the range had been set to 0.01-0.01 - a fixed lot expressed
+    # as two boxes that had to be kept equal by hand.
+    lots_gold: float = 0.01
+    lots_non_gold: float = 0.05
     # Timeframes auto mode may send from. The Place button ignores this - it
     # limits automation, not what you can do by hand.
     auto_timeframes: tuple = ('1m', '3m', '5m', '15m', '30m', '1h', '4h', '1d')

@@ -252,14 +252,32 @@ def run(check) -> None:
     finally:
         CONFIG.execution.broker_tp = saved_tp
 
-    # lots clamp
-    for raw, want in ((0.5, 0.03), (0.001, 0.01), (0.02, 0.02)):
-        r2 = rig(lots=raw)
-        f2 = r2.store.finalize('XAUUSD.a', TF, [signal()], SPEC, bar, TF_MS)[0]
-        r2.bridge.quote = {'bid': 4000.5, 'ask': 4000.8}
-        r2.ex.step()
-        got = (r2.ledger.get(f2) or {}).get('lots')
-        check(f'lots {raw} is clamped to {want}', got == want, f'got {got}')
+    # Fixed lots: every order goes out at the configured size for its class,
+    # whatever the risk model sized it at - gold lots_gold, anything else
+    # lots_non_gold. Checked end to end on a sent order, then on the one
+    # function every order uses.
+    saved = (CONFIG.execution.lots_gold, CONFIG.execution.lots_non_gold)
+    try:
+        CONFIG.execution.lots_gold, CONFIG.execution.lots_non_gold = 0.01, 0.05
+        for raw in (0.5, 0.001, 0.02):
+            r2 = rig(lots=raw)
+            f2 = r2.store.finalize('XAUUSD.a', TF, [signal()], SPEC, bar, TF_MS)[0]
+            r2.bridge.quote = {'bid': 4000.5, 'ask': 4000.8}
+            r2.ex.step()
+            got = (r2.ledger.get(f2) or {}).get('lots')
+            check(f'gold sized {raw} by risk is sent at the fixed 0.01', got == 0.01, f'got {got}')
+
+        r3 = rig()
+        check('a non-gold symbol trades the fixed non-gold size (0.05)',
+              r3.ex._lots('USDJPY.a') == 0.05, str(r3.ex._lots('USDJPY.a')))
+        check('...for any non-gold symbol', r3.ex._lots('EURUSD.a') == 0.05)
+        check('gold trades lots_gold, not the non-gold size', r3.ex._lots('XAUUSD.a') == 0.01)
+        CONFIG.execution.lots_gold = 0.02
+        check('changing lots_gold changes the gold size', r3.ex._lots('XAUUSD.a') == 0.02)
+        CONFIG.execution.lots_gold = 0.0149
+        check('a size off the 0.01 step is rounded to it', r3.ex._lots('XAUUSD.a') == 0.01)
+    finally:
+        CONFIG.execution.lots_gold, CONFIG.execution.lots_non_gold = saved
 
     # pending when price has moved
     for ask, kind in ((4006.0, 'limit'), (3994.5, 'stop')):
@@ -431,6 +449,130 @@ def run(check) -> None:
     check('closed by the trailed stop: CLOSED, outcome trail, +1.6R',
           c8['stage'] == CLOSED and c8['outcome'] == 'trail' and abs(c8['r'] - 1.6) < 1e-6,
           f"{c8['stage']} {c8.get('outcome')} {c8.get('r')}")
+
+    _daily(check)
+
+
+def _ms(iso: str) -> int:
+    from datetime import datetime
+    return int(datetime.fromisoformat(iso.replace('Z', '+00:00')).timestamp() * 1000)
+
+
+def _daily(check) -> None:
+    """
+    The daily limits (server/daily.py): the broker's day, the day's sends
+    counted from the ledger, and the loss limit - the two gates that used to
+    be dead (P&L never computed) or wrong (a counter that never reset).
+    """
+    from server import clock
+    from server.daily import DailyLimits, day_start_ms, judging_context
+    from server.engine.qualify import qualify
+
+    OFF = 3 * 3_600_000                            # a UTC+3 broker clock
+
+    # ------------------------------------------------------------ the day
+    last_ms = _ms('2026-09-24T20:59:59.999Z')      # 23:59:59.999 broker time
+    check("the broker's day ends at the broker's midnight, not UTC's",
+          day_start_ms(last_ms, OFF) == _ms('2026-09-23T21:00:00Z')
+          and day_start_ms(last_ms + 1, OFF) == _ms('2026-09-24T21:00:00Z'))
+    check('...and at the stamp\'s own midnight with no offset (the lab, on broker-time history)',
+          day_start_ms(_ms('2026-09-24T23:59:00Z'), 0) == _ms('2026-09-24T00:00:00Z'))
+
+    # -------------------------------------- sends, from the ledger on disk
+    tmp = Path(tempfile.mkdtemp())
+    now = {'t': _ms('2026-09-24T18:00:00Z')}
+    clock.set_source(lambda: now['t'])
+    try:
+        ledger = OrderLedger(tmp / 'ledger.json')
+        for i, state in enumerate(('placed', 'placed', 'refused')):
+            fid = f'XAUUSD.a:5m:pattern_break:buy:{i}'
+            ledger.intent(fid, {'symbol': 'XAUUSD.a', 'tf': '5m', 'side': 'buy',
+                                'kind': 'market', 'lots': 0.01})
+            ledger.mark(fid, state, 'test')
+            now['t'] += 10 * 60_000
+        day0 = day_start_ms(now['t'], OFF)
+        check("orders sent today come from the order ledger - a refusal is not a send",
+              ledger.placed_since(day0) == 2, str(ledger.placed_since(day0)))
+        check('...so an API restart (the file read again) keeps the count',
+              OrderLedger(tmp / 'ledger.json').placed_since(day0) == 2)
+        now['t'] = _ms('2026-09-24T21:05:00Z')     # 00:05 the next broker day
+        check("the day's count resets at the broker's midnight",
+              ledger.placed_since(day_start_ms(now['t'], OFF)) == 0)
+    finally:
+        clock.set_source(None)
+
+    # ------------------------- DailyLimits, against a fake bridge and clock
+    calls = []
+    fake = {'s': _ms('2026-09-24T20:00:00Z') / 1000, 'today': -300.0, 'deals_up': True}
+
+    def deals():
+        calls.append('deals')
+        return {'deals': []} if fake['deals_up'] else None
+
+    def health():
+        calls.append('health')
+        return {'time_offset_ms': OFF}
+
+    def summarise(_deals, off):
+        return {'today': fake['today'], 'day_start_ms': day_start_ms(fake['s'] * 1000, off)}
+
+    dl = DailyLimits(deals=deals, health=health, summarise=summarise,
+                     sends=lambda since: 3, now=lambda: fake['s'], background=False)
+    acct = {'balance': 19_700.0, 'equity': 19_550.0, 'profit': -150.0}
+    calls.clear()
+    trades, pct = dl.refresh(acct)
+    check('the first refresh asks the bridge for its clock offset, nothing else',
+          calls == ['health'] and trades == 3, str(calls))
+    fake['s'] += 1
+    calls.clear()
+    trades, pct = dl.refresh(acct)
+    check('the next reads realised P&L - one extra bridge call per refresh, never two',
+          calls == ['deals'], str(calls))
+    check('daily P&L = realised today + floating, over the balance the day opened with',
+          pct == -2.25, f'{pct}% (-300 realised, -150 floating, opened at 20,000)')
+    fake['s'] += 5
+    calls.clear()
+    dl.refresh(acct)
+    check('...and the read is cached between refreshes', calls == [], str(calls))
+    fake['s'] = _ms('2026-09-24T21:00:30Z') / 1000    # 00:00:30 the next broker day
+    fake['deals_up'] = False
+    calls.clear()
+    trades, pct = dl.refresh({'balance': 19_700.0, 'equity': 19_700.0, 'profit': 0.0})
+    check("past the broker's midnight yesterday's loss stops counting - even before a new read lands",
+          pct == 0.0 and len(calls) == 1, f'{pct}% {calls}')
+    fake['deals_up'], fake['today'] = True, -120.0
+    fake['s'] += 1
+    calls.clear()
+    trades, pct = dl.refresh({'balance': 19_580.0, 'equity': 19_580.0, 'profit': 0.0})
+    check("...and the new day's realised P&L is read at once, not 20s later",
+          calls == ['deals'] and pct == round(-120 / 19_700 * 100, 3), f'{pct}% {calls}')
+
+    # ------------------------------------------ the gate that acts on them
+    saved = (CONFIG.risk.max_daily_loss_pct, CONFIG.risk.max_daily_trades)
+    try:
+        CONFIG.risk.max_daily_loss_pct, CONFIG.risk.max_daily_trades = 2.0, 24
+        snap = {'atr': 10.0, 'tf': TF, 'price': 4000.0}
+        base = {'equity': 19_550.0, 'open_positions': 0, 'spread_points': 10.0,
+                'trades_today': 0, 'daily_pnl_pct': 0.0}
+
+        def gate(ctx):
+            q = qualify(signal(), snap, SPEC, ctx)
+            return next(g for g in q.gates if g['name'] == 'daily')
+
+        g = gate(dict(base, daily_pnl_pct=-2.25))
+        check('down 2.25% against a 2% limit: the daily gate BLOCKS', g['verdict'] == 'BLOCK', g['detail'])
+        g = gate(dict(base, daily_pnl_pct=-1.5))
+        check('down 1.5%: it passes', g['verdict'] == 'PASS', g['detail'])
+        full = dict(base, trades_today=24)
+        g = gate(full)
+        check("24 orders sent today: a 25th is blocked", g['verdict'] == 'BLOCK', g['detail'])
+        g = gate(judging_context(full, 'SENT'))
+        check('...but a pending order already sent is never cancelled by the cap it was placed under',
+              g['verdict'] == 'PASS', g['detail'])
+        g = gate(judging_context(dict(full, daily_pnl_pct=-2.5), 'SENT'))
+        check('the loss limit still pulls a pending order', g['verdict'] == 'BLOCK', g['detail'])
+    finally:
+        CONFIG.risk.max_daily_loss_pct, CONFIG.risk.max_daily_trades = saved
 
 
 def main() -> int:

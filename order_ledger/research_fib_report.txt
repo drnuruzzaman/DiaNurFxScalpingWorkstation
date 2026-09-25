@@ -1,0 +1,56 @@
+FIBONACCI RATIOS AT GOLD REVERSALS   XAUUSD.a 5m   187,308 bars 2024-01-02 .. 2026-08-21
+h = share of swings that reached the level and ENDED within +0.05 of it; ctrl = the same at non-Fib levels either side; z = difference in standard errors
+
+=== zigzag 1.0 ATR: 59,492 pivots, median leg 1.90 ATR, median retracement 0.978
+  A. retracement r = correction / prior leg
+      level  reached       h    ctrl    diff      z    z 2024  z 2025  z 2026
+      0.382   56,120   0.030   0.029   +0.2pp  +2.40     +1.99   +0.63   +1.60
+      0.500   51,754   0.041   0.041   +0.0pp  +0.01     -1.78   +1.80   +0.05
+      0.618   46,476   0.052   0.050   +0.2pp  +1.59     +2.86   -1.03   +0.96
+      0.786   38,458   0.063   0.060   +0.3pp  +2.64     +2.94   -0.32   +2.12
+      0.886   33,781   0.066   0.064   +0.3pp  +2.24     +0.78   +2.12   +0.94
+      1.000   28,946   0.065   0.066   -0.0pp  -0.32     -0.17   +0.28   -0.78
+      1.272   20,120   0.067   0.066   +0.1pp  +0.51     +1.88   -1.42   +0.42
+      1.618   12,555   0.061   0.064   -0.3pp  -1.42     +0.59   -1.38   -1.85
+  B. measured move m = CD / AB
+      1.000   29,237   0.062   0.062   -0.1pp  -0.45
+      1.272   20,645   0.059   0.061   -0.2pp  -1.20
+      1.618   13,372   0.057   0.060   -0.2pp  -1.14
+  C. Elliott: rule-valid 5-wave impulses in 3.77% of 6-pivot windows; shuffled legs 8.05% +/- 0.09%
+     leg after a completed wave 5: mean 2.30 ATR, P(>= 3 ATR) 19.5%  (n=2,244)   | after any leg: mean 2.30 ATR, P(>= 3 ATR) 19.8%
+
+=== zigzag 1.5 ATR: 33,769 pivots, median leg 2.57 ATR, median retracement 0.980
+  A. retracement r = correction / prior leg
+      level  reached       h    ctrl    diff      z    z 2024  z 2025  z 2026
+      0.382   31,949   0.029   0.028   +0.0pp  +0.37     +1.84   -0.11   -1.35
+      0.500   29,551   0.043   0.040   +0.3pp  +2.49     -0.75   +2.63   +2.82
+      0.618   26,544   0.049   0.050   -0.1pp  -0.75     +0.72   -0.28   -2.09
+      0.786   22,021   0.066   0.061   +0.5pp  +2.95     +2.89   +1.19   +0.88
+      0.886   19,283   0.067   0.064   +0.3pp  +1.67     +0.91   -0.07   +2.37
+      1.000   16,452   0.065   0.067   -0.2pp  -0.94     +0.87   +0.05   -3.06
+      1.272   11,335   0.068   0.069   -0.1pp  -0.26     -0.95   +0.63   -0.09
+      1.618    6,969   0.064   0.067   -0.3pp  -1.03     -0.83   +0.41   -1.54
+  B. measured move m = CD / AB
+      1.000   16,584   0.062   0.065   -0.3pp  -1.62
+      1.272   11,575   0.063   0.064   -0.2pp  -0.68
+      1.618    7,430   0.060   0.060   -0.0pp  -0.12
+  C. Elliott: rule-valid 5-wave impulses in 3.76% of 6-pivot windows; shuffled legs 8.09% +/- 0.14%
+     leg after a completed wave 5: mean 3.00 ATR, P(>= 3 ATR) 37.3%  (n=1,271)   | after any leg: mean 3.11 ATR, P(>= 3 ATR) 38.0%
+
+=== zigzag 2.5 ATR: 12,995 pivots, median leg 4.16 ATR, median retracement 0.976
+  A. retracement r = correction / prior leg
+      level  reached       h    ctrl    diff      z    z 2024  z 2025  z 2026
+      0.382   12,240   0.027   0.029   -0.2pp  -1.01     -1.31   +1.06   -1.64
+      0.500   11,308   0.042   0.040   +0.2pp  +0.91     +1.53   +0.66   -0.89
+      0.618   10,143   0.050   0.052   -0.1pp  -0.62     -0.93   +0.16   -0.27
+      0.786    8,378   0.066   0.059   +0.7pp  +2.59     +0.93   +1.49   +2.21
+      0.886    7,325   0.062   0.064   -0.2pp  -0.85     -0.12   -1.53   +0.34
+      1.000    6,302   0.060   0.064   -0.4pp  -1.22     -0.01   -0.11   -2.25
+      1.272    4,399   0.063   0.067   -0.5pp  -1.20     -1.81   +0.89   -1.16
+      1.618    2,740   0.057   0.061   -0.4pp  -0.97     -1.52   -0.17   +0.13
+  B. measured move m = CD / AB
+      1.000    6,481   0.058   0.056   +0.2pp  +0.82
+      1.272    4,630   0.052   0.062   -0.9pp  -2.60
+      1.618    3,097   0.055   0.060   -0.5pp  -1.13
+  C. Elliott: rule-valid 5-wave impulses in 3.38% of 6-pivot windows; shuffled legs 8.04% +/- 0.24%
+     leg after a completed wave 5: mean 5.02 ATR, P(>= 5 ATR) 36.9%  (n=439)   | after any leg: mean 5.10 ATR, P(>= 5 ATR) 35.6%

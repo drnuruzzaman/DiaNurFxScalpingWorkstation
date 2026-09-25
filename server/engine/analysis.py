@@ -21,6 +21,7 @@ import numpy as np
 from ..config import CONFIG, MTF_LADDER, TF_SECONDS, session_quality, sessions_at
 from ..datafeed import Series
 from . import events as ev
+from . import legs as lg
 from . import levels as lv
 from . import patterns as pat
 from . import regime as rg
@@ -188,6 +189,11 @@ def analyse(series: Series, mtf_reads: dict = None,
         'down': st.impulse_retracement(swings, price, 'down', min_impulse),
     }
 
+    # The leg in progress - direction, how far it has run, how far price has
+    # come back off its extreme - on the ATR Phase 0 measured with. See legs.py.
+    atr_leg = atr_arr if cfg.atr_period == lg.LEG_ATR_PERIOD         else atr(h, l, c, lg.LEG_ATR_PERIOD)
+    leg = lg.leg_state(h, l, c, atr_leg, t)
+
     eq_tol = atr_now * 0.30
     eq_highs = st.equal_levels(swings, eq_tol, 'high')
     eq_lows = st.equal_levels(swings, eq_tol, 'low')
@@ -285,6 +291,7 @@ def analyse(series: Series, mtf_reads: dict = None,
         'breaks': [b.to_dict() for b in breaks[-12:]],
         'fib': fib,
         'pullback': pullback,
+        'leg': lg.annotate(leg, mtf, series.tf),
 
         'levels': [x.to_dict() for x in levels],
         'nearest': {
@@ -341,13 +348,23 @@ def quick_trend(series: Series) -> dict:
 
 
 def build_mtf(feed, symbol: str, base_tf: str, live: bool = True,
-              bars: int = 300) -> dict:
-    """Trend reads for the ladder above `base_tf`."""
+              bars: int = 300, closed: bool = False) -> dict:
+    """
+    Trend reads for the ladder above `base_tf`.
+
+    closed=True drops each higher timeframe's FORMING bar, so the read is
+    what those timeframes had CLOSED on - what a FINAL signal, decided on
+    closed bars, is allowed to know. A 1h bar twenty minutes old is not a
+    1h bar yet.
+    """
     out = {}
+    now_ms = time.time() * 1000
     for tf in MTF_LADDER.get(base_tf, [base_tf]):
         if tf in out:
             continue
         s = feed.bars(symbol, tf, bars, live=live)
+        if closed and len(s) and float(s.t[-1]) + TF_SECONDS.get(tf, 300) * 1000 > now_ms:
+            s = s.slice(0, len(s) - 1)
         if len(s) >= 60:
             out[tf] = quick_trend(s)
     return out

@@ -194,7 +194,7 @@ class Service:
 # HEADROOM, not the trading size. This is the bridge's hard refusal - a
 # separate process from the app, fixed at launch, unreachable from the UI -
 # and it exists to stop a runaway, not to set position size. Settings does
-# that (execution.max_lots).
+# that (execution.lots_gold / lots_non_gold).
 #
 # Set it just above the working range rather than equal to it: matched to the
 # trading size, every increase in Settings is silently refused at send time

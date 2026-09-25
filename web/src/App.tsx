@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ChartPane } from './chart/ChartPane'
+import { IndicatorsMenu, LayoutMenu, OVERLAY_KEYS } from './chart/ChartMenus'
 import * as barcache from './lib/barcache'
 import * as workspace from './lib/workspace'
 import * as snapshot from './lib/snapshot'
@@ -8,7 +9,7 @@ import { DEFAULT_LAYOUT, DEFAULT_OVERLAYS, type Bar, type LayoutOpts, type MtfTr
 import { LiveFeed, api, mergeBars, toBars, type Board, type Health, type LivePayload, type Mt5State, type Pnl } from './lib/api'
 import { dirClass, fmt, signed } from './lib/format'
 import { AgentDock } from './panels/AgentDock'
-import { BacktestView, EMPTY_RUN, type BacktestRun } from './panels/BacktestView'
+import { LabView } from './lab/LabView'
 import { BottomDock, DOCK_TABS, type DockTab } from './panels/BottomDock'
 import { LeftRail } from './panels/LeftRail'
 import { RightRail } from './panels/RightRail'
@@ -30,74 +31,8 @@ const TF_MS: Record<string, number> = {
   '4h': 14_400_000, '1d': 86_400_000,
 }
 
-/**
- * The indicator catalogue, split the way the chart itself is split: things
- * drawn ON the price pane, and things that get a pane of their own.
- *
- * Each row carries a short hint saying what the overlay actually keys off,
- * because "Channels" and "Liquidity" are not self-explanatory and the cost of
- * guessing wrong is reading a level that means something else.
- */
-type OverlayRow = { key: keyof Overlays; label: string; hint?: string }
-
-const OVERLAY_GROUPS: { title: string; rows: OverlayRow[] }[] = [
-  {
-    title: 'Overlays',
-    rows: [
-      { key: 'levels', label: 'S/R levels', hint: 'price turned repeatedly' },
-      { key: 'trendlines', label: 'Trendlines', hint: 'swing-anchored' },
-      { key: 'channels', label: 'Channels', hint: 'parallel corridor' },
-      { key: 'patterns', label: 'Patterns', hint: 'wedges, tops, H&S' },
-      { key: 'swings', label: 'Swing points', hint: 'HH / HL / LH / LL' },
-      { key: 'structure', label: 'BOS / CHoCH', hint: 'structure breaks' },
-      { key: 'liquidity', label: 'Liquidity', hint: 'resting stops' },
-      { key: 'events', label: 'Events', hint: 'macro releases' },
-      { key: 'signal', label: 'Signal levels', hint: 'entry / stop / targets' },
-      { key: 'zigzag', label: 'ZigZag line', hint: 'swing skeleton' },
-      { key: 'regimeBands', label: 'Regime ribbon', hint: 'trending / ranging runs' },
-    ],
-  },
-  {
-    // Bands, not lines - kept in their own group because switching two of
-    // them on at once is already a lot of chart, and that is easier to see
-    // when they are listed together.
-    title: 'Areas',
-    rows: [
-      { key: 'zones', label: 'Supply / demand', hint: 'bases strong moves left' },
-      { key: 'fvg', label: 'Fair value gaps', hint: 'unfilled imbalances' },
-      { key: 'fib', label: 'Fibonacci', hint: 'retracement of the last leg' },
-    ],
-  },
-  {
-    title: 'Higher timeframe',
-    rows: [
-      { key: 'mtfTrendlines', label: 'Projected trendlines', hint: 'from coarser frames' },
-    ],
-  },
-  {
-    title: 'Panes',
-    rows: [
-      { key: 'volume', label: 'Volume' },
-      { key: 'rsi', label: 'RSI + divergence', hint: 'regular & hidden' },
-      { key: 'macd', label: 'MACD', hint: '12 / 26 / 9' },
-    ],
-  },
-]
-
-const OVERLAY_KEYS = OVERLAY_GROUPS.flatMap((g) => g.rows.map((r) => r.key))
-
-const THEMES: { key: string; label: string; hint: string }[] = [
-  { key: 'midnight', label: 'Midnight', hint: 'near-black navy' },
-  { key: 'navy', label: 'Navy', hint: 'blue, brighter' },
-  { key: 'carbon', label: 'Carbon', hint: 'neutral grey' },
-  { key: 'glossy', label: 'Glossy', hint: 'Ausloans, lacquered' },
-]
-
-const LAYOUT_ROWS: { key: keyof LayoutOpts; label: string; hint: string }[] = [
-  { key: 'grid', label: 'Show grid', hint: 'on axis ticks' },
-  { key: 'newsMarks', label: 'News marks', hint: 'high impact only' },
-  { key: 'positions', label: 'Trade positions', hint: 'open entries' },
-]
+// The indicator and layout catalogues live in chart/ChartMenus.tsx, shared
+// with the backtest lab so both charts offer the same studies.
 
 /**
  * localStorage, with the failure modes handled once.
@@ -118,6 +53,22 @@ function loadPref<T>(key: string, fallback: T): T {
   } catch {
     return fallback
   }
+}
+
+/** What a saved chart workspace holds - see saveWorkspace() in App. */
+type ChartPreset = {
+  overlays: Overlays
+  mtfSources: string[] | null
+  span: number | null
+  saved_ms: number
+}
+
+/** Deep equality that does not care about key order. */
+function sameJson(a: unknown, b: unknown): boolean {
+  const norm = (v: any): any => (v && typeof v === 'object' && !Array.isArray(v)
+    ? Object.keys(v).sort().reduce((o: any, k) => { o[k] = norm(v[k]); return o }, {})
+    : Array.isArray(v) ? v.map(norm) : v)
+  return JSON.stringify(norm(a)) === JSON.stringify(norm(b))
 }
 
 function savePref(key: string, value: unknown): void {
@@ -273,6 +224,9 @@ export default function App() {
       const known = snapshot.PANEL_LABELS.map((p) => p.key)
       const saved = loadPref<snapshot.PanelKey[]>('dianur.snapPanels.v2', [])
       const clean = Array.isArray(saved) ? saved.filter((k) => known.includes(k)) : []
+      // Everything was on before Detected patterns existed: keep it that way.
+      const oldAll = ['signal', 'gauge', 'trend', 'evidence'] as snapshot.PanelKey[]
+      if (oldAll.every((k) => clean.includes(k)) && !clean.includes('patterns')) return known
       return clean.length ? clean : known
     })
   const [layout, setLayout] = useState<LayoutOpts>(
@@ -318,11 +272,77 @@ export default function App() {
   /** The live chart's engine, handed over by ChartPane once it exists. */
   const chartEngine = useRef<any>(null)
 
-  // Backtest run state is owned here so a run survives switching to LIVE and
-  // back. It used to live inside BacktestView, where unmounting the tab killed
-  // the poll and lost a completed run's results.
-  const [btRun, setBtRun] = useState<BacktestRun>(EMPTY_RUN)
-  const patchRun = (p: Partial<BacktestRun>) => setBtRun((r) => ({ ...r, ...p }))
+  // ---------------------------------------------- saved workspace per chart
+  // One saved setup per instrument + timeframe: indicators, projected
+  // higher-frame sources and zoom. Opening that chart loads it; a chart with
+  // nothing saved keeps whatever is on screen, as before. Layout and theme
+  // are NOT per chart: they are the house style, the same on every chart,
+  // set from the Layout menu - so they are never saved or loaded here.
+  // Kept in the synced workspace (lib/workspace.ts), so it follows you to
+  // another browser and survives cleared site data.
+  // Saves made before that rule carried layout/theme; drop them on load.
+  const [presets, setPresets] = useState<Record<string, ChartPreset>>(() => {
+    const raw = loadPref<Record<string, any>>('dianur.chartPresets', {})
+    const out: Record<string, ChartPreset> = {}
+    for (const [k, v] of Object.entries(raw)) {
+      const { layout: _l, theme: _t, ...rest } = v || {}
+      out[k] = rest as ChartPreset
+    }
+    return out
+  })
+  const presetKey = `${symbol}|${tf}`
+  const preset: ChartPreset | undefined = presets[presetKey]
+  const flash = (msg: string) => {
+    setToast(msg)
+    window.setTimeout(() => setToast((t) => (t === msg ? null : t)), 4500)
+  }
+  const applyPreset = (p: ChartPreset) => {
+    setOverlays({ ...DEFAULT_OVERLAYS, ...p.overlays })
+    if (p.mtfSources !== undefined) {
+      setMtfSources(p.mtfSources)
+      savePref('dianur.mtfSources', p.mtfSources)
+    }
+  }
+  // Applied once per chart OPENED - not re-applied while you work on it.
+  const appliedFor = useRef<string | null>(null)
+  useEffect(() => {
+    if (appliedFor.current === presetKey) return
+    appliedFor.current = presetKey
+    if (preset) applyPreset(preset)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [presetKey])
+  const presetDirty = !!preset && !(
+    sameJson({ ...DEFAULT_OVERLAYS, ...preset.overlays }, overlays)
+    && sameJson(preset.mtfSources ?? null, mtfSources ?? null))
+  const saveWorkspace = () => {
+    const span = chartEngine.current?.getViewport?.().span
+    const next = {
+      ...presets,
+      [presetKey]: {
+        overlays, mtfSources,
+        span: span ? Math.round(span) : null, saved_ms: Date.now(),
+      },
+    }
+    setPresets(next)
+    savePref('dianur.chartPresets', next)
+    flash(`Workspace saved for ${symbol} ${tf.toUpperCase()} - it loads whenever this chart opens`)
+  }
+  const revertWorkspace = () => {
+    if (!preset) return
+    applyPreset(preset)
+    chartEngine.current?.setPreferredSpan?.(preset.span ?? null, true)
+    flash(`Back to the saved workspace for ${symbol} ${tf.toUpperCase()}`)
+  }
+  const forgetWorkspace = () => {
+    const next = { ...presets }
+    delete next[presetKey]
+    setPresets(next)
+    savePref('dianur.chartPresets', next)
+    flash(`Saved workspace for ${symbol} ${tf.toUpperCase()} forgotten - the chart keeps its current setup`)
+  }
+  // Ctrl+S (Cmd+S) saves the live chart's workspace instead of the web page.
+  const saveRef = useRef(saveWorkspace)
+  saveRef.current = saveWorkspace
 
   const menuBar = useRef<HTMLDivElement>(null)
   const feed = useRef<LiveFeed | null>(null)
@@ -396,6 +416,18 @@ export default function App() {
     savePref('dianur.theme', theme)
   }, [theme])
 
+  useEffect(() => {
+    if (mode !== 'live') return
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault()
+        saveRef.current()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [mode])
+
   useEffect(() => { savePref('dianur.symbol', symbol) }, [symbol])
   useEffect(() => { savePref('dianur.watchlist', watchlist) }, [watchlist])
   useEffect(() => { savePref('dianur.tf', tf) }, [tf])
@@ -436,27 +468,6 @@ export default function App() {
     return () => { stop = true; clearInterval(t) }
   }, [])
 
-  // Poll a running backtest regardless of which tab is on screen.
-  useEffect(() => {
-    const id = btRun.runId
-    if (!id || btRun.result) return
-    let stop = false
-    const timer = setInterval(async () => {
-      if (stop) return
-      try {
-        const st = await api.backtestStatus(id)
-        patchRun({ status: st })
-        if (st.status === 'done') {
-          clearInterval(timer)
-          patchRun({ result: await api.backtestResult(id) })
-        } else if (st.status === 'error') {
-          clearInterval(timer)
-          patchRun({ error: st.error ?? 'backtest failed' })
-        }
-      } catch { /* transient; keep polling */ }
-    }, 900)
-    return () => { stop = true; clearInterval(timer) }
-  }, [btRun.runId, btRun.result])
 
   // One forced sweep on load: the background worker refreshes each timeframe
   // on its own cadence, so without this the slow rows (4h, 1d) would be blank
@@ -586,13 +597,19 @@ export default function App() {
     return signals.find((s) => s.playbook === pb && s.side === side) ?? signals[0] ?? null
   }, [signals, selectedId])
 
+  // Signals on this chart the leg gate rejected - marked on the chart when
+  // Layout -> Leg read is on.
+  const legBlocked = useMemo(
+    () => signals.filter((s) => s.gates?.some((g) => g.name === 'leg' && g.verdict === 'BLOCK')),
+    [signals])
+
   const placeOrder = async (sig: Signal) => {
     const ok = window.confirm(
       `Send this FINAL signal to MT5?\n\n` +
-      `${sig.side.toUpperCase()} ${sig.symbol} ${sig.tf}  (0.01-0.03 lots)\n` +
+      `${sig.side.toUpperCase()} ${sig.symbol} ${sig.tf}  (${sig.sizing?.lots ?? '?'} lots)\n` +
       `Entry ${fmt(sig.entry)}  Stop ${fmt(sig.stop)}\n` +
       `At TP1 ${fmt(sig.tp1)} the stop locks +${sig.exit_plan?.lock_r ?? 0.5}R, ` +
-      `then trails ${sig.exit_plan?.trail_atr ?? 1} ATR. No fixed target.\n\n` +
+      `then trails ${sig.exit_plan?.trail_atr ?? 1} ATR; objective TP2 ${fmt(sig.tp2)}.\n\n` +
       `Market if price is near the entry, otherwise a pending order at it.\n` +
       `This places a real order on account ${account?.login ?? '?'}.`,
     )
@@ -828,6 +845,10 @@ export default function App() {
           <div className="brand-name">DIANUR<em>FX</em></div>
         </div>
 
+        {/* The live chart's controls. The BACKTEST lab has its own toolbar with
+            the same menus bound to ITS chart, so none of these show there -
+            which chart a button acts on must never be a question. */}
+        {mode === 'live' && (<>
         <button className="symbol-pill" onClick={() => setShowPicker(true)}
           title="Change instrument, or edit the watchlist">
           <span>{symbol}</span>
@@ -863,38 +884,11 @@ export default function App() {
           </button>
 
           {openMenu === 'layout' && (
-            <div className="menu" role="menu" style={{ left: 'auto', right: 0, minWidth: 236 }}>
-              <div className="menu-head">Chart</div>
-              {LAYOUT_ROWS.map((r) => {
-                const on = layout[r.key]
-                return (
-                  <button key={r.key} className={`menu-item ${on ? 'on' : ''}`}
-                    role="menuitemcheckbox" aria-checked={on}
-                    onClick={() => setLayoutKey(r.key, !on)}>
-                    <span className="menu-check">{on ? '✓' : ''}</span>
-                    <span className="menu-label">{r.label}</span>
-                    <span className="menu-hint">{r.hint}</span>
-                  </button>
-                )
-              })}
-              <div className="menu-head">Theme</div>
-              {THEMES.map((t) => (
-                <button key={t.key} className={`menu-item ${theme === t.key ? 'on' : ''}`}
-                  role="menuitemradio" aria-checked={theme === t.key}
-                  onClick={() => setTheme(t.key)}>
-                  <span className="menu-check">{theme === t.key ? '\u2713' : ''}</span>
-                  <span className="menu-label">{t.label}</span>
-                  <span className="menu-hint">{t.hint}</span>
-                </button>
-              ))}
-
-              <div className="menu-note">
-                Saved and reloaded with the chart.{' '}
+            <LayoutMenu layout={layout} onToggle={setLayoutKey} theme={theme} onTheme={setTheme}
+              note={<>Saved and reloaded with the chart.{' '}
                 {layout.newsMarks && !news.length
                   ? 'No high-impact releases in range.'
-                  : `${news.length} high-impact release${news.length === 1 ? '' : 's'} in the last 14d.`}
-              </div>
-            </div>
+                  : `${news.length} high-impact release${news.length === 1 ? '' : 's'} in the last 14d.`}</>} />
           )}
 
           <div style={{ position: 'relative' }}>
@@ -936,70 +930,38 @@ export default function App() {
           </div>
 
           {openMenu === 'indicators' && (
-            <div className="menu" role="menu">
-              {OVERLAY_GROUPS.map((g) => (
-                <React.Fragment key={g.title}>
-                  <div className="menu-head">{g.title}</div>
-                  {g.rows.map((r) => {
-                    const on = overlays[r.key]
-                    return (
-                      <button key={r.key} className={`menu-item ${on ? 'on' : ''}`}
-                        role="menuitemcheckbox" aria-checked={on}
-                        onClick={() => setOverlays({ ...overlays, [r.key]: !on })}>
-                        <span className="menu-check">{on ? '✓' : ''}</span>
-                        <span className="menu-label">{r.label}</span>
-                        {r.hint && <span className="menu-hint">{r.hint}</span>}
-                      </button>
-                    )
-                  })}
-                </React.Fragment>
-              ))}
-              {overlays.mtfTrendlines && (
-                <>
-                  <div className="menu-head">Sources</div>
-                  <div className="menu-tfs">
-                    {mtfAvailable.map((t) => {
-                      const on = shownSources.includes(t)
-                      return (
-                        <button key={t} className={`tf-chip ${on ? 'on' : ''}`}
-                          onClick={() => {
-                            const next = on
-                              ? shownSources.filter((x) => x !== t)
-                              : [...shownSources, t]
-                            setMtfSources(next)
-                            savePref('dianur.mtfSources', next)
-                          }}>{t.toUpperCase()}</button>
-                      )
-                    })}
-                  </div>
-                  <div className="menu-note">
-                    {!mtfAvailable.length
-                      ? 'No coarser frame above this one.'
-                      : !shownSources.length
-                        ? 'No sources selected — nothing is being projected.'
-                        : `${tf.toUpperCase()} is this chart's own frame; the rest project down.`}
-                  </div>
-                </>
-              )}
-
-              <div className="menu-sep" />
-              <div className="menu-note">
-                This selection is saved and reloads with the chart.
-              </div>
-              <div className="menu-foot">
-                <button className="menu-action" onClick={() => setOverlays(
-                  OVERLAY_KEYS.reduce((a, k) => ({ ...a, [k]: false }), {} as Overlays))}>
-                  Remove all studies
-                </button>
-                {/* Removing everything with no way back is a one-way door -
-                    the defaults are a specific, considered set. */}
-                <button className="menu-action dim"
-                  title="Discard this setup and go back to the built-in selection"
-                  onClick={() => setOverlays(DEFAULT_OVERLAYS)}>Reset</button>
-              </div>
-            </div>
+            <IndicatorsMenu overlays={overlays} onChange={setOverlays}>
+                {overlays.mtfTrendlines && (
+                  <>
+                    <div className="menu-head">Sources</div>
+                    <div className="menu-tfs">
+                      {mtfAvailable.map((t) => {
+                        const on = shownSources.includes(t)
+                        return (
+                          <button key={t} className={`tf-chip ${on ? 'on' : ''}`}
+                            onClick={() => {
+                              const next = on
+                                ? shownSources.filter((x) => x !== t)
+                                : [...shownSources, t]
+                              setMtfSources(next)
+                              savePref('dianur.mtfSources', next)
+                            }}>{t.toUpperCase()}</button>
+                        )
+                      })}
+                    </div>
+                    <div className="menu-note">
+                      {!mtfAvailable.length
+                        ? 'No coarser frame above this one.'
+                        : !shownSources.length
+                          ? 'No sources selected — nothing is being projected.'
+                          : `${tf.toUpperCase()} is this chart's own frame; the rest project down.`}
+                    </div>
+                  </>
+                )}
+            </IndicatorsMenu>
           )}
         </div>
+        </>)}
 
         <div className="spacer" />
 
@@ -1044,7 +1006,15 @@ export default function App() {
           )}
         </div>
 
-        {conn !== 'live' && (
+        {mode !== 'live' ? (
+          // The live chart's stream is closed on purpose while the lab is on
+          // screen; "STREAM DOWN" read like an outage. Trading is unaffected -
+          // the executor runs in the API, not in this page.
+          <span className="chip chip-mute"
+            title="The live chart's stream pauses while you are on BACKTEST. Auto trading carries on in the API; the footer figures refresh when you return to LIVE.">
+            LIVE FEED PAUSED
+          </span>
+        ) : conn !== 'live' && (
           <span className="chip chip-warn">
             {conn === 'down' ? 'STREAM DOWN' : 'CONNECTING'}
           </span>
@@ -1099,9 +1069,15 @@ export default function App() {
               overlays={overlays} digits={digits} money={money}
               onNeedHistory={loadOlderBars} status={chartStatus}
               onEngine={(e) => { chartEngine.current = e }}
+              chartKey={presetKey} preferredSpan={preset?.span ?? null}
+              workspace={{
+                label: `${symbol} · ${tf.toUpperCase()}`, saved: !!preset, dirty: presetDirty,
+                savedAt: preset?.saved_ms, onSave: saveWorkspace,
+                onRevert: revertWorkspace, onForget: forgetWorkspace,
+              }}
               tfMs={TF_MS[tf] ?? 0}
               mtfLines={mtfLines} mtfSources={shownSources}
-              layout={layout} news={news} theme={theme}
+              layout={layout} news={news} theme={theme} legBlocked={legBlocked}
               positions={positions.filter((p: any) => p.symbol === symbol)}
               badge={
                 <>
@@ -1178,8 +1154,7 @@ export default function App() {
           )}
         </div>
       ) : (
-        <BacktestView symbol={symbol} timeframes={TF_LIST} overlays={overlays}
-          run={btRun} onRun={patchRun} />
+        <LabView theme={theme} liveOverlays={overlays} layout={layout} onLayout={setLayoutKey} />
       )}
 
       {/* --------------------------------------------------- status bar */}

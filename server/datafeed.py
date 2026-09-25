@@ -524,6 +524,7 @@ class Feed:
             with self._lock:
                 self._spec[symbol] = out
                 self._spec_at[symbol] = now
+            _save_spec(symbol, out)
         return out
 
     def _spec_uncached(self, symbol: str) -> dict:
@@ -547,6 +548,36 @@ class Feed:
             out['margin_per_lot'] = live.get('margin_per_lot')
             out['source'] = 'mt5'
         return out
+
+
+_SPEC_SAVED: dict = {}          # symbol -> wall time of the last write
+
+
+def _save_spec(symbol: str, spec: dict) -> None:
+    """
+    Keep the broker's contract facts beside the history, for the backtest lab.
+
+    The lab runs without a bridge (server/lab), so it cannot ask MT5 what a
+    lot of this instrument is worth; without this file it prices P&L on the
+    configured defaults. tick_value is in the ACCOUNT's currency and drifts
+    with FX rates, so it is refreshed at most every six hours rather than on
+    every wobble. Only instruments that already have history on disk get one.
+    """
+    folder = DATA_DIR / symbol
+    if not folder.is_dir() or time.time() - _SPEC_SAVED.get(symbol, 0) < 6 * 3600:
+        return
+    keep = {k: spec.get(k) for k in ('digits', 'point', 'tick_size', 'tick_value',
+                                     'contract_size', 'volume_min', 'volume_max',
+                                     'volume_step', 'stops_level_points',
+                                     'commission_per_lot_side')}
+    keep['saved_at'] = time.strftime('%Y-%m-%d %H:%M', time.gmtime())
+    try:
+        tmp = folder / 'spec.json.tmp'
+        tmp.write_text(json.dumps(keep, indent=1), encoding='utf-8')
+        tmp.replace(folder / 'spec.json')
+        _SPEC_SAVED[symbol] = time.time()
+    except OSError:
+        pass
 
 
 def _is_stale(series: Series, tf: str, max_bars_behind: int = 400) -> bool:

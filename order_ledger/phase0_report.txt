@@ -1,0 +1,278 @@
+PHASE 0 - measure before redesigning TP / SL        XAUUSD, read-only
+leg = reversal of 1.5 ATR   tradeable leg >= 2.0 ATR   signal horizon 72 x 5m   costs: spread + commission + slippage
+
+============================================================================================================================
+  2026   2025-12-31 -> 2026-08-20
+============================================================================================================================
+
+  PART A - impulses and corrections   (WITH = impulse along the HTF trend, COUNTER = correction against it)
+   3m vs 1H trend   13243 legs over 166 trading days (79.9/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        42%     33.5     2.6 /  3.6 /  5.2      11.8 /  19.0         4        72%                              
+    COUNTER     42%     33.6     2.5 /  3.6 /  5.2      11.8 /  19.0         4        72%         97%        30%    48%
+    RANGE       16%     12.8     2.6 /  3.7 /  5.2      11.6 /  18.3         4        73%                              
+   5m vs 1H trend   8019 legs over 166 trading days (48.4/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        42%     20.3     2.6 /  3.6 /  5.2      15.3 /  24.8         4        72%                              
+    COUNTER     42%     20.5     2.6 /  3.7 /  5.1      15.5 /  24.7         4        71%         97%        29%    48%
+    RANGE       16%      7.7     2.6 /  3.8 /  5.2      15.5 /  24.0         4        72%                              
+  15m vs 1H trend   2605 legs over 166 trading days (15.7/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        41%      6.5     2.6 /  3.7 /  5.5      28.7 /  46.6         4        74%                              
+    COUNTER     42%      6.6     2.6 /  3.7 /  5.1      29.3 /  43.8         4        75%         96%        30%    47%
+    RANGE       16%      2.6     2.7 /  3.8 /  5.3      27.6 /  42.8         4        76%                              
+   1h vs 4H trend   665 legs over 166 trading days (4.0/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        40%      1.6     2.6 /  3.6 /  5.8      59.8 /  96.6         5        75%                              
+    COUNTER     41%      1.7     2.5 /  3.4 /  5.1      57.7 /  88.0         4        71%         95%        33%    46%
+    RANGE       19%      0.8     2.6 /  3.7 /  4.9      52.4 /  89.0         5        74%                              
+
+  PART B - signal paths   6286 qualified signals (reward gate ignored, deduped per setup+side over 5 bars)
+    P kR = reached k R before the stop   MFE50 = median best excursion (R)   MAE@1R = how deep trades that reached 1R went against first (R)
+    rescue = stopped trades that then reached +1R from entry   EVk = net R/trade with a fixed target at k R   best k = the target with the highest EV
+                                           n  P0.5R    P1R  P1.5R    P2R    P3R  MFE50  MAE@1R p50/p80  rescue  EV0.75     EV1   EV1.5     EV2  best k  EVbest
+    ALL SIGNALS                         6286    67%    50%    38%    29%    19%   0.98    0.31 / 0.64     47%  -0.003  +0.015  +0.022  +0.018      3R  +0.035
+    -- by setup
+    sweep_reversal                      3043    67%    49%    38%    31%    20%   0.98    0.32 / 0.65     50%  -0.012  -0.013  -0.014  -0.007      3R  +0.002
+    pattern_break                       1518    65%    47%    33%    24%    14%   0.88    0.28 / 0.62     31%  +0.005  +0.038  +0.053  +0.058      3R  +0.086
+    mtf_pullback                         702    67%    52%    42%    32%    23%   1.09    0.29 / 0.62     44%  +0.039  +0.081  +0.126  +0.103      3R  +0.169
+    breakout_retest                      650    67%    50%    39%    32%    24%   0.99    0.38 / 0.64     57%  -0.056  -0.027  -0.032  -0.040    2.5R  -0.001
+    false_break_fade                     208    67%    53%    42%    31%    20%   1.17    0.32 / 0.67     54%  +0.015  +0.055  +0.062  -0.032   1.25R  +0.065
+    flag_continuation                     96    76%    58%    40%    27%    12%   1.18    0.38 / 0.63     24%  +0.194  +0.239  +0.193  +0.167      1R  +0.239
+    range_fade                            69    62%    49%    39%    26%    10%   0.98    0.30 / 0.51     50%  -0.017  +0.005  +0.016  -0.104    1.5R  +0.016
+    -- by direction vs the 1H trend
+    with 1H                             3704    67%    50%    37%    29%    19%   1.00    0.31 / 0.62     46%  +0.002  +0.022  +0.017  +0.013      3R  +0.048
+    counter 1H                          1606    67%    49%    38%    29%    18%   0.94    0.32 / 0.66     50%  +0.002  +0.000  +0.024  +0.009    1.5R  +0.024
+    range                                976    64%    49%    38%    31%    21%   0.95    0.31 / 0.63     42%  -0.028  +0.010  +0.034  +0.056      3R  +0.098
+    -- by setup x 1H trend
+    sweep_reversal / with 1H            1432    68%    50%    37%    30%    21%   0.99    0.32 / 0.62     51%  -0.009  -0.014  -0.047  -0.043    0.5R  -0.004
+    sweep_reversal / counter 1H         1116    67%    49%    40%    32%    20%   0.95    0.32 / 0.66     52%  +0.005  -0.009  +0.031  +0.037      2R  +0.037
+    pattern_break / with 1H             1054    66%    48%    34%    25%    14%   0.90    0.28 / 0.62     33%  +0.010  +0.042  +0.062  +0.074    2.5R  +0.082
+    mtf_pullback / with 1H               609    67%    52%    42%    32%    23%   1.09    0.29 / 0.62     44%  +0.029  +0.071  +0.116  +0.089      3R  +0.155
+    sweep_reversal / range               495    65%    49%    38%    31%    20%   0.93    0.32 / 0.65     45%  -0.060  -0.016  -0.021  +0.001      3R  +0.014
+    breakout_retest / with 1H            403    65%    50%    38%    31%    24%   0.96    0.38 / 0.65     58%  -0.073  -0.036  -0.071  -0.087      3R  -0.015
+    pattern_break / counter 1H           236    66%    47%    28%    18%     9%   0.87    0.35 / 0.67     31%  +0.008  +0.042  -0.011  -0.043      1R  +0.042
+    pattern_break / range                228    60%    45%    34%    25%    18%   0.82    0.25 / 0.56     23%  -0.018  +0.012  +0.077  +0.089      3R  +0.234
+    breakout_retest / counter 1H         129    71%    47%    37%    30%    20%   0.86    0.38 / 0.65     57%  -0.075  -0.075  -0.053  -0.077    0.5R  +0.040
+    breakout_retest / range              118    69%    54%    46%    39%    30%   1.15    0.36 / 0.55     56%  +0.022  +0.054  +0.124  +0.159    2.5R  +0.235
+    false_break_fade / with 1H           100    67%    54%    43%    33%    23%   1.07    0.33 / 0.69     47%  +0.001  +0.075  +0.070  +0.020      1R  +0.075
+    mtf_pullback / range                  77    69%    55%    43%    36%    25%   1.08    0.24 / 0.58     41%  +0.132  +0.185  +0.200  +0.275      3R  +0.302
+    false_break_fade / counter 1H         76    68%    54%    42%    29%    14%   1.19    0.31 / 0.67     64%  +0.058  +0.054  +0.061  -0.099    1.5R  +0.061
+    flag_continuation / with 1H           66    79%    61%    41%    27%    17%   1.20    0.39 / 0.56     32%  +0.254  +0.295  +0.241  +0.216      1R  +0.295
+    range_fade / with 1H                  40    68%    52%    40%    25%    12%   1.03    0.26 / 0.47     64%  +0.076  +0.076  +0.059  -0.104   1.25R  +0.095
+    false_break_fade / range              32    62%    50%    41%    31%    25%   1.04    0.32 / 0.64     48%  -0.045  -0.005  +0.041  -0.037   1.25R  +0.049
+    flag_continuation / counter 1H        17   (too few)
+    range_fade / counter 1H               16   (too few)
+    mtf_pullback / counter 1H             16   (too few)
+    flag_continuation / range             13   (too few)
+    range_fade / range                    13   (too few)
+    -- by session
+    tokyo                               1692    65%    48%    37%    29%    20%   0.94    0.31 / 0.62     43%  -0.022  +0.005  +0.022  +0.033      3R  +0.077
+    london                              1442    67%    51%    38%    30%    20%   1.02    0.30 / 0.61     47%  -0.000  +0.020  +0.009  +0.028      3R  +0.051
+    newyork                             1301    67%    49%    35%    26%    17%   0.93    0.31 / 0.62     37%  +0.033  +0.036  +0.044  +0.021      3R  +0.064
+    london/newyork overlap              1200    67%    49%    37%    29%    18%   0.96    0.34 / 0.67     58%  -0.030  -0.029  -0.059  -0.084    0.5R  -0.019
+    sydney                               651    70%    54%    45%    36%    23%   1.24    0.33 / 0.66     48%  +0.019  +0.069  +0.153  +0.143    1.5R  +0.153
+    -- by regime
+    transition                          2268    67%    50%    38%    30%    20%   1.02    0.32 / 0.63     46%  +0.013  +0.028  +0.035  +0.051      3R  +0.077
+    trend                               1909    67%    51%    39%    30%    21%   1.02    0.31 / 0.63     45%  +0.019  +0.064  +0.098  +0.086      3R  +0.135
+    range                               1801    66%    48%    36%    28%    18%   0.93    0.32 / 0.66     49%  -0.031  -0.032  -0.049  -0.063    0.5R  -0.030
+    squeeze                              308    64%    44%    33%    25%    13%   0.80    0.26 / 0.62     41%  -0.087  -0.113  -0.134  -0.163    0.5R  -0.063
+    -- stop size (stop distance in ATR)
+    stop <1.0 ATR                        210    66%    51%    43%    34%    24%   1.12    0.29 / 0.61     69%  -0.051  -0.024  +0.040  -0.030   1.25R  +0.050
+    stop 1.0-1.5 ATR                    2019    65%    50%    40%    33%    24%   0.99    0.35 / 0.67     63%  -0.057  -0.040  -0.042  -0.040   1.25R  -0.028
+    stop 1.5-2.5 ATR                    1919    68%    51%    40%    32%    21%   1.05    0.32 / 0.62     41%  +0.006  +0.015  +0.014  -0.006    2.5R  +0.018
+    stop >=2.5 ATR                      2138    67%    47%    33%    23%    13%   0.92    0.28 / 0.62     23%  +0.046  +0.070  +0.087  +0.101      3R  +0.138
+    -- structural TP2: how far away, and how often reached before the stop
+    TP2 <1.5R    n=  429   reached before stop   41%
+    TP2 1.5-2R   n= 4250   reached before stop   29%
+    TP2 2-3R     n= 1311   reached before stop   28%
+    TP2 >=3R     n=  296   reached before stop   19%
+
+============================================================================================================================
+  2025   2024-12-31 -> 2025-08-30
+============================================================================================================================
+
+  PART A - impulses and corrections   (WITH = impulse along the HTF trend, COUNTER = correction against it)
+   3m vs 1H trend   14048 legs over 172 trading days (81.5/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        41%     33.4     2.6 /  3.6 /  5.1       5.0 /   8.0         4        72%                              
+    COUNTER     41%     33.5     2.6 /  3.6 /  5.1       4.9 /   7.7         4        72%         98%        29%    49%
+    RANGE       18%     14.6     2.5 /  3.6 /  5.2       4.7 /   7.2         4        72%                              
+   5m vs 1H trend   8313 legs over 172 trading days (48.2/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        41%     19.6     2.6 /  3.7 /  5.2       6.6 /  10.4         4        73%                              
+    COUNTER     41%     19.7     2.6 /  3.7 /  5.2       6.4 /  10.3         4        72%         97%        29%    48%
+    RANGE       18%      8.9     2.5 /  3.7 /  5.2       6.0 /   9.3         4        70%                              
+  15m vs 1H trend   2761 legs over 172 trading days (16.0/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        41%      6.5     2.6 /  3.6 /  5.4      11.9 /  18.3         4        74%                              
+    COUNTER     41%      6.6     2.6 /  3.7 /  5.5      12.0 /  18.3         4        73%         99%        29%    49%
+    RANGE       18%      2.9     2.7 /  3.8 /  5.3      11.7 /  17.6         4        75%                              
+   1h vs 4H trend   678 legs over 172 trading days (3.9/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        41%      1.6     2.6 /  3.8 /  5.2      24.1 /  34.3         4        68%                              
+    COUNTER     44%      1.7     2.6 /  3.8 /  5.6      23.4 /  34.8         4        75%        105%        25%    52%
+    RANGE       15%      0.6     2.7 /  4.0 /  5.9      27.7 /  41.2         5        76%                              
+
+  PART B - signal paths   6542 qualified signals (reward gate ignored, deduped per setup+side over 5 bars)
+    P kR = reached k R before the stop   MFE50 = median best excursion (R)   MAE@1R = how deep trades that reached 1R went against first (R)
+    rescue = stopped trades that then reached +1R from entry   EVk = net R/trade with a fixed target at k R   best k = the target with the highest EV
+                                           n  P0.5R    P1R  P1.5R    P2R    P3R  MFE50  MAE@1R p50/p80  rescue  EV0.75     EV1   EV1.5     EV2  best k  EVbest
+    ALL SIGNALS                         6542    65%    47%    35%    28%    18%   0.90    0.31 / 0.65     46%  -0.050  -0.043  -0.044  -0.040      3R  -0.036
+    -- by setup
+    sweep_reversal                      3188    66%    49%    38%    30%    20%   0.95    0.34 / 0.67     49%  -0.064  -0.054  -0.055  -0.055      1R  -0.054
+    pattern_break                       1636    63%    43%    29%    22%    11%   0.80    0.26 / 0.59     27%  -0.026  -0.020  -0.016  +0.006      2R  +0.006
+    breakout_retest                      725    67%    49%    39%    32%    23%   0.96    0.32 / 0.68     56%  -0.067  -0.067  -0.063  -0.043      3R  -0.036
+    mtf_pullback                         659    66%    47%    35%    26%    18%   0.91    0.32 / 0.66     50%  -0.035  -0.027  -0.043  -0.065      3R  -0.017
+    false_break_fade                     164    71%    51%    40%    36%    22%   1.11    0.35 / 0.67     49%  +0.022  -0.011  -0.035  +0.070    2.5R  +0.152
+    flag_continuation                     95    74%    48%    35%    19%     9%   0.94    0.40 / 0.63     55%  +0.105  +0.128  +0.119  -0.088      1R  +0.128
+    range_fade                            75    52%    37%    33%    24%    19%   0.52    0.28 / 0.58     48%  -0.299  -0.299  -0.213  -0.308    1.5R  -0.213
+    -- by direction vs the 1H trend
+    with 1H                             3761    65%    47%    35%    27%    17%   0.90    0.32 / 0.65     44%  -0.046  -0.042  -0.044  -0.051      3R  -0.035
+    counter 1H                          1632    66%    47%    36%    29%    17%   0.88    0.32 / 0.64     48%  -0.082  -0.072  -0.082  -0.058    0.5R  -0.056
+    range                               1149    67%    49%    37%    30%    20%   0.96    0.31 / 0.63     46%  -0.016  -0.007  +0.010  +0.022      3R  +0.079
+    -- by setup x 1H trend
+    sweep_reversal / with 1H            1446    66%    50%    39%    31%    21%   1.01    0.35 / 0.68     50%  -0.050  -0.035  -0.031  -0.041      3R  -0.024
+    sweep_reversal / counter 1H         1163    66%    47%    36%    29%    18%   0.87    0.33 / 0.67     48%  -0.097  -0.090  -0.089  -0.063      2R  -0.063
+    pattern_break / with 1H             1129    61%    41%    27%    19%    10%   0.75    0.26 / 0.59     25%  -0.046  -0.059  -0.063  -0.059   0.75R  -0.046
+    sweep_reversal / range               579    67%    50%    38%    30%    22%   0.99    0.34 / 0.62     50%  -0.031  -0.032  -0.048  -0.076      3R  -0.027
+    mtf_pullback / with 1H               569    66%    49%    35%    27%    18%   0.97    0.32 / 0.66     50%  -0.021  -0.009  -0.036  -0.058      1R  -0.009
+    breakout_retest / with 1H            435    69%    51%    40%    33%    25%   1.03    0.36 / 0.69     56%  -0.038  -0.028  -0.027  -0.016      3R  +0.033
+    pattern_break / range                293    70%    52%    38%    32%    16%   1.06    0.29 / 0.66     26%  +0.098  +0.148  +0.188  +0.284      3R  +0.357
+    pattern_break / counter 1H           214    62%    44%    31%    23%    11%   0.73    0.28 / 0.51     37%  -0.090  -0.041  -0.047  -0.031      2R  -0.031
+    breakout_retest / range              149    62%    44%    35%    28%    21%   0.78    0.23 / 0.57     52%  -0.170  -0.171  -0.161  -0.162    0.5R  -0.136
+    breakout_retest / counter 1H         141    67%    49%    38%    34%    20%   0.96    0.31 / 0.62     58%  -0.049  -0.077  -0.073  -0.003    2.5R  +0.013
+    false_break_fade / with 1H            85    68%    46%    39%    34%    22%   0.83    0.36 / 0.65     47%  -0.069  -0.120  -0.047  +0.005      3R  +0.136
+    mtf_pullback / range                  70    63%    41%    37%    30%    24%   0.77    0.33 / 0.61     50%  -0.069  -0.079  +0.053  +0.093      3R  +0.268
+    flag_continuation / with 1H           58    69%    43%    31%    16%     7%   0.77    0.37 / 0.62     58%  -0.047  +0.023  +0.017  -0.148    0.5R  +0.029
+    false_break_fade / counter 1H         56    79%    61%    39%    38%    21%   1.39    0.36 / 0.76     45%  +0.166  +0.161  -0.073  +0.069   1.25R  +0.232
+    range_fade / with 1H                  39    46%    33%    28%    21%    15%   0.45    0.23 / 0.42     42%  -0.331  -0.383  -0.345  -0.436   0.75R  -0.331
+    range_fade / counter 1H               23   (too few)
+    false_break_fade / range              23   (too few)
+    flag_continuation / range             22   (too few)
+    mtf_pullback / counter 1H             20   (too few)
+    flag_continuation / counter 1H        15   (too few)
+    range_fade / range                    13   (too few)
+    -- by session
+    tokyo                               1898    65%    47%    37%    29%    18%   0.91    0.34 / 0.65     43%  -0.060  -0.071  -0.054  -0.038      2R  -0.038
+    london                              1541    65%    48%    37%    29%    19%   0.91    0.31 / 0.64     52%  -0.065  -0.054  -0.042  -0.048    1.5R  -0.042
+    newyork                             1315    61%    41%    27%    20%    12%   0.73    0.30 / 0.62     33%  -0.071  -0.066  -0.100  -0.098      1R  -0.066
+    london/newyork overlap              1219    69%    53%    40%    32%    21%   1.10    0.31 / 0.67     51%  +0.006  +0.036  +0.039  +0.026   1.25R  +0.050
+    sydney                               569    66%    49%    36%    31%    21%   0.99    0.32 / 0.66     47%  -0.045  -0.037  -0.063  -0.032      3R  -0.016
+    -- by regime
+    transition                          2425    64%    47%    35%    27%    17%   0.88    0.32 / 0.66     43%  -0.071  -0.059  -0.068  -0.068   1.25R  -0.046
+    trend                               2053    67%    47%    34%    26%    16%   0.93    0.31 / 0.65     46%  -0.002  +0.001  -0.000  -0.011   1.25R  +0.004
+    range                               1790    65%    47%    37%    30%    20%   0.89    0.33 / 0.64     49%  -0.083  -0.081  -0.063  -0.043      3R  -0.031
+    squeeze                              274    68%    52%    39%    32%    19%   1.05    0.28 / 0.58     41%  -0.009  +0.005  -0.038  +0.013      2R  +0.013
+    -- stop size (stop distance in ATR)
+    stop <1.0 ATR                        170    64%    50%    39%    35%    26%   1.00    0.32 / 0.71     69%  -0.136  -0.094  -0.110  -0.055    2.5R  -0.026
+    stop 1.0-1.5 ATR                    2134    66%    49%    39%    32%    24%   0.96    0.35 / 0.69     62%  -0.088  -0.086  -0.105  -0.089    0.5R  -0.085
+    stop 1.5-2.5 ATR                    1927    67%    49%    38%    30%    19%   0.94    0.31 / 0.64     40%  -0.052  -0.048  -0.040  -0.069    0.5R  -0.032
+    stop >=2.5 ATR                      2311    63%    44%    30%    22%    10%   0.84    0.28 / 0.59     23%  -0.006  +0.004  +0.014  +0.031      3R  +0.032
+    -- structural TP2: how far away, and how often reached before the stop
+    TP2 <1.5R    n=  450   reached before stop   40%
+    TP2 1.5-2R   n= 4748   reached before stop   28%
+    TP2 2-3R     n= 1072   reached before stop   26%
+    TP2 >=3R     n=  272   reached before stop   14%
+
+============================================================================================================================
+  2024   2023-12-31 -> 2024-08-30
+============================================================================================================================
+
+  PART A - impulses and corrections   (WITH = impulse along the HTF trend, COUNTER = correction against it)
+   3m vs 1H trend   14435 legs over 173 trading days (83.7/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        39%     32.3     2.6 /  3.8 /  5.2       2.9 /   4.7         4        74%                              
+    COUNTER     39%     32.4     2.6 /  3.8 /  5.3       2.9 /   4.7         4        74%         98%        29%    49%
+    RANGE       23%     18.9     2.6 /  3.7 /  5.1       2.8 /   4.5         4        73%                              
+   5m vs 1H trend   8804 legs over 173 trading days (51.0/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        39%     19.7     2.6 /  3.7 /  5.2       3.7 /   6.2         4        72%                              
+    COUNTER     39%     19.8     2.6 /  3.7 /  5.2       3.8 /   6.1         4        72%         99%        28%    49%
+    RANGE       23%     11.5     2.6 /  3.6 /  5.0       3.7 /   5.7         4        74%                              
+  15m vs 1H trend   2849 legs over 173 trading days (16.5/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        38%      6.3     2.7 /  3.7 /  5.4       7.5 /  11.2         4        73%                              
+    COUNTER     39%      6.5     2.6 /  3.8 /  5.6       7.5 /  11.5         4        73%         98%        29%    49%
+    RANGE       22%      3.7     2.6 /  3.6 /  5.3       6.7 /  10.3         4        73%                              
+   1h vs 4H trend   669 legs over 173 trading days (3.9/day)   leg = reversal of 1.5 ATR
+              share  per day   size ATR p50/p75/p90  points p50/p75  bars p50  tradeable  retrace p50  in 38-79%  >100%
+    WITH        38%      1.5     2.7 /  4.0 /  5.8      15.7 /  23.5         5        73%                              
+    COUNTER     39%      1.5     3.0 /  3.9 /  5.5      16.8 /  25.6         4        78%         95%        29%    49%
+    RANGE       24%      0.9     3.0 /  3.9 /  5.4      16.2 /  21.9         5        75%                              
+
+  PART B - signal paths   6085 qualified signals (reward gate ignored, deduped per setup+side over 5 bars)
+    P kR = reached k R before the stop   MFE50 = median best excursion (R)   MAE@1R = how deep trades that reached 1R went against first (R)
+    rescue = stopped trades that then reached +1R from entry   EVk = net R/trade with a fixed target at k R   best k = the target with the highest EV
+                                           n  P0.5R    P1R  P1.5R    P2R    P3R  MFE50  MAE@1R p50/p80  rescue  EV0.75     EV1   EV1.5     EV2  best k  EVbest
+    ALL SIGNALS                         6085    65%    47%    36%    28%    19%   0.91    0.32 / 0.64     48%  -0.066  -0.062  -0.057  -0.046      3R  -0.033
+    -- by setup
+    sweep_reversal                      2879    65%    48%    37%    30%    20%   0.94    0.32 / 0.65     51%  -0.096  -0.092  -0.091  -0.069    2.5R  -0.056
+    pattern_break                       1467    65%    45%    32%    24%    14%   0.84    0.29 / 0.62     31%  -0.000  +0.020  +0.024  +0.029      3R  +0.052
+    breakout_retest                      734    64%    47%    38%    31%    21%   0.92    0.32 / 0.63     63%  -0.118  -0.137  -0.111  -0.126    1.5R  -0.111
+    mtf_pullback                         633    66%    48%    35%    28%    19%   0.91    0.35 / 0.63     47%  -0.044  -0.054  -0.052  -0.044      3R  +0.002
+    false_break_fade                     200    70%    54%    41%    32%    19%   1.13    0.32 / 0.67     56%  +0.019  +0.029  +0.007  -0.024      1R  +0.029
+    flag_continuation                    110    66%    49%    34%    29%    17%   0.91    0.24 / 0.55     23%  +0.003  +0.043  +0.049  +0.106      3R  +0.191
+    range_fade                            62    65%    39%    31%    27%    18%   0.68    0.38 / 0.65     55%  -0.266  -0.283  -0.213  -0.157    0.5R  -0.098
+    -- by direction vs the 1H trend
+    with 1H                             3251    65%    47%    35%    28%    19%   0.88    0.30 / 0.62     48%  -0.066  -0.060  -0.059  -0.044      3R  -0.025
+    counter 1H                          1482    66%    48%    37%    30%    20%   0.96    0.33 / 0.67     49%  -0.074  -0.070  -0.071  -0.041      3R  +0.004
+    range                               1352    65%    48%    37%    28%    17%   0.91    0.33 / 0.64     49%  -0.059  -0.060  -0.038  -0.057    1.5R  -0.038
+    -- by setup x 1H trend
+    sweep_reversal / with 1H            1244    65%    49%    37%    30%    21%   0.97    0.31 / 0.65     50%  -0.068  -0.068  -0.076  -0.070    2.5R  -0.045
+    sweep_reversal / counter 1H         1023    65%    48%    36%    30%    21%   0.93    0.32 / 0.67     51%  -0.109  -0.107  -0.122  -0.083      3R  -0.041
+    pattern_break / with 1H              922    63%    45%    31%    24%    14%   0.79    0.27 / 0.60     31%  -0.037  -0.006  -0.018  +0.009      3R  +0.026
+    sweep_reversal / range               612    64%    47%    38%    31%    19%   0.87    0.34 / 0.63     53%  -0.131  -0.118  -0.069  -0.044    2.5R  -0.043
+    mtf_pullback / with 1H               538    66%    49%    36%    29%    20%   0.97    0.36 / 0.61     49%  -0.039  -0.034  -0.021  -0.007      3R  +0.052
+    breakout_retest / with 1H            367    62%    43%    35%    29%    19%   0.81    0.32 / 0.64     68%  -0.170  -0.208  -0.159  -0.160    0.5R  -0.152
+    pattern_break / range                337    65%    45%    32%    20%    11%   0.87    0.33 / 0.67     33%  +0.032  +0.019  +0.045  -0.055    1.5R  +0.045
+    breakout_retest / range              225    67%    52%    41%    33%    23%   1.08    0.31 / 0.65     58%  -0.057  -0.045  -0.044  -0.065    1.5R  -0.044
+    pattern_break / counter 1H           208    72%    50%    38%    29%    17%   0.99    0.32 / 0.67     26%  +0.112  +0.136  +0.176  +0.255      3R  +0.345
+    breakout_retest / counter 1H         142    66%    49%    39%    31%    24%   0.99    0.34 / 0.57     57%  -0.077  -0.101  -0.095  -0.137   0.75R  -0.077
+    false_break_fade / with 1H            90    67%    52%    39%    34%    21%   1.11    0.32 / 0.71     56%  -0.039  -0.006  -0.038  +0.062      2R  +0.062
+    mtf_pullback / range                  84    65%    42%    27%    21%    14%   0.80    0.26 / 0.65     33%  -0.058  -0.188  -0.293  -0.306   0.75R  -0.058
+    false_break_fade / counter 1H         64    72%    50%    39%    28%    16%   1.00    0.32 / 0.67     57%  +0.003  -0.041  -0.066  -0.172    0.5R  +0.010
+    flag_continuation / with 1H           61    67%    44%    30%    23%    15%   0.80    0.20 / 0.46     23%  -0.029  -0.011  -0.005  -0.011      3R  +0.079
+    false_break_fade / range              46    72%    63%    48%    33%    20%   1.43    0.36 / 0.60     53%  +0.154  +0.196  +0.198  +0.016    1.5R  +0.198
+    range_fade / with 1H                  29   (too few)
+    flag_continuation / range             26   (too few)
+    flag_continuation / counter 1H        23   (too few)
+    range_fade / range                    22   (too few)
+    mtf_pullback / counter 1H             11   (too few)
+    range_fade / counter 1H               11   (too few)
+    -- by session
+    london                              1553    66%    50%    38%    31%    20%   0.99    0.31 / 0.63     50%  -0.050  -0.051  -0.050  -0.039    2.5R  -0.018
+    tokyo                               1499    65%    48%    37%    29%    19%   0.94    0.34 / 0.67     45%  -0.095  -0.064  -0.065  -0.031    2.5R  -0.004
+    london/newyork overlap              1275    66%    49%    38%    31%    22%   0.97    0.32 / 0.65     60%  -0.071  -0.073  -0.073  -0.071      3R  -0.062
+    newyork                             1199    64%    42%    31%    23%    13%   0.79    0.30 / 0.61     33%  -0.032  -0.035  -0.018  -0.015    2.5R  -0.010
+    sydney                               559    65%    45%    34%    25%    17%   0.86    0.25 / 0.62     45%  -0.098  -0.126  -0.104  -0.114      3R  -0.090
+    -- by regime
+    transition                          2180    66%    48%    36%    28%    19%   0.93    0.31 / 0.64     46%  -0.057  -0.061  -0.069  -0.056      3R  -0.029
+    trend                               1924    65%    47%    35%    27%    18%   0.90    0.31 / 0.61     49%  -0.035  -0.036  -0.025  -0.027      3R  -0.015
+    range                               1729    64%    48%    37%    30%    20%   0.91    0.32 / 0.65     51%  -0.104  -0.085  -0.069  -0.051    2.5R  -0.044
+    squeeze                              252    63%    46%    36%    29%    19%   0.87    0.43 / 0.79     48%  -0.127  -0.116  -0.112  -0.068    2.5R  -0.013
+    -- stop size (stop distance in ATR)
+    stop <1.0 ATR                        144    67%    53%    39%    32%    24%   1.10    0.33 / 0.64     70%  -0.077  -0.066  -0.167  -0.182      1R  -0.066
+    stop 1.0-1.5 ATR                    1894    65%    49%    39%    33%    23%   0.98    0.32 / 0.65     66%  -0.116  -0.118  -0.120  -0.113    2.5R  -0.110
+    stop 1.5-2.5 ATR                    1841    65%    49%    39%    32%    23%   0.97    0.34 / 0.65     45%  -0.071  -0.059  -0.032  +0.000      3R  +0.030
+    stop >=2.5 ATR                      2206    65%    44%    30%    21%    11%   0.81    0.30 / 0.63     26%  -0.019  -0.017  -0.016  -0.018      3R  -0.005
+    -- structural TP2: how far away, and how often reached before the stop
+    TP2 <1.5R    n=  436   reached before stop   44%
+    TP2 1.5-2R   n= 4454   reached before stop   28%
+    TP2 2-3R     n=  941   reached before stop   27%
+    TP2 >=3R     n=  254   reached before stop   19%
+
+============================================================================================================================
+  CONSISTENCY - best fixed-target EV per setup, per year (a setup only has an edge if it holds in all three)
+============================================================================================================================
+    setup                                   2026                  2025                  2024       verdict
+    breakout_retest           -0.001 @ 2.5R (n 650)    -0.036 @ 3R (n 725)    -0.111 @ 1.5R (n 734)       no edge
+    false_break_fade          +0.065 @ 1.25R (n 208)    +0.152 @ 2.5R (n 164)    +0.029 @ 1R (n 200)       edge x3
+    flag_continuation         +0.239 @ 1R (n  96)    +0.128 @ 1R (n  95)    +0.191 @ 3R (n 110)       edge x3
+    mtf_pullback              +0.169 @ 3R (n 702)    -0.017 @ 3R (n 659)    +0.002 @ 3R (n 633)         mixed
+    pattern_break             +0.086 @ 3R (n1518)    +0.006 @ 2R (n1636)    +0.052 @ 3R (n1467)       edge x3
+    range_fade                +0.016 @ 1.5R (n  69)    -0.213 @ 1.5R (n  75)    -0.098 @ 0.5R (n  62)         mixed
+    sweep_reversal            +0.002 @ 3R (n3043)    -0.054 @ 1R (n3188)    -0.056 @ 2.5R (n2879)         mixed
+    [with 1H]                 +0.048 @ 3R (n3704)    -0.035 @ 3R (n3761)    -0.025 @ 3R (n3251)
+    [counter 1H]              +0.024 @ 1.5R (n1606)    -0.056 @ 0.5R (n1632)    +0.004 @ 3R (n1482)
+    [range]                   +0.098 @ 3R (n 976)    +0.079 @ 3R (n1149)    -0.038 @ 1.5R (n1352)

@@ -30,8 +30,9 @@ broker and no test can ever place an order.
 """
 from __future__ import annotations
 
-import time
 
+from .engine.qualify import is_gold
+from . import clock
 from .order_ledger import comment_for, tag_for
 from .signal_store import (CANCELLED, CLOSED, EXPIRED, FILLED, FINAL, REVERSED, SENT,
                            round_to_tick)
@@ -54,7 +55,8 @@ UNKNOWN_GIVE_UP_MS = 60_000
 
 
 def _now() -> int:
-    return int(time.time() * 1000)
+    # Wall clock live; the backtest lab points this at simulated time.
+    return clock.now_ms()
 
 
 class Executor:
@@ -179,7 +181,7 @@ class Executor:
                    ('limit' if px < entry else 'stop')
             price = entry
 
-        lots = self._lots(q)
+        lots = self._lots(rec['symbol'])
         trail = self.cfg.risk.exit_mode == 'trail'
         request = {
             'symbol': rec['symbol'], 'tf': rec['tf'], 'side': rec['side'], 'kind': kind,
@@ -238,11 +240,19 @@ class Executor:
                                  * abs(entry - stop), tick, digits)
         return 0.0
 
-    def _lots(self, q) -> float:
+    def _lots(self, symbol: str) -> float:
+        """
+        The size this order is sent at - the one place every order's lots
+        are decided, auto and the Place button alike.
+
+        Fixed per instrument class: `lots_gold` for gold, `lots_non_gold` for
+        anything else. Gold is recognised by its XAU prefix, the same rule the
+        chart uses for its money labels and qualify.py uses for the size on
+        the signal card, so all three always agree on the number.
+        """
         e = self.cfg.execution
-        raw = float((getattr(q, 'sizing', None) or {}).get('lots') or e.min_lots)
-        clamped = min(e.max_lots, max(e.min_lots, raw))
-        return round(round(clamped / 0.01) * 0.01, 2)
+        size = e.lots_gold if is_gold(symbol) else e.lots_non_gold
+        return round(round(float(size) / 0.01) * 0.01, 2)
 
     def _wait(self, fid, note) -> None:
         rec = self.store.get(fid)

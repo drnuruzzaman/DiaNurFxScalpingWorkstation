@@ -471,3 +471,98 @@
 2026-09-24T19:10:09+10:00  order     RESULT ok=True retcode=10009 ticket=8913686 price=158.591 comment='Request executed'
 2026-09-24T19:14:58+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4262.97 sl=4277.19 tp=4234.54 signal=XAUUSD.a:15m:breakout_retest:sell:1790240400000 account=23011660
 2026-09-24T19:14:58+10:00  order     RESULT ok=True retcode=10009 ticket=8913767 price=4263.08 comment='Request executed'
+2026-09-24T19:27:47+10:00  order     MODIFY position=8908440 sl 4299.92 -> 4268.5
+2026-09-24T19:27:47+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:29:56+10:00  order     MODIFY position=8880510 sl 158.273 -> 158.644
+2026-09-24T19:29:56+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:29:57+10:00  order     MODIFY position=8908440 sl 4268.5 -> 4265.26
+2026-09-24T19:29:57+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:55:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T19:55:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T19:55:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T19:55:38+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T19:55:38+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T19:55:38+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T19:55:42+10:00  order     SEND limit sell GBPUSD.a 0.01 lots @1.323 sl=1.324 tp=1.32 signal=GBPUSD.a:15m:sweep_reversal:sell:1790242200000 account=23011660
+2026-09-24T19:55:42+10:00  order     RESULT ok=True retcode=10009 ticket=8914517 price=0.0 comment='Request executed'
+2026-09-24T19:59:56+10:00  order     MODIFY position=8880510 sl 158.644 -> 158.697
+2026-09-24T19:59:56+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T19:59:56+10:00  order     MODIFY position=8908440 sl 4265.26 -> 4260.9
+2026-09-24T19:59:56+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:00:51+10:00  order     CANCEL order=8913271
+2026-09-24T20:00:52+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T20:00:52+10:00  order     SEND market sell GBPUSD.a 0.01 lots @1.3228900000000001 sl=1.326 tp=1.317 signal=GBPUSD.a:30m:sweep_reversal:sell:1790240400000 account=23011660
+2026-09-24T20:00:53+10:00  order     RESULT ok=True retcode=10009 ticket=8914639 price=1.3228900000000001 comment='Request executed'
+2026-09-24T20:21:39+10:00  order     MODIFY position=8914517 sl 1.324 -> 1.3225
+2026-09-24T20:21:39+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:21:43+10:00  order     MODIFY position=8913767 sl 4277.19 -> 4256.02
+2026-09-24T20:21:43+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:29:54+10:00  order     MODIFY position=8908440 sl 4260.9 -> 4254.97
+2026-09-24T20:29:54+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:29:54+10:00  order     MODIFY position=8913767 sl 4256.02 -> 4253.24
+2026-09-24T20:29:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:29:55+10:00  order     MODIFY position=8914517 sl 1.3225 -> 1.32226
+2026-09-24T20:29:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:29:58+10:00  order     MODIFY position=8880510 sl 158.697 -> 158.71
+2026-09-24T20:29:58+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:30:39+10:00  order     MODIFY position=8912378 sl 4290.35 -> 4256.9
+2026-09-24T20:30:40+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:34:55+10:00  order     MODIFY position=8912378 sl 4256.9 -> 4253.68
+2026-09-24T20:34:55+10:00  order     MODIFY RESULT ok=False retcode=10016
+2026-09-24T20:34:58+10:00  order     MODIFY position=8912378 sl 4256.9 -> 4254.81
+2026-09-24T20:34:58+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T20:40:28+10:00  order     SEND limit sell XAUUSD.a 0.01 lots @4263.48 sl=4297.39 tp=4195.67 signal=XAUUSD.a:5m:pattern_break:sell:1790246100000 account=23011660
+2026-09-24T20:40:28+10:00  order     RESULT ok=True retcode=10009 ticket=8915744 price=0.0 comment='Request executed'
+2026-09-24T21:01:37+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4258.45 sl=4308.6 tp=4157.81 signal=XAUUSD.a:30m:pattern_break:sell:1790245800000 account=23011660
+2026-09-24T21:01:37+10:00  order     RESULT ok=True retcode=10009 ticket=8916294 price=4258.41 comment='Request executed'
+2026-09-24T21:07:18+10:00  error     /bars ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-09-24T21:27:10+10:00  order     SEND limit sell XAUUSD.a 0.01 lots @4272.41 sl=4297.09 tp=4223.04 signal=XAUUSD.a:3m:pattern_break:sell:1790249040000 account=23011660
+2026-09-24T21:27:11+10:00  order     RESULT ok=True retcode=10009 ticket=8916706 price=0.0 comment='Request executed'
+2026-09-24T21:29:55+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4258.86 sl=4291.1 tp=4194.38 signal=XAUUSD.a:15m:mtf_pullback:sell:1790247600000 account=23011660
+2026-09-24T21:29:55+10:00  order     RESULT ok=True retcode=10009 ticket=8916767 price=0.0 comment='Request executed'
+2026-09-24T21:30:19+10:00  order     CANCEL order=8916706
+2026-09-24T21:30:19+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T21:35:56+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4257.1 sl=4269.32 tp=4239.15 signal=XAUUSD.a:3m:pattern_break:sell:1790249580000 account=23011660
+2026-09-24T21:35:57+10:00  order     RESULT ok=True retcode=10009 ticket=8916808 price=0.0 comment='Request executed'
+2026-09-24T21:37:52+10:00  order     MODIFY position=8912732 sl 158.032 -> 158.588
+2026-09-24T21:37:52+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T21:38:56+10:00  order     CANCEL order=8916808
+2026-09-24T21:38:57+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T21:42:02+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4258.33 sl=4269.85 tp=4240.38 signal=XAUUSD.a:3m:pattern_break:sell:1790249940000 account=23011660
+2026-09-24T21:42:02+10:00  order     RESULT ok=True retcode=10009 ticket=8916875 price=0.0 comment='Request executed'
+2026-09-24T21:44:54+10:00  order     MODIFY position=8912732 sl 158.588 -> 158.746
+2026-09-24T21:44:54+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T21:55:56+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T21:55:57+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T21:59:55+10:00  order     MODIFY position=8912732 sl 158.746 -> 158.761
+2026-09-24T21:59:55+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-24T22:03:19+10:00  order     CANCEL order=8916875
+2026-09-24T22:03:19+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T22:06:21+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4262.64 sl=4268.68 tp=4250.45 signal=XAUUSD.a:3m:pattern_break:sell:1790251380000 account=23011660
+2026-09-24T22:06:21+10:00  order     RESULT ok=True retcode=10009 ticket=8917276 price=4262.64 comment='Request executed'
+2026-09-24T22:20:18+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-24T22:28:52+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T22:28:52+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T22:28:52+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T22:34:21+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=stale from 5 tick(s)
+2026-09-24T22:34:21+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-24T22:34:21+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-24T22:34:21+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=stale from 5 tick(s)
+2026-09-24T22:34:22+10:00  order     SEND stop buy USDJPY.a 0.05 lots @158.888 sl=158.625 tp=159.618 signal=USDJPY.a:15m:flag_continuation:buy:1790252100000 account=23011660
+2026-09-24T22:34:22+10:00  order     RESULT ok=True retcode=10009 ticket=8917742 price=0.0 comment='Request executed'
+2026-09-24T22:35:22+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-24T22:36:39+10:00  error     /bars ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-09-24T22:36:39+10:00  error     /bars ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-09-24T22:39:01+10:00  order     SEND market sell XAUUSD.a 0.01 lots @4267.21 sl=4274.33 tp=4252.4 signal=XAUUSD.a:3m:pattern_break:sell:1790253360000 account=23011660
+2026-09-24T22:39:01+10:00  order     RESULT ok=True retcode=10009 ticket=8917846 price=4267.21 comment='Request executed'
+2026-09-24T22:46:55+10:00  order     CANCEL order=8917742
+2026-09-24T22:46:55+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T23:02:10+10:00  order     SEND stop buy USDJPY.a 0.05 lots @158.888 sl=158.613 tp=159.618 signal=USDJPY.a:30m:flag_continuation:buy:1790253000000 account=23011660
+2026-09-24T23:02:10+10:00  order     RESULT ok=True retcode=10009 ticket=8918424 price=0.0 comment='Request executed'
+2026-09-24T23:02:13+10:00  order     CANCEL order=8918424
+2026-09-24T23:02:14+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-24T23:17:10+10:00  order     SEND stop buy USDJPY.a 0.05 lots @158.888 sl=158.623 tp=159.618 signal=USDJPY.a:15m:flag_continuation:buy:1790254800000 account=23011660
+2026-09-24T23:17:10+10:00  order     RESULT ok=True retcode=10009 ticket=8918642 price=0.0 comment='Request executed'
+2026-09-24T23:32:17+10:00  order     SEND stop buy USDJPY.a 0.05 lots @158.888 sl=158.612 tp=159.618 signal=USDJPY.a:30m:flag_continuation:buy:1790254800000 account=23011660
+2026-09-24T23:32:17+10:00  order     RESULT ok=True retcode=10009 ticket=8918912 price=0.0 comment='Request executed'
+2026-09-24T23:36:36+10:00  error     /bars ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host

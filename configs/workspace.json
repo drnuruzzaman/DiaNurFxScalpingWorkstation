@@ -2,12 +2,22 @@
  "values": {
   "dianur.tabs.v2": [
    {
-    "id": "tmuezst9z",
+    "id": "tmug4tjy6",
+    "symbol": "XAUUSD.a",
+    "tf": "1h"
+   },
+   {
+    "id": "tmug6r5p2",
+    "symbol": "XAUUSD.a",
+    "tf": "4h"
+   },
+   {
+    "id": "tmug7vomm",
     "symbol": "XAUUSD.a",
     "tf": "15m"
    }
   ],
-  "dianur.activeTab": "t0",
+  "dianur.activeTab": "tmug7vomm",
   "dianur.overlays": {
    "mtfTrendlines": true,
    "zigzag": false,
@@ -17,8 +27,9 @@
    "channels": true,
    "patterns": true,
    "fvg": false,
-   "zones": false,
+   "zones": true,
    "fib": false,
+   "engulfing": false,
    "swings": true,
    "structure": true,
    "events": false,
@@ -32,8 +43,10 @@
   "dianur.layout": {
    "grid": false,
    "newsMarks": false,
-   "positions": false
+   "positions": false,
+   "legRead": false
   },
+  "dianur.mtfSources": null,
   "dianur.hideFigures": 0,
   "dianur.watchlist": [
    "XAUUSD.a",
@@ -44,14 +57,15 @@
    "signal",
    "gauge",
    "trend",
-   "evidence"
+   "evidence",
+   "patterns"
   ],
   "dianur.panels": {
    "left": true,
    "right": true,
    "bottom": false
   },
-  "dianur.dockTab": "signals",
+  "dianur.dockTab": "execution",
   "dianur.boardSort": {
    "key": "symbol",
    "dir": 1
@@ -59,7 +73,140 @@
   "dianur.execSort": {
    "key": "tf",
    "dir": 1
-  }
+  },
+  "dianur.chartPresets": {
+   "XAUUSD.a|1h": {
+    "overlays": {
+     "mtfTrendlines": true,
+     "zigzag": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "patterns": true,
+     "fvg": false,
+     "zones": true,
+     "fib": false,
+     "engulfing": false,
+     "swings": true,
+     "structure": true,
+     "events": false,
+     "liquidity": true,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false
+    },
+    "mtfSources": null,
+    "span": 226,
+    "saved_ms": 1790296454317
+   },
+   "USDJPY.a|15m": {
+    "overlays": {
+     "mtfTrendlines": true,
+     "zigzag": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "patterns": true,
+     "fvg": false,
+     "zones": true,
+     "fib": false,
+     "engulfing": false,
+     "swings": true,
+     "structure": true,
+     "events": false,
+     "liquidity": true,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false
+    },
+    "mtfSources": null,
+    "span": 300,
+    "saved_ms": 1790289977063
+   },
+   "XAUUSD.a|15m": {
+    "overlays": {
+     "mtfTrendlines": true,
+     "zigzag": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "patterns": true,
+     "fvg": false,
+     "zones": true,
+     "fib": false,
+     "engulfing": false,
+     "swings": true,
+     "structure": true,
+     "events": false,
+     "liquidity": true,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false
+    },
+    "mtfSources": null,
+    "span": 199,
+    "saved_ms": 1790296468902
+   },
+   "XAUUSD.a|4h": {
+    "overlays": {
+     "mtfTrendlines": true,
+     "zigzag": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "patterns": true,
+     "fvg": false,
+     "zones": true,
+     "fib": false,
+     "engulfing": false,
+     "swings": true,
+     "structure": true,
+     "events": false,
+     "liquidity": true,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false
+    },
+    "mtfSources": null,
+    "span": 227,
+    "saved_ms": 1790296446789
+   }
+  },
+  "dianur.lab.overlays": {
+   "mtfTrendlines": true,
+   "zigzag": false,
+   "macd": false,
+   "levels": true,
+   "trendlines": false,
+   "channels": true,
+   "patterns": true,
+   "fvg": false,
+   "zones": true,
+   "fib": false,
+   "swings": true,
+   "structure": true,
+   "events": false,
+   "liquidity": true,
+   "signal": true,
+   "volumeProfile": false,
+   "regimeBands": true,
+   "rsi": true,
+   "volume": false
+  },
+  "dianur.lab.dock": "trades",
+  "dianur.lab.dockH": 230
  },
- "saved_ms": 1790240670626
+ "saved_ms": 1790298158509
 }

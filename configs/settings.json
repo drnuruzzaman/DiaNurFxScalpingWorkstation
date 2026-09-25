@@ -1,7 +1,7 @@
 {
  "risk": {
   "equity": 20000.0,
-  "min_stop_atr": 1.0,
+  "min_stop_atr": 1.5,
   "max_concurrent": 10,
   "trail_atr": 1.0,
   "trail_lock_r": 0.5,
@@ -12,19 +12,19 @@
   "min_rr": 1.0
  },
  "execution": {
-  "min_lots": 0.01,
-  "max_lots": 0.01,
   "entry_tolerance_atr": 0.2,
   "auto_timeframes": [
    "5m",
    "15m",
    "30m",
    "4h",
-   "1h"
+   "1h",
+   "3m"
   ],
   "auto": true,
   "max_per_symbol_tf": 2,
-  "broker_tp": "tp2"
+  "broker_tp": "tp2",
+  "lots_gold": 0.01
  },
  "gates": {
   "min_confidence": 55,
@@ -33,7 +33,11 @@
   "max_atr_percentile": 97.0,
   "min_mtf_score": 25,
   "cooldown_bars": 2,
-  "disabled_playbooks": [],
+  "disabled_playbooks": [
+   "sweep_reversal",
+   "breakout_retest",
+   "range_fade"
+  ],
   "news_blocks": false,
   "news_blackout_min": 10
  }

@@ -27,6 +27,8 @@ import os
 import re
 
 from .config import CONFIG
+from .engine.legs import MEASURED, htf_trend
+from .engine.legs import describe as describe_leg
 
 MODEL = 'claude-sonnet-5'
 MAX_TOKENS = 900
@@ -69,6 +71,12 @@ def build_facts(snap: dict, sig=None, context: dict = None,
     if t.get('last_break'):
         b = t['last_break']
         f.append(f"Last structural event: {b['kind']} {b['direction']} through {b['price']}.")
+    leg = snap.get('leg_gate') or snap.get('leg')
+    if leg:
+        htf_dir, htf_tf = htf_trend(mtf, snap.get('tf'))
+        f.append(f"Leg in progress: {describe_leg(leg, htf_dir, htf_tf)}.")
+    for line in MEASURED:
+        f.append(f"Measured behaviour: {line}")
     f.append(f"Multi-timeframe read: {mtf.get('verdict')} with score {mtf.get('score')} "
              f"(-100 to +100). Rows: "
              f"{', '.join(f"{x['tf']}={x['state']}" for x in mtf.get('rows', []))}.")
@@ -176,6 +184,8 @@ TOPICS = [
      lambda f: [x for x in f if x.startswith(('Active signal', 'Signal '))]),
     ('event|breakout|retest|false|rejection',
      lambda f: [x for x in f if x.startswith('Event ')]),
+    ('leg|impulse|correction|pullback|retrace|extended|exhaust|fade|pocket|fib|reverse|turn',
+     lambda f: [x for x in f if x.startswith(('Leg ', 'Measured '))]),
 ]
 
 
@@ -229,7 +239,20 @@ Rules, without exception:
   paragraphs and specific price levels over general commentary.
 - If the question asks whether a trade is good, describe the evidence on both
   sides that the fact sheet contains, including the counter-evidence, and let
-  the trader decide."""
+  the trader decide.
+
+How to reason about price. These rules come from the "Measured behaviour"
+lines in the fact sheet - this system's own data, 2024-2026:
+- Treat price as a sequence of impulse legs and corrections. Lower-timeframe
+  legs run both ways inside a higher-timeframe trend, so a move against the
+  1h trend is a normal leg, not a mistake to be corrected.
+- Never call a leg exhausted, overextended or due to reverse because of how
+  far it has run. Leg length does not predict a turn.
+- Never present a pullback into a Fibonacci level or "pocket" as a reason
+  price will turn there. Corrections typically retrace nearly the whole leg.
+- Do not argue for fading strength. Trading against a leg in the three
+  measured spots lost in every year tested; the "Leg in progress" line and
+  the leg gate say whether this is one of them."""
 
 
 async def llm_answer(question: str, facts: list) -> dict:

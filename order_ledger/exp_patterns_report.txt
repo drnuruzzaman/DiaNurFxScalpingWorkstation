@@ -1,0 +1,28 @@
+PATTERN FIX - old vs new detector   XAUUSD 5m   today's live settings and exit   fixed 0.01 lots   costs included   HTF on closed bars
+
+  2026   bars 44428, pattern lists differ on 33287 (74.9%)   H&S per bar old 2.374 -> new 1.363   stale "forming" H&S/double/triple (old) 0.563/bar
+                                   trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD
+    ALL      old                     3407  49.9%  1.07  +0.024    +81.2     +3075     1493
+    ALL      new                     3268  48.7%  1.03  +0.012    +38.7     +1705     1804
+    pattern_break     old            2949  49.6%  1.04  +0.016    +47.1     +2642     1446
+    pattern_break     new            2777  48.2%  1.00  +0.001     +2.3     +1206     1673
+    flag_continuation old             155  52.3%  1.44  +0.128    +19.8      +282      291
+    flag_continuation new             173  53.2%  1.48  +0.140    +24.2      +371      285
+
+  2025   bars 46494, pattern lists differ on 35249 (75.8%)   H&S per bar old 2.338 -> new 1.333   stale "forming" H&S/double/triple (old) 0.609/bar
+                                   trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD
+    ALL      old                     3550  49.6%  0.97  -0.011    -40.8      +253      763
+    ALL      new                     3343  48.7%  0.93  -0.028    -93.6      -258      827
+    pattern_break     old            3170  49.7%  0.98  -0.008    -26.8      +399      610
+    pattern_break     new            2913  48.7%  0.93  -0.027    -79.4      -116      690
+    flag_continuation old             147  48.3%  0.92  -0.030     -4.4       -74      137
+    flag_continuation new             185  49.2%  0.99  -0.004     -0.7       -30      131
+
+  2024   bars 46845, pattern lists differ on 33602 (71.7%)   H&S per bar old 2.353 -> new 1.448   stale "forming" H&S/double/triple (old) 0.535/bar
+                                   trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD
+    ALL      old                     3353  48.4%  0.96  -0.015    -50.4      -148      654
+    ALL      new                     3166  48.0%  0.93  -0.026    -82.7      -196      623
+    pattern_break     old            2888  48.1%  0.96  -0.015    -42.8      -231      639
+    pattern_break     new            2654  47.8%  0.94  -0.025    -65.4      -223      597
+    flag_continuation old             186  52.2%  1.17  +0.060    +11.1       +90       29
+    flag_continuation new             218  50.0%  1.07  +0.026     +5.7       +48       50

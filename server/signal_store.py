@@ -34,8 +34,9 @@ from __future__ import annotations
 import copy
 import json
 import threading
-import time
 from pathlib import Path
+
+from . import clock
 
 FORMING, FINAL, SENT, FILLED, CLOSED = 'FORMING', 'FINAL', 'SENT', 'FILLED', 'CLOSED'
 EXPIRED, CANCELLED, REVERSED = 'EXPIRED', 'CANCELLED', 'REVERSED'
@@ -48,7 +49,8 @@ KEEP_FINISHED_MS = 7 * 24 * 3600 * 1000
 
 
 def _now() -> int:
-    return int(time.time() * 1000)
+    # Wall clock live; the backtest lab points this at simulated time.
+    return clock.now_ms()
 
 
 def round_to_tick(x: float, tick: float, digits: int) -> float:

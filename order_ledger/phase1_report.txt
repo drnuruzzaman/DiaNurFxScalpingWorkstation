@@ -1,0 +1,111 @@
+live setting: risk.equity: 25000.0 -> 20000.0
+live setting: risk.min_stop_atr: 1.0 -> 1.5
+live setting: risk.max_concurrent: 2 -> 10
+live setting: risk.max_daily_trades: 12 -> 24
+live setting: risk.min_rr: 1.5 -> 1.0
+live setting: gates.cooldown_bars: 5 -> 2
+live setting: gates.news_blocks: True -> False
+live setting: gates.news_blackout_min: 15 -> 10
+
+PHASE 1 - TP / SL / selection   XAUUSD 5m   baseline = today's live settings and exit   fixed 0.01 lots   costs included
+S26 (chosen on 2026 alone): breakout_retest, flag_continuation, mtf_pullback, pattern_break
+EXIT per setup (chosen on 2026, baseline otherwise): breakout_retest 3.0R, false_break_fade 1.5R, flag_continuation 3.0R, mtf_pullback trail, pattern_break 3.0R, range_fade 0.75R, sweep_reversal 2.5R
+
+======================================================================================================================
+  STAGE A - one change at a time
+======================================================================================================================
+
+  2026
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    BASE  today, live                          3902  50.9%  1.05  +0.020    +78.2     +2963     1011   14.68pt
+    S3    top-3 setups (hindsight)             2736  51.4%  1.18  +0.060   +165.4     +4667      596   20.99pt
+    S26   setups chosen on 2026                3529  52.0%  1.19  +0.071   +250.0     +4637      815   18.22pt
+    AVOID the three avoid rules                3897  51.3%  1.08  +0.031   +122.7     +3880      753   15.18pt
+    FLOOR stop >= 1.5 ATR                      3902  50.7%  1.05  +0.021    +81.5     +3119     1297   15.60pt
+    FLOOR stop >= 2.0 ATR                      3901  51.2%  1.08  +0.029   +111.6     +3525     1328   16.97pt
+    FLOOR stop >= 2.5 ATR                      3901  50.5%  1.07  +0.026   +100.9     +3316     1398   18.76pt
+    EXIT  per-setup exit (2026-chosen)         3902  44.4%  1.08  +0.038   +149.1     +4133     1421   14.68pt
+
+  2025
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    BASE  today, live                          4066  49.0%  0.90  -0.045   -184.5      +233      866    5.93pt
+    S3    top-3 setups (hindsight)             2863  49.9%  0.98  -0.006    -16.0      +297      450    9.71pt
+    S26   setups chosen on 2026                3716  50.1%  0.95  -0.020    -72.6      +520      815    7.66pt
+    AVOID the three avoid rules                4065  49.9%  0.94  -0.025   -101.3      +330      701    6.32pt
+    FLOOR stop >= 1.5 ATR                      4066  48.7%  0.90  -0.044   -180.9       +48     1129    6.26pt
+    FLOOR stop >= 2.0 ATR                      4066  48.7%  0.91  -0.036   -146.2        -0     1184    6.76pt
+    FLOOR stop >= 2.5 ATR                      4066  48.5%  0.91  -0.035   -143.7      -137     1347    7.44pt
+    EXIT  per-setup exit (2026-chosen)         4066  41.7%  0.91  -0.044   -178.4      +455      894    5.93pt
+
+  2024
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    BASE  today, live                          4104  48.2%  0.85  -0.066   -269.8      -599      742    3.26pt
+    S3    top-3 setups (hindsight)             2649  50.2%  0.99  -0.002     -6.6      +100      394    5.35pt
+    S26   setups chosen on 2026                3627  48.8%  0.88  -0.050   -181.4      -373      711    4.22pt
+    AVOID the three avoid rules                4089  48.5%  0.86  -0.060   -246.2      -555      715    3.41pt
+    FLOOR stop >= 1.5 ATR                      4104  48.0%  0.87  -0.058   -239.1      -629      775    3.41pt
+    FLOOR stop >= 2.0 ATR                      4104  48.0%  0.92  -0.035   -142.5      -542      699    3.67pt
+    FLOOR stop >= 2.5 ATR                      4103  47.4%  0.92  -0.031   -129.2      -584      735    4.02pt
+    EXIT  per-setup exit (2026-chosen)         4104  40.2%  0.84  -0.082   -336.3      -784      902    3.26pt
+
+======================================================================================================================
+  STAGE B - one combination, chosen on 2026 only
+======================================================================================================================
+  2026 grid, best first (live exit):
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    setups S26 avoid on  floor 1.0             3319  52.4%  1.20  +0.073   +241.0     +4980      804   18.73pt
+    setups S26 avoid on  floor 2.5             3292  51.3%  1.15  +0.049   +162.4     +4874      909   21.83pt
+    setups S26 avoid on  floor 1.5             3312  51.9%  1.18  +0.065   +214.1     +4851      792   19.39pt
+    setups S26 avoid on  floor 2.0             3304  51.7%  1.15  +0.052   +171.5     +4693      938   20.44pt
+    setups S26 avoid off floor 1.0             3529  52.0%  1.19  +0.071   +250.0     +4637      815   18.22pt
+    setups S26 avoid off floor 1.5             3520  51.7%  1.17  +0.064   +224.3     +4556     1017   18.94pt
+    setups S26 avoid off floor 2.0             3516  51.2%  1.14  +0.049   +172.8     +4386     1020   20.08pt
+    setups S26 avoid off floor 2.5             3506  50.5%  1.12  +0.042   +148.1     +4376      985   21.52pt
+    setups all avoid on  floor 1.0             3897  51.3%  1.08  +0.031   +122.7     +3880      753   15.18pt
+    setups all avoid on  floor 1.5             3897  51.2%  1.09  +0.033   +129.8     +3769      967   15.88pt
+    setups all avoid on  floor 2.0             3895  51.2%  1.08  +0.029   +113.9     +3654     1094   17.06pt
+    setups all avoid on  floor 2.5             3895  50.5%  1.08  +0.029   +111.5     +3560     1155   18.71pt
+    setups all avoid off floor 2.0             3901  51.2%  1.08  +0.029   +111.6     +3525     1328   16.97pt
+    setups all avoid off floor 2.5             3901  50.5%  1.07  +0.026   +100.9     +3316     1398   18.76pt
+    setups all avoid off floor 1.5             3902  50.7%  1.05  +0.021    +81.5     +3119     1297   15.60pt
+    setups all avoid off floor 1.0             3902  50.9%  1.05  +0.020    +78.2     +2963     1011   14.68pt
+
+  CHOSEN on 2026: setups S26, avoid on, floor 1.0 ATR, exits breakout_retest 3.0R, flag_continuation trail, mtf_pullback 3.0R, pattern_break 3.0R
+
+======================================================================================================================
+  VERDICT - the chosen configuration against today, in years it never saw
+======================================================================================================================
+
+  2026  (in-sample)
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    BASE  today, live                          3902  50.9%  1.05  +0.020    +78.2     +2963     1011   14.68pt
+    CHOSEN combination                         3319  45.0%  1.20  +0.087   +287.6     +6071      751   18.73pt
+      ...same, but today's exit                3319  52.4%  1.20  +0.073   +241.0     +4980      804   18.73pt
+
+  2025  (OUT OF SAMPLE)
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    BASE  today, live                          4066  49.0%  0.90  -0.045   -184.5      +233      866    5.93pt
+    CHOSEN combination                         3481  43.4%  1.03  +0.015    +50.7     +1008      602    8.04pt
+      ...same, but today's exit                3481  50.8%  1.00  +0.001     +4.9      +656      716    8.04pt
+
+  2024  (OUT OF SAMPLE)
+                                             trades    win    PF    E[R]    sum R   $ @0.01  $ maxDD  avg stop
+    BASE  today, live                          4104  48.2%  0.85  -0.066   -269.8      -599      742    3.26pt
+    CHOSEN combination                         3314  41.0%  0.90  -0.050   -166.8      -369      590    4.49pt
+      ...same, but today's exit                3314  49.6%  0.93  -0.030   -100.5      -145      553    4.49pt
+
+======================================================================================================================
+  ADDENDUM - against TRUE live (min_stop_atr is 1.5 in settings.json, so "today" = the 1.5 floor), today's exit
+======================================================================================================================
+  2026   TODAY live (all setups, 1.5)   3902  E[R] +0.021  sum +81.5R   $+3119  DD 1297
+         DEFAULTS (3 setups off)        3289  E[R] +0.080  sum +263.4R  $+6101  DD  852
+         DEFAULTS + avoid rules         2995  E[R] +0.075  sum +223.1R  $+5478  DD  693
+         TOP-3 + avoid rules            2445  E[R] +0.056  sum +137.5R  $+3954  DD  597
+  2025   TODAY                          4066  E[R] -0.044  sum -180.9R  $  +48  DD 1129
+         DEFAULTS                       3386  E[R] -0.009  sum  -31.8R  $ +284  DD  753
+         DEFAULTS + avoid               3090  E[R] -0.002  sum   -4.7R  $ +471  DD  617
+         TOP-3 + avoid                  2598  E[R] -0.016  sum  -41.7R  $ +187  DD  492
+  2024   TODAY                          4104  E[R] -0.058  sum -239.1R  $ -629  DD  775
+         DEFAULTS                       3194  E[R] -0.009  sum  -28.7R  $ +103  DD  371
+         DEFAULTS + avoid               2890  E[R] -0.009  sum  -25.5R  $ +123  DD  335
+         TOP-3 + avoid                  2357  E[R] +0.005  sum  +11.9R  $ +186  DD  308

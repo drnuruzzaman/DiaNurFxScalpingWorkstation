@@ -1,0 +1,18 @@
+2026-09-25T00:00:45+10:00  order     CANCEL order=8918642
+2026-09-25T00:00:46+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-25T00:00:46+10:00  order     CANCEL order=8918912
+2026-09-25T00:00:46+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-25T08:42:50+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-25T08:42:50+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=ICMarketsAU-Demo
+2026-09-25T08:42:50+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-25T08:43:17+10:00  order     MODIFY position=8913686 sl 158.305 -> 158.781
+2026-09-25T08:43:18+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-25T08:43:22+10:00  order     MODIFY position=8913686 sl 158.781 -> 158.782
+2026-09-25T08:43:22+10:00  order     MODIFY RESULT ok=True retcode=10009
+2026-09-25T09:21:11+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-25T10:03:14+10:00  order     SEND limit sell XAUUSD.a 0.01 lots @4271.62 sl=4276.66 tp=4261.55 signal=XAUUSD.a:3m:pattern_break:sell:1790293500000 account=23011660
+2026-09-25T10:03:14+10:00  order     RESULT ok=True retcode=10009 ticket=8931621 price=0.0 comment='Request executed'
+2026-09-25T10:06:15+10:00  order     CANCEL order=8931621
+2026-09-25T10:06:15+10:00  order     CANCEL RESULT ok=True retcode=10009
+2026-09-25T10:27:08+10:00  order     SEND stop sell XAUUSD.a 0.01 lots @4268.82 sl=4276.84 tp=4252.78 signal=XAUUSD.a:3m:pattern_break:sell:1790294760000 account=23011660
+2026-09-25T10:27:08+10:00  order     RESULT ok=True retcode=10009 ticket=8931884 price=0.0 comment='Request executed'

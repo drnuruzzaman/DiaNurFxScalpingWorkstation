@@ -696,7 +696,7 @@ export function BottomDock({
             {' · '}bridge <b className={exec.trading_enabled ? 't-warn' : 't-up'}>
               {exec.trading_enabled ? 'ARMED' : 'read-only'}</b>
             {' · '}{live.length} live signal{live.length === 1 ? '' : 's'}
-            {' · '}lots {exec.settings?.lots?.join('-')}
+            {' · '}lots gold {exec.settings?.lots_gold ?? '—'} · other {exec.settings?.lots_non_gold ?? '—'}
             {' · '}entry tolerance {exec.settings?.entry_tolerance_atr} ATR
           </div>
           {live.length > 0 && (

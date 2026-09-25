@@ -707,7 +707,11 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
       // The bridge's ceiling is a different process's setting; it can only be
       // compared, never edited from here.
       const bridgeMax: number | null = engine.bridge_max_lots ?? null
-      const overLots = bridgeMax != null && Number(x.max_lots) > bridgeMax
+      // Either fixed size above the bridge's own ceiling would be refused at
+      // SEND time with nothing on screen to explain why, so each box says so
+      // while the number is still being chosen.
+      const overGold = bridgeMax != null && Number(x.lots_gold ?? 0.01) > bridgeMax
+      const overOther = bridgeMax != null && Number(x.lots_non_gold ?? 0.05) > bridgeMax
 
       const saveRisk = stage('risk')
       const saveGates = stage('gates')
@@ -802,7 +806,8 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
                       space, which left double gaps mid-sentence ("stop to
                       +0.5R at TP1") that no amount of CSS would close. */}
                   {'Every FINAL, qualified signal on a watchlist symbol is sent to MT5 '
-                    + `without asking — ${x.min_lots}–${x.max_lots} lots`
+                    + `without asking — gold ${x.lots_gold ?? 0.01} lots, `
+                    + `other symbols ${x.lots_non_gold ?? 0.05}`
                     + (x.max_per_symbol_tf > 0
                       ? `, at most ${x.max_per_symbol_tf} per symbol and timeframe` : '')
                     + `, stop to +${r.trail_lock_r}R at TP1 then trailing ${r.trail_atr} ATR.`
@@ -820,21 +825,26 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
               </div>
             )}
             <div className="set-grid">
-              <Field label="Min lots" hint="every order is at least this">
-                <input type="number" step={0.01} min={0.01} defaultValue={x.min_lots}
-                  onBlur={(e) => saveExec({ min_lots: +e.target.value })} />
-              </Field>
-              {/* The bridge keeps its own hard ceiling, fixed when it was
-                  launched. Exceed it and every order is refused at SEND time
-                  with nothing on screen to explain why - so say it here,
-                  while the number is still being chosen. */}
-              <Field label="Max lots"
-                hint={overLots
+              {/* One FIXED size per instrument class - not a min/max range.
+                  The range had been set to 0.01-0.01, a fixed lot expressed as
+                  two boxes that had to be kept equal by hand. Two classes,
+                  because the contracts are not comparable: 0.01 of gold is
+                  1 oz, 0.01 of a major is 1,000 units. */}
+              <Field label="Lots (gold)"
+                hint={overGold
                   ? `the bridge refuses anything above ${bridgeMax} — relaunch it to raise this`
-                  : 'every order is at most this, whatever sizing says'}>
-                <input type="number" step={0.01} min={0.01} defaultValue={x.max_lots}
-                  className={overLots ? 'bad' : undefined}
-                  onBlur={(e) => saveExec({ max_lots: +e.target.value })} />
+                  : 'fixed size for every gold order'}>
+                <input type="number" step={0.01} min={0.01} defaultValue={x.lots_gold ?? 0.01}
+                  className={overGold ? 'bad' : undefined}
+                  onBlur={(e) => saveExec({ lots_gold: +e.target.value })} />
+              </Field>
+              <Field label="Lots (other symbols)"
+                hint={overOther
+                  ? `the bridge refuses anything above ${bridgeMax} — relaunch it to raise this`
+                  : 'fixed size for every non-gold order'}>
+                <input type="number" step={0.01} min={0.01} defaultValue={x.lots_non_gold ?? 0.05}
+                  className={overOther ? 'bad' : undefined}
+                  onBlur={(e) => saveExec({ lots_non_gold: +e.target.value })} />
               </Field>
               <Field label="Entry tolerance (ATR)"
                 hint="within this of the entry: market order; further: pending at the entry">
@@ -962,6 +972,27 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
                     + 'high-impact release is rejected outright.'
                   : `A release within ${g.news_blackout_min} minutes is still flagged and `
                     + 'still costs the setup confidence, but no longer vetoes the trade.'}
+              </span>
+            </div>
+            {/* The Phase 0b avoid rules - the 'leg' gate in qualify.py. Read
+                as on until the API reports it, so an older server does not
+                show a real setting as off. */}
+            <div className="set-row" style={{ marginBottom: 12 }}>
+              <label className="set-toggle" style={{ cursor: 'pointer' }}
+                onClick={() => saveGates({ avoid_fades: g.avoid_fades === false })}>
+                <span className={`switch ${g.avoid_fades !== false ? 'on' : ''}`}><i /></span>
+                <span className={g.avoid_fades !== false ? 't-up' : 't-dim'}
+                  style={{ fontWeight: 800, letterSpacing: '0.08em' }}>
+                  AVOID FADING THE LEG
+                </span>
+              </label>
+              <span className="spacer" />
+              <span className="set-armed-note">
+                {g.avoid_fades !== false
+                  ? 'Trades against the leg in progress are rejected 0.5–1 ATR off its '
+                    + 'extreme, once it has run 4 ATR, or with the 1h trend behind it.'
+                  : 'The leg read is still shown on each signal, but no longer vetoes '
+                    + 'a trade against the leg.'}
               </span>
             </div>
             <div className="set-grid">

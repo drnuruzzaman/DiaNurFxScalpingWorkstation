@@ -39,10 +39,16 @@ const C = {
   markGrey: '#b1b3b3',
 }
 
-export type PanelKey = 'signal' | 'gauge' | 'trend' | 'evidence'
+export type PanelKey = 'signal' | 'patterns' | 'gauge' | 'trend' | 'evidence'
 
+/**
+ * The side panels, IN THE ORDER THEY ARE ALWAYS DRAWN. The order you tick
+ * them in the menu does not matter - a shared image reads the same way
+ * every time: the trade, what the chart shows, the mood, the trend, and why.
+ */
 export const PANEL_LABELS: { key: PanelKey; label: string }[] = [
-  { key: 'signal', label: 'Live signal' },
+  { key: 'signal', label: 'Live signals' },
+  { key: 'patterns', label: 'Detected patterns' },
   { key: 'gauge', label: 'Fear & Greed index' },
   { key: 'trend', label: 'Trend read' },
   { key: 'evidence', label: 'Evidence' },
@@ -60,6 +66,10 @@ export type SnapshotOpts = {
   snap: Snapshot | null
   signal: Signal | null
   digits?: number
+  /** A pill in the header, e.g. BACKTEST - so a replay image is never read as live. */
+  badge?: string
+  /** Replaces "now" in the strap: a replay snapshot is dated by its bar. */
+  when?: string
 }
 
 // ---------------------------------------------------------------- capture
@@ -435,7 +445,9 @@ function layoutRail(g: CanvasRenderingContext2D, o: SnapshotOpts, w: number): nu
   const dp = o.digits ?? 2
   const r = new Rail(g, 0, w, 0)
 
-  for (const key of o.panels) {
+  const order = PANEL_LABELS.map((p) => p.key).filter((k) => o.panels.includes(k))
+  for (const key of order) {
+    if (key === 'patterns') continue       // drawn on the chart, see compose()
     if (key === 'signal') {
       if (!signal) {
         r.head('Live signal', 'NONE', C.dim)
@@ -573,8 +585,10 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
 
   const RAIL_D = 300                       // rail width, design units
   const PAD = Math.round(18 * S)
-  const GUT = o.panels.length ? Math.round(22 * S) : 0
-  const RAIL = o.panels.length ? Math.round(RAIL_D * S) : 0
+  // Detected patterns draw ON the chart; only the other panels need a rail.
+  const railPanels = o.panels.filter((k) => k !== 'patterns').length
+  const GUT = railPanels ? Math.round(22 * S) : 0
+  const RAIL = railPanels ? Math.round(RAIL_D * S) : 0
   const HEAD = Math.round(66 * S)
   // Both strap lines moved inside the chart, so the foot is bare margin.
   const FOOT = Math.round(14 * S)
@@ -584,7 +598,7 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
   // paper under the candles.
   const probe = document.createElement('canvas')
   probe.width = 8; probe.height = 8
-  const railH = o.panels.length
+  const railH = railPanels
     ? Math.ceil(layoutRail(probe.getContext('2d')!, o, RAIL_D) * S) : 0
 
   const painted = paintChart(o.wrap, o.engine, railH)
@@ -604,10 +618,9 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
   g.textBaseline = 'alphabetic'
 
   // ------------------------------------------------------------- header
-  // The mark, drawn to the same geometry as the topbar's SVG: four squares
-  // plus the grey centre that overlaps them. The supplied PNG has an opaque
-  // near-black plate baked in, so it is rebuilt rather than pasted - dropping
-  // a dark block onto white paper is exactly what it would have done.
+  // LEFT: who made it - the mark, the wordmark and the strapline under it.
+  // RIGHT: when - the moment of capture (or the replay bar), and the risk
+  // line under it. No price: the chart's own axis carries that.
   const U = (24 * S) / 22                    // one unit of the 22x22 viewBox
   const markTop = Math.round(13 * S)
   const sq = (ux: number, uy: number, fill: string) => {
@@ -620,86 +633,22 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
   sq(0, 12, C.markLime)
   sq(12, 12, C.brand)
   sq(6, 6, C.markGrey)
-
   const tx = PAD + 22 * U + Math.round(11 * S)
   g.textAlign = 'left'
   g.font = '800 ' + Math.round(21 * S) + 'px ' + SANS
-  // The wordmark is near-white in the original, which would vanish here.
   g.fillStyle = C.ink
   g.fillText('DIANUR', tx, Math.round(35 * S))
   g.fillStyle = C.brand
   g.fillText('FX', tx + g.measureText('DIANUR').width, Math.round(35 * S))
-
-  const sub = o.symbol + '   ' + o.tf.toUpperCase()
-  g.font = '700 ' + Math.round(13 * S) + 'px ' + MONO
+  g.font = '600 ' + Math.round(10 * S) + 'px ' + SANS
   g.fillStyle = C.mid
-  g.fillText(sub, PAD, Math.round(56 * S))
+  g.fillText('Where Data Meets Discipline, Analysis, Execution.', PAD, Math.round(56 * S))
 
-  // Current regime, stated as current rather than drawn as a history ribbon:
-  // the engine reports the regime NOW, and a multi-segment timeline would be
-  // inventing a past it never computed.
-  const reg = snap && snap.regime
-  if (reg && reg.label) {
-    const rl = String(reg.label).toUpperCase()
-    g.font = '700 ' + Math.round(10.5 * S) + 'px ' + MONO
-    const rw = g.measureText(rl).width + Math.round(16 * S)
-    const rx = PAD + g.measureText(sub).width * 0 + (() => {
-      g.font = '700 ' + Math.round(13 * S) + 'px ' + MONO
-      const wpx = g.measureText(sub).width
-      g.font = '700 ' + Math.round(10.5 * S) + 'px ' + MONO
-      return wpx + Math.round(14 * S)
-    })()
-    const col = rl.indexOf('UP') >= 0 ? C.up : rl.indexOf('DOWN') >= 0 ? C.down
-      : rl.indexOf('SQUEEZE') >= 0 ? C.accent : rl.indexOf('RANGE') >= 0 ? C.info : C.warn
-    g.fillStyle = col
-    g.globalAlpha = 0.12
-    roundRect(g, rx, Math.round(44 * S), rw, Math.round(16 * S), 3 * S); g.fill()
-    g.globalAlpha = 1
-    g.fillStyle = col
-    g.textAlign = 'center'
-    g.fillText(rl, rx + rw / 2, Math.round(55.5 * S))
-    g.textAlign = 'left'
-  }
-
-  if (snap && snap.price != null) {
-    g.textAlign = 'right'
-    g.font = '800 ' + Math.round(23 * S) + 'px ' + MONO
-    g.fillStyle = C.ink
-    g.fillText(num(snap.price, dp), PAD + chart.width, Math.round(37 * S))
-    g.textAlign = 'left'
-  }
-
-  // -------------------------------------------------------------- chart
-  g.drawImage(chart, PAD, HEAD)
-  g.strokeStyle = C.rule
-  g.lineWidth = 1
-  g.strokeRect(PAD + 0.5, HEAD + 0.5, chart.width - 1, chart.height - 1)
-
-  // Both strap lines sit INSIDE the chart, in the gap between the price plot
-  // and the first indicator pane. They share one band, so they are measured
-  // together and shrunk to fit rather than drawn at a fixed size and left to
-  // overlap - which is exactly what happened at the first attempt.
-  {
-    const geom = painted.geom
-    const inset = Math.round(12 * S)
-    // Sit on the gap's baseline; without an indicator pane, fall back to the
-    // bottom of the plot so the lines never land on the time axis.
-    const band = geom && geom.subTop != null ? geom.subTop
-      : (geom ? geom.bottom : chart.height - Math.round(10 * S))
-    const ty = HEAD + band - Math.round(5 * S)
-    const left = PAD + inset
-    const right = PAD + (geom ? geom.plotW : chart.width) - inset
-    const avail = right - left
-
-    const parts: [string, string][] = [
-      ['Trade with a Plan, ', C.info],
-      ['Strategy Today, ', C.up],
-      ['Freedom Tomorrow', C.brand],
-    ]
-    // Local time, not UTC: the person reading this is the person who took it.
-    // The zone is named so a shared image is not ambiguous about which local.
+  // Local time, not UTC: the person reading this is the person who took it.
+  // The zone is named so a shared image is not ambiguous about which local.
+  let when: string = o.when ?? ''
+  if (!when) {
     const d = new Date()
-    let when: string
     try {
       when = d.toLocaleString(undefined, {
         day: '2-digit', month: 'short', year: 'numeric',
@@ -708,64 +657,172 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
     } catch {
       when = d.toString()
     }
-    const risk = 'Trading is risky. Do not over trade. You might lose your funds.'
+  }
+  const right = W - PAD
+  g.textAlign = 'right'
+  g.font = '700 ' + Math.round(11.5 * S) + 'px ' + MONO
+  g.fillStyle = C.ink
+  g.fillText(when, right, Math.round(35 * S))
+  g.font = '400 ' + Math.round(10 * S) + 'px ' + MONO
+  g.fillStyle = C.dim
+  g.fillText('Trading is risky. Do not over trade. You might lose your funds.', right,
+             Math.round(56 * S))
+  g.textAlign = 'left'
 
-    /** Widths of the blocks at a given scale. The right pair is stacked, so
-        only the wider of the two competes with the tagline for the row. */
-    const measure = (k: number) => {
-      g.font = '800 ' + (13 * S * k) + 'px ' + SANS
-      let tag = 0
-      for (const part of parts) tag += g.measureText(part[0]).width
-      g.font = '400 ' + (10 * S * k) + 'px ' + MONO
-      const rw = g.measureText(risk).width
-      g.font = '700 ' + (10 * S * k) + 'px ' + MONO
-      const ww = g.measureText(when).width
-      return { tag, rw, ww, right: Math.max(rw, ww), gap: 18 * S * k }
+  // -------------------------------------------------------------- chart
+  g.drawImage(chart, PAD, HEAD)
+  g.strokeStyle = C.rule
+  g.lineWidth = 1
+  g.strokeRect(PAD + 0.5, HEAD + 0.5, chart.width - 1, chart.height - 1)
+
+  const geom = painted.geom
+  const inset = Math.round(12 * S)
+
+  // ---- watermark: the brand, in colour but faint, at the LEFT MIDDLE of
+  // the price pane. It is held to the left third of the plot so it never
+  // sits over the middle of the chart, where the latest price action is
+  // read. Drawn before the labels so their plates cover it, not the reverse.
+  {
+    const plotW = geom ? geom.plotW : chart.width
+    const paneH = geom ? (geom.subTop ?? geom.bottom) : chart.height
+    let mark = Math.max(36 * S, Math.min(84 * S, paneH * 0.16))
+    const wordOf = (m: number) => {
+      g.font = '800 ' + Math.round(m * 0.6) + 'px ' + SANS
+      return g.measureText('DIANURFX').width
     }
-
-    let k = 1
-    let m = measure(k)
-    const need = () => m.tag + m.right + m.gap + 24 * S
-    if (need() > avail) {
-      // One pass is enough: text width is linear in font size.
-      k = Math.max(0.6, k * (avail / need()))
-      m = measure(k)
-    }
-
-    const plate = (x: number, w: number, top: number, h: number) => {
-      g.fillStyle = 'rgba(255,255,255,0.88)'
-      roundRect(g, x - 6 * S, top, w + 12 * S, h, 4 * S)
+    // Shrink until mark + gap + word fits in the left third.
+    while (mark > 24 * S && mark * 1.35 + wordOf(mark) > plotW / 3) mark *= 0.9
+    const wordW = wordOf(mark)
+    const gap = mark * 0.35
+    const x0 = PAD + Math.max(inset * 2, Math.min(plotW / 3 - mark - gap - wordW, plotW * 0.06))
+    const y0 = HEAD + paneH / 2 - mark / 2
+    const u = mark / 22                          // same 22x22 grid as the header mark
+    g.save()
+    g.globalAlpha = 0.14
+    const wsq = (ux: number, uy: number, fill: string) => {
+      g.fillStyle = fill
+      roundRect(g, x0 + ux * u, y0 + uy * u, 10 * u, 10 * u, 1.2 * u)
       g.fill()
     }
-
-    const smallPx = 10 * S * k
-    const lead = smallPx + 5 * S
-    const tagPx = 13 * S * k
-
-    plate(left, m.tag, ty - tagPx, tagPx + 7 * S)
-    g.font = '800 ' + tagPx + 'px ' + SANS
+    wsq(0, 0, C.markBlue)
+    wsq(12, 0, C.markAmber)
+    wsq(0, 12, C.markLime)
+    wsq(12, 12, C.brand)
+    wsq(6, 6, C.markGrey)
+    g.font = '800 ' + Math.round(mark * 0.6) + 'px ' + SANS
     g.textAlign = 'left'
-    let cx = left
-    for (const part of parts) {
-      g.fillStyle = part[1]
-      g.fillText(part[0], cx, ty)
-      cx += g.measureText(part[0]).width
-    }
+    g.textBaseline = 'middle'
+    const wx = x0 + mark + gap
+    const wy = y0 + mark / 2
+    g.fillStyle = C.ink
+    g.fillText('DIANUR', wx, wy)
+    g.fillStyle = C.brand
+    g.fillText('FX', wx + g.measureText('DIANUR').width, wy)
+    g.restore()
+  }
+  const plate = (x: number, y: number, w: number, h: number) => {
+    g.fillStyle = 'rgba(255,255,255,0.9)'
+    roundRect(g, x, y, w, h, 4 * S)
+    g.fill()
+  }
 
-    // Date first, risk line under it.
-    plate(right - m.right, m.right, ty - lead - smallPx, lead + smallPx + 7 * S)
-    g.textAlign = 'right'
-    g.font = '700 ' + smallPx + 'px ' + MONO
+  // ---- top left of the chart: what it is of
+  {
+    const x0 = PAD + inset
+    const base = HEAD + Math.round(30 * S)
+    g.font = '800 ' + Math.round(18 * S) + 'px ' + SANS
+    const symW = g.measureText(o.symbol).width
+    g.font = '700 ' + Math.round(12 * S) + 'px ' + MONO
+    const tfW = g.measureText(o.tf.toUpperCase()).width
+    const tr = snap && snap.trend
+    const st = String((tr && tr.state) || '')
+    const trendText = st
+      ? (st.replace(/_/g, ' ') + (tr.strength ? ' \u00b7 ' + tr.strength : '')).toUpperCase()
+      : String((snap && snap.regime && snap.regime.label) || '').toUpperCase()
+    g.font = '700 ' + Math.round(11 * S) + 'px ' + MONO
+    const pills = [trendText, o.badge || ''].filter(Boolean)
+    const pillW = pills.map((t) => g.measureText(t).width + Math.round(16 * S))
+    const gap = Math.round(10 * S)
+    const total = symW + Math.round(8 * S) + tfW + pillW.reduce((n, w) => n + w + gap, 0)
+    plate(x0 - 6 * S, base - 22 * S, total + 12 * S, 30 * S)
+    g.textAlign = 'left'
+    g.font = '800 ' + Math.round(18 * S) + 'px ' + SANS
+    g.fillStyle = C.ink
+    g.fillText(o.symbol, x0, base)
+    g.font = '700 ' + Math.round(12 * S) + 'px ' + MONO
     g.fillStyle = C.mid
-    g.fillText(when, right, ty - lead)
-    g.font = '400 ' + smallPx + 'px ' + MONO
-    g.fillStyle = C.dim
-    g.fillText(risk, right, ty)
-    g.textAlign = 'left'
+    g.fillText(o.tf.toUpperCase(), x0 + symW + Math.round(8 * S), base)
+    let px = x0 + symW + Math.round(8 * S) + tfW + gap
+    pills.forEach((t, i) => {
+      const col = i === 1 ? C.warn : t.indexOf('UP') >= 0 ? C.up
+        : t.indexOf('DOWN') >= 0 ? C.down : t.indexOf('SQUEEZE') >= 0 ? C.accent : C.info
+      g.font = '700 ' + Math.round(11 * S) + 'px ' + MONO
+      g.fillStyle = col
+      g.globalAlpha = 0.12
+      roundRect(g, px, base - 15 * S, pillW[i], 20 * S, 3 * S); g.fill()
+      g.globalAlpha = 1
+      g.textAlign = 'center'
+      g.fillText(t, px + pillW[i] / 2, base)
+      g.textAlign = 'left'
+      px += pillW[i] + gap
+    })
+  }
+
+  // ---- bottom left of the price pane: the live patterns, each name once
+  if (o.panels.includes('patterns')) {
+    const live: any[] = ((snap && snap.patterns) || []).filter((p: any) => p.actionable)
+    const seen = new Set<string>()
+    const rows: { name: string; status: string; col: string }[] = []
+    for (const p of live) {
+      const name = String(p.label || p.kind)
+      const status = String(p.status || '').toUpperCase()
+      const k = name + '|' + status
+      if (seen.has(k)) continue
+      seen.add(k)
+      rows.push({ name, status,
+        col: p.direction === 'bullish' ? C.up : p.direction === 'bearish' ? C.down : C.info })
+    }
+    if (rows.length) {
+      // Sits on the gap between the price plot and the first indicator pane.
+      const band = geom && geom.subTop != null ? geom.subTop
+        : (geom ? geom.bottom : chart.height - Math.round(10 * S))
+      const rowH = Math.round(13 * S)
+      const headH = Math.round(21 * S)
+      const bottom = HEAD + band - Math.round(8 * S)
+      const top = bottom - headH - rows.length * rowH
+      const x0 = PAD + inset
+      g.font = '400 ' + Math.round(9 * S) + 'px ' + MONO
+      const nameW = Math.max(...rows.map((r) => g.measureText(r.name).width))
+      g.font = '700 ' + Math.round(9 * S) + 'px ' + MONO
+      const statW = Math.max(...rows.map((r) => g.measureText(r.status).width))
+      const boxW = Math.max(nameW + statW + Math.round(20 * S), Math.round(150 * S))
+      plate(x0 - 8 * S, top - 6 * S, boxW + 16 * S, bottom - top + 10 * S)
+      g.textAlign = 'left'
+      g.font = '800 ' + Math.round(9.5 * S) + 'px ' + SANS
+      g.fillStyle = C.brand
+      g.fillText('DETECTED PATTERNS', x0, top + Math.round(10 * S))
+      g.strokeStyle = C.rule
+      g.beginPath()
+      g.moveTo(x0, top + Math.round(16 * S) + 0.5)
+      g.lineTo(x0 + boxW, top + Math.round(16 * S) + 0.5)
+      g.stroke()
+      rows.forEach((r, i) => {
+        const y = top + headH + (i + 1) * rowH - Math.round(4 * S)
+        g.textAlign = 'left'
+        g.font = '400 ' + Math.round(9 * S) + 'px ' + MONO
+        g.fillStyle = C.ink
+        g.fillText(r.name, x0, y)
+        g.textAlign = 'right'
+        g.font = '700 ' + Math.round(9 * S) + 'px ' + MONO
+        g.fillStyle = r.col
+        g.fillText(r.status, x0 + boxW, y)
+      })
+      g.textAlign = 'left'
+    }
   }
 
   // --------------------------------------------------------------- rail
-  if (o.panels.length) {
+  if (railPanels) {
     g.save()
     g.translate(PAD + chart.width + GUT, HEAD)
     g.scale(S, S)

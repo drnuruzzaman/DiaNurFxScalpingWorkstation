@@ -1,0 +1,13 @@
+{
+ "digits": 2,
+ "point": 0.01,
+ "tick_size": 0.01,
+ "tick_value": 1.0,
+ "contract_size": 100.0,
+ "volume_min": 0.01,
+ "volume_max": 100.0,
+ "volume_step": 0.01,
+ "stops_level_points": 0,
+ "commission_per_lot_side": 3.0,
+ "saved_at": "2026-09-25 00:08"
+}

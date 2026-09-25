@@ -21,8 +21,8 @@
  */
 
 import type {
-  Bar, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, PriceArea,
-  Snapshot, Signal, Viewport,
+  Bar, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
+  PriceArea, Snapshot, Signal, TradeMark, Viewport,
 } from './types'
 
 export type ChartTheme = {
@@ -323,7 +323,9 @@ export class ChartEngine {
   /** Set when the timeframe changes; consumed by the next setBars(). */
   private resetOnNextBars = false
 
-  private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true }
+  private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true, legRead: true }
+  /** Signals on this chart the leg gate BLOCKED, marked when legRead is on. */
+  private legBlocked: Signal[] = []
   private news: NewsMark[] = []
   /**
    * Screen boxes for the news labels drawn this frame, for hit testing.
@@ -337,6 +339,12 @@ export class ChartEngine {
   /** Only fire the hover callback when the label under the cursor CHANGES. */
   private lastNewsHit: NewsMark | null = null
   private positions: any[] = []
+  /** Trades to mark (backtest lab): closed entry->exit, open with stop/target. */
+  private tradeMarks: TradeMark[] = []
+  /** Replay cursor: bars after it are the future, dimmed when shown at all. */
+  private cursorT: number | null = null
+  /** Faint text behind everything - BACKTEST on the lab's chart. */
+  private watermark: string | null = null
 
   private mtfLines: MtfTrendline[] = []
   /** Source timeframes to draw. Exactly these - an empty list draws none. */
@@ -354,6 +362,12 @@ export class ChartEngine {
   private money: MoneyModel | null = null
   /** Bar length in ms, for the candle countdown. 0 = no countdown. */
   private tfMs = 0
+  /**
+   * The zoom this chart was saved at (the live chart's saved workspace, per
+   * instrument and timeframe). Used wherever the view resets - a new
+   * timeframe, the first bars, the Reset button - in place of DEFAULT_SPAN.
+   */
+  private preferredSpan: number | null = null
   /** 1 Hz repaint while a countdown is showing. */
   private clock: number | null = null
 
@@ -446,7 +460,7 @@ export class ChartEngine {
     }
 
     if (!keepView || prevLen === 0) {
-      const span = Math.min(DEFAULT_SPAN, bars.length || DEFAULT_SPAN)
+      const span = Math.min(this.baseSpan(), bars.length || this.baseSpan())
       this.view = { start: Math.max(0, bars.length - span + this.rightPadBars), span }
     } else if (bars.length > prevLen && prevFirstT && bars[0].t < prevFirstT) {
       // History was PREPENDED. Every existing index shifted right by however
@@ -470,6 +484,16 @@ export class ChartEngine {
     if (s && typeof (s as any).digits === 'number') this.digits = (s as any).digits
     this.recomputeSnapOffset()
     this.scheduleBase()
+  }
+
+  /** chart index of the last bar at or before `t`, or -1. */
+  private barIndexAtOrBefore(t: number): number {
+    let lo = 0, hi = this.bars.length - 1, out = -1
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1
+      if (this.bars[mid].t <= t) { out = mid; lo = mid + 1 } else hi = mid - 1
+    }
+    return out
   }
 
   /** chart index for an exact bar timestamp, or -1. */
@@ -519,6 +543,39 @@ export class ChartEngine {
 
   setNews(n: NewsMark[]) {
     this.news = n ?? []
+    this.scheduleBase()
+  }
+
+  setTrades(t: TradeMark[]) {
+    this.tradeMarks = t ?? []
+    this.scheduleBase()
+  }
+
+  /**
+   * The replay cursor. With future bars on the chart (the lab's Reveal), the
+   * bars after it are dimmed and the view keeps the cursor on screen.
+   */
+  setCursor(t: number | null) {
+    const moved = t !== this.cursorT
+    this.cursorT = t
+    if (moved && t != null && this.bars.length) {
+      const i = this.barIndexAtOrBefore(t)
+      const right = this.view.start + this.view.span - this.rightPadBars
+      if (i >= 0 && (i < this.view.start || i > right)) {
+        this.view.start = Math.max(0, i - Math.round(this.view.span * 0.75))
+      }
+    }
+    this.scheduleBase()
+  }
+
+  setWatermark(text: string | null) {
+    this.watermark = text || null
+    this.scheduleBase()
+  }
+
+  /** Signals on this chart that the leg gate rejected; the caller filters. */
+  setLegBlocked(s: Signal[]) {
+    this.legBlocked = s ?? []
     this.scheduleBase()
   }
 
@@ -680,6 +737,23 @@ export class ChartEngine {
 
   getViewport(): Viewport { return { ...this.view } }
 
+  private baseSpan(): number { return this.preferredSpan ?? DEFAULT_SPAN }
+
+  /**
+   * Set the saved zoom. `apply` puts the view there now (a chart with a saved
+   * workspace was just opened); otherwise it only changes what the next
+   * reset returns to - saving must not yank the view back to the latest bar.
+   */
+  setPreferredSpan(span: number | null, apply = false) {
+    this.preferredSpan = span && span > 0 ? Math.max(30, Math.min(1200, Math.round(span))) : null
+    if (!apply || !this.bars.length) return
+    this.view.span = Math.min(this.baseSpan(), this.bars.length)
+    this.view.start = Math.max(0, this.bars.length - this.view.span + this.rightPadBars)
+    this.clampView()
+    this.scheduleBase()
+    this.onViewChange?.(this.getViewport())
+  }
+
   /** Hand price scaling back to the chart. */
   resetPriceScale() {
     this.priceAuto = true
@@ -699,7 +773,7 @@ export class ChartEngine {
    * thing you want is rarely "zoom out one notch" - it is "undo all of that".
    */
   resetChart() {
-    this.view.span = Math.min(DEFAULT_SPAN, this.bars.length || DEFAULT_SPAN)
+    this.view.span = Math.min(this.baseSpan(), this.bars.length || this.baseSpan())
     this.view.start = Math.max(0, this.bars.length - this.view.span + this.rightPadBars)
     this.priceAuto = true
     this.clampView()
@@ -892,6 +966,7 @@ export class ChartEngine {
 
     // Grid first: it is background, and anything drawn over it should win.
     if (this.layoutOpts.grid) this.drawGrid()
+    if (this.watermark) this.drawWatermark()
     // Always called. The toggle governs the DASHED LINES, not the labels -
     // see drawNewsMarks.
     this.drawNewsMarks()
@@ -910,14 +985,19 @@ export class ChartEngine {
     if (this.overlays.mtfTrendlines) this.drawMtfTrendlines()
     if (this.overlays.trendlines) this.drawTrendlines()
     if (this.overlays.zigzag) this.drawZigZag()
+    if (this.layoutOpts.legRead) this.drawLegUnder()
 
     this.drawCandles()
+    if (this.overlays.engulfing) this.drawEngulfing()
 
     if (this.overlays.swings) this.drawSwings()
     if (this.overlays.structure) this.drawStructureBreaks()
     if (this.overlays.events) this.drawEvents()
     if (this.overlays.signal) this.drawSignal()
+    if (this.layoutOpts.legRead) this.drawLegOver()
+    if (this.tradeMarks.length) this.drawTradeMarks()
     if (this.layoutOpts.positions) this.drawPositions()
+    if (this.cursorT != null) this.drawFuture()
 
     this.drawSubPanes()
     this.drawPriceAxis()
@@ -1821,6 +1901,89 @@ export class ChartEngine {
     ctx.restore()
   }
 
+  // --- engulfing candles -------------------------------------------------- //
+  private engulfCache: { bars: Bar[]; closed: number; marks: Int8Array } | null = null
+
+  /**
+   * +1 / -1 on every CLOSED bar that is a bullish / bearish engulfing: the
+   * previous bar the opposite colour, this body covering the previous body,
+   * and the body at least 0.3 ATR(14) - the definition measured in
+   * tools/research_engulfing.py. ATR is Wilder's, as the engine computes it.
+   *
+   * The forming bar is never marked: an engulfing that is still being built
+   * can stop being one before it closes, and the mark would come and go.
+   * Worth knowing what the measurement said: on its own it trades no better
+   * than any decent candle - this is context, not a signal.
+   */
+  private engulfing(): Int8Array {
+    const bars = this.bars
+    const n = bars.length
+    const last = n ? bars[n - 1] : null
+    const closed = last && this.tfMs && last.t + this.tfMs > Date.now() ? n - 1 : n
+    const hit = this.engulfCache
+    if (hit && hit.bars === bars && hit.closed === closed) return hit.marks
+    const marks = new Int8Array(n)
+    let atr = NaN
+    let acc = 0
+    for (let i = 0; i < closed; i++) {
+      const b = bars[i]
+      const pc = i ? bars[i - 1].c : b.c
+      const tr = Math.max(b.h - b.l, Math.abs(b.h - pc), Math.abs(b.l - pc))
+      if (i < 14) {
+        acc += tr
+        if (i === 13) atr = acc / 14
+      } else {
+        atr = (atr * 13 + tr) / 14
+      }
+      if (i < 1 || !(atr > 0)) continue
+      const p = bars[i - 1]
+      const body = b.c - b.o
+      const prev = p.c - p.o
+      if (Math.abs(body) < 0.3 * atr) continue
+      if (body > 0 && prev < 0 && b.o <= p.c && b.c >= p.o) marks[i] = 1
+      else if (body < 0 && prev > 0 && b.o >= p.c && b.c <= p.o) marks[i] = -1
+    }
+    this.engulfCache = { bars, closed, marks }
+    return marks
+  }
+
+  /** A thin frame round each engulfing candle, and an E beside it when there is room. */
+  private drawEngulfing() {
+    const marks = this.engulfing()
+    const n = this.bars.length
+    if (!n) return
+    const ctx = this.bctx
+    const bw = this.barW()
+    const from = Math.max(1, Math.floor(this.view.start))
+    const to = Math.min(n, Math.ceil(this.view.start + this.view.span) + 1)
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
+    ctx.lineWidth = 1
+    ctx.font = `800 8.5px ${UI_FONT}`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    const w = Math.max(3, Math.round(bw * 0.9))
+    for (let i = from; i < to; i++) {
+      const m = marks[i]
+      if (!m) continue
+      const b = this.bars[i]
+      const up = m > 0
+      const col = up ? this.theme.up : this.theme.down
+      const x = Math.round(this.xOf(i))
+      const yh = Math.round(this.yOf(b.h))
+      const yl = Math.round(this.yOf(b.l))
+      ctx.globalAlpha = 0.8
+      ctx.strokeStyle = col
+      ctx.strokeRect(x - Math.floor(w / 2) - 2.5, yh - 3.5, w + 5, yl - yh + 7)
+      if (bw >= 5) {
+        ctx.globalAlpha = 0.95
+        ctx.fillStyle = col
+        ctx.fillText('E', x, up ? yl + 11 : yh - 10)
+      }
+    }
+    ctx.restore()
+  }
+
   private drawStructureBreaks() {
     const s = this.snap
     if (!s?.breaks) return
@@ -2203,6 +2366,280 @@ export class ChartEngine {
    * Same swings the structure labels already use, so the line cannot tell a
    * different story from the HH/HL markers sitting on it.
    */
+  // --- backtest furniture ------------------------------------------------ //
+  private drawWatermark() {
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
+    const size = Math.max(28, Math.min(96, this.pane.w / 9))
+    ctx.font = `900 ${size}px ${UI_FONT}`
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
+    ctx.globalAlpha = 0.055
+    ctx.fillStyle = this.theme.text
+    ctx.fillText(this.watermark!, this.pane.w / 2, this.pane.y + this.pane.h / 2)
+    ctx.restore()
+  }
+
+  /**
+   * The future, when it is on the chart at all: everything right of the
+   * replay cursor sits under a wash, and the cursor itself is a line.
+   */
+  private drawFuture() {
+    const t = this.cursorT
+    if (t == null || !this.bars.length) return
+    const i = this.barIndexAtOrBefore(t)
+    if (i < 0) return
+    const x = Math.round(this.xOf(i) + this.barW() / 2) + 0.5
+    const ctx = this.bctx
+    ctx.save()
+    if (i < this.bars.length - 1 && x < this.pane.w) {
+      ctx.globalAlpha = 0.62
+      ctx.fillStyle = this.theme.bg
+      ctx.fillRect(x, 0, this.pane.w - x, this.height)
+    }
+    ctx.globalAlpha = 0.9
+    ctx.strokeStyle = this.theme.warn
+    ctx.lineWidth = 1
+    ctx.setLineDash([4, 3])
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, this.pane.y + this.pane.h); ctx.stroke()
+    ctx.setLineDash([])
+    ctx.restore()
+  }
+
+  /**
+   * Trades: a closed one is a marker at the fill, a marker at the exit and a
+   * dashed line between them, green when it made money and red when it did
+   * not, with its R at the exit. An open one is its entry rail with the live
+   * stop and target, so a trailing stop can be watched moving.
+   */
+  private drawTradeMarks() {
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
+    ctx.textBaseline = 'middle'
+    const labelAll = this.barW() >= 3
+    for (const m of this.tradeMarks) {
+      const buy = m.side === 'buy'
+      const xe = this.xOfTime(m.entry_t)
+      const ye = this.yOf(m.entry)
+      const sideCol = buy ? this.theme.up : this.theme.down
+      if (m.open) {
+        const W = this.pane.w
+        const rail = (price: number | null | undefined, col: string, text: string, dash: number[]) => {
+          if (price == null || !Number.isFinite(price) || !price) return
+          const y = Math.round(this.yOf(price)) + 0.5
+          ctx.globalAlpha = 0.85
+          ctx.strokeStyle = col
+          ctx.lineWidth = 1.2
+          ctx.setLineDash(dash)
+          ctx.beginPath(); ctx.moveTo(Math.max(0, xe), y); ctx.lineTo(W, y); ctx.stroke()
+          ctx.setLineDash([])
+          ctx.font = `700 9.5px ${UI_FONT}`
+          const tw = ctx.measureText(text).width
+          ctx.fillStyle = `rgba(${this.theme.plateRgb},0.9)`
+          ctx.fillRect(W - tw - 14, y - 8, tw + 10, 16)
+          ctx.fillStyle = col
+          ctx.textAlign = 'left'
+          ctx.fillText(text, W - tw - 9, y)
+        }
+        const pl = Number(m.profit)
+        rail(m.entry, this.theme.warn, `${buy ? 'BUY' : 'SELL'} ${this.fmtPrice(m.entry)}`
+          + (Number.isFinite(pl) ? `  ${pl >= 0 ? '+' : ''}${pl.toFixed(2)}` : ''), [])
+        rail(m.sl, this.theme.down, `SL ${this.fmtPrice(m.sl ?? 0)}`, [5, 4])
+        rail(m.tp, this.theme.up, `TP ${this.fmtPrice(m.tp ?? 0)}`, [5, 4])
+        this.tradeArrow(xe, ye, buy, sideCol, 1)
+        continue
+      }
+      if (m.exit_t == null || m.exit == null) continue
+      const xx = this.xOfTime(m.exit_t)
+      const yx = this.yOf(m.exit)
+      if (Math.max(xe, xx) < -10 || Math.min(xe, xx) > this.pane.w + 10) continue
+      const won = Number(m.profit ?? m.r ?? 0) > 0
+      const col = won ? this.theme.up : this.theme.down
+      ctx.globalAlpha = m.selected ? 1 : 0.75
+      ctx.strokeStyle = col
+      ctx.lineWidth = m.selected ? 2 : 1.2
+      ctx.setLineDash([4, 3])
+      ctx.beginPath(); ctx.moveTo(xe, ye); ctx.lineTo(xx, yx); ctx.stroke()
+      ctx.setLineDash([])
+      this.tradeArrow(xe, ye, buy, sideCol, m.selected ? 1.25 : 1)
+      ctx.globalAlpha = 1
+      ctx.fillStyle = col
+      ctx.strokeStyle = `rgba(${this.theme.plateRgb},0.9)`
+      ctx.lineWidth = 1.5
+      ctx.beginPath(); ctx.arc(xx, yx, m.selected ? 4.5 : 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke()
+      if ((labelAll || m.selected) && m.r != null) {
+        const text = `${m.r >= 0 ? '+' : ''}${m.r.toFixed(2)}R`
+        ctx.font = `800 ${m.selected ? 10.5 : 9}px ${UI_FONT}`
+        const tw = ctx.measureText(text).width
+        const ly = yx + (won === buy ? -13 : 13)
+        ctx.globalAlpha = 0.92
+        ctx.fillStyle = `rgba(${this.theme.plateRgb},0.85)`
+        ctx.fillRect(xx - tw / 2 - 4, ly - 7, tw + 8, 14)
+        ctx.globalAlpha = 1
+        ctx.fillStyle = col
+        ctx.textAlign = 'center'
+        ctx.fillText(text, xx, ly)
+      }
+    }
+    ctx.restore()
+  }
+
+  private tradeArrow(x: number, y: number, buy: boolean, col: string, k: number) {
+    const ctx = this.bctx
+    const s = 6 * k
+    ctx.globalAlpha = 1
+    ctx.fillStyle = col
+    ctx.strokeStyle = `rgba(${this.theme.plateRgb},0.9)`
+    ctx.lineWidth = 1.2
+    ctx.beginPath()
+    if (buy) {
+      ctx.moveTo(x, y + 2); ctx.lineTo(x - s, y + 2 + s * 1.5); ctx.lineTo(x + s, y + 2 + s * 1.5)
+    } else {
+      ctx.moveTo(x, y - 2); ctx.lineTo(x - s, y - 2 - s * 1.5); ctx.lineTo(x + s, y - 2 - s * 1.5)
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke()
+  }
+
+  private fmtPrice(p: number): string {
+    return Number(p).toFixed(this.digits)
+  }
+
+  // --- leg read ---------------------------------------------------------- //
+  /**
+   * The leg the avoid-fade gate is judging: the CLOSED-bar read when the
+   * server sends one (leg_gate), otherwise this snapshot's own.
+   */
+  private legRead(): LegRead | null {
+    return this.snap?.leg_gate ?? this.snap?.leg ?? null
+  }
+
+  /**
+   * Under the candles: the leg itself, the pullback off its extreme so far,
+   * and the two prices the rules turn on - the 0.5-1.0 ATR no-fade band back
+   * off the extreme, and where the leg reaches 4 ATR. Lines and labels only;
+   * no filled bands (washing the candles hides the thing being read).
+   */
+  private drawLegUnder() {
+    const g = this.legRead()
+    if (!g || g.start_ms == null || g.extreme_ms == null || !(Number(g.atr) > 0)) return
+    const atr = Number(g.atr)
+    const ctx = this.bctx
+    const up = g.dir === 1
+    const col = up ? this.theme.up : this.theme.down
+    const xs = this.xOfTime(g.start_ms), ys = this.yOf(g.start)
+    const xe = this.xOfTime(g.extreme_ms), ye = this.yOf(g.extreme)
+    const xc = g.bar_ms != null ? this.xOfTime(g.bar_ms) : xe
+    const yc = this.yOf(g.close ?? g.extreme)
+    const W = this.pane.w
+
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, W, this.pane.h); ctx.clip()
+
+    // the leg
+    ctx.globalAlpha = 0.6
+    ctx.strokeStyle = col
+    ctx.lineWidth = 2
+    ctx.beginPath(); ctx.moveTo(xs, ys); ctx.lineTo(xe, ye); ctx.stroke()
+    // the pullback so far, extreme -> last closed bar
+    ctx.setLineDash([3, 3])
+    ctx.lineWidth = 1.2
+    ctx.beginPath(); ctx.moveTo(xe, ye); ctx.lineTo(xc, yc); ctx.stroke()
+
+    const hline = (p: number, label: string, colour: string, alpha: number) => {
+      const y = Math.round(this.yOf(p)) + 0.5
+      if (y < 0 || y > this.pane.h) return
+      ctx.globalAlpha = alpha
+      ctx.strokeStyle = colour
+      ctx.lineWidth = 1
+      ctx.setLineDash([2, 4])
+      ctx.beginPath(); ctx.moveTo(xe, y); ctx.lineTo(W, y); ctx.stroke()
+      ctx.setLineDash([])
+      ctx.font = '600 8.5px ui-sans-serif, system-ui'
+      ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'
+      ctx.globalAlpha = Math.min(1, alpha + 0.25)
+      ctx.fillStyle = colour
+      ctx.fillText(label, W - 6, y - 2)
+    }
+    // The no-fade band: a fade entered 0.5-1.0 ATR back off the extreme is
+    // one of the three spots that lost every year.
+    const back = up ? -1 : 1
+    hline(g.extreme + back * 0.5 * atr, 'NO-FADE 0.5 ATR', this.theme.warn, 0.55)
+    hline(g.extreme + back * 1.0 * atr, 'NO-FADE 1.0 ATR', this.theme.warn, 0.55)
+    // Where the leg reaches 4 ATR - past it, fading is blocked outright.
+    if (g.ext_atr < 4) {
+      hline(g.start + (up ? 1 : -1) * 4 * atr, 'LEG 4 ATR', col, 0.4)
+    }
+    ctx.restore()
+  }
+
+  /**
+   * Over the candles: a chip at the leg's extreme saying how far it has run,
+   * how far price is back off it, the higher-timeframe trend the impulse
+   * rule reads, and whether a fade is blocked right now. Then an X on every
+   * signal on this chart the leg gate rejected.
+   */
+  private drawLegOver() {
+    const g = this.legRead()
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+
+    if (g && g.extreme_ms != null) {
+      const up = g.dir === 1
+      const col = up ? this.theme.up : this.theme.down
+      const htf = g.htf_tf
+        ? `  ·  ${g.htf_tf} ${g.htf_dir === 1 ? '\u25B2' : g.htf_dir === -1 ? '\u25BC' : '\u2013'}`
+        : ''
+      const line1 = `${up ? '\u25B2' : '\u25BC'} LEG ${g.ext_atr.toFixed(1)} ATR  ·  `
+        + `${g.pull_atr.toFixed(1)} back${htf}`
+      const side = (g.fade_side ?? (up ? 'sell' : 'buy')).toUpperCase()
+      const blocked = !!g.fade_block
+      const line2 = !blocked ? `${side} vs leg: open`
+        : g.rules_on === false ? `${side} vs leg: would block (rules off)`
+          : `${side} vs leg: BLOCKED`
+      ctx.font = '700 9px ui-sans-serif, system-ui'
+      const w = Math.max(ctx.measureText(line1).width, ctx.measureText(line2).width) + 12
+      const h = 28
+      let x = this.xOfTime(g.extreme_ms) - w / 2
+      let y = this.yOf(g.extreme) + (up ? -h - 8 : 8)
+      x = Math.max(4, Math.min(this.pane.w - w - 4, x))
+      y = Math.max(4, Math.min(this.pane.h - h - 4, y))
+      ctx.globalAlpha = 1
+      ctx.fillStyle = `rgba(${this.theme.plateRgb},0.9)`
+      ctx.fillRect(x, y, w, h)
+      ctx.strokeStyle = col
+      ctx.globalAlpha = 0.7
+      ctx.lineWidth = 1
+      ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1)
+      ctx.globalAlpha = 1
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
+      ctx.fillStyle = col
+      ctx.fillText(line1, x + 6, y + 8)
+      ctx.fillStyle = !blocked ? this.theme.textDim
+        : g.rules_on === false ? this.theme.textDim : this.theme.warn
+      ctx.fillText(line2, x + 6, y + 20)
+    }
+
+    // Signals the gate rejected for fading the leg.
+    for (const s of this.legBlocked) {
+      const x = this.xOfTime(s.bar_time_ms), y = this.yOf(s.entry)
+      if (x < 0 || x > this.pane.w || y < 0 || y > this.pane.h) continue
+      ctx.globalAlpha = 0.95
+      ctx.strokeStyle = this.theme.warn
+      ctx.lineWidth = 2
+      ctx.beginPath()
+      ctx.moveTo(x - 4, y - 4); ctx.lineTo(x + 4, y + 4)
+      ctx.moveTo(x + 4, y - 4); ctx.lineTo(x - 4, y + 4)
+      ctx.stroke()
+      ctx.font = '700 8.5px ui-sans-serif, system-ui'
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
+      ctx.fillStyle = this.theme.warn
+      ctx.fillText(`${s.side.toUpperCase()} FADE`, x + 7, y)
+    }
+    ctx.restore()
+  }
+
   private drawZigZag() {
     const sw = this.snap?.swings
     if (!sw?.length) return

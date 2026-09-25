@@ -28,8 +28,9 @@ from __future__ import annotations
 import hashlib
 import json
 import threading
-import time
 from pathlib import Path
+
+from . import clock
 
 # States in which the signal must NOT be sent again.
 BLOCKING = ('sending', 'placed', 'unknown', 'filled', 'closed', 'cancelled', 'expired')
@@ -101,7 +102,8 @@ def comment_for(signal_id: str, playbook: str = '', tf: str = '') -> str:
 
 
 def _now() -> int:
-    return int(time.time() * 1000)
+    # Wall clock live; the backtest lab points this at simulated time.
+    return clock.now_ms()
 
 
 class OrderLedger:
@@ -175,6 +177,12 @@ class OrderLedger:
         with self._lock:
             return sum(1 for r in self.rows.values()
                        if r['state'] in ('sending', 'placed', 'unknown', 'filled'))
+
+    def placed_since(self, since_ms: int) -> int:
+        """Orders the broker accepted at or after `since_ms` - the day's sends."""
+        from .daily import sends_since
+        with self._lock:
+            return sends_since(self.rows.values(), since_ms)
 
     def listing(self, limit: int = 200) -> list:
         with self._lock:

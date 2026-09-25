@@ -1,0 +1,88 @@
+ENGULFING CANDLES ON GOLD   net of spread and commission   entry next open, stop 0.1 ATR beyond the candle
+
+=== 5m   (187,308 bars)
+                 subset       target       n    win  E[R] net
+    ENGULFING    all              1R  26,095  47.5%    -0.080
+    any candle   all              1R  86,055  47.1%    -0.089
+    ENGULFING    against leg      1R  10,914  47.2%    -0.086
+    any candle   against leg      1R  26,055  46.6%    -0.100
+    ENGULFING    with leg         1R  15,181  47.7%    -0.075
+    any candle   with leg         1R  60,000  47.2%    -0.085
+    ENGULFING    y2024            1R   9,863  46.3%    -0.120
+    any candle   y2024            1R  33,330  45.9%    -0.128
+    ENGULFING    y2025            1R  10,250  48.2%    -0.059
+    any candle   y2025            1R  31,856  47.8%    -0.070
+    ENGULFING    y2026            1R   5,982  48.2%    -0.048
+    any candle   y2026            1R  20,869  47.8%    -0.055
+
+    ENGULFING    all              2R  26,095  32.8%    -0.060
+    any candle   all              2R  86,055  32.1%    -0.080
+    ENGULFING    against leg      2R  10,914  32.0%    -0.081
+    any candle   against leg      2R  26,055  31.7%    -0.091
+    ENGULFING    with leg         2R  15,181  33.4%    -0.045
+    any candle   with leg         2R  60,000  32.3%    -0.075
+    ENGULFING    y2024            2R   9,863  31.9%    -0.106
+    any candle   y2024            2R  33,330  31.1%    -0.126
+    ENGULFING    y2025            2R  10,250  33.5%    -0.031
+    any candle   y2025            2R  31,856  32.6%    -0.059
+    ENGULFING    y2026            2R   5,982  33.1%    -0.034
+    any candle   y2026            2R  20,869  32.9%    -0.037
+
+
+=== 15m   (62,462 bars)
+                 subset       target       n    win  E[R] net
+    ENGULFING    all              1R   8,451  48.0%    -0.056
+    any candle   all              1R  27,362  48.1%    -0.054
+    ENGULFING    against leg      1R   3,364  47.9%    -0.060
+    any candle   against leg      1R   8,272  48.5%    -0.047
+    ENGULFING    with leg         1R   5,087  48.1%    -0.054
+    any candle   with leg         1R  19,090  48.0%    -0.056
+    ENGULFING    y2024            1R   3,165  47.9%    -0.068
+    any candle   y2024            1R  10,393  47.0%    -0.085
+    ENGULFING    y2025            1R   3,396  47.7%    -0.060
+    any candle   y2025            1R  10,118  48.9%    -0.036
+    ENGULFING    y2026            1R   1,890  48.9%    -0.031
+    any candle   y2026            1R   6,851  48.7%    -0.032
+
+    ENGULFING    all              2R   8,451  33.0%    -0.042
+    any candle   all              2R  27,362  33.1%    -0.038
+    ENGULFING    against leg      2R   3,364  32.3%    -0.060
+    any candle   against leg      2R   8,272  33.0%    -0.038
+    ENGULFING    with leg         2R   5,087  33.5%    -0.030
+    any candle   with leg         2R  19,090  33.1%    -0.038
+    ENGULFING    y2024            2R   3,165  32.8%    -0.061
+    any candle   y2024            2R  10,393  32.5%    -0.067
+    ENGULFING    y2025            2R   3,396  32.4%    -0.053
+    any candle   y2025            2R  10,118  33.6%    -0.018
+    ENGULFING    y2026            2R   1,890  34.4%    +0.009
+    any candle   y2026            2R   6,851  33.1%    -0.024
+
+
+=== 1h   (15,625 bars)
+                 subset       target       n    win  E[R] net
+    ENGULFING    all              1R   2,013  48.3%    -0.041
+    any candle   all              1R   6,799  49.3%    -0.023
+    ENGULFING    against leg      1R     788  51.1%    +0.012
+    any candle   against leg      1R   2,059  48.2%    -0.045
+    ENGULFING    with leg         1R   1,225  46.4%    -0.075
+    any candle   with leg         1R   4,740  49.7%    -0.013
+    ENGULFING    y2024            1R     744  45.8%    -0.097
+    any candle   y2024            1R   2,468  48.1%    -0.049
+    ENGULFING    y2025            1R     807  50.2%    -0.002
+    any candle   y2025            1R   2,667  50.3%    -0.001
+    ENGULFING    y2026            1R     462  48.9%    -0.019
+    any candle   y2026            1R   1,664  49.3%    -0.018
+
+    ENGULFING    all              2R   2,013  33.9%    -0.003
+    any candle   all              2R   6,799  34.4%    +0.013
+    ENGULFING    against leg      2R     788  35.9%    +0.058
+    any candle   against leg      2R   2,059  32.9%    -0.027
+    ENGULFING    with leg         2R   1,225  32.7%    -0.042
+    any candle   with leg         2R   4,740  35.1%    +0.031
+    ENGULFING    y2024            2R     744  33.2%    -0.038
+    any candle   y2024            2R   2,468  33.5%    -0.017
+    ENGULFING    y2025            2R     807  34.7%    +0.020
+    any candle   y2025            2R   2,667  34.5%    +0.022
+    ENGULFING    y2026            2R     462  33.8%    +0.014
+    any candle   y2026            2R   1,664  35.6%    +0.044
+

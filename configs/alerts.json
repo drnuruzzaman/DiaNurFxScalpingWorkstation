@@ -5,7 +5,7 @@
   "statuses": [
     "qualified"
   ],
-  "cooldown_minutes": 15,
+  "cooldown_minutes": 10,
   "quiet_hours_utc": {
     "enabled": false,
     "from": 22,
@@ -91,7 +91,9 @@
       "label": "Trade Like a Pro",
       "target": "t.me/dianurfx",
       "enabled": true,
-      "kinds": []
+      "kinds": [
+        "scalper"
+      ]
     },
     {
       "id": "d1789902951857",

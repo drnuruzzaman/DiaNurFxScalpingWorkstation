@@ -158,6 +158,32 @@ export type Signal = {
   reason: string
 }
 
+/**
+ * The leg in progress, as the avoid-fade gate reads it (server/engine/legs.py).
+ * Distances are in ATR of the bar the read was taken on.
+ */
+export type LegRead = {
+  dir: 1 | -1
+  ext_atr: number
+  pull_atr: number
+  depth: number | null
+  start: number
+  extreme: number
+  close?: number
+  atr?: number
+  k_atr: number
+  start_ms?: number
+  extreme_ms?: number
+  bar_ms?: number
+  htf_dir?: number
+  htf_tf?: string | null
+  fade_side?: 'buy' | 'sell'
+  /** Why a fade is blocked right now; null when it is not. */
+  fade_block?: string | null
+  /** Whether the gate is switched on (Settings -> Risk & Gates). */
+  rules_on?: boolean
+}
+
 export type Snapshot = {
   ok: boolean
   reason?: string
@@ -178,6 +204,10 @@ export type Snapshot = {
   breaks: StructureBreak[]
   fib: any
   pullback: Record<string, any>
+  /** Leg read on this snapshot's bars (a live one includes the forming bar). */
+  leg?: LegRead | null
+  /** The CLOSED-bar leg read the gate actually judges on. Prefer this. */
+  leg_gate?: LegRead | null
   levels: Level[]
   nearest: { above: Level | null; below: Level | null }
   session_levels: Record<string, number>
@@ -239,12 +269,36 @@ export type LayoutOpts = {
   grid: boolean
   newsMarks: boolean
   positions: boolean
+  /** The leg in progress and the avoid-fade rules, as the gate sees them. */
+  legRead: boolean
 }
 
 export const DEFAULT_LAYOUT: LayoutOpts = {
   grid: true,
   newsMarks: true,
   positions: true,
+  legRead: true,
+}
+
+/**
+ * A trade drawn on the chart: closed (entry -> exit, coloured by result) or
+ * open (entry rail with its live stop and target). Used by the backtest lab;
+ * nothing about it is lab-specific.
+ */
+export type TradeMark = {
+  id: string
+  side: 'buy' | 'sell'
+  entry_t: number
+  entry: number
+  exit_t?: number | null
+  exit?: number | null
+  sl?: number | null
+  tp?: number | null
+  r?: number | null
+  profit?: number | null
+  outcome?: string
+  open?: boolean
+  selected?: boolean
 }
 
 /** A macro release, for the vertical marks. */
@@ -326,6 +380,8 @@ export type Overlays = {
   zones: boolean
   /** Retracement levels of the current impulse leg. */
   fib: boolean
+  /** Closed candles whose body engulfs the previous one (context, not a signal). */
+  engulfing: boolean
   signal: boolean
   volumeProfile: boolean
   regimeBands: boolean
@@ -347,6 +403,7 @@ export const DEFAULT_OVERLAYS: Overlays = {
   fvg: false,
   zones: false,
   fib: false,
+  engulfing: true,
   swings: true,
   structure: true,
   events: true,

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ChartEngine, type HoverInfo } from './ChartEngine'
-import type { Bar, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot } from './types'
+import type { Bar, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot, TradeMark } from './types'
 import { fmt } from '../lib/format'
 
 /**
@@ -98,10 +98,34 @@ function NewsCard({ hit, width }: { hit: NewsHover; width: number }) {
   )
 }
 
+/** The live chart's saved-workspace button (instrument + timeframe). */
+export type WorkspaceControl = {
+  label: string
+  saved: boolean
+  /** Saved, but the indicators have changed since. */
+  dirty: boolean
+  savedAt?: number
+  onSave: () => void
+  onRevert: () => void
+  onForget: () => void
+}
+
+function SaveIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+      strokeWidth="1.6" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2.5 2.5h9l2 2v9h-11z" />
+      <path d="M5 2.5v3.5h5V2.5" />
+      <rect x="5" y="9.5" width="6" height="4" />
+    </svg>
+  )
+}
+
 export function ChartPane({
   bars, snapshot, signal, overlays, digits, money, badge, onNeedHistory, status, onEngine,
   tfMs = 0,
-  mtfLines = [], mtfSources = [], layout, news = [], positions = [],
+  mtfLines = [], mtfSources = [], layout, news = [], positions = [], legBlocked = [],
+  trades, cursorT = null, watermark = null, preferredSpan = null, chartKey, workspace,
   theme = 'glossy',
 }: {
   bars: Bar[]
@@ -121,6 +145,20 @@ export function ChartPane({
   news?: NewsMark[]
   /** Open positions, already filtered to this chart's symbol. */
   positions?: any[]
+  /** Signals on this chart the leg gate rejected (Layout -> Leg read). */
+  legBlocked?: Signal[]
+  /** Trades to mark - the backtest lab's closed and open trades. */
+  trades?: TradeMark[]
+  /** Replay cursor time: bars after it are dimmed (lab, with Reveal on). */
+  cursorT?: number | null
+  /** Faint text behind the chart (BACKTEST on the lab's). */
+  watermark?: string | null
+  /** The zoom this chart was saved at, if its workspace is saved. */
+  preferredSpan?: number | null
+  /** Which chart this is (instrument|timeframe) - a change applies its saved zoom. */
+  chartKey?: string
+  /** The save-workspace button; omitted on charts that do not save one. */
+  workspace?: WorkspaceControl
   /** UI theme name; the canvas mirrors it since it cannot read CSS vars. */
   theme?: string
   badge?: React.ReactNode
@@ -200,6 +238,30 @@ export function ChartPane({
   useEffect(() => { engine.current?.setLayout(layout) }, [layout])
   useEffect(() => { engine.current?.setNews(news) }, [news])
   useEffect(() => { engine.current?.setPositions(positions) }, [positions])
+  useEffect(() => { engine.current?.setLegBlocked(legBlocked) }, [legBlocked])
+  useEffect(() => { engine.current?.setTrades(trades ?? []) }, [trades])
+  useEffect(() => { engine.current?.setCursor(cursorT) }, [cursorT])
+  useEffect(() => { engine.current?.setWatermark(watermark) }, [watermark])
+  // The saved zoom is APPLIED only when a different chart opens; a new save
+  // on the same chart just updates what Reset returns to.
+  const lastKey = useRef<string | undefined>(undefined)
+  useEffect(() => {
+    const e = engine.current
+    if (!e) return
+    const opened = chartKey !== lastKey.current
+    lastKey.current = chartKey
+    e.setPreferredSpan(preferredSpan ?? null, opened && preferredSpan != null)
+  }, [preferredSpan, chartKey])
+  const [wsMenu, setWsMenu] = useState(false)
+  const wsBox = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!wsMenu) return
+    const off = (ev: MouseEvent) => {
+      if (wsBox.current && !wsBox.current.contains(ev.target as Node)) setWsMenu(false)
+    }
+    window.addEventListener('mousedown', off)
+    return () => window.removeEventListener('mousedown', off)
+  }, [wsMenu])
   useEffect(() => { engine.current?.setTheme(theme) }, [theme])
   useEffect(() => { engine.current?.setOverlays(overlays) }, [overlays])
   useEffect(() => { engine.current?.setDigits(digits) }, [digits])
@@ -255,8 +317,39 @@ export function ChartPane({
       )}
       <div className="chart-tools">
         <button title="Jump to latest" onClick={() => engine.current?.scrollToEnd()}>⇥</button>
-        <button title="Reset chart — default zoom, latest bars, automatic price scale"
+        <button title={workspace?.saved
+          ? 'Reset chart — the saved zoom, latest bars, automatic price scale'
+          : 'Reset chart — default zoom, latest bars, automatic price scale'}
           onClick={() => engine.current?.resetChart()}>⟲</button>
+        {workspace && (
+          <div className="ws-box" ref={wsBox}>
+            <button className={`ws-btn ${workspace.saved ? 'saved' : ''}`}
+              title={workspace.saved
+                ? `Workspace saved for ${workspace.label}${workspace.dirty ? ' - changed since, click to save again' : ''} (Ctrl+S)`
+                : `Save this workspace for ${workspace.label}: its indicators and zoom load whenever it opens - layout and theme stay the same on every chart (Ctrl+S)`}
+              onClick={() => { setWsMenu(false); workspace.onSave() }}>
+              <SaveIcon />
+              {workspace.dirty && <i className="ws-dot" />}
+            </button>
+            {workspace.saved && (
+              <button className="ws-more" title="More" onClick={() => setWsMenu((o) => !o)}>▾</button>
+            )}
+            {wsMenu && (
+              <div className="ws-menu" role="menu">
+                <div className="ws-menu-h">Workspace · {workspace.label}</div>
+                {workspace.savedAt && (
+                  <div className="ws-menu-note">saved {new Date(workspace.savedAt).toLocaleString()}</div>
+                )}
+                <button className="menu-item" onClick={() => { setWsMenu(false); workspace.onSave() }}>
+                  Save current setup</button>
+                <button className="menu-item" disabled={!workspace.dirty}
+                  onClick={() => { setWsMenu(false); workspace.onRevert() }}>Revert to saved</button>
+                <button className="menu-item" onClick={() => { setWsMenu(false); workspace.onForget() }}>
+                  Forget saved workspace</button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

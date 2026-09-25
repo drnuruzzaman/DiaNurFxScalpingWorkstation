@@ -84,6 +84,28 @@ def _status(broke: bool, failed: bool) -> str:
 # was 300 bars back - technically true, useless to trade.
 CONFIRM_WINDOW = 30
 
+# A pattern judged by that window whose window has CLOSED without a break is
+# dropped, not left as "forming". Before, the status simply never timed out:
+# live 15m gold showed a Head & Shoulders "forming" 81 bars after its right
+# shoulder, its steep neckline projected ever lower (break 4 ATR under price),
+# and pattern_break could still arm a stop order on it. Worse, a neckline
+# broken on bar 31 was reported "forming" forever, because the scan stops at
+# bar 30. Applies to the two detectors that use the window - head and
+# shoulders, double/triple tops and bottoms; the others test "ever broken".
+# OFF: tested 2024-2026 (tools/exp_patterns.py, order_ledger/
+# exp_patterns_report.txt) and it cost money in every year - pattern_break
+# E[R] 2026 +0.016 -> +0.001, 2025 -0.008 -> -0.027, 2024 -0.015 -> -0.025.
+# The stale "forming" patterns' extended necklines were acting as breakout
+# triggers that paid. Kept switchable for a display-only use.
+EXPIRE_UNBROKEN = False
+
+# The head of a head and shoulders must clear BOTH shoulders by this much.
+# Any margin used to do: a "head" 0.10 above its left shoulder (0.01 ATR)
+# passed, which is a double top - already reported as one - plus a lower
+# bounce read as a right shoulder, counted a second time under another name.
+# 0.0 = the old rule (any margin). 0.5 tested worse alongside the expiry.
+HEAD_CLEAR_ATR = 0.0
+
 # How much two same-kind patterns must share before one is a duplicate.
 #
 # A third of the shorter span. Low enough to catch the same shape found at two
@@ -100,6 +122,11 @@ def _overlap(a, b) -> float:
     shared = max(0, hi - lo)
     shortest = min(a.end_idx - a.start_idx, b.end_idx - b.start_idx)
     return shared / shortest if shortest > 0 else 0.0
+
+
+def _expired(n_bars: int, start: int, broke: bool) -> bool:
+    """The confirmation window after `start` is over, and nothing broke."""
+    return EXPIRE_UNBROKEN and not broke and n_bars - start >= CONFIRM_WINDOW
 
 
 def _broke_within(series: np.ndarray, start: int, level, above: bool,
@@ -148,15 +175,16 @@ def head_and_shoulders(swings, h, l, c, t, atr_val) -> list:
         # Two valid arrangements:
         #   bearish  H&S : ls(high) t1(low) head(high) t2(low) rs(high)
         #   bullish iH&S : ls(low)  t1(high) head(low) t2(high) rs(low)
+        clear = HEAD_CLEAR_ATR * atr_val
         if kinds == ['high', 'low', 'high', 'low', 'high']:
             ls, t1, head, t2, rs = p
             direction = 'bearish'
-            if not (head.price > ls.price and head.price > rs.price):
+            if not head.price - max(ls.price, rs.price) > clear:
                 continue
         elif kinds == ['low', 'high', 'low', 'high', 'low']:
             ls, t1, head, t2, rs = p
             direction = 'bullish'
-            if not (head.price < ls.price and head.price < rs.price):
+            if not min(ls.price, rs.price) - head.price > clear:
                 continue
         else:
             continue
@@ -199,6 +227,8 @@ def head_and_shoulders(swings, h, l, c, t, atr_val) -> list:
             invalidation = float(head.price)
             broke = _broke_within(c, rs.idx, neck_line, above=True)
             failed = bool(l[rs.idx:].size and l[rs.idx:].min() < head.price)
+        if _expired(c.size, rs.idx, broke):
+            continue
 
         quality = _q(
             symmetry * 34 +
@@ -279,6 +309,8 @@ def double_tops_bottoms(swings, h, l, c, t, atr_val) -> list:
             invalidation = float(min(a.price, b.price) - atr_val * 0.25)
             broke = _broke_within(c, b.idx, neck, above=True)
             failed = bool(c[b.idx:].size and (c[b.idx:] < invalidation).any())
+        if _expired(c.size, b.idx, broke):
+            continue
 
         match = max(0.0, 1.0 - gap / tol)
         quality = _q(match * 42 + min(depth / (atr_val * 4), 1.0) * 30 +

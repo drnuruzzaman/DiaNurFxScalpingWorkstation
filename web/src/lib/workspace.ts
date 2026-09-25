@@ -34,6 +34,10 @@ const KEYS = [
   'dianur.dockTab',        // the bottom panel's open tab
   'dianur.boardSort',      // signal board column sort
   'dianur.execSort',       // execution tab column sort
+  'dianur.chartPresets',   // saved workspace per instrument + timeframe
+  'dianur.lab.overlays',   // the backtest lab keeps its own studies
+  'dianur.lab.dock',       // the lab's open research tab
+  'dianur.lab.dockH',      // and how tall it is
 ]
 
 const URL = '/api/workspace'

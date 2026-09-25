@@ -53,6 +53,7 @@ from . import alerts as alerts_mod
 from .executor import Executor
 from .order_ledger import OrderLedger
 from .signal_store import SignalStore, FINAL
+from .daily import DailyLimits, day_start_ms, judging_context
 from .telegram_commands import TelegramCommands, private_destinations
 
 VERSION = '1.0.0'
@@ -127,8 +128,19 @@ class State:
         self.signal_index: dict = {}       # id -> Signal
         self.backtests: dict = {}          # run_id -> {status, progress, result}
         self.last_stats: dict = {}         # symbol -> latest backtest summary
+        # The daily limits (server/daily.py says what they measure). Both are
+        # recomputed with the trading context, never incremented: the day's
+        # sends come from the order ledger on disk and the P&L from the
+        # account, so an API restart mid-day changes neither.
         self.trades_today = 0
         self.daily_pnl_pct = 0.0
+        # Late-bound lambdas: BRIDGE is imported above, but LEDGER and
+        # realised_pnl are defined further down this module.
+        self.day = DailyLimits(
+            deals=lambda: BRIDGE.deals(35),
+            health=lambda: BRIDGE.health(),
+            summarise=lambda deals, off: realised_pnl(deals, {'time_offset_ms': off}),
+            sends=lambda since_ms: LEDGER.placed_since(since_ms))
         self.lock = asyncio.Lock()
         # The multi-timeframe signal board: (symbol, tf) -> a compact row.
         # Refreshed by board_worker() on a per-timeframe cadence, never inside
@@ -169,11 +181,17 @@ class State:
             self._ctx, self._ctx_at = built, now
         return built
 
+    def invalidate_context(self) -> None:
+        """Drop the cached context: the next decision rebuilds it."""
+        with self._ctx_lock:
+            self._ctx = None
+
     def _context_uncached(self) -> dict:
         """What qualify.py needs that the chart cannot know."""
         acct = BRIDGE.account() or {}
         positions = BRIDGE.positions() or []
         equity = float(acct.get('equity') or CONFIG.risk.equity)
+        self.trades_today, self.daily_pnl_pct = self.day.refresh(acct)
         quote = None
         try:
             q = BRIDGE.quotes([CONFIG.symbol]) or {}
@@ -209,6 +227,23 @@ STATE = State()
 LEDGER_DIR = Path(__file__).resolve().parent.parent / 'order_ledger'
 STORE = SignalStore(LEDGER_DIR / 'signal_store.json')
 LEDGER = OrderLedger(LEDGER_DIR / 'order_ledger.json')
+
+
+def _closed_leg(series, snap: dict):
+    """
+    The leg read on CLOSED bars, for a symbol with no closed-bar snapshot yet
+    (off the watchlist, or the first frame after a restart). The higher-
+    timeframe trend comes from the live ladder here - close enough for a
+    symbol that is not being traded.
+    """
+    from .engine import legs
+    from .engine.indicators import atr
+    if len(series) < 62:
+        return None
+    cs = series.slice(0, len(series) - 1)
+    a = atr(cs.h, cs.l, cs.c, legs.LEG_ATR_PERIOD)
+    return legs.annotate(legs.leg_state(cs.h, cs.l, cs.c, a, cs.t),
+                         snap.get('mtf') or {}, series.tf)
 
 
 def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
@@ -257,7 +292,10 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
         # the information a backtest acts on. See signal_store.py.
         if STORE.bar_closed(symbol, tf, int(series.t[-1])) and len(series) > 61:
             closed = series.slice(0, len(series) - 1)
-            snap_c = analyse(closed, mtf, spec)
+            # Higher timeframes on their CLOSED bars too - the trend the
+            # mtf and leg gates read must not move with a bar still forming.
+            mtf_c = build_mtf(FEED, symbol, tf, live=live, closed=True)
+            snap_c = analyse(closed, mtf_c, spec)
             if snap_c.get('ok'):
                 STATE.closed[(symbol, tf)] = snap_c
                 STORE.finalize(symbol, tf, generate(snap_c, closed), spec,
@@ -265,6 +303,18 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
         detected = STORE.view(symbol, tf)
     else:
         detected = generate(snap, series)
+    # The leg read the GATE uses, for the chart and the analyst. The snapshot
+    # above includes the forming bar; the leg gate judges the closed one, so
+    # the closed-bar read is carried alongside rather than letting the chart
+    # show a leg the gate is not looking at.
+    if live:
+        c = STATE.closed.get((symbol, tf))
+        if c and c.get('ok') and len(series) > 1 and c.get('bar_time_ms') == int(series.t[-2]):
+            snap['leg_gate'] = c.get('leg')
+        else:
+            snap['leg_gate'] = _closed_leg(series, snap)
+    else:
+        snap['leg_gate'] = snap.get('leg')
     sigs = qualify_all(detected, snap, spec,
                        context if context is not None else STATE.context())
     STATE.snapshots[(symbol, tf)] = snap
@@ -1152,7 +1202,9 @@ def realised_pnl(deals, bridge: dict = None) -> dict:
     # server is already Monday, so a Monday cut takes the whole week without
     # slicing the Sunday-evening open off the front of it.
     week_start = day_start - timedelta(days=day_start.weekday())
-    day_ms = day_start.timestamp() * 1000 - off
+    # The same cut the daily limits use (server/daily.py), so PROFIT TODAY
+    # and the daily-loss gate can never disagree about when today began.
+    day_ms = day_start_ms(int(time.time() * 1000), off)
     week_ms = week_start.timestamp() * 1000 - off
     month_ms = month_start.timestamp() * 1000 - off
 
@@ -1631,6 +1683,62 @@ def backtest_list():
 
 
 # --------------------------------------------------------------------------- #
+# the backtest lab (a separate process - see server/lab/__init__.py)          #
+# --------------------------------------------------------------------------- #
+LAB_PORT = 8771
+# Two tabs (or React's double-mounted effect in dev) can ask at once; the
+# second must wait for the first launch, not start a rival that fails to bind.
+_LAB_LOCK = threading.Lock()
+
+
+def _lab_alive() -> bool:
+    import urllib.request
+    try:
+        with urllib.request.urlopen(f'http://127.0.0.1:{LAB_PORT}/lab/health', timeout=0.8) as r:
+            return bool(json.loads(r.read().decode('utf-8')).get('ok'))
+    except Exception:                                     # noqa: BLE001
+        return False
+
+
+@app.get('/api/lab/status')
+def lab_status():
+    return {'running': _lab_alive(), 'port': LAB_PORT}
+
+
+@app.post('/api/lab/start')
+def lab_start():
+    """
+    Start the lab server if it is not running. It is launched DETACHED: the
+    lab never imports this module, never reads the live account, and must not
+    die when this API is restarted mid-replay.
+    """
+    import subprocess
+    import sys
+    with _LAB_LOCK:
+        return _lab_start_locked(subprocess, sys)
+
+
+def _lab_start_locked(subprocess, sys):
+    if _lab_alive():
+        return {'ok': True, 'started': False, 'port': LAB_PORT}
+    root = Path(__file__).resolve().parent.parent
+    logs = LEDGER_DIR / 'logs'
+    logs.mkdir(parents=True, exist_ok=True)
+    flags = 0
+    if sys.platform == 'win32':
+        flags = 0x00000008 | 0x00000200     # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
+    with open(logs / 'lab.log.out', 'ab') as out, open(logs / 'lab.log.err', 'ab') as err:
+        subprocess.Popen([sys.executable, '-u', '-m', 'server.lab', '--port', str(LAB_PORT)],
+                         cwd=str(root), stdout=out, stderr=err, stdin=subprocess.DEVNULL,
+                         creationflags=flags, close_fds=True)
+    for _ in range(60):
+        time.sleep(0.25)
+        if _lab_alive():
+            return {'ok': True, 'started': True, 'port': LAB_PORT}
+    return {'ok': False, 'error': 'the lab did not start - see order_ledger/logs/lab.log.err'}
+
+
+# --------------------------------------------------------------------------- #
 # settings                                                                    #
 # --------------------------------------------------------------------------- #
 SETTINGS_FILE = Path(__file__).resolve().parent.parent / 'configs' / 'settings.json'
@@ -1650,8 +1758,8 @@ def _check_setting(group: str, key: str, v):
     expensive to trade.
     """
     rules = {
-        ('execution', 'min_lots'): (0.01, 5.0),
-        ('execution', 'max_lots'): (0.01, 5.0),
+        ('execution', 'lots_gold'): (0.01, 5.0),
+        ('execution', 'lots_non_gold'): (0.01, 5.0),
         ('execution', 'entry_tolerance_atr'): (0.0, 2.0),
         # 0 disables the cap; above 20 per slot is not a setting, it is a typo.
         ('execution', 'max_per_symbol_tf'): (0, 20),
@@ -1733,13 +1841,6 @@ def apply_settings(patch: dict, persist: bool = True) -> tuple:
 
     # Cross-field rules, checked after the whole patch: undo the offending
     # change rather than leave an impossible pair in place.
-    e = CONFIG.execution
-    if e.min_lots > e.max_lots:
-        for k in ('min_lots', 'max_lots'):
-            if ('execution', k) in before:
-                setattr(e, k, before[('execution', k)])
-                applied.pop(f'execution.{k}', None)
-        errors.append('min lots cannot be above max lots')
 
     if persist and applied:
         try:
@@ -1773,6 +1874,15 @@ def _migrate_settings(saved: dict) -> dict:
     if isinstance(ex, dict) and 'one_per_symbol_tf' in ex:
         legacy = ex.pop('one_per_symbol_tf')
         ex.setdefault('max_per_symbol_tf', 1 if legacy else 0)
+    # min_lots / max_lots (a clamp) -> lots_gold (one fixed size). The SMALLER
+    # of the two carries over: if they ever differed, the low end of the old
+    # range is the one that cannot surprise anyone with a bigger order than
+    # they had allowed.
+    if isinstance(ex, dict) and ('min_lots' in ex or 'max_lots' in ex):
+        lo, hi = ex.pop('min_lots', None), ex.pop('max_lots', None)
+        old = [float(v) for v in (lo, hi) if v is not None]
+        if old:
+            ex.setdefault('lots_gold', min(old))
     return saved
 
 
@@ -1867,7 +1977,8 @@ def _requalify(rec: dict):
     if time.time() * 1000 - float(snap.get('generated_ms') or 0) > 2.5 * bar_ms:
         return None
     sig = Signal(**{k: v for k, v in rec['signal'].items() if k in Signal.__dataclass_fields__})
-    out = qualify(sig, snap, FEED.spec(rec['symbol']), STATE.context())
+    ctx = judging_context(STATE.context(), rec.get('stage'))
+    out = qualify(sig, snap, FEED.spec(rec['symbol']), ctx)
     # Which closed bar this verdict belongs to. The executor re-judges a
     # pending order once per bar, and needs to tell a new verdict from the
     # same one handed back two seconds later.
@@ -1877,7 +1988,10 @@ def _requalify(rec: dict):
 
 
 def _on_sent(rec: dict) -> None:
-    STATE.trades_today += 1
+    # The day's count is read from the order ledger with the context (the
+    # 'placed' event is already written); dropping the cached context makes
+    # the very next decision count this order rather than a second later.
+    STATE.invalidate_context()
 
 
 EXECUTOR = Executor(
@@ -1952,7 +2066,8 @@ def execution_state(limit: int = Query(100, ge=1, le=1000)):
         'trading_enabled': _trading_enabled(),
         'settings': {
             'entry_tolerance_atr': CONFIG.execution.entry_tolerance_atr,
-            'lots': [CONFIG.execution.min_lots, CONFIG.execution.max_lots],
+            'lots_gold': CONFIG.execution.lots_gold,
+            'lots_non_gold': CONFIG.execution.lots_non_gold,
             'max_per_symbol_tf': CONFIG.execution.max_per_symbol_tf,
             'max_concurrent': CONFIG.risk.max_concurrent,
             'exit': {'mode': CONFIG.risk.exit_mode, 'lock_r': CONFIG.risk.trail_lock_r,
@@ -1960,6 +2075,10 @@ def execution_state(limit: int = Query(100, ge=1, le=1000)):
         },
         'signals': STORE.listing(limit),
         'orders': LEDGER.listing(limit),
+        # The daily limits as the gate last saw them (daily.DailyLimits).
+        'daily': dict(STATE.day.figures,
+                      max_daily_trades=CONFIG.risk.max_daily_trades,
+                      max_daily_loss_pct=CONFIG.risk.max_daily_loss_pct),
     }
 
 
@@ -1986,9 +2105,9 @@ async def ws_live(ws: WebSocket, symbol: str = None, tf: str = '5m'):
     # Realised P&L is refreshed on its own slow clock, not once per frame.
     # read_deals() walks a month of history AND asks MT5 for the orders behind
     # every position in it, which is far too heavy for a 1s loop - doing it
-    # inline stalled the whole stream while it held MT5_LOCK.
-    pnl_cache = {'value': None, 'at': 0.0}
-    PNL_EVERY_S = 20.0
+    # inline stalled the whole stream while it held MT5_LOCK. The cache is
+    # STATE's, shared with every other socket and with the daily-loss gate,
+    # so one read a cycle serves them all (daily.DailyLimits.realised).
 
     async def reader():
         """Handle subscribe messages without blocking the push loop."""
@@ -2035,17 +2154,10 @@ async def ws_live(ws: WebSocket, symbol: str = None, tf: str = '5m'):
                 asyncio.to_thread(BRIDGE.health),
             )
 
-            if (isinstance(acct, dict)
-                    and time.time() - pnl_cache['at'] > PNL_EVERY_S):
-                try:
-                    raw = await asyncio.to_thread(BRIDGE.deals, 35)
-                    pnl_cache['value'] = realised_pnl(
-                        (raw or {}).get('deals') or [], bridge_health)
-                except Exception:                              # noqa: BLE001
-                    # Keep the last good figure rather than blanking the
-                    # ribbon over one slow history read.
-                    pass
-                pnl_cache['at'] = time.time()
+            STATE.day.note_health(bridge_health)
+            # A failed read keeps the last good figure rather than blanking
+            # the ribbon over one slow history read.
+            pnl_value = STATE.day.realised(refresh=isinstance(acct, dict))
 
             narrative = narrator.describe_market(snap) if snap.get('ok') else None
 
@@ -2064,7 +2176,7 @@ async def ws_live(ws: WebSocket, symbol: str = None, tf: str = '5m'):
                 'bridge': bridge_health or {'connected': False,
                                             'error': BRIDGE.last_error},
                 'mt5': mt5_state(bridge_health, acct if isinstance(acct, dict) else None),
-                'pnl': pnl_cache['value'],
+                'pnl': pnl_value,
                 # Cached read, not an engine pass - see mtf_trendlines().
                 'mtf_trendlines': mtf_trendlines(sym, timeframe),
                 'narrative': narrative,

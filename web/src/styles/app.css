@@ -398,6 +398,27 @@
   color: var(--ink-hi);
   border-color: var(--ink-dim);
 }
+/* The saved-workspace button: grey until saved, green once saved, an amber
+   dot when the setup has changed since. */
+.chart-tools .ws-box { position: relative; display: flex; gap: 2px; }
+.chart-tools .ws-btn { position: relative; }
+.chart-tools .ws-btn.saved { color: var(--bull); border-color: var(--bull-dim); }
+.chart-tools .ws-more { width: 14px; font-size: 9px; }
+.chart-tools .ws-dot {
+  position: absolute; top: -3px; right: -3px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--warn); box-shadow: 0 0 0 2px var(--bg-base);
+}
+.chart-tools .ws-menu {
+  position: absolute; right: 0; bottom: 28px; min-width: 230px;
+  padding: 5px 0 4px; background: var(--bg-panel);
+  border: 1px solid var(--line-strong); border-radius: var(--r);
+  box-shadow: 0 16px 40px #000b; z-index: 20;
+}
+.chart-tools .ws-menu .menu-item { width: 100%; height: auto; display: flex; place-items: initial; border: 0; border-radius: 0; background: none; }
+.chart-tools .ws-menu .menu-item:disabled { opacity: 0.4; }
+.chart-tools .ws-menu-h { padding: 5px 12px 2px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-low); }
+.chart-tools .ws-menu-note { padding: 0 12px 4px; font-size: 9.5px; color: var(--ink-low); }
 
 /* Hover card for a news mark. Anchored to the foot of the chart, where the
    labels are, so it never covers the candles you are reading. */

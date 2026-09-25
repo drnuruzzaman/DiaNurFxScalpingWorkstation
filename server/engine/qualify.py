@@ -43,7 +43,19 @@ def _gate(name: str, verdict: str, detail: str, penalty: int = 0) -> dict:
 # --------------------------------------------------------------------------- #
 # position sizing                                                             #
 # --------------------------------------------------------------------------- #
-def size_position(entry: float, stop: float, spec: dict, risk: dict) -> dict:
+def is_gold(symbol: str) -> bool:
+    """Gold by its XAU prefix - one rule for sizing, sending and the chart."""
+    return str(symbol or '').upper().startswith('XAU')
+
+
+def fixed_lots(symbol: str) -> float:
+    """The fixed size an order for `symbol` is sent at."""
+    e = CONFIG.execution
+    return float(e.lots_gold if is_gold(symbol) else e.lots_non_gold)
+
+
+def size_position(entry: float, stop: float, spec: dict, risk: dict,
+                  lots_override: float = None) -> dict:
     """
     Lots such that a stop-out costs exactly the configured risk budget.
 
@@ -81,6 +93,13 @@ def size_position(entry: float, stop: float, spec: dict, risk: dict) -> dict:
     vmax = float(spec.get('volume_max') or 100.0)
     lots = max(vmin, min(vmax, int(raw_lots / step) * step))
     lots = round(lots, 2)
+    oversized = raw_lots < vmin            # budget too small for the minimum lot
+    if lots_override is not None:
+        # A FIXED lot: the size that will actually be sent. Money at risk and
+        # the too-big check are then about that size, not a hypothetical
+        # risk-sized one the executor would never use.
+        lots = round(max(vmin, min(vmax, round(float(lots_override) / step) * step)), 2)
+        oversized = lots * (value_per_lot + cost_per_lot) > budget
 
     actual_risk = lots * (value_per_lot + cost_per_lot)
     return {
@@ -93,7 +112,8 @@ def size_position(entry: float, stop: float, spec: dict, risk: dict) -> dict:
         'stop_distance': round(distance, 3),
         'stop_points': round(distance / point, 1),
         'equity': equity,
-        'oversized': bool(raw_lots < vmin),   # budget too small for min lot
+        'oversized': bool(oversized),
+        'fixed': lots_override is not None,
     }
 
 
@@ -252,16 +272,48 @@ def qualify(sig, snap: dict, spec: dict, context: dict = None):
         gates.append(_gate('mtf', 'WARN',
                            f'higher timeframes conflicted ({mtf_score:+d})', 6))
 
+    # --- 4b. leg position ---------------------------------------------------- #
+    # Where price is inside the leg in progress, on closed bars. Fading a leg
+    # (trading against it) in the three spots Phase 0b measured as losing in
+    # every year is blocked; everything else passes - legs have no memory, so
+    # there is no "extended, due to turn" to score. See legs.py.
+    # leg_gate, when present, is the CLOSED-bar read carried on a live
+    # snapshot (main._run_engine), so the board shows the verdict the
+    # executor will reach. Its own higher-timeframe read travels with it.
+    from .legs import avoid_verdict, htf_trend
+    leg = snap.get('leg_gate') or snap.get('leg')
+    if leg and 'htf_dir' in leg:
+        htf_dir, htf_tf = int(leg['htf_dir']), leg.get('htf_tf')
+    else:
+        htf_dir, htf_tf = htf_trend(mtf, snap.get('tf') or sig.tf)
+    why = avoid_verdict(sig.side, leg, htf_dir, htf_tf)
+    if not leg:
+        gates.append(_gate('leg', 'PASS', 'no confirmed leg yet'))
+    else:
+        where = (f"{'up' if leg['dir'] == 1 else 'down'} leg {leg['ext_atr']:.1f} ATR, "
+                 f"{leg['pull_atr']:.1f} ATR off its extreme")
+        if why and g.avoid_fades:
+            gates.append(_gate('leg', 'BLOCK', why))
+        elif why:
+            gates.append(_gate('leg', 'PASS', f'{where} - avoid rules off ({why})'))
+        else:
+            with_leg = (sig.side == 'buy') == (leg['dir'] == 1)
+            gates.append(_gate('leg', 'PASS',
+                               f"{where}, trading {'with' if with_leg else 'against'} it"))
+
     # --- 5. sizing ----------------------------------------------------------- #
     risk_cfg = {'equity': ctx.get('equity', r.equity),
                 'risk_per_trade_pct': ctx.get('risk_per_trade_pct', r.risk_per_trade_pct)}
-    sizing = size_position(sig.entry, sig.stop, spec, risk_cfg)
+    # Sized at the FIXED lot the executor will actually send, so the size on
+    # the signal card, the money at risk and the order all agree.
+    sizing = size_position(sig.entry, sig.stop, spec, risk_cfg,
+                           lots_override=fixed_lots(sig.symbol))
     if sizing.get('error'):
         gates.append(_gate('sizing', 'BLOCK', sizing['error']))
     elif sizing.get('oversized'):
         gates.append(_gate('sizing', 'BLOCK',
-                           f"stop is too wide for the risk budget - minimum lot "
-                           f"would risk {sizing['risk_pct']:.2f}% against a "
+                           f"stop is too wide for the risk budget - {sizing['lots']} "
+                           f"lots would risk {sizing['risk_pct']:.2f}% against a "
                            f"{risk_cfg['risk_per_trade_pct']:.2f}% limit"))
     else:
         gates.append(_gate('sizing', 'PASS',

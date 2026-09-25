@@ -32,6 +32,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from ..config import CONFIG
+from . import legs as lg
 
 
 def _pct(x) -> str:
@@ -74,6 +75,16 @@ def describe_market(snap: dict) -> dict:
         struct += (f" That read is wrong on a close beyond "
                    f"{_fmt(trend['invalidation'])}.")
     paragraphs.append(struct)
+
+    # --- the leg in progress ---------------------------------------------- #
+    leg = snap.get('leg_gate') or snap.get('leg')
+    if leg:
+        htf_dir, htf_tf = lg.htf_trend(mtf, snap.get('tf'))
+        paragraphs.append(
+            f"Price is in {lg.describe(leg, htf_dir, htf_tf)}. Neither how far "
+            f"this leg has run nor a pullback inside it is, on its own, a reason "
+            f"to trade: measured on 2024-2026 gold, legs have no memory and "
+            f"corrections retrace nearly the whole leg.")
 
     # --- regime ------------------------------------------------------------ #
     reg = (f"The regime classifier calls this {regime['label']} at "
@@ -162,10 +173,26 @@ def explain_signal(sig, snap: dict) -> dict:
                   f"{_fmt(d['tp2'])} ({d['rr2']}R).")
 
     # Rank the evidence so the strongest reason leads.
+    #
+    # Where the entry sits in a pullback (the 'fib' evidence) is shown as
+    # CONTEXT, not as a reason: corrections retraced a median ~97% of the leg
+    # in 2024-2026, so the pocket is not a level price reliably turns from.
+    # The playbook still scores it; the analyst just does not argue from it.
     ev = sorted([e for e in d.get('evidence', []) if e['weight'] > 0],
                 key=lambda e: -e['weight'])
-    why = []
+    why, context = [], []
+    leg = snap.get('leg_gate') or snap.get('leg')
+    if leg:
+        htf_dir, htf_tf = lg.htf_trend(snap.get('mtf') or {}, snap.get('tf') or d.get('tf'))
+        with_leg = (d['side'] == 'buy') == (int(leg['dir']) == 1)
+        context.append(f"Trades {'with' if with_leg else 'against'} "
+                       f"{lg.describe(leg, htf_dir, htf_tf)}.")
     for e in ev:
+        if e['kind'] == 'fib':
+            context.append(f"{e['text'][:1].upper()}{e['text'][1:]} - context only: "
+                           f"corrections retraced a median ~97% of the leg in "
+                           f"2024-2026, so a pocket is not by itself a turning point.")
+            continue
         why.append({'text': e['text'], 'kind': e['kind'], 'weight': e['weight']})
 
     sizing = d.get('sizing') or {}
@@ -191,6 +218,7 @@ def explain_signal(sig, snap: dict) -> dict:
         'mode': 'analysis',
         'thesis': thesis,
         'why': why,
+        'context': context,
         'mechanics': mechanics,
         'confidence': d.get('confidence', 0),
         'status': d.get('status'),
@@ -261,13 +289,28 @@ def challenge_signal(sig, snap: dict, history: dict = None) -> dict:
             'fakes before it runs',
             'volatility')
 
-    # 5. how far has price already gone?
-    fib = snap.get('fib') or {}
-    if fib.get('zone') == 'extended':
-        add('moderate',
-            'price is already extended beyond the last leg - the easy part of '
-            'this move has been paid out',
-            'structure')
+    # 5. where is price inside the leg in progress?
+    #
+    # Not "how far has it gone": a leg's length says nothing about whether it
+    # turns (2024-2026: 52-58% odds of another ATR at any length), so an
+    # extended leg is no objection to trading WITH it. What did lose, every
+    # year, is fading it in three spots - the 'leg' gate. When that gate is
+    # on it has already BLOCKED above; when it is off, say so here.
+    leg = snap.get('leg_gate') or snap.get('leg')
+    if leg:
+        htf_dir, htf_tf = lg.htf_trend(mtf, snap.get('tf') or d.get('tf'))
+        why_not = lg.avoid_verdict(d['side'], leg, htf_dir, htf_tf)
+        leg_blocked = any(g['name'] == 'leg' and g['verdict'] == 'BLOCK'
+                          for g in d.get('gates', []))
+        word = 'up' if int(leg['dir']) == 1 else 'down'
+        if why_not and not leg_blocked:
+            add('severe', f"{why_not} (the avoid switch is off)", 'leg')
+        elif not why_not and (d['side'] == 'buy') != (int(leg['dir']) == 1):
+            add('minor',
+                f"this trades against the {word} leg in progress "
+                f"({float(leg['ext_atr']):.1f} ATR run) - it rests on the setup "
+                f"alone, not on the leg being due to turn",
+                'leg')
 
     # 6. is the opposing level uncomfortably close?
     nearest = snap.get('nearest') or {}

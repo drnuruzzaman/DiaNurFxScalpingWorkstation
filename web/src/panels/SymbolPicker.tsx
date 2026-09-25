@@ -11,13 +11,18 @@ import { Empty } from './common'
  * matter of opening the dialog three times.
  */
 export function SymbolPicker({
-  current, watchlist, onPick, onWatchlist, onClose,
+  current, watchlist = [], onPick, onWatchlist, onClose, load, loadingText, hint,
 }: {
   current: string
-  watchlist: string[]
+  watchlist?: string[]
   onPick: (symbol: string) => void
-  onWatchlist: (symbols: string[]) => void
+  /** Omit to hide the watchlist stars (the backtest lab has no watchlist). */
+  onWatchlist?: (symbols: string[]) => void
   onClose: () => void
+  /** Where the rows come from; the broker's instrument list by default. */
+  load?: () => Promise<BrokerSymbol[]>
+  loadingText?: string
+  hint?: string
 }) {
   const [rows, setRows] = useState<BrokerSymbol[] | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -28,8 +33,8 @@ export function SymbolPicker({
 
   useEffect(() => {
     let stop = false
-    api.symbols()
-      .then((r) => { if (!stop) setRows(r.symbols) })
+    ;(load ? load() : api.symbols().then((r) => r.symbols))
+      .then((r) => { if (!stop) setRows(r) })
       .catch((e) => { if (!stop) setError(e?.message ?? 'could not load symbols') })
     // Focus lands in the search box: the dialog exists to be typed into.
     input.current?.focus()
@@ -49,6 +54,7 @@ export function SymbolPicker({
   useEffect(() => { setSel(0) }, [q])
 
   const toggleWatch = (name: string) => {
+    if (!onWatchlist) return
     onWatchlist(watchlist.includes(name)
       ? watchlist.filter((x) => x !== name)
       : [...watchlist, name])
@@ -80,7 +86,7 @@ export function SymbolPicker({
 
         <div className="picker-list" ref={listRef}>
           {error ? <Empty>Could not load symbols — {error}</Empty>
-            : !rows ? <Empty>Reading the broker's instrument list…</Empty>
+            : !rows ? <Empty>{loadingText ?? "Reading the broker's instrument list…"}</Empty>
               : !shown.length ? <Empty>Nothing matches “{q}”.</Empty>
                 : shown.map((r, i) => {
                   const pinned = watchlist.includes(r.name)
@@ -89,11 +95,13 @@ export function SymbolPicker({
                       className={`picker-row ${i === sel ? 'sel' : ''} ${r.name === current ? 'on' : ''}`}
                       onMouseEnter={() => setSel(i)}
                       onClick={() => choose(r.name)}>
-                      <button className={`pin ${pinned ? 'on' : ''}`}
-                        title={pinned ? 'Remove from watchlist' : 'Add to watchlist'}
-                        onClick={(e) => { e.stopPropagation(); toggleWatch(r.name) }}>
-                        {pinned ? '★' : '☆'}
-                      </button>
+                      {onWatchlist && (
+                        <button className={`pin ${pinned ? 'on' : ''}`}
+                          title={pinned ? 'Remove from watchlist' : 'Add to watchlist'}
+                          onClick={(e) => { e.stopPropagation(); toggleWatch(r.name) }}>
+                          {pinned ? '★' : '☆'}
+                        </button>
+                      )}
                       <span className="picker-name">{r.name}</span>
                       <span className="picker-group">{r.group}</span>
                       {/* Only disk-backed symbols can be backtested - the live
@@ -107,7 +115,7 @@ export function SymbolPicker({
 
         <div className="picker-f">
           <span className="t-dim">
-            ★ pins to the watchlist · click a row to chart it · ↑↓ and Enter work too
+            {hint ?? '★ pins to the watchlist · click a row to chart it · ↑↓ and Enter work too'}
           </span>
           <span className="t-dim mono">{shown.length}/{rows?.length ?? 0}</span>
         </div>

@@ -157,6 +157,16 @@ export function AgentDock({ snap, signal, symbol, tf }: {
               </span>
             </div>
           ))}
+          {/* Where price sits in the leg, and any Fibonacci-pocket evidence -
+              shown, but not argued from (see narrator.explain_signal). */}
+          {a.context?.length > 0 && (
+            <>
+              <h4>Context (not a reason)</h4>
+              {a.context.map((m: string, i: number) => (
+                <div key={i} className="t-mid" style={{ fontSize: 10.5, padding: '2px 0' }}>· {m}</div>
+              ))}
+            </>
+          )}
           <h4>Mechanics</h4>
           {a.mechanics.map((m: string, i: number) => (
             <div key={i} className="t-mid" style={{ fontSize: 10.5, padding: '2px 0' }}>· {m}</div>

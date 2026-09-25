@@ -329,6 +329,124 @@ def main() -> int:
         _sg.PLAYBOOKS.clear()
         _sg.PLAYBOOKS.update(real)
 
+    # --------------------------------------------------------------- 11 --- #
+    section('11. leg position (the Phase 0b avoid rules)')
+    from server.engine import legs as LG
+    from server.engine.qualify import qualify
+    from server.engine.signals import Signal
+    leg = snap.get('leg')
+    check('the snapshot carries the leg in progress',
+          bool(leg) and leg['dir'] in (1, -1),
+          f"dir {leg['dir']:+d}, {leg['ext_atr']:.2f} ATR run, "
+          f"{leg['pull_atr']:.2f} ATR off the extreme" if leg else 'none')
+    # The live engine sees a 600-bar window, the research saw all history. The
+    # read must not depend on where the window starts, or the gate would be
+    # judging something the research never measured.
+    worst = 0.0
+    for cut in (700, 800, 900):
+        if cut > len(series):
+            continue
+        hh, ll, cc = series.h[:cut], series.l[:cut], series.c[:cut]
+        a_all = LG.leg_state(hh, ll, cc, atr(hh, ll, cc, 14))
+        w = slice(cut - 600, cut)
+        a_win = LG.leg_state(hh[w], ll[w], cc[w], atr(hh[w], ll[w], cc[w], 14))
+        if a_all and a_win and a_all['dir'] == a_win['dir']:
+            worst = max(worst, abs(a_all['ext_atr'] - a_win['ext_atr']),
+                        abs(a_all['pull_atr'] - a_win['pull_atr']))
+        else:
+            worst = float('inf')
+    check('the leg read does not depend on the window start', worst < 0.02,
+          f'largest divergence {worst:.4f} ATR')
+
+    up = {'dir': 1, 'ext_atr': 3.0, 'pull_atr': 0.7}
+    check('fading a leg 0.5-1.0 ATR off its extreme is avoided',
+          LG.avoid_verdict('sell', up, 0) is not None)
+    check('...trading WITH the leg there is not', LG.avoid_verdict('buy', up, 0) is None)
+    check('...nor fading it 0.3 ATR off the extreme',
+          LG.avoid_verdict('sell', dict(up, pull_atr=0.3), 0) is None)
+    check('...nor 1.0 ATR off (the band is [0.5, 1.0))',
+          LG.avoid_verdict('sell', dict(up, pull_atr=1.0), 0) is None)
+    check('fading a leg that has run 4 ATR is avoided',
+          LG.avoid_verdict('sell', {'dir': 1, 'ext_atr': 4.0, 'pull_atr': 0.2}, 0) is not None)
+    check('...3.9 ATR is not',
+          LG.avoid_verdict('sell', {'dir': 1, 'ext_atr': 3.9, 'pull_atr': 0.2}, 0) is None)
+    short = {'dir': -1, 'ext_atr': 2.0, 'pull_atr': 0.2}
+    check('fading the impulse while 1h trends the same way is avoided',
+          LG.avoid_verdict('buy', short, -1, '1h') is not None)
+    check('...not when 1h is against the leg', LG.avoid_verdict('buy', short, 1, '1h') is None)
+    rows = {'rows': [{'tf': '15m', 'state': 'down'}, {'tf': '1h', 'state': 'up'},
+                     {'tf': '4h', 'state': 'ranging'}]}
+    check('the impulse rule reads 1h for a 5m signal', LG.htf_trend(rows, '5m') == (1, '1h'))
+    check('...and the next timeframe up for 1h', LG.htf_trend(rows, '1h') == (0, '4h'))
+
+    # End to end: the gate in qualify(), both positions of the switch.
+    px, av = float(snap['price']), float(snap['atr'])
+    snap_ext = dict(snap, leg={'dir': 1, 'ext_atr': 5.0, 'pull_atr': 0.2})
+    saved_af = CONFIG.gates.avoid_fades
+    got = {}
+    try:
+        for on in (True, False):
+            CONFIG.gates.avoid_fades = on
+            fade = Signal(playbook='pattern_break', label='TEST', side='sell', symbol=symbol,
+                          tf='5m', entry=px, stop=px + 2 * av, tp1=px - 2 * av,
+                          tp2=px - 4 * av, confidence=80, expiry_bars=12,
+                          atr_at_signal=av, id='leg-test')
+            got[on] = next(x for x in qualify(fade, snap_ext, spec).gates if x['name'] == 'leg')
+    finally:
+        CONFIG.gates.avoid_fades = saved_af
+    check('switch ON: fading a 5 ATR leg is BLOCKED', got[True]['verdict'] == 'BLOCK',
+          got[True]['detail'])
+    check('switch OFF: the same signal passes, with the reason still shown',
+          got[False]['verdict'] == 'PASS' and 'avoid rules off' in got[False]['detail'],
+          got[False]['detail'])
+
+    # --------------------------------------------------------------- 12 --- #
+    section('12. pattern detector: head clearance and the break window')
+    from server.engine import patterns as PT
+    from server.engine.structure import Swing
+    _saved_pt = (PT.EXPIRE_UNBROKEN, PT.HEAD_CLEAR_ATR)
+    PT.EXPIRE_UNBROKEN, PT.HEAD_CLEAR_ATR = True, 0.5   # the rules, when switched on
+
+    def hs_case(head=108.0, after=10, dip_at=None):
+        """A bearish H&S on flat data, `after` bars past the right shoulder."""
+        pts = [(10, 105.0, 'high'), (15, 100.0, 'low'), (20, head, 'high'),
+               (25, 100.0, 'low'), (30, 105.0, 'high')]
+        n = 30 + after
+        c = np.full(n, 103.0)
+        if dip_at is not None:
+            c[30 + dip_at] = 99.0               # one close through the neckline
+        t = np.arange(n, dtype=float) * 300_000
+        sw = [Swing(idx=k, t=int(t[k]), price=pr, kind=kd, confirmed_at=k + 2)
+              for k, pr, kd in pts]
+        return [x for x in PT.head_and_shoulders(sw, c + 0.5, c - 0.5, c, t, 1.0)
+                if x.kind == 'head_shoulders']
+
+    got = hs_case()
+    check('a head 3 ATR above both shoulders is a head and shoulders',
+          len(got) == 1 and got[0].status == 'forming', str([x.status for x in got]))
+    check('a head only 0.3 ATR above a shoulder is not',
+          not hs_case(head=105.3), 'that is a double top plus a bounce')
+    check('an unbroken H&S is dropped once its 30-bar break window closes',
+          not hs_case(after=35))
+    got = hs_case(after=35, dip_at=5)
+    check('...but one that broke inside the window stays, confirmed',
+          len(got) == 1 and got[0].status == 'confirmed', str([x.status for x in got]))
+
+    def dt_case(after):
+        pts = [(10, 105.0, 'high'), (15, 100.0, 'low'), (20, 105.0, 'high')]
+        n = 20 + after
+        c = np.full(n, 103.0)
+        t = np.arange(n, dtype=float) * 300_000
+        sw = [Swing(idx=k, t=int(t[k]), price=pr, kind=kd, confirmed_at=k + 2)
+              for k, pr, kd in pts]
+        return [x for x in PT.double_tops_bottoms(sw, c + 0.5, c - 0.5, c, t, 1.0)
+                if x.kind == 'double_top']
+
+    check('a double top inside its break window is forming',
+          [x.status for x in dt_case(10)] == ['forming'])
+    check('...and gone once the window closes unbroken', not dt_case(35))
+    PT.EXPIRE_UNBROKEN, PT.HEAD_CLEAR_ATR = _saved_pt
+
     # ------------------------------------------------------------------- #
     print(f'\n{"=" * 52}')
     print(f'  {PASS} passed, {FAIL} failed')
