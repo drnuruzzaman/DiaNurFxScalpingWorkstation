@@ -301,6 +301,28 @@ export type TradeMark = {
   selected?: boolean
 }
 
+/**
+ * The range cone (forecast engine, backtest lab): how far price is likely to
+ * travel up and down over the next k bars, drawn to the right of the bar it
+ * was forecast at. Distances are excursions from that bar's close, in its ATR.
+ */
+export type ForecastCone = {
+  /** open time of the bar the cone starts from; its close is the anchor */
+  anchorT: number
+  close: number
+  atr: number
+  /** per step k = 1..H: [P20, P50, P80] */
+  up: [number, number, number][]
+  dn: [number, number, number][]
+  /** the baseline's P50 per step, drawn thin to compare against (optional) */
+  baseUp?: number[]
+  baseDn?: number[]
+  /** short tag drawn at the cone's end, e.g. 'MODEL 15m' */
+  label?: string
+  /** pinned: kept at its bar while the replay moves on */
+  pinned?: boolean
+}
+
 /** A macro release, for the vertical marks. */
 export type NewsMark = {
   ts: number
@@ -380,8 +402,6 @@ export type Overlays = {
   zones: boolean
   /** Retracement levels of the current impulse leg. */
   fib: boolean
-  /** Closed candles whose body engulfs the previous one (context, not a signal). */
-  engulfing: boolean
   signal: boolean
   volumeProfile: boolean
   regimeBands: boolean
@@ -403,7 +423,6 @@ export const DEFAULT_OVERLAYS: Overlays = {
   fvg: false,
   zones: false,
   fib: false,
-  engulfing: true,
   swings: true,
   structure: true,
   events: true,

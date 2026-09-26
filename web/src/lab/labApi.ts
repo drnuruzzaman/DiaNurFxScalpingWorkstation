@@ -5,7 +5,7 @@
  * URL. REST goes to it directly (it allows this origin); the transport is a
  * websocket, connected directly as the live feed is.
  */
-import type { LabDataInfo, LabMeta, SchemaRow } from './types'
+import type { LabChallenge, LabDataInfo, LabForecastSession, LabForecastSettled, LabForecastSummary, LabMeta, SchemaRow } from './types'
 
 export const LAB_HTTP: string = (import.meta.env.VITE_LAB_URL as string | undefined)
   ?? 'http://127.0.0.1:8771'
@@ -22,6 +22,9 @@ async function j<T>(path: string, init?: RequestInit): Promise<T> {
   return r.json() as Promise<T>
 }
 
+/** The forecast endpoints answer for a symbol - the open session's when none is named. */
+const sym = (symbol?: string) => (symbol ? `?symbol=${encodeURIComponent(symbol)}` : '')
+
 export const lab = {
   health: () => j<{ ok: boolean; pid: number; engine_rev: string; session: string | null }>('/lab/health'),
   data: () => j<LabDataInfo>('/lab/data'),
@@ -33,6 +36,25 @@ export const lab = {
     body: JSON.stringify({ png, note }),
   }),
   snapshotUrl: (sid: string, file: string) => `${LAB_HTTP}/lab/sessions/${sid}/snapshots/${file}`,
+  /** The same PNG sent as an attachment (a cross-port <a download> is ignored). */
+  snapshotDownloadUrl: (sid: string, file: string) =>
+    `${LAB_HTTP}/lab/sessions/${sid}/snapshots/${file}?download=1`,
+  removeSnapshot: (sid: string, file: string) =>
+    j<{ ok: boolean }>(`/lab/sessions/${sid}/snapshots/${file}`, { method: 'DELETE' }),
+  /** A symbol's latest batch run's scorecard summary (gates, decay, calibration). */
+  forecastSummary: (symbol?: string) => j<LabForecastSummary>(`/lab/forecast/summary${sym(symbol)}`),
+  /** The newest Phase D filter test (tools/forecast_filtertest.py) - gold's; {} for others. */
+  forecastFilterTest: (symbol?: string) => j<any>(`/lab/forecast/filtertest${sym(symbol)}`),
+  /** Phase E: a symbol's news layer - its gate per timeframe and release reaction tables. */
+  forecastNews: (symbol?: string) => j<any>(`/lab/forecast/news${sym(symbol)}`),
+  /** Phase E: the supervisor's challenge of the forecast at the bar on screen. */
+  forecastChallenge: (signalId?: string, fresh = false) => j<LabChallenge>('/lab/forecast/challenge', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ signal_id: signalId ?? null, fresh }),
+  }),
+  /** This session's settled forecasts and how they scored. */
+  forecastLog: (limit = 300) => j<{ rows: LabForecastSettled[]; stats: LabForecastSession; tf?: string }>(
+    `/lab/forecast/log?limit=${limit}`),
   exportUrl: (sid: string) => `${LAB_HTTP}/lab/sessions/${sid}/export`,
   /** Ask the LIVE API to launch the lab process if it is not running. */
   start: async (): Promise<{ ok: boolean; error?: string }> => {

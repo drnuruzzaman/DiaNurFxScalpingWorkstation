@@ -286,6 +286,18 @@ export const api = {
   alertsResolve: (target: string, bot?: string) =>
     jpost<any>('/api/alerts/resolve', { target, bot: bot ?? null }),
   alertsLog: (limit = 60) => jget<{ entries: any[] }>(`/api/alerts/log?limit=${limit}`),
+  /** History on disk, the running update, the monthly routine (server/marketdata.py). */
+  dataStatus: () => jget<any>('/api/data/status'),
+  /** The running (or last) update alone - light enough for the footer to poll. */
+  dataJob: () => jget<any>('/api/data/job'),
+  dataUpdate: (body: { rebuild: boolean; rescore: boolean; force: boolean
+    symbols?: string[]; tfs?: string[]; years?: number; download?: boolean
+    enable_forecast?: boolean | string[] }) =>
+    jpost<any>('/api/data/update', body),
+  /** Switch the forecast engine on or off for one symbol: the status, or {ok: false, error}. */
+  dataForecast: (symbol: string, on: boolean) => jpost<any>('/api/data/forecast', { symbol, on }),
+  dataCancel: () => jpost<any>('/api/data/cancel', {}),
+  dataRoutine: (auto: boolean) => jpost<any>('/api/data/routine', { auto }),
 }
 
 /**

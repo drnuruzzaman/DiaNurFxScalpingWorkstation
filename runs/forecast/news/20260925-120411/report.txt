@@ -1,0 +1,122 @@
+FORECAST ENGINE - PHASE E: THE NEWS LAYER     run 20260925-120411
+Range at the horizon, 2024-2026, scored against what the lab shows now (Phase B model where
+promoted, else the climatology baseline). Gate = Phase B's: interval clear of zero in EVERY
+year on both sides and P20-P80 coverage 55-65%. Two candidates, both fixed in advance:
+A = the news model on every row; B = on news rows only, the reference elsewhere (scored on
+the rows it changes). If both pass, B - the smaller change. Measurements, not trading advice.
+
+5m  (vs range_v1; k 3, half-life 12; 187296 rows)  -> not promoted - the lab keeps its cone
+  A. news model on every row:
+  2024  up: skill +0.2% [+0.0,+0.5] cov 60% (vs base +4.5%)   dn: skill +0.3% [+0.1,+0.5] cov 60% (vs base +4.8%)
+  2025  up: skill +0.1% [-0.1,+0.2] cov 60% (vs base +2.7%)   dn: skill +0.0% [-0.1,+0.2] cov 59% (vs base +2.6%)
+  2026  up: skill +0.1% [-0.2,+0.3] cov 60% (vs base +3.1%)   dn: skill -0.0% [-0.2,+0.1] cov 60% (vs base +1.8%)
+  B. news model on news rows only (scored on those rows; reference coverage in brackets):
+  2024  up: skill +3.1% [+0.3,+5.8] cov 59% (58%) n_eff 208   dn: skill +2.9% [+0.3,+5.2] cov 60% (58%) n_eff 208
+  2025  up: skill +0.5% [-3.4,+4.0] cov 64% (63%) n_eff 178   dn: skill +0.1% [-3.5,+2.8] cov 60% (58%) n_eff 178
+  2026  up: skill +1.3% [-3.5,+5.3] cov 59% (57%) n_eff 121   dn: skill -0.4% [-4.0,+2.4] cov 62% (60%) n_eff 121
+  inside each news state (skill vs the reference, 2024-26 pooled; forecast width vs quiet hour):
+    none           n_eff 15099  up  +0.0%  dn  +0.0%  width x1.00   up by year 2024:+0% 2025:+0% 2026:+0%
+    minor          n_eff   107  up  -0.7%  dn  -3.7%  width x1.27   up by year 2024:+6% 2025:-8% 2026:-6%
+    tier2 early    n_eff    54  up  +7.0%  dn  +4.3%  width x1.57   up by year 2024:+4% 2025:+15% 2026:+5%
+    tier2 late     n_eff    54  up  +3.9%  dn  +6.8%  width x1.62   up by year 2024:+3% 2025:+8% 2026:+0%
+    NFP/CPI early  n_eff    31  up  +0.9%  dn  -2.4%  width x2.46   up by year 2024:+1% 2025:-1% 2026:+4%
+    NFP/CPI late   n_eff    31  up  -0.7%  dn  -1.7%  width x2.18   up by year 2024:+0% 2025:-4% 2026:+2%
+    FOMC           n_eff    21  up  -1.0%  dn  -0.8%  width x2.95   up by year 2024:-2% 2025:+2% 2026:-2%
+    after          n_eff   208  up  +2.6%  dn  +3.7%  width x1.06   up by year 2024:+5% 2025:-1% 2026:+3%
+  release reactions (range over the next horizon vs the same hour with no release; share closing up - 51% of all horizons do):
+    NFP      102 releases  x2.33  up 58%   2024:x2.83 2025:x2.12 2026:x1.87
+    CPI      108 releases  x1.89  up 59%   2024:x2.75 2025:x1.86 2026:x1.24
+    FOMC      68 releases  x5.56  up 56%   2024:x5.44 2025:x4.97 2026:x2.75
+    PPI      109 releases  x1.20  up 59%   2024:x1.93 2025:x1.01 2026:x0.97
+    GDP      110 releases  x1.34  up 50%   2024:x1.21 2025:x1.44 2026:x1.02
+    PCE      101 releases  x1.30  up 49%   2024:x1.43 2025:x1.18 2026:x1.02
+    RETAIL   110 releases  x1.26  up 49%   2024:x1.44 2025:x1.04 2026:x1.05
+    CLAIMS   445 releases  x1.18  up 51%   2024:x1.19 2025:x1.09 2026:x1.00
+    JOLTS    103 releases  x1.35  up 50%   2024:x1.96 2025:x1.41 2026:x1.18
+
+15m  (vs range_v1; k 3, half-life 12; 62454 rows)  -> not promoted - the lab keeps its cone
+  A. news model on every row:
+  2024  up: skill +0.2% [-0.1,+0.6] cov 60% (vs base +7.0%)   dn: skill +0.5% [+0.2,+0.8] cov 60% (vs base +8.4%)
+  2025  up: skill -0.0% [-0.2,+0.2] cov 60% (vs base +2.8%)   dn: skill -0.0% [-0.3,+0.3] cov 58% (vs base +4.0%)
+  2026  up: skill +0.1% [-0.3,+0.4] cov 60% (vs base +3.2%)   dn: skill -0.1% [-0.3,+0.2] cov 59% (vs base +2.1%)
+  B. news model on news rows only (scored on those rows; reference coverage in brackets):
+  2024  up: skill +1.5% [-1.0,+4.1] cov 59% (58%) n_eff 212   dn: skill +2.8% [+1.0,+4.7] cov 58% (57%) n_eff 212
+  2025  up: skill -0.6% [-3.1,+2.0] cov 64% (63%) n_eff 181   dn: skill -0.6% [-3.5,+1.7] cov 60% (60%) n_eff 181
+  2026  up: skill +0.4% [-3.3,+3.4] cov 61% (60%) n_eff 122   dn: skill +0.2% [-2.9,+2.5] cov 59% (58%) n_eff 122
+  inside each news state (skill vs the reference, 2024-26 pooled; forecast width vs quiet hour):
+    none           n_eff  7290  up  +0.0%  dn  +0.0%  width x1.00   up by year 2024:+0% 2025:+0% 2026:+0%
+    minor          n_eff   106  up  -2.0%  dn  -2.4%  width x1.18   up by year 2024:+2% 2025:-7% 2026:-4%
+    tier2 early    n_eff    54  up  +3.6%  dn  +2.9%  width x1.35   up by year 2024:+2% 2025:+8% 2026:+2%
+    tier2 late     n_eff    54  up  +2.1%  dn  +3.6%  width x1.27   up by year 2024:+1% 2025:+5% 2026:+2%
+    NFP/CPI early  n_eff    31  up  -1.0%  dn  -1.4%  width x2.09   up by year 2024:-1% 2025:-4% 2026:+4%
+    NFP/CPI late   n_eff    31  up  -0.2%  dn  -1.3%  width x1.53   up by year 2024:-1% 2025:+0% 2026:+0%
+    FOMC           n_eff    21  up  -3.2%  dn  +2.7%  width x2.40   up by year 2024:-4% 2025:-6% 2026:+1%
+    after          n_eff   216  up  +1.8%  dn  +2.7%  width x1.04   up by year 2024:+4% 2025:-0% 2026:+1%
+  release reactions (range over the next horizon vs the same hour with no release; share closing up - 51% of all horizons do):
+    NFP      101 releases  x2.06  up 59%   2024:x2.37 2025:x2.27 2026:x1.70
+    CPI      107 releases  x1.62  up 66%   2024:x2.16 2025:x1.64 2026:x1.04
+    FOMC      68 releases  x5.64  up 57%   2024:x6.88 2025:x5.10 2026:x3.57
+    PPI      108 releases  x1.09  up 53%   2024:x1.36 2025:x1.05 2026:x1.10
+    GDP      110 releases  x1.21  up 42%   2024:x1.26 2025:x1.30 2026:x1.35
+    PCE      101 releases  x1.21  up 48%   2024:x1.40 2025:x1.12 2026:x1.35
+    RETAIL   109 releases  x1.19  up 43%   2024:x1.32 2025:x0.91 2026:x1.21
+    CLAIMS   444 releases  x1.17  up 51%   2024:x1.27 2025:x1.07 2026:x1.20
+    JOLTS    102 releases  x1.41  up 52%   2024:x1.53 2025:x1.42 2026:x1.05
+
+1h  (vs climatology; k 10, half-life none; 15619 rows)  -> not promoted - the lab keeps its cone
+  A. news model on every row:
+  2024  up: skill +6.2% [+4.6,+7.9] cov 59% (vs base +6.2%)   dn: skill +8.0% [+6.2,+9.7] cov 57% (vs base +8.0%)
+  2025  up: skill +0.6% [-1.2,+2.3] cov 58% (vs base +0.6%)   dn: skill +1.8% [+0.1,+3.3] cov 57% (vs base +1.8%)
+  2026  up: skill -0.0% [-2.2,+2.0] cov 59% (vs base -0.0%)   dn: skill -1.5% [-3.5,+0.5] cov 57% (vs base -1.5%)
+  B. news model on news rows only (scored on those rows; reference coverage in brackets):
+  2024  up: skill +12.1% [+7.8,+15.5] cov 58% (51%) n_eff 200   dn: skill +14.7% [+10.6,+18.5] cov 60% (49%) n_eff 200
+  2025  up: skill +4.8% [-1.4,+9.7] cov 60% (57%) n_eff 171   dn: skill +5.8% [-0.4,+10.5] cov 61% (53%) n_eff 171
+  2026  up: skill +2.7% [-4.7,+9.0] cov 61% (54%) n_eff 113   dn: skill -1.2% [-8.5,+4.7] cov 59% (58%) n_eff 113
+  inside each news state (skill vs the reference, 2024-26 pooled; forecast width vs quiet hour):
+    none           n_eff  2117  up  +0.9%  dn  +1.7%  width x1.00   up by year 2024:+4% 2025:-1% 2026:-1%
+    minor          n_eff   104  up  +3.5%  dn  +6.0%  width x1.10   up by year 2024:+12% 2025:+1% 2026:-17%
+    tier2 early    n_eff    54  up +12.4%  dn  +8.4%  width x1.17   up by year 2024:+18% 2025:+7% 2026:+9%
+    tier2 late     n_eff    54  up  +9.8%  dn  -1.1%  width x1.13   up by year 2024:+13% 2025:+6% 2026:+5%
+    NFP/CPI early  n_eff    31  up +20.6%  dn +20.9%  width x1.50   up by year 2024:+19% 2025:+26% 2026:+13%
+    NFP/CPI late   n_eff    31  up  +9.5%  dn +14.2%  width x1.39   up by year 2024:+14% 2025:+1% 2026:+11%
+    FOMC           n_eff    20  up +11.4%  dn +13.3%  width x2.12   up by year 2024:+20% 2025:-23% 2026:+18%
+    after          n_eff   188  up  +1.4%  dn  +4.4%  width x1.06   up by year 2024:+2% 2025:+2% 2026:-0%
+  release reactions (range over the next horizon vs the same hour with no release; share closing up - 52% of all horizons do):
+    NFP       99 releases  x1.63  up 51%   2024:x2.09 2025:x1.57 2026:x1.35
+    CPI      105 releases  x1.46  up 56%   2024:x1.95 2025:x1.25 2026:x1.16
+    FOMC      67 releases  x3.77  up 58%   2024:x3.99 2025:x2.76 2026:x2.51
+    PPI      106 releases  x1.14  up 58%   2024:x1.11 2025:x0.93 2026:x1.32
+    GDP      108 releases  x1.14  up 48%   2024:x0.96 2025:x1.32 2026:x1.23
+    PCE       99 releases  x1.11  up 44%   2024:x1.50 2025:x1.17 2026:x1.23
+    RETAIL   107 releases  x1.14  up 42%   2024:x1.19 2025:x0.99 2026:x0.90
+    CLAIMS   435 releases  x1.14  up 50%   2024:x1.13 2025:x1.05 2026:x1.03
+    JOLTS    101 releases  x1.11  up 52%   2024:x1.23 2025:x0.95 2026:x0.96
+
+4h  (vs climatology; k 30, half-life none; 4088 rows)  -> not promoted - the lab keeps its cone
+  A. news model on every row:
+  2024  up: skill +3.4% [+1.8,+4.8] cov 60% (vs base +3.4%)   dn: skill +3.9% [+2.6,+5.3] cov 57% (vs base +3.9%)
+  2025  up: skill -1.1% [-2.5,+0.1] cov 58% (vs base -1.1%)   dn: skill +0.8% [-0.6,+2.1] cov 58% (vs base +0.8%)
+  2026  up: skill -0.3% [-1.9,+1.3] cov 57% (vs base -0.3%)   dn: skill -1.8% [-3.4,-0.4] cov 55% (vs base -1.8%)
+  B. news model on news rows only (scored on those rows; reference coverage in brackets):
+  2024  up: skill +5.7% [+3.0,+8.5] cov 56% (54%) n_eff 195   dn: skill +5.8% [+3.1,+8.3] cov 57% (52%) n_eff 195
+  2025  up: skill -0.8% [-4.2,+2.6] cov 58% (56%) n_eff 167   dn: skill +0.7% [-2.5,+3.5] cov 63% (60%) n_eff 167
+  2026  up: skill +0.7% [-3.6,+4.6] cov 57% (57%) n_eff 110   dn: skill -2.5% [-6.7,+0.9] cov 55% (56%) n_eff 110
+  inside each news state (skill vs the reference, 2024-26 pooled; forecast width vs quiet hour):
+    none           n_eff   890  up  -0.2%  dn  +0.9%  width x1.00   up by year 2024:+1% 2025:-1% 2026:-1%
+    minor          n_eff   104  up  -0.5%  dn  +1.7%  width x1.10   up by year 2024:+5% 2025:-3% 2026:-9%
+    tier2 early    n_eff    36  up  +5.6%  dn  -3.9%  width x1.18   up by year 2024:+7% 2025:+4% 2026:+4%
+    tier2 late     n_eff    72  up  +3.3%  dn  -2.1%  width x1.11   up by year 2024:+5% 2025:+2% 2026:+3%
+    NFP/CPI early  n_eff    21  up  +5.7%  dn +10.9%  width x1.36   up by year 2024:+6% 2025:+7%
+    NFP/CPI late   n_eff    42  up  +6.0%  dn  +4.9%  width x1.25   up by year 2024:+12% 2025:-0% 2026:+1%
+    FOMC           n_eff    19  up +10.9%  dn  +6.8%  width x1.61   up by year 2024:+16% 2025:-9%
+    after          n_eff   176  up  -0.9%  dn  +1.9%  width x1.07   up by year 2024:-0% 2025:-2% 2026:-0%
+  release reactions (range over the next horizon vs the same hour with no release; share closing up - 53% of all horizons do):
+    NFP       99 releases  x1.42  up 53%   2024:x1.73 2025:x1.63 2026:x1.11
+    CPI      105 releases  x1.29  up 60%   2024:x1.44 2025:x1.20 2026:x1.09
+    FOMC      67 releases  x2.77  up 58%   2024:x2.70 2025:x1.71 2026:x2.41
+    PPI      106 releases  x1.09  up 56%   2024:x1.21 2025:x0.99 2026:x1.31
+    GDP      108 releases  x1.10  up 53%   2024:x1.07 2025:x1.31 2026:x1.20
+    PCE       99 releases  x1.07  up 47%   2024:x1.25 2025:x1.11 2026:x1.20
+    RETAIL   107 releases  x1.12  up 45%   2024:x1.16 2025:x1.01 2026:x1.01
+    CLAIMS   435 releases  x1.14  up 51%   2024:x1.17 2025:x1.20 2026:x1.10
+    JOLTS    101 releases  x1.05  up 53%   2024:x1.21 2025:x0.91 2026:x1.10

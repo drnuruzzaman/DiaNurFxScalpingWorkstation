@@ -8,14 +8,19 @@
  *   SESSIONS     saved runs: reopen (re-runs and checks it still matches),
  *                compare two, export, delete
  *   SNAPSHOTS    chart images taken in this session, each tied to its bar
+ *   FORECAST     the forecast engine's scorecard and this session's settled
+ *                forecasts - LabForecast.tsx
  */
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { fmt, signed } from '../lib/format'
 import { EquityCurve, ExcursionScatter, RHistogram } from './LabCharts'
+import { DeleteSession, DownloadIcon, TrashConfirm } from './DeleteSession'
+import { ForecastDock } from './LabForecast'
 import { lab } from './labApi'
-import type { LabEvent, LabMeta, LabNote, LabSession, LabSnap, LabStats, LabTrade } from './types'
+import type { LabEvent, LabForecast, LabMeta, LabNote, LabSession, LabSnap, LabStats,
+  LabTrade } from './types'
 
-export type DockTab = 'trades' | 'journal' | 'performance' | 'sessions' | 'snapshots'
+export type DockTab = 'trades' | 'journal' | 'performance' | 'forecast' | 'sessions' | 'snapshots'
 
 const when = (ms: number) => {
   const d = new Date(ms)
@@ -61,11 +66,13 @@ export function LabDock(p: {
   digits: number
   reveal: boolean
   refreshKey: number
+  forecast?: LabForecast | null
 }) {
   const tabs: { key: DockTab; label: string; count?: number }[] = [
     { key: 'trades', label: 'Trades', count: p.trades.length },
     { key: 'journal', label: 'Journal' },
     { key: 'performance', label: 'Performance' },
+    { key: 'forecast', label: 'Forecast', count: p.forecast?.session?.n || undefined },
     { key: 'sessions', label: 'Sessions' },
     { key: 'snapshots', label: 'Snapshots', count: p.snaps.length },
   ]
@@ -82,6 +89,7 @@ export function LabDock(p: {
         {p.tab === 'trades' && <TradesTab {...p} />}
         {p.tab === 'journal' && <JournalTab {...p} />}
         {p.tab === 'performance' && <PerformanceTab {...p} />}
+        {p.tab === 'forecast' && <ForecastDock forecast={p.forecast ?? null} onSeekBar={p.onSeekBar} />}
         {p.tab === 'sessions' && <SessionsTab {...p} />}
         {p.tab === 'snapshots' && <SnapshotsTab {...p} />}
       </div>
@@ -314,11 +322,7 @@ function SessionsTab(p: Parameters<typeof LabDock>[0]) {
                       <td style={{ whiteSpace: 'nowrap' }}>
                         <button className="lab-link" onClick={() => p.onOpen(m.id)}>open</button>
                         <a className="lab-link" href={lab.exportUrl(m.id)}>export</a>
-                        <button className="lab-link danger" onClick={() => {
-                          if (window.confirm(`Delete "${m.name}" and its snapshots? This cannot be undone.`)) {
-                            lab.remove(m.id).then(load)
-                          }
-                        }}>delete</button>
+                        <DeleteSession sid={m.id} name={m.name} onDeleted={load} />
                       </td>
                     </tr>
                   )
@@ -372,9 +376,62 @@ function Compare({ a, b }: { a: LabMeta; b: LabMeta }) {
 }
 
 // --------------------------------------------------------------- snapshots
+/** Full-size view of one snapshot: ← → to step, Esc to close. */
+function SnapViewer({ sid, snap, list, onMove, onClose, onSeek, onDelete }: {
+  sid: string
+  snap: LabSnap
+  list: LabSnap[]
+  onMove: (file: string) => void
+  onClose: () => void
+  onSeek: () => void
+  onDelete: () => Promise<unknown>
+}) {
+  const at = list.findIndex((s) => s.file === snap.file)
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      else if (e.key === 'ArrowLeft' && at > 0) onMove(list[at - 1].file)
+      else if (e.key === 'ArrowRight' && at < list.length - 1) onMove(list[at + 1].file)
+      else return
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    // capture: the lab's own ← → (step the replay) must not fire under the viewer
+    window.addEventListener('keydown', key, true)
+    return () => window.removeEventListener('keydown', key, true)
+  }, [at, list, onClose, onMove])
+  return (
+    <div className="lab-snapview" onClick={onClose}>
+      <div className="lab-snapview-box" onClick={(e) => e.stopPropagation()}>
+        <div className="lab-snapview-bar">
+          <span className="mono">{snap.file}</span>
+          <span className="t-dim">{when(snap.t)}{list.length > 1 ? ` · ${at + 1} of ${list.length}` : ''}</span>
+          <span style={{ flex: 1 }} />
+          <button className="lab-link" disabled={at <= 0} onClick={() => onMove(list[at - 1].file)} title="Previous (←)">◀</button>
+          <button className="lab-link" disabled={at >= list.length - 1} onClick={() => onMove(list[at + 1].file)} title="Next (→)">▶</button>
+          <button className="lab-link" onClick={onSeek} title="Close and put the chart on this bar">go to bar</button>
+          <a className="lab-link lab-del-x" href={lab.snapshotDownloadUrl(sid, snap.file)} title="Download"><DownloadIcon /></a>
+          <TrashConfirm compact title={`Delete ${snap.file}`} onConfirm={onDelete} />
+          <button className="lab-link" onClick={onClose} title="Close (Esc)">✕</button>
+        </div>
+        <img src={lab.snapshotUrl(sid, snap.file)} alt={snap.file} />
+        {snap.note && <div className="lab-snap-n" style={{ padding: '6px 2px 0' }}>{snap.note}</div>}
+      </div>
+    </div>
+  )
+}
+
 function SnapshotsTab(p: Parameters<typeof LabDock>[0]) {
+  const [view, setView] = useState<string | null>(null)
+  // Close the viewer if its snapshot is deleted (here or from another window).
+  useEffect(() => {
+    if (view && !p.snaps.some((s) => s.file === view)) setView(null)
+  }, [p.snaps, view])
   if (!p.session) return <div className="lab-empty">No session open.</div>
   const sid = p.session.meta.id
+  const list = [...p.snaps].reverse()
+  const shown = list.find((s) => s.file === view) ?? null
+  const del = (file: string) => lab.removeSnapshot(sid, file)
   return (
     <div className="lab-snaps">
       <div className="lab-jbar">
@@ -383,17 +440,30 @@ function SnapshotsTab(p: Parameters<typeof LabDock>[0]) {
       </div>
       {!p.snaps.length ? <div className="lab-empty">No snapshots in this session yet.</div> : (
         <div className="lab-snapgrid">
-          {[...p.snaps].reverse().map((s) => (
-            <div key={s.file} className="lab-snap" onClick={() => p.onSeekBar(s.i)} title="Put the chart on this bar">
+          {list.map((s) => (
+            <div key={s.file} className="lab-snap" onClick={() => setView(s.file)} title="View this snapshot">
+              <span className="lab-snap-hover" onClick={(e) => e.stopPropagation()}>
+                <a className="lab-link lab-del-x" href={lab.snapshotDownloadUrl(sid, s.file)}
+                  title={`Download ${s.file}`}><DownloadIcon size={15} /></a>
+                <TrashConfirm compact title={`Delete ${s.file}`} onConfirm={() => del(s.file)} />
+              </span>
               <img src={lab.snapshotUrl(sid, s.file)} alt={s.file} loading="lazy" />
               <div className="lab-snap-f">
                 <span className="mono">{when(s.t)}</span>
-                <a href={lab.snapshotUrl(sid, s.file)} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>open ↗</a>
+                <span className="lab-snap-acts" onClick={(e) => e.stopPropagation()}>
+                  <a className="lab-link lab-del-x" href={lab.snapshotDownloadUrl(sid, s.file)}
+                    title={`Download ${s.file}`}><DownloadIcon /></a>
+                  <TrashConfirm compact title={`Delete ${s.file}`} onConfirm={() => del(s.file)} />
+                </span>
               </div>
               {s.note && <div className="lab-snap-n">{s.note}</div>}
             </div>
           ))}
         </div>
+      )}
+      {shown && (
+        <SnapViewer sid={sid} snap={shown} list={list} onMove={setView} onClose={() => setView(null)}
+          onSeek={() => { p.onSeekBar(shown.i); setView(null) }} onDelete={() => del(shown.file)} />
       )}
     </div>
   )

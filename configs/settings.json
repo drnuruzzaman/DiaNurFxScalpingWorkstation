@@ -8,8 +8,8 @@
   "exit_mode": "trail",
   "risk_per_trade_pct": 0.5,
   "max_daily_loss_pct": 2.0,
-  "max_daily_trades": 24,
-  "min_rr": 1.0
+  "max_daily_trades": 100,
+  "min_rr": 0.5
  },
  "execution": {
   "entry_tolerance_atr": 0.2,
@@ -19,12 +19,15 @@
    "30m",
    "4h",
    "1h",
-   "3m"
+   "3m",
+   "2h",
+   "1d"
   ],
   "auto": true,
-  "max_per_symbol_tf": 2,
+  "max_per_symbol_tf": 5,
   "broker_tp": "tp2",
-  "lots_gold": 0.01
+  "lots_gold": 0.01,
+  "lots_non_gold": 0.05
  },
  "gates": {
   "min_confidence": 55,
@@ -39,6 +42,7 @@
    "range_fade"
   ],
   "news_blocks": false,
-  "news_blackout_min": 10
+  "news_blackout_min": 10,
+  "avoid_fades": true
  }
 }

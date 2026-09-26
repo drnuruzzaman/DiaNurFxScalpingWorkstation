@@ -1,0 +1,272 @@
+FORECAST ENGINE - PHASE A: THE BASELINES, SCORED        XAUUSD.a   run 20260926-000522
+versions  feature f1 / label l2 / baseline b2 / engine 1077afccf0c69a88 / git 15e83b0
+training  expanding from 2018-01-01, resolved-only, refreshed at each broker day start; recency option half-life 365 days
+evaluated 2024, 2025, 2026 (broker-time years); a baseline day needs 5000 resolved samples; intervals are 90%, day-block bootstrap (400 reps)
+n_eff = rows / horizon: outcomes that share bars are counted once.
+These are measurements of the market and of the baseline, not trading advice.
+
+1. WHAT WAS SCORED
+            horizon  rows since 2018   scored
+   5m        12 bars          618,766  194,166
+   15m        8 bars          206,428   64,770
+   1h         6 bars           51,638   16,197
+   4h         3 bars           13,519    4,238
+   5m tr    360 min          618,694  194,106   (trade decisions, walked on M1)
+   15m tr   360 min          206,404   64,754   (trade decisions, walked on M1)
+
+2. IS THE UNCONDITIONAL BASELINE CALIBRATED OUT OF SAMPLE?   (climatology)
+   2a. direction - P(close higher at the horizon)
+   tf   year      said  happened   Brier    ECE   n_eff
+   5m   2024    50.5%     52.8%   0.250   2.3%   5,928
+   5m   2025    50.8%     53.1%   0.250   2.3%   5,903
+   5m   2026    51.0%     49.9%   0.250   1.1%   4,348
+   5m   all     50.7%     52.1%   0.250   1.4%  16,180
+   15m  2024    50.8%     53.8%   0.249   3.0%   2,966
+   15m  2025    51.2%     54.2%   0.249   3.0%   2,954
+   15m  2026    51.4%     49.6%   0.250   1.8%   2,175
+   15m  all     51.1%     52.8%   0.250   1.7%   8,096
+   1h   2024    51.1%     54.9%   0.249   3.8%     989
+   1h   2025    51.7%     55.7%   0.248   4.0%     985
+   1h   2026    51.9%     49.9%   0.250   2.0%     724
+   1h   all     51.6%     53.9%   0.249   2.3%   2,699
+   4h   2024    51.6%     56.2%   0.248   4.6%     517
+   4h   2025    52.4%     57.2%   0.247   4.8%     516
+   4h   2026    52.7%     49.8%   0.251   2.9%     379
+   4h   all     52.2%     54.9%   0.249   2.7%   1,412
+
+   2b. state at the horizon (the chart's regime label) - calibration error, 5 classes
+   tf        2024     2025     2026      all
+   5m        0.8%     1.6%     1.1%     0.9%
+   15m       1.2%     1.5%     1.9%     1.0%
+   1h        2.2%     3.0%     2.1%     1.8%
+   4h        3.1%     6.4%     2.0%     3.2%
+
+   2c. range at the horizon - excursion from the close, in ATR
+       calibrated = 20 / 50 / 80% of outcomes at or below P20 / P50 / P80, 60% inside P20-P80
+   tf   side year    <=P20  <=P50  <=P80  P20-80  P50 ATR  pinball
+   5m   up   2024      20%    49%    80%     60%     1.41    0.508
+   5m   up   2025      20%    50%    81%     61%     1.41    0.476
+   5m   up   2026      21%    51%    81%     60%     1.41    0.487
+   5m   up   all       20%    50%    81%     61%     1.41    0.491
+   5m   dn   2024      21%    52%    81%     60%     1.42    0.517
+   5m   dn   2025      21%    51%    81%     59%     1.41    0.508
+   5m   dn   2026      20%    49%    80%     60%     1.41    0.523
+   5m   dn   all       21%    51%    81%     60%     1.42    0.515
+   15m  up   2024      19%    49%    79%     60%     1.10    0.425
+   15m  up   2025      19%    48%    80%     62%     1.10    0.393
+   15m  up   2026      20%    51%    82%     62%     1.11    0.395
+   15m  up   all       19%    49%    80%     61%     1.10    0.405
+   15m  dn   2024      22%    53%    81%     59%     1.10    0.435
+   15m  dn   2025      21%    51%    80%     59%     1.10    0.416
+   15m  dn   2026      19%    48%    80%     60%     1.10    0.435
+   15m  dn   all       21%    51%    80%     59%     1.10    0.428
+   1h   up   2024      18%    47%    78%     60%     0.97    0.369
+   1h   up   2025      18%    47%    78%     60%     0.98    0.342
+   1h   up   2026      22%    52%    82%     61%     0.99    0.338
+   1h   up   all       19%    48%    79%     60%     0.98    0.351
+   1h   dn   2024      23%    52%    80%     57%     0.95    0.374
+   1h   dn   2025      22%    51%    80%     59%     0.95    0.346
+   1h   dn   2026      19%    46%    79%     61%     0.95    0.373
+   1h   dn   all       21%    50%    80%     58%     0.95    0.363
+   4h   up   2024      18%    46%    79%     61%     0.71    0.244
+   4h   up   2025      18%    46%    77%     58%     0.72    0.236
+   4h   up   2026      23%    54%    82%     59%     0.72    0.233
+   4h   up   all       19%    48%    79%     60%     0.72    0.238
+   4h   dn   2024      24%    52%    80%     57%     0.68    0.251
+   4h   dn   2025      21%    51%    80%     59%     0.67    0.233
+   4h   dn   2026      20%    48%    79%     59%     0.67    0.260
+   4h   dn   all       22%    51%    80%     58%     0.68    0.247
+
+   2d. trade templates (spread, slippage and the lab broker's path rule included)
+       P(target first) said by the baseline (history replayed at each trade's own cost)
+       vs what happened; ECE over the 3 outcomes
+   5m decisions, 360-minute horizon
+   template                       2024 said/got     2025 said/got     2026 said/got  ECE all
+   buy 1 ATR stop, 1R            44.3% /  46.3%    46.1% /  47.8%    47.1% /  47.1%     0.9%
+   buy 1 ATR stop, 1.5R          35.2% /  37.6%    36.8% /  38.6%    37.6% /  37.2%     1.0%
+   buy 1 ATR stop, 2R            29.2% /  31.7%    30.5% /  32.6%    31.2% /  30.7%     1.0%
+   buy 1.5 ATR stop, 1R          45.6% /  48.6%    47.0% /  48.9%    47.7% /  47.1%     1.1%
+   buy 1.5 ATR stop, 1.5R        36.0% /  38.9%    37.2% /  39.3%    37.7% /  37.0%     1.1%
+   buy 1.5 ATR stop, 2R          29.1% /  31.8%    30.1% /  32.5%    30.6% /  30.1%     1.2%
+   sell 1 ATR stop, 1R           45.0% /  43.4%    46.5% /  46.6%    47.5% /  49.8%     0.2%
+   sell 1 ATR stop, 1.5R         36.1% /  34.1%    37.2% /  37.2%    38.1% /  40.4%     0.1%
+   sell 1 ATR stop, 2R           30.0% /  27.9%    30.9% /  30.6%    31.6% /  33.9%     0.5%
+   sell 1.5 ATR stop, 1R         46.6% /  44.1%    47.5% /  47.1%    48.2% /  50.8%     0.4%
+   sell 1.5 ATR stop, 1.5R       36.7% /  34.0%    37.3% /  36.9%    37.9% /  40.9%     0.6%
+   sell 1.5 ATR stop, 2R         29.6% /  27.1%    30.1% /  29.9%    30.6% /  33.8%     0.9%
+   MFE / MAE exceedance (costs included): said -> got, all years
+     buy  MFE>=0.5: 92%->92%  MFE>=1: 84%->85%  MFE>=1.5: 77%->78%  MFE>=2: 70%->71%  MAE>=0.5: 93%->93%  MAE>=1: 86%->85%  MAE>=1.5: 78%->77%
+     sell MFE>=0.5: 91%->91%  MFE>=1: 84%->83%  MFE>=1.5: 76%->75%  MFE>=2: 70%->68%  MAE>=0.5: 94%->94%  MAE>=1: 86%->87%  MAE>=1.5: 79%->80%
+   15m decisions, 360-minute horizon
+   template                       2024 said/got     2025 said/got     2026 said/got  ECE all
+   buy 1 ATR stop, 1R            46.2% /  49.4%    47.3% /  49.8%    47.9% /  47.6%     1.3%
+   buy 1 ATR stop, 1.5R          35.9% /  39.2%    36.9% /  39.8%    37.4% /  37.0%     1.4%
+   buy 1 ATR stop, 2R            28.5% /  31.3%    29.3% /  32.4%    29.8% /  29.4%     1.4%
+   buy 1.5 ATR stop, 1R          44.6% /  47.8%    45.5% /  49.1%    46.1% /  45.6%     1.6%
+   buy 1.5 ATR stop, 1.5R        32.3% /  35.0%    33.1% /  36.7%    33.5% /  33.0%     1.4%
+   buy 1.5 ATR stop, 2R          24.0% /  26.0%    24.5% /  27.3%    24.8% /  23.7%     1.0%
+   sell 1 ATR stop, 1R           47.1% /  44.3%    47.5% /  46.7%    48.1% /  50.4%     0.8%
+   sell 1 ATR stop, 1.5R         36.2% /  33.7%    36.5% /  36.3%    37.0% /  40.5%     0.8%
+   sell 1 ATR stop, 2R           28.5% /  26.3%    28.7% /  29.2%    29.2% /  33.1%     1.2%
+   sell 1.5 ATR stop, 1R         44.6% /  41.4%    44.8% /  44.7%    45.3% /  49.6%     1.2%
+   sell 1.5 ATR stop, 1.5R       32.0% /  29.5%    32.2% /  32.9%    32.7% /  37.9%     1.9%
+   sell 1.5 ATR stop, 2R         23.6% /  22.2%    23.8% /  24.5%    24.2% /  28.6%     2.0%
+   MFE / MAE exceedance (costs included): said -> got, all years
+     buy  MFE>=0.5: 86%->87%  MFE>=1: 73%->74%  MFE>=1.5: 61%->62%  MFE>=2: 50%->52%  MAE>=0.5: 87%->86%  MAE>=1: 73%->72%  MAE>=1.5: 61%->60%
+     sell MFE>=0.5: 85%->84%  MFE>=1: 72%->71%  MFE>=1.5: 60%->59%  MFE>=2: 49%->49%  MAE>=0.5: 88%->89%  MAE>=1: 74%->76%  MAE>=1.5: 62%->64%
+
+   2e. why the trade baseline replays history at today's cost: spread in ATR by year
+   5m   2018 0.101  2019 0.089  2020 0.052  2021 0.062  2022 0.057  2023 0.074  2024 0.061  2025 0.036  2026 0.021
+   15m  2018 0.053  2019 0.046  2020 0.027  2021 0.028  2022 0.027  2023 0.034  2024 0.031  2025 0.019  2026 0.011
+   Gold's ATR grew with its price and the spread did not, so a trade got ~4x cheaper in
+   ATR terms and P(target first) rose on BOTH sides. Pooling all years would call that
+   skill. The table at the costs history paid, scored against the replayed one
+   (skill of the "pooled" table; < 0 = replaying at today's cost is the better baseline):
+   tf   template                          2024                  2025                  2026
+   5m   buy 1ATR 1R        -0.44% [-0.57,-0.30]   -0.68% [-0.84,-0.53]   -0.38% [-0.58,-0.17]
+   5m   sell 1ATR 1R       -0.43% [-0.59,-0.25]   -0.63% [-0.83,-0.42]   -1.39% [-1.65,-1.14]
+   15m  buy 1ATR 1R        -0.09% [-0.17,-0.00]   -0.21% [-0.31,-0.12]   +0.00% [-0.13,+0.15]
+   15m  sell 1ATR 1R       +0.09% [-0.05,+0.23]   +0.01% [-0.15,+0.18]   -0.48% [-0.71,-0.27]
+
+3. RECENCY WEIGHTING - 365-day half-life vs the expanding window
+   skill = 1 - score(recency) / score(expanding); > 0 means recency helps. [90% interval]
+   tf   output                            2024                  2025                  2026
+   5m   direction @H       +0.05% [+0.02,+0.08]   +0.14% [+0.06,+0.22]   -0.09% [-0.18,+0.00]
+   5m   state @H           +0.01% [-0.01,+0.03]   +0.10% [+0.04,+0.15]   +0.00% [-0.06,+0.07]
+   5m   range up @H        -0.00% [-0.02,+0.02]   -0.00% [-0.02,+0.01]   +0.01% [-0.01,+0.03]
+   5m   range down @H      +0.05% [+0.02,+0.08]   +0.03% [-0.01,+0.06]   -0.02% [-0.05,+0.00]
+   15m  direction @H       +0.10% [+0.03,+0.16]   +0.25% [+0.11,+0.41]   -0.18% [-0.33,-0.04]
+   15m  state @H           +0.02% [-0.03,+0.08]   +0.12% [-0.02,+0.26]   -0.05% [-0.17,+0.10]
+   15m  range up @H        +0.01% [-0.02,+0.04]   +0.04% [-0.01,+0.09]   -0.02% [-0.05,+0.02]
+   15m  range down @H      +0.06% [+0.03,+0.11]   +0.01% [-0.03,+0.05]   -0.02% [-0.04,+0.00]
+   1h   direction @H       +0.07% [-0.04,+0.18]   +0.39% [+0.12,+0.70]   -0.30% [-0.63,+0.03]
+   1h   state @H           +0.06% [-0.19,+0.30]   +0.56% [+0.16,+1.07]   -0.18% [-0.55,+0.25]
+   1h   range up @H        +0.05% [-0.04,+0.15]   +0.15% [-0.01,+0.31]   -0.19% [-0.34,-0.05]
+   1h   range down @H      +0.04% [+0.00,+0.09]   -0.00% [-0.05,+0.05]   -0.01% [-0.07,+0.05]
+   4h   direction @H       +0.11% [-0.10,+0.33]   +0.58% [+0.06,+1.12]   -0.52% [-1.08,+0.13]
+   4h   state @H           -0.05% [-0.42,+0.36]   +2.57% [+1.85,+3.34]   -1.44% [-2.44,-0.52]
+   4h   range up @H        +0.03% [-0.14,+0.20]   +0.26% [-0.06,+0.56]   -0.36% [-0.67,-0.10]
+   4h   range down @H      -0.01% [-0.08,+0.06]   -0.03% [-0.11,+0.05]   -0.03% [-0.13,+0.08]
+   5m   buy 1ATR 1R        +0.10% [+0.06,+0.14]   +0.10% [+0.04,+0.17]   -0.04% [-0.10,+0.02]
+   5m   sell 1ATR 1R       +0.02% [+0.00,+0.03]   -0.00% [-0.01,+0.01]   +0.07% [+0.04,+0.10]
+   15m  buy 1ATR 1R        +0.25% [+0.13,+0.38]   +0.17% [+0.02,+0.33]   -0.11% [-0.25,+0.01]
+   15m  sell 1ATR 1R       +0.16% [+0.07,+0.26]   +0.05% [-0.05,+0.15]   -0.05% [-0.12,+0.01]
+
+4. REFERENCE CHECK - can the scorecard see skill that is known to exist?
+   state_transition = P(state later | state now); regime persistence is real, so this must score > 0
+   tf                     2024                  2025                  2026
+   5m      +9.44% [+8.86,+10.08]   +9.26% [+8.56,+9.96]   +9.06% [+8.34,+9.84]
+   15m    +15.30% [+13.90,+16.45]  +17.20% [+15.72,+18.64]  +14.76% [+13.39,+16.21]
+   1h     +23.45% [+20.94,+25.63]  +23.73% [+21.14,+26.43]  +20.92% [+18.34,+23.84]
+   4h     +35.97% [+31.60,+40.16]  +40.04% [+35.56,+44.65]  +37.11% [+31.88,+41.88]
+
+5. WHERE CONDITIONS MOVE THE ODDS - a preview of the conditional tables (Phase C)
+   LIFT = (realised - baseline) in the group, minus the same miss over ALL rows of that
+   year - so a drift that lifts every group at once (a bull year, cheaper trades) is
+   taken out and only what the condition adds is left. Percentage points. Listed only
+   when the lift has the SAME sign in all three years AND its 90% interval excludes 0.
+   A lift is a candidate, not a forecast: Phase C has to turn it into one and beat the
+   baseline out of sample, with a penalty for how many candidates were looked at.
+   38 of 288 condition groups met both tests. By chance alone about 22 would
+   (90% range 14-29); more than that suggests some structure is real, but not WHICH rows.
+   15m direction
+     session: sydney                    said  51.1% got  54.8%  lift  +2.0pp [+0.1, +3.9]  by year  +0.1  +1.5  +5.4  n_eff 696
+     regime: DOWNTREND                  said  51.1% got  54.6%  lift  +2.0pp [+0.2, +3.7]  by year  +3.8  +0.1  +2.2  n_eff 1,232
+   15m tpl_buy_1atr_1r_tp_first
+     session: sydney                    said  46.5% got  52.1%  lift  +3.6pp [+1.7, +5.7]  by year  +1.3  +4.7  +5.4  n_eff 232
+     mtf: strong up                     said  47.1% got  50.8%  lift  +1.5pp [+0.1, +2.8]  by year  +1.9  +1.0  +2.5  n_eff 616
+     mtf: conflicted                    said  47.0% got  47.5%  lift  -1.5pp [-2.9, -0.2]  by year  -1.0  -1.4  -2.4  n_eff 737
+     session: london                    said  47.1% got  47.6%  lift  -1.5pp [-2.7, -0.4]  by year  -0.8  -1.8  -1.9  n_eff 589
+     regime: TRANSITION                 said  47.1% got  50.4%  lift  +1.4pp [+0.4, +2.5]  by year  +1.6  +0.5  +2.2  n_eff 875
+   15m tpl_buy_1atr_2r_tp_first
+     vol: extreme                       said  29.5% got  27.9%  lift  -3.6pp [-5.5, -1.9]  by year  -5.2  -4.1  -1.0  n_eff 446
+     session: sydney                    said  28.8% got  34.2%  lift  +3.4pp [+1.2, +5.5]  by year  +0.2  +2.8  +8.3  n_eff 232
+     session: newyork                   said  29.3% got  28.4%  lift  -3.0pp [-4.8, -1.1]  by year  -6.4  -0.4  -1.7  n_eff 580
+     mtf: strong up                     said  29.2% got  33.4%  lift  +1.8pp [+0.1, +3.5]  by year  +3.7  +1.0  +1.3  n_eff 616
+     mtf: conflicted                    said  29.1% got  29.3%  lift  -1.8pp [-3.3, -0.2]  by year  -1.2  -3.0  -1.3  n_eff 737
+     vol: normal                        said  29.1% got  32.8%  lift  +1.6pp [+0.3, +2.8]  by year  +0.8  +2.3  +1.9  n_eff 747
+     vol: high                          said  29.3% got  29.8%  lift  -1.6pp [-3.1, -0.2]  by year  -3.0  -1.0  -0.1  n_eff 522
+   15m tpl_sell_1atr_1r_tp_first
+     session: sydney                    said  47.0% got  42.8%  lift  -3.4pp [-5.3, -1.4]  by year  -1.3  -4.3  -5.1  n_eff 232
+     session: london                    said  47.5% got  48.9%  lift  +2.0pp [+0.9, +3.3]  by year  +1.8  +2.3  +2.0  n_eff 589
+     regime: SQUEEZE                    said  47.0% got  48.4%  lift  +2.0pp [+0.0, +3.8]  by year  +0.5  +1.7  +4.2  n_eff 192
+     vol: extreme                       said  48.0% got  45.7%  lift  -1.6pp [-3.2, -0.1]  by year  -2.2  -1.4  -1.3  n_eff 446
+     regime: TRANSITION                 said  47.5% got  45.4%  lift  -1.5pp [-2.6, -0.5]  by year  -2.0  -0.3  -2.2  n_eff 875
+     mtf: conflicted                    said  47.5% got  48.0%  lift  +1.4pp [+0.0, +2.8]  by year  +0.6  +1.3  +2.6  n_eff 737
+   15m tpl_sell_1atr_2r_tp_first
+     session: newyork                   said  28.9% got  23.0%  lift  -6.3pp [-8.1, -4.6]  by year  -9.0  -7.1  -1.6  n_eff 580
+     vol: extreme                       said  29.1% got  26.1%  lift  -3.4pp [-5.0, -1.5]  by year  -5.1  -3.2  -1.6  n_eff 446
+     session: london                    said  28.8% got  32.1%  lift  +3.0pp [+1.5, +4.6]  by year  +3.3  +3.3  +2.0  n_eff 589
+     vol: very_low                      said  28.5% got  31.9%  lift  +2.8pp [+1.1, +4.6]  by year  +1.6  +4.4  +2.4  n_eff 468
+     regime: SQUEEZE                    said  28.5% got  31.3%  lift  +2.4pp [+0.3, +4.6]  by year  +1.2  +3.4  +2.8  n_eff 192
+     session: sydney                    said  28.4% got  26.8%  lift  -2.0pp [-3.8, -0.0]  by year  -2.1  -0.7  -3.8  n_eff 232
+     vol: high                          said  28.9% got  27.4%  lift  -1.7pp [-3.2, -0.4]  by year  -2.2  -1.1  -2.1  n_eff 522
+     mtf: conflicted                    said  28.8% got  30.7%  lift  +1.7pp [+0.2, +3.2]  by year  +0.3  +1.2  +4.2  n_eff 737
+   1h direction
+     regime: RANGE                      said  51.5% got  51.4%  lift  -2.6pp [-5.5, -0.1]  by year  -0.5  -2.1  -6.7  n_eff 557
+   5m direction
+     regime: DOWNTREND                  said  50.8% got  54.2%  lift  +2.2pp [+1.1, +3.4]  by year  +1.2  +2.6  +2.9  n_eff 2,377
+   5m tpl_buy_1atr_2r_tp_first
+     session: london                    said  30.4% got  30.8%  lift  -1.1pp [-2.0, -0.2]  by year  -0.4  -1.5  -1.5  n_eff 589
+     regime: UPTREND                    said  30.3% got  32.9%  lift  +1.0pp [+0.1, +2.0]  by year  +1.1  +0.5  +1.7  n_eff 489
+   5m tpl_sell_1atr_1r_tp_first
+     session: sydney                    said  44.5% got  41.5%  lift  -3.0pp [-4.3, -1.6]  by year  -3.7  -2.4  -3.0  n_eff 231
+     session: london                    said  46.5% got  47.6%  lift  +1.0pp [+0.3, +1.8]  by year  +1.2  +1.2  +0.6  n_eff 589
+   5m tpl_sell_1atr_2r_tp_first
+     session: sydney                    said  29.5% got  26.8%  lift  -2.5pp [-3.8, -1.1]  by year  -2.7  -2.4  -2.5  n_eff 231
+     session: london                    said  30.9% got  31.7%  lift  +1.0pp [+0.2, +2.0]  by year  +1.4  +1.1  +0.4  n_eff 589
+
+6. THE RANGE MODEL (Phase B) - hour x news x volatility tables, each cell shrunk to
+   its parent. k and the half-life were tuned on 2020-2023 only; 2024-2026 are scored
+   against the climatology at the horizon. PROMOTED = the interval clears zero in every
+   year on both sides AND the P20-P80 band held 55-65% of outcomes - only then does the
+   lab draw this cone; otherwise it draws the baseline and says why.
+   tf   side                    2024                  2025                  2026     P20-80 held  verdict
+   5m   up       +4.28% [+3.65,+4.92]   +2.60% [+2.00,+3.11]   +3.10% [+2.53,+3.71] 60% / 60% / 60%  PROMOTED
+   5m   dn       +4.56% [+3.94,+5.13]   +2.56% [+2.04,+3.13]   +2.20% [+1.61,+2.76] 60% / 59% / 60%  
+        tuned: k 3, half-life 12 months   decay (skill by step, all years): up +1.6 +1.7 +1.8 +2.0 +2.2 +2.4 +2.6 +2.7 +2.8 +3.0 +3.2 +3.4  | down +1.5 +1.6 +1.8 +1.9 +2.1 +2.3 +2.4 +2.5 +2.7 +2.8 +3.0 +3.2
+   15m  up       +6.79% [+5.77,+7.82]   +2.85% [+1.90,+3.85]   +3.24% [+2.15,+4.22] 60% / 60% / 60%  PROMOTED
+   15m  dn       +8.01% [+6.88,+9.09]   +4.05% [+2.96,+5.07]   +2.68% [+1.58,+3.67] 60% / 58% / 59%  
+        tuned: k 3, half-life 12 months   decay (skill by step, all years): up +3.4 +3.5 +3.7 +3.8 +4.0 +4.2 +4.4 +4.5  | down +3.4 +3.7 +4.0 +4.2 +4.5 +4.7 +5.0 +5.1
+   1h   up       +6.42% [+4.76,+8.13]   +0.87% [-0.87,+2.64]   +0.33% [-1.29,+2.07] 59% / 59% / 59%  baseline kept
+   1h   dn       +7.62% [+5.70,+9.50]   +1.59% [-0.22,+3.20]   -0.12% [-2.19,+1.45] 58% / 58% / 59%  
+        tuned: k 3, half-life 24 months   decay (skill by step, all years): up +4.1 +3.9 +3.7 +3.4 +3.1 +2.9  | down +4.7 +4.8 +4.7 +4.2 +3.7 +3.4
+   4h   up       +3.22% [+1.85,+4.41]   -0.46% [-1.79,+0.71]   -0.50% [-1.86,+0.92] 61% / 59% / 58%  baseline kept
+   4h   dn       +3.66% [+2.46,+5.04]   +0.51% [-0.74,+1.86]   -0.97% [-2.35,+0.37] 57% / 58% / 56%  
+        tuned: k 30, half-life none   decay (skill by step, all years): up +2.6 +1.3 +0.9  | down +4.3 +2.1 +1.3
+
+   where the range model helps most and least (skill at the horizon, both sides pooled
+   by condition group; interval 90%):
+   5m   most: news release due (up) +16.6%, news release due (dn) +15.3%, session overlap (up) +5.8%
+        least: session london (dn) +1.2%, session sydney (up) +0.9%
+   15m  most: news release due (dn) +15.3%, news release due (up) +14.6%, session newyork (dn) +11.0%
+        least: session tokyo (dn) +1.3%, session sydney (up) +0.4%
+   1h   most: news release due (up) +13.3%, news release due (dn) +10.8%, vol very_low (up) +6.8%
+        least: vol extreme (up) -1.1%, session sydney (up) -1.4%
+   4h   most: mtf strong down (up) +6.7%, news release due (up) +6.2%, session newyork (dn) +5.2%
+        least: vol extreme (up) -2.2%, mtf strong down (dn) -4.3%
+
+7. THE CONDITIONAL TABLES (Phase C) - lift over each baseline, keys chosen on 2018-2023
+   direction: regime x momentum x leg position | regime: regime x momentum x volatility
+   trade odds: volatility x session x regime, over the baseline replayed at each trade's cost
+   Brier skill vs the baseline; PROMOTED = interval clears zero every year AND calibration
+   error <= 3pp. What is not promoted is shown in the lab as "~ baseline", numbers visible.
+   tf   output                                  2024                  2025                  2026  verdict
+   5m   direction @12            +0.06% [-0.05,+0.17]   +0.20% [+0.07,+0.33]   -0.15% [-0.33,+0.03]  baseline kept
+   5m   regime @H               +13.05% [+12.42,+13.72]  +12.50% [+11.82,+13.28]  +12.64% [+11.80,+13.45]  PROMOTED
+   5m   buy_1atr_1r              +0.03% [-0.03,+0.10]   +0.09% [+0.01,+0.17]   -0.13% [-0.23,-0.02]  baseline kept
+   5m   sell_1atr_1r             +0.12% [-0.02,+0.27]   -0.07% [-0.17,+0.04]   -0.11% [-0.19,-0.04]  baseline kept
+   5m   buy_1atr_2r              +0.10% [-0.00,+0.20]   +0.14% [-0.01,+0.28]   -0.22% [-0.39,-0.05]  baseline kept
+   5m   sell_1atr_2r             +0.15% [-0.02,+0.30]   -0.00% [-0.15,+0.13]   -0.18% [-0.28,-0.07]  baseline kept
+   15m  direction @8             +0.17% [+0.04,+0.31]   +0.12% [-0.03,+0.27]   -0.21% [-0.41,-0.02]  baseline kept
+   15m  regime @H               +19.18% [+17.74,+20.44]  +20.95% [+19.57,+22.39]  +19.18% [+17.72,+20.85]  PROMOTED
+   15m  buy_1atr_1r              +0.37% [+0.14,+0.60]   +0.26% [+0.02,+0.52]   -0.25% [-0.49,-0.02]  baseline kept
+   15m  sell_1atr_1r             +0.42% [+0.15,+0.69]   +0.13% [-0.11,+0.39]   -0.26% [-0.45,-0.04]  baseline kept
+   15m  buy_1atr_2r              +2.74% [+2.16,+3.32]   +0.83% [+0.35,+1.30]   -0.24% [-0.64,+0.17]  baseline kept
+   15m  sell_1atr_2r             +1.64% [+1.06,+2.14]   +0.61% [+0.20,+0.97]   -0.05% [-0.35,+0.25]  baseline kept
+   1h   direction @6             +0.03% [-0.13,+0.20]   +0.40% [+0.05,+0.77]   -0.17% [-0.63,+0.29]  baseline kept
+   1h   regime @H               +26.79% [+24.11,+29.10]  +27.68% [+25.06,+30.52]  +24.70% [+21.77,+27.68]  PROMOTED
+   4h   direction @3             +0.05% [-0.33,+0.42]   +0.56% [-0.04,+1.14]   -0.89% [-1.64,+0.00]  baseline kept
+   4h   regime @H               +37.06% [+32.92,+41.20]  +41.70% [+37.26,+46.29]  +38.52% [+33.42,+43.24]  PROMOTED
+
+Files: manifest.json, ui_summary.json (what the lab shows), scorecard.parquet (every output, every step k - the decay curves), conditional.parquet, forecasts_<tf>.parquet (one row per forecast).

@@ -15,8 +15,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { IndicatorsMenu, LAYOUT_ROWS, LayoutMenu } from '../chart/ChartMenus'
 import { ChartPane } from '../chart/ChartPane'
-import { DEFAULT_LAYOUT, DEFAULT_OVERLAYS, type Bar, type LayoutOpts, type Overlays,
-  type TradeMark } from '../chart/types'
+import { DEFAULT_LAYOUT, DEFAULT_OVERLAYS, type Bar, type ForecastCone, type LayoutOpts,
+  type Overlays, type TradeMark } from '../chart/types'
 import { toBars } from '../lib/api'
 import { fmt, signed } from '../lib/format'
 import * as snapshot from '../lib/snapshot'
@@ -25,8 +25,10 @@ import { LabDock, type DockTab } from './LabDock'
 import { LabSide, type SideTab } from './LabSide'
 import { LabTimeline } from './LabTimeline'
 import { NewSession } from './NewSession'
+import { MarketData } from '../panels/MarketData'
+import { DeleteSession } from './DeleteSession'
 import { lab, LabSocket, type LabConn } from './labApi'
-import type { LabDataInfo, LabEvent, LabFrame, LabJob, LabNote, LabSession, LabSnap,
+import type { LabDataInfo, LabEvent, LabForecast, LabFrame, LabJob, LabNote, LabSession, LabSnap,
   LabStats, LabTrade, SchemaRow } from './types'
 import './lab.css'
 
@@ -61,8 +63,10 @@ const toInput = (ms: number) => new Date(ms).toISOString().slice(0, 16)
 
 type MenuKey = null | 'session' | 'next' | 'indicators' | 'layout' | 'snapshot'
 
-export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }: {
+export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, onLayout }: {
   theme: string
+  /** The system-wide theme - switching it here switches the live chart too. */
+  onTheme: (key: string) => void
   liveOverlays: Overlays
   /** The system-wide Layout selection - the same on every chart. */
   layout: LayoutOpts
@@ -93,6 +97,10 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
   // account, so on a replay those two are always off.
   const layout = useMemo<LayoutOpts>(
     () => ({ ...DEFAULT_LAYOUT, ...globalLayout, newsMarks: false, positions: false }), [globalLayout])
+  // The forecast engine's range cone: shown or not, and pinned to a bar or
+  // following the one on screen.
+  const [coneOn, setConeOn] = useState<boolean>(() => load<boolean>('dianur.lab.cone', true))
+  const [pinned, setPinned] = useState<LabForecast | null>(null)
   const [menu, setMenu] = useState<MenuKey>(null)
   const [showNew, setShowNew] = useState(false)
   const [sideTab, setSideTab] = useState<SideTab>('now')
@@ -104,6 +112,11 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
   const [gotoText, setGotoText] = useState('')
   const [sessionsKey, setSessionsKey] = useState(0)
   const [recent, setRecent] = useState<any[]>([])
+  // Back on the start page (closed, or the open session was deleted): list what is on disk now.
+  useEffect(() => {
+    if (session) return
+    lab.sessions().then((d) => setRecent(d.sessions.slice(0, 6))).catch(() => {})
+  }, [session])
   const sock = useRef<LabSocket | null>(null)
   const engine = useRef<any>(null)
   const centre = useRef<HTMLDivElement>(null)
@@ -111,6 +124,7 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
   const toastTimer = useRef<number | null>(null)
 
   const setOverlays = (o: Overlays) => { setOverlaysRaw(o); save('dianur.lab.overlays', o) }
+  const setCone = (on: boolean) => { setConeOn(on); save('dianur.lab.cone', on) }
   const setLayoutKey = (k: keyof LayoutOpts, on: boolean) => onLayout(k, on)
   const setDockTab = (t: DockTab) => { setDockTabRaw(t); setDockOpen(true); save('dianur.lab.dock', t) }
   const flash = (msg: string) => {
@@ -141,6 +155,7 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
         }
         break
       case 'session':
+        setPinned(null)
         setSession(m)
         setBars(toBars(m.bars))
         setEvents(m.events ?? [])
@@ -270,6 +285,30 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
     lots: session.settings?.execution?.lots_gold ?? 0.01, symbol: '',
   } : null), [session])
   const selectedTrade = useMemo(() => trades.find((t) => t.id === selTrade) ?? null, [trades, selTrade])
+  const forecast = frame?.forecast ?? null
+  // A pinned cone stays at its bar while the replay moves on - hidden while
+  // the view is BEFORE that bar, since its anchor is not on the chart then.
+  const pinShown = pinned && cur && (pinned.t ?? 0) <= cur.t ? pinned : null
+  const cone = useMemo<ForecastCone | null>(() => {
+    const f = pinShown ?? forecast
+    if (!coneOn || !f || !f.available || !f.up || !f.dn || !f.base_up || !f.base_dn) return null
+    // The model's cone only where it passed its promotion gate; otherwise the
+    // baseline's, labelled so - never a forecast that has not earned it.
+    const model = f.promoted
+    return {
+      anchorT: f.t!, close: f.close!, atr: f.atr!,
+      up: model ? f.up : f.base_up, dn: model ? f.dn : f.base_dn,
+      baseUp: model ? f.base_up.map((q) => q[1]) : undefined,
+      baseDn: model ? f.base_dn.map((q) => q[1]) : undefined,
+      label: `${model ? 'RANGE FORECAST' : 'BASELINE RANGE'} ${f.tf} · next ${f.horizon} bars`,
+      pinned: !!pinShown,
+    }
+  }, [coneOn, forecast, pinShown])
+  const togglePin = () => {
+    if (pinned) { setPinned(null); return }
+    if (forecast?.available) setPinned(forecast)
+    else flash(forecast?.reason ?? 'No forecast at this bar to pin.')
+  }
 
   // ------------------------------------------------------------ actions
   const send = (op: string, payload: Record<string, any> = {}) => {
@@ -342,6 +381,7 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
       else if (k === 't' || k === 'T') send('next', { what: 'trade' })
       else if (k === 'r' || k === 'R') setReveal((x) => !x)
       else if (k === 's' || k === 'S') snapToSession()
+      else if (k === 'p' || k === 'P') togglePin()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -388,6 +428,20 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
               title={session.cfg.mode === 'auto' ? 'The system trades, exactly as live would' : 'You trade; the engine advises'}>
               {session.cfg.mode === 'auto' ? 'SYSTEM' : 'MANUAL'}
             </span>
+            {(session.cfg as any).news_gate ? (
+              <span className="chip chip-info" title="The live news blackout, replayed from the release history (US releases; live's calendar also has other currencies)">
+                NEWS GATE
+              </span>
+            ) : (
+              <span className="chip chip-warn" title="This session does not replay the live news blackout, so sends near releases may differ from live">
+                NO NEWS GATE
+              </span>
+            )}
+            {(session.cfg as any).forecast_filter && (
+              <span className="chip chip-warn" title="Phase D: a forecast filter vetoes some sends the live gates qualified - this is NOT the live strategy">
+                FILTER · {(session.cfg as any).forecast_filter}
+              </span>
+            )}
 
             <div className="lab-transport">
               <button title="First bar (Home)" onClick={() => send('first')} disabled={busy}>⏮</button>
@@ -440,7 +494,15 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
               <button className={`tool-btn ${menu === 'indicators' ? 'on' : ''}`}
                 onClick={() => setMenu(menu === 'indicators' ? null : 'indicators')}>ƒ Indicators</button>
               {menu === 'indicators' && (
-                <IndicatorsMenu overlays={overlays} onChange={setOverlays} exclude={['mtfTrendlines']} />
+                <IndicatorsMenu overlays={overlays} onChange={setOverlays} exclude={['mtfTrendlines']}>
+                  <div className="menu-head">Forecast</div>
+                  <button className={`menu-item ${coneOn ? 'on' : ''}`} role="menuitemcheckbox"
+                    aria-checked={coneOn} onClick={() => setCone(!coneOn)}>
+                    <span className="menu-check">{coneOn ? '\u2713' : ''}</span>
+                    <span className="menu-label">Range cone</span>
+                    <span className="menu-hint">P20-P80 of the next bars</span>
+                  </button>
+                </IndicatorsMenu>
               )}
             </div>
             <div className="lab-pop">
@@ -448,7 +510,8 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
                 onClick={() => setMenu(menu === 'layout' ? null : 'layout')}>▦ Layout</button>
               {menu === 'layout' && (
                 <LayoutMenu layout={layout} onToggle={setLayoutKey} rows={LAB_LAYOUT_ROWS}
-                  note="Layout is the same on every chart, live and backtest." />
+                  theme={theme} onTheme={onTheme}
+                  note="Layout and theme are the same on every chart, live and backtest." />
               )}
             </div>
             <div className="lab-pop">
@@ -500,13 +563,14 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
                 tfMs={0} layout={layout} news={[]} positions={[]}
                 legBlocked={legBlocked} trades={marks}
                 cursorT={reveal && cur ? cur.t : null}
-                watermark="BACKTEST" theme={theme}
+                watermark="DIANURFX BACKTEST" theme={theme} forecast={cone}
                 status={null}
                 badge={<span className="lab-chip-sim">SIMULATED · {session.cfg.symbol} {session.cfg.tf}</span>}
               />
             ) : (
               <Welcome conn={conn} data={data} recent={recent}
-                onNew={() => setShowNew(true)} onOpen={(sid) => send('open', { sid })} />
+                onNew={() => setShowNew(true)} onOpen={(sid) => send('open', { sid })}
+                onDeleted={() => lab.sessions().then((d) => setRecent(d.sessions.slice(0, 6))).catch(() => {})} />
             )}
             {job && (
               <div className="lab-job">
@@ -550,7 +614,8 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
                   cursorI={v} cursorT={cur?.t ?? 0} selectedTrade={selTrade}
                   onPickTrade={pickTrade} onSeekBar={seekBar} onSeekTime={seekTime}
                   onOpen={(sid) => send('open', { sid })} onNew={() => setShowNew(true)}
-                  onSnapshot={snapToSession} digits={digits} reveal={reveal} refreshKey={sessionsKey} />
+                  onSnapshot={snapToSession} digits={digits} reveal={reveal} refreshKey={sessionsKey}
+                  forecast={forecast} />
               )}
             </div>
           )}
@@ -563,7 +628,8 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
             onTag={(id, tag, note) => send('tag', { id, tag, note })}
             onNote={(text) => { send('note', { text }); flash('Note added to the journal') }}
             schema={schema?.schema ?? []} live={schema?.live ?? {}} playbooks={data?.playbooks ?? []}
-            onConfigure={configure} />
+            onConfigure={configure} bars={bars} pinned={pinned} onPin={togglePin}
+            coneOn={coneOn} onCone={setCone} onSeekTime={seekTime} />
         )}
       </div>
 
@@ -577,12 +643,13 @@ export function LabView({ theme, liveOverlays, layout: globalLayout, onLayout }:
   )
 }
 
-function Welcome({ conn, data, recent, onNew, onOpen }: {
+function Welcome({ conn, data, recent, onNew, onOpen, onDeleted }: {
   conn: LabConn
   data: LabDataInfo | null
   recent: any[]
   onNew: () => void
   onOpen: (sid: string) => void
+  onDeleted: () => void
 }) {
   const sym = data?.symbols[0]
   return (
@@ -605,20 +672,26 @@ function Welcome({ conn, data, recent, onNew, onOpen }: {
             {sym.symbol}: 1m {new Date(sym.coverage['1m']?.first_ms ?? 0).getUTCFullYear()} → {new Date(sym.coverage['1m']?.last_ms ?? 0).toISOString().slice(0, 10)} on disk
           </div>
         )}
+        {/* How current that is, and a one-click top-up (Settings > Market data has the rest). */}
+        <MarketData compact />
         <div className="lab-keys">
           <span><b>Space</b> play/pause</span><span><b>← →</b> step</span><span><b>Shift</b> ×10</span>
           <span><b>N</b> next signal</span><span><b>T</b> next trade</span><span><b>R</b> reveal future</span>
-          <span><b>S</b> snapshot</span><span><b>Home/End</b> first/latest</span>
+          <span><b>S</b> snapshot</span><span><b>P</b> pin the range cone</span>
+          <span><b>Home/End</b> first/latest</span>
         </div>
       </div>
       {recent.length > 0 && (
         <div className="lab-recent">
           <div className="lab-chartbox-h">Recent sessions</div>
           {recent.map((m) => (
-            <button key={m.id} className="lab-recent-r" onClick={() => onOpen(m.id)}>
-              <span className="t-hi">{m.name}</span>
-              <span className="t-dim mono">{m.symbol} {m.tf} · {m.summary?.n ?? 0} trades · {signed(m.summary?.net ?? 0, 2)}</span>
-            </button>
+            <div key={m.id} className="lab-recent-row">
+              <button className="lab-recent-r" onClick={() => onOpen(m.id)}>
+                <span className="t-hi">{m.name}</span>
+                <span className="t-dim mono">{m.symbol} {m.tf} · {m.summary?.n ?? 0} trades · {signed(m.summary?.net ?? 0, 2)}</span>
+              </button>
+              <DeleteSession sid={m.id} name={m.name} onDeleted={onDeleted} compact />
+            </div>
           ))}
         </div>
       )}

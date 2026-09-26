@@ -148,6 +148,143 @@ export type LabFrame = {
   account: LabAccount
   ev: number
   tr: number
+  forecast?: LabForecast
+}
+
+/** [P20, P50, P80] in ATR of the forecast bar. */
+export type Q3 = [number, number, number]
+
+export type LabGateYear = {
+  up?: { skill: number | null; lo: number | null; hi: number | null; cov: number | null; cov_base?: number | null }
+  dn?: { skill: number | null; lo: number | null; hi: number | null; cov: number | null; cov_base?: number | null }
+}
+
+export type LabGate = {
+  promoted: boolean
+  years: Record<string, LabGateYear>
+  k_prior?: number
+  half_life_months?: number | null
+}
+
+export type LabBarrierOdds = {
+  target: number | null; stop: number | null; neither: number | null
+  inside: boolean; target_atr: number
+  /** the conditions' lift for the nearest template, on top of the baseline */
+  model?: { target: number; stop: number; neither: number; template: string; why: string[]
+            neff: number; promoted: boolean }
+}
+
+export type LabConfidence = 'high' | 'moderate' | 'baseline'
+
+export type LabCondGate = {
+  promoted: boolean
+  years: Record<string, { skill: number | null; lo: number | null; hi: number | null
+                          ece?: number | null; ece_base?: number | null }>
+}
+
+export type LabDirection = {
+  p: number[]; base: number[]; lo: number; hi: number; neff: number; w: number; why: string[]
+  promoted: boolean; gate: LabCondGate | null; confidence: LabConfidence
+}
+
+export type LabRegime = {
+  p: number[]; base: number[]; top: number; lo: number; hi: number; neff: number; w: number
+  why: string[]; promoted: boolean; gate: LabCondGate | null; confidence: LabConfidence
+}
+
+export type LabAnalogs = {
+  n: number; n_eff: number; p_up?: number; up_med?: number; dn_med?: number; first_ms?: number
+  why?: string[]; tp_buy?: number | null; tp_sell?: number | null
+  agreement?: 'agree' | 'disagree' | 'neutral' | 'too few'
+  rows: { t: number; close_ms: number; up: number; dn: number; ret_up: number; state_h: number
+          in_session?: boolean }[]
+}
+
+export type LabForecastTrade = {
+  kind: 'signal' | 'position'
+  id: string
+  side: 'buy' | 'sell'
+  label?: string
+  stop_atr: number
+  tp1?: LabBarrierOdds
+  tp2?: LabBarrierOdds
+  tp?: LabBarrierOdds
+}
+
+export type LabForecastMtf = {
+  tf: string; horizon: number; t: number; close: number; atr: number
+  up: Q3; dn: Q3; base_up: Q3; base_dn: Q3; ratio: number; p_up: number; promoted: boolean
+  p_up_model?: number | null
+}
+
+export type LabForecastSession = {
+  n: number; cov_up?: number; cov_dn?: number; b_cov_up?: number; b_cov_dn?: number
+  skill?: number | null
+}
+
+/** The forecast engine's read at the bar on screen (server/lab/forecast.py). */
+export type LabForecast = {
+  symbol?: string
+  tf: string
+  available: boolean
+  reason?: string
+  stale?: boolean
+  horizon?: number
+  row?: number
+  t?: number
+  close_ms?: number
+  close?: number
+  atr?: number
+  /** per step k = 1..H */
+  up?: Q3[]
+  dn?: Q3[]
+  base_up?: Q3[]
+  base_dn?: Q3[]
+  ratio?: number
+  cell?: {
+    hour: number; news: number; vol: number; vol_name: string; neff: number; w: number
+    news_next_min: number; news_next: string | null; rr_w: number | null; session?: string
+  }
+  p_up?: number[]
+  p_state?: number[]
+  state_now?: number
+  gate: LabGate | null
+  promoted: boolean
+  run_id?: string | null
+  direction?: LabDirection | null
+  regime?: LabRegime | null
+  analogs?: LabAnalogs | null
+  agreement?: { label: string; spread: number; rows: [string, number][]; promoted: boolean }
+  /** Phase E: the next release's measured reaction, from releases resolved before this bar */
+  news?: LabNewsReaction | null
+  mtf: LabForecastMtf[]
+  trades: LabForecastTrade[]
+  session: LabForecastSession
+}
+
+export type LabNewsReaction = {
+  kind: string; n: number; x: number; x_p25: number; x_p75: number; p_up: number; first_ms: number
+}
+
+export type LabForecastSettled = {
+  i: number; t: number; up: number; dn: number
+  q_up: Q3; q_dn: Q3; b_up: Q3; b_dn: Q3
+  in_up: boolean; in_dn: boolean; b_in_up: boolean; b_in_dn: boolean
+  loss_m: number; loss_b: number
+}
+
+export type LabForecastSummary = {
+  run_id?: string
+  created_utc?: string
+  eval_years?: number[]
+  versions?: Record<string, string>
+  range?: Record<string, LabGate & { decay: { up: (number | null)[]; dn: (number | null)[] } }>
+  range_conditions?: Record<string, { side: string; cond: string; group: string; skill: number;
+    lo: number; hi: number; per_year: Record<string, number>; n_eff: number }[]>
+  reference?: Record<string, Record<string, [number | null, number | null, number | null]>>
+  trade?: Record<string, Record<string, Record<string, [number | null, number | null, number | null]>>>
+  cond?: Record<string, { direction?: LabCondGate & { decay?: (number | null)[] }; state?: LabCondGate
+                          trade?: LabCondGate & { templates?: Record<string, LabCondGate> } }>
 }
 
 export type LabJob = { label: string; done: number; total: number } | null
@@ -170,4 +307,21 @@ export type SchemaRow = {
   group: string; key: string; label: string
   type: 'float' | 'int' | 'bool' | 'enum' | 'playbooks'
   lo?: number; hi?: number; options?: string[]; hint?: string
+}
+
+/** Phase E: the supervisor's challenge (server/lab/challenge.py). */
+export interface LabChallenge {
+  text: string
+  source: 'llm' | 'engine'
+  model?: string
+  note?: string
+  facts: string[]
+  checks: string[]
+  subject: { id: string; side: string; label: string } | null
+  withheld?: boolean
+  untraced?: string[]
+  traced?: boolean
+  cached?: boolean
+  v?: number
+  t?: number
 }

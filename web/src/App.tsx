@@ -14,7 +14,8 @@ import { BottomDock, DOCK_TABS, type DockTab } from './panels/BottomDock'
 import { LeftRail } from './panels/LeftRail'
 import { RightRail } from './panels/RightRail'
 import { SessionFlyout } from './panels/SessionFlyout'
-import { Settings } from './panels/Settings'
+import { FooterJob } from './panels/MarketData'
+import { Settings, type SettingsTab } from './panels/Settings'
 import { SymbolPicker } from './panels/SymbolPicker'
 
 const TF_LIST = ['1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '1d']
@@ -241,6 +242,8 @@ export default function App() {
   const [theme, setTheme] = useState<string>(
     () => loadPref('dianur.theme', 'glossy'))
   const [showSettings, setShowSettings] = useState(false)
+  // The tab Settings opens on: its first by default, Market data from the footer.
+  const [settingsTab, setSettingsTab] = useState<SettingsTab | undefined>(undefined)
   const [dockH, setDockH] = useState(180)
   // Which panels are open. Part of the saved workspace, so a layout you chose
   // - chart wide, rails away - comes back the same after a restart.
@@ -1028,7 +1031,7 @@ export default function App() {
         </div>
 
 
-        <button className="tool-btn" onClick={() => setShowSettings(true)}
+        <button className="tool-btn" onClick={() => { setSettingsTab(undefined); setShowSettings(true) }}
           title="Alerts, destinations, risk and gates">&#9881; Settings</button>
       </header>
 
@@ -1068,6 +1071,7 @@ export default function App() {
               bars={bars} snapshot={snap} signal={overlays.signal ? selected : null}
               overlays={overlays} digits={digits} money={money}
               onNeedHistory={loadOlderBars} status={chartStatus}
+              watermark="DIANURFX" watermarkStyle="brand"
               onEngine={(e) => { chartEngine.current = e }}
               chartKey={presetKey} preferredSpan={preset?.span ?? null}
               workspace={{
@@ -1154,7 +1158,7 @@ export default function App() {
           )}
         </div>
       ) : (
-        <LabView theme={theme} liveOverlays={overlays} layout={layout} onLayout={setLayoutKey} />
+        <LabView theme={theme} onTheme={setTheme} liveOverlays={overlays} layout={layout} onLayout={setLayoutKey} />
       )}
 
       {/* --------------------------------------------------- status bar */}
@@ -1188,6 +1192,9 @@ export default function App() {
             ))}
           </div>
         )}
+        {/* A market data update (Settings › Market data), followed from here
+            with Settings closed. Nothing is drawn when none is running. */}
+        <FooterJob onOpen={() => { setSettingsTab('data'); setShowSettings(true) }} />
         {/* Account figures sit at the right-hand end of the bar. */}
         <div className="spacer" />
         {/* Account figures come from MT5 and only exist when MT5 is attached.
@@ -1276,7 +1283,7 @@ export default function App() {
       )}
 
       {showSettings && <Settings onClose={() => setShowSettings(false)} liveTf={tf}
-        watchlist={watchlistShown} mt5={mt5} />}
+        watchlist={watchlistShown} mt5={mt5} initialTab={settingsTab} />}
 
       {toast && (
         <div className="panel" style={{

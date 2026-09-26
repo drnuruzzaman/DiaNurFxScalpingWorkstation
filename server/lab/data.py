@@ -28,11 +28,12 @@ def symbols() -> list:
 
 
 def coverage(symbol: str) -> dict:
-    """{tf: {'first_ms', 'last_ms'}} per timeframe on disk. Cached per process."""
+    """{tf: {'first_ms', 'last_ms'}} per timeframe on disk. Cached until a year file changes."""
+    sig = _signature(symbol)
     with _LOCK:
         hit = _COVER.get(symbol)
-    if hit is not None:
-        return hit
+    if hit is not None and hit[0] == sig:
+        return hit[1]
     out = {}
     for tf in available_timeframes(symbol):
         years = available_years(symbol, tf)
@@ -43,8 +44,22 @@ def coverage(symbol: str) -> dict:
         if len(first) and len(last):
             out[tf] = {'first_ms': int(first.t[0]), 'last_ms': int(last.t[-1])}
     with _LOCK:
-        _COVER[symbol] = out
+        _COVER[symbol] = (sig, out)
     return out
+
+
+def _signature(symbol: str) -> tuple:
+    """(tf, newest year, its mtime) per timeframe - changes when an update writes new bars."""
+    out = []
+    for tf in available_timeframes(symbol):
+        years = available_years(symbol, tf)
+        if years:
+            try:
+                m = (DATA_DIR / symbol / tf / f'{years[-1]}.csv.gz').stat().st_mtime
+            except OSError:
+                m = 0
+            out.append((tf, years[-1], m))
+    return tuple(out)
 
 
 def spec(symbol: str) -> dict:

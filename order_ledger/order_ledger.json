@@ -22384,7 +22384,7 @@
   "XAUUSD.a:4h:mtf_pullback:sell:1790168400000": {
    "id": "XAUUSD.a:4h:mtf_pullback:sell:1790168400000",
    "tag": "DNX 924c2b1070",
-   "state": "filled",
+   "state": "closed",
    "attempts": 70,
    "request": {
     "symbol": "XAUUSD.a",
@@ -22400,10 +22400,10 @@
    "ticket": 8895595,
    "position": 8895595,
    "fill_price": 4291.41,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4287.86,
+   "outcome": "manual",
+   "r": 0.039,
+   "profit": 3.94,
    "events": [
     [
      1790198761079,
@@ -23109,10 +23109,15 @@
      1790200938341,
      "filled",
      "position 8895595"
+    ],
+    [
+     1790301158082,
+     "closed",
+     "manual at 4287.86"
     ]
    ],
    "created_ms": 1790198761079,
-   "updated_ms": 1790200938341,
+   "updated_ms": 1790301158082,
    "symbol": "XAUUSD.a",
    "tf": "4h",
    "side": "sell",
@@ -24734,7 +24739,7 @@
   "XAUUSD.a:1h:pattern_break:sell:1790236800000": {
    "id": "XAUUSD.a:1h:pattern_break:sell:1790236800000",
    "tag": "DNX 79cb745f6e",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -24750,10 +24755,10 @@
    "ticket": 8913530,
    "position": 8913530,
    "fill_price": 4261.88,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4292.29,
+   "outcome": "stop",
+   "r": -1.0,
+   "profit": -30.02,
    "events": [
     [
      1790240441589,
@@ -24769,10 +24774,15 @@
      1790240444491,
      "filled",
      "position 8913530"
+    ],
+    [
+     1790299262934,
+     "closed",
+     "stop at 4292.29"
     ]
    ],
    "created_ms": 1790240441589,
-   "updated_ms": 1790240444491,
+   "updated_ms": 1790299262934,
    "symbol": "XAUUSD.a",
    "tf": "1h",
    "side": "sell",
@@ -24971,7 +24981,7 @@
   "GBPUSD.a:30m:sweep_reversal:sell:1790240400000": {
    "id": "GBPUSD.a:30m:sweep_reversal:sell:1790240400000",
    "tag": "DNX dd18e4cfda",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "GBPUSD.a",
@@ -24987,10 +24997,10 @@
    "ticket": 8914639,
    "position": 8914639,
    "fill_price": 1.3228900000000001,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 1.3214299999999999,
+   "outcome": "manual",
+   "r": 0.469,
+   "profit": 1.39,
    "events": [
     [
      1790244052845,
@@ -25006,10 +25016,15 @@
      1790244056898,
      "filled",
      "position 8914639"
+    ],
+    [
+     1790301164294,
+     "closed",
+     "manual at 1.3214299999999999"
     ]
    ],
    "created_ms": 1790244052845,
-   "updated_ms": 1790244056898,
+   "updated_ms": 1790301164294,
    "symbol": "GBPUSD.a",
    "tf": "30m",
    "side": "sell",
@@ -25019,7 +25034,7 @@
   "XAUUSD.a:5m:pattern_break:sell:1790246100000": {
    "id": "XAUUSD.a:5m:pattern_break:sell:1790246100000",
    "tag": "DNX acbfb04d15",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -25035,10 +25050,10 @@
    "ticket": 8915744,
    "position": 8915744,
    "fill_price": 4264.29,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4287.8,
+   "outcome": "manual",
+   "r": -0.71,
+   "profit": -23.12,
    "events": [
     [
      1790246428083,
@@ -25054,10 +25069,15 @@
      1790246948601,
      "filled",
      "position 8915744"
+    ],
+    [
+     1790301161541,
+     "closed",
+     "manual at 4287.8"
     ]
    ],
    "created_ms": 1790246428083,
-   "updated_ms": 1790246948601,
+   "updated_ms": 1790301161541,
    "symbol": "XAUUSD.a",
    "tf": "5m",
    "side": "sell",
@@ -25067,7 +25087,7 @@
   "XAUUSD.a:30m:pattern_break:sell:1790245800000": {
    "id": "XAUUSD.a:30m:pattern_break:sell:1790245800000",
    "tag": "DNX 331d292c1c",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -25083,10 +25103,10 @@
    "ticket": 8916294,
    "position": 8916294,
    "fill_price": 4258.41,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4287.91,
+   "outcome": "manual",
+   "r": -0.588,
+   "profit": -29.11,
    "events": [
     [
      1790247697125,
@@ -25102,10 +25122,15 @@
      1790247701260,
      "filled",
      "position 8916294"
+    ],
+    [
+     1790301161815,
+     "closed",
+     "manual at 4287.91"
     ]
    ],
    "created_ms": 1790247697125,
-   "updated_ms": 1790247701260,
+   "updated_ms": 1790301161815,
    "symbol": "XAUUSD.a",
    "tf": "30m",
    "side": "sell",
@@ -25163,7 +25188,7 @@
   "XAUUSD.a:15m:mtf_pullback:sell:1790247600000": {
    "id": "XAUUSD.a:15m:mtf_pullback:sell:1790247600000",
    "tag": "DNX aa87f0c7e1",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -25179,10 +25204,10 @@
    "ticket": 8916767,
    "position": 8916767,
    "fill_price": 4258.67,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4291.84,
+   "outcome": "stop",
+   "r": -1.023,
+   "profit": -32.78,
    "events": [
     [
      1790249395538,
@@ -25198,10 +25223,15 @@
      1790249918069,
      "filled",
      "position 8916767"
+    ],
+    [
+     1790299050544,
+     "closed",
+     "stop at 4291.84"
     ]
    ],
    "created_ms": 1790249395538,
-   "updated_ms": 1790249918069,
+   "updated_ms": 1790299050544,
    "symbol": "XAUUSD.a",
    "tf": "15m",
    "side": "sell",
@@ -25702,7 +25732,2124 @@
    "side": "sell",
    "kind": "stop",
    "lots": 0.01
+  },
+  "XAUUSD.a:3m:flag_continuation:buy:1790301780000": {
+   "id": "XAUUSD.a:3m:flag_continuation:buy:1790301780000",
+   "tag": "DNX 842da14fdd",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4295.84,
+    "sl": 4286.02,
+    "tp": 4314.92,
+    "expiration_ms": 1790304840000
+   },
+   "ticket": 8933842,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790301990585,
+     "sending",
+     ""
+    ],
+    [
+     1790301991041,
+     "placed",
+     "stop ticket 8933842"
+    ],
+    [
+     1790302512609,
+     "cancelled",
+     "invalidated on the closed bar - fades the down impulse while 1h is trending down too - lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790301990585,
+   "updated_ms": 1790302512609,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:pattern_break:sell:1790302860000": {
+   "id": "XAUUSD.a:3m:pattern_break:sell:1790302860000",
+   "tag": "DNX ca0d2d3dbb",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4286.55,
+    "sl": 4297.02,
+    "tp": 4265.6,
+    "expiration_ms": 1790306640000
+   },
+   "ticket": 8934064,
+   "position": 8934064,
+   "fill_price": 4286.52,
+   "close_price": 4271.86,
+   "outcome": "trail",
+   "r": 1.396,
+   "profit": 14.62,
+   "events": [
+    [
+     1790303396071,
+     "sending",
+     ""
+    ],
+    [
+     1790303396420,
+     "placed",
+     "stop ticket 8934064"
+    ],
+    [
+     1790303745750,
+     "filled",
+     "position 8934064"
+    ],
+    [
+     1790307349535,
+     "filled",
+     "stop -> 4281.27"
+    ],
+    [
+     1790307354748,
+     "filled",
+     "stop -> 4278.54"
+    ],
+    [
+     1790307535688,
+     "filled",
+     "stop -> 4276.36"
+    ],
+    [
+     1790307895177,
+     "filled",
+     "stop -> 4276.17"
+    ],
+    [
+     1790308077216,
+     "filled",
+     "stop -> 4274.11"
+    ],
+    [
+     1790308256092,
+     "filled",
+     "stop -> 4274.03"
+    ],
+    [
+     1790308614183,
+     "filled",
+     "stop -> 4273.66"
+    ],
+    [
+     1790308796618,
+     "filled",
+     "stop -> 4272.18"
+    ],
+    [
+     1790309160911,
+     "filled",
+     "stop -> 4271.81"
+    ],
+    [
+     1790309166204,
+     "closed",
+     "trail at 4271.86"
+    ]
+   ],
+   "created_ms": 1790303396071,
+   "updated_ms": 1790309166204,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790303100000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790303100000",
+   "tag": "DNX a6779a225a",
+   "state": "closed",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4286.55,
+    "sl": 4297.37,
+    "tp": 4264.9,
+    "expiration_ms": 1790309400000
+   },
+   "ticket": 8934068,
+   "position": 8934068,
+   "fill_price": 4286.52,
+   "close_price": 4271.13,
+   "outcome": "trail",
+   "r": 1.418,
+   "profit": 15.35,
+   "events": [
+    [
+     1790303397218,
+     "sending",
+     ""
+    ],
+    [
+     1790303397396,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1790303427315,
+     "sending",
+     ""
+    ],
+    [
+     1790303427618,
+     "placed",
+     "stop ticket 8934068"
+    ],
+    [
+     1790303746268,
+     "filled",
+     "position 8934068"
+    ],
+    [
+     1790307370597,
+     "filled",
+     "stop -> 4281.1"
+    ],
+    [
+     1790307596542,
+     "filled",
+     "stop -> 4277.14"
+    ],
+    [
+     1790307895689,
+     "filled",
+     "stop -> 4276.95"
+    ],
+    [
+     1790308195106,
+     "filled",
+     "stop -> 4274.81"
+    ],
+    [
+     1790308496801,
+     "filled",
+     "stop -> 4274.72"
+    ],
+    [
+     1790308797090,
+     "filled",
+     "stop -> 4272.96"
+    ],
+    [
+     1790309095999,
+     "filled",
+     "stop -> 4272.21"
+    ],
+    [
+     1790309694962,
+     "filled",
+     "stop -> 4271.44"
+    ],
+    [
+     1790309994746,
+     "filled",
+     "stop -> 4271.13"
+    ],
+    [
+     1790310390128,
+     "closed",
+     "trail at 4271.13"
+    ]
+   ],
+   "created_ms": 1790303397218,
+   "updated_ms": 1790310390128,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:false_break_fade:buy:1790314500000": {
+   "id": "XAUUSD.a:5m:false_break_fade:buy:1790314500000",
+   "tag": "DNX ddfcb5f511",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4273.23,
+    "sl": 4255.15,
+    "tp": 4295.84,
+    "expiration_ms": 1790318400000
+   },
+   "ticket": 8938209,
+   "position": 8938209,
+   "fill_price": 4273.66,
+   "close_price": 4296.08,
+   "outcome": "target",
+   "r": 1.211,
+   "profit": 22.38,
+   "events": [
+    [
+     1790316650804,
+     "sending",
+     ""
+    ],
+    [
+     1790316651070,
+     "placed",
+     "stop ticket 8938209"
+    ],
+    [
+     1790316709398,
+     "filled",
+     "position 8938209"
+    ],
+    [
+     1790325869951,
+     "filled",
+     "stop -> 4282.92"
+    ],
+    [
+     1790325894541,
+     "filled",
+     "stop -> 4288.35"
+    ],
+    [
+     1790325984337,
+     "closed",
+     "target at 4296.08"
+    ]
+   ],
+   "created_ms": 1790316650804,
+   "updated_ms": 1790325984337,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:buy:1790317620000": {
+   "id": "XAUUSD.a:1m:pattern_break:buy:1790317620000",
+   "tag": "DNX 0ac6ff86b1",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4281.2,
+    "sl": 4275.26,
+    "tp": 4295.32,
+    "expiration_ms": 1790318880000
+   },
+   "ticket": 8938637,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790317866338,
+     "sending",
+     ""
+    ],
+    [
+     1790317866607,
+     "placed",
+     "stop ticket 8938637"
+    ],
+    [
+     1790317884227,
+     "cancelled",
+     "price went through the stop before the entry filled"
+    ]
+   ],
+   "created_ms": 1790317866338,
+   "updated_ms": 1790317884227,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:buy:1790318340000": {
+   "id": "XAUUSD.a:1m:pattern_break:buy:1790318340000",
+   "tag": "DNX 81b1cce7ad",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4277.68,
+    "sl": 4273.59,
+    "tp": 4285.86,
+    "expiration_ms": 1790319600000
+   },
+   "ticket": 8938758,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790318700583,
+     "sending",
+     ""
+    ],
+    [
+     1790318700853,
+     "placed",
+     "stop ticket 8938758"
+    ],
+    [
+     1790318763802,
+     "cancelled",
+     "invalidated on the closed bar - flip at 4277.82 (score 97) sits only 3% of the way to TP1"
+    ]
+   ],
+   "created_ms": 1790318700583,
+   "updated_ms": 1790318763802,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:buy:1790318760000": {
+   "id": "XAUUSD.a:1m:pattern_break:buy:1790318760000",
+   "tag": "DNX 7617f85f27",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4273.7,
+    "tp": 4286.24,
+    "expiration_ms": 0
+   },
+   "ticket": 8938772,
+   "position": 8938772,
+   "fill_price": 4277.66,
+   "close_price": 4273.35,
+   "outcome": "stop",
+   "r": -1.088,
+   "profit": -4.35,
+   "events": [
+    [
+     1790318827039,
+     "sending",
+     ""
+    ],
+    [
+     1790318827319,
+     "placed",
+     "market ticket 8938772"
+    ],
+    [
+     1790318830082,
+     "filled",
+     "position 8938772"
+    ],
+    [
+     1790319891048,
+     "closed",
+     "stop at 4273.35"
+    ]
+   ],
+   "created_ms": 1790318827039,
+   "updated_ms": 1790319891048,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:buy:1790319900000": {
+   "id": "XAUUSD.a:1m:pattern_break:buy:1790319900000",
+   "tag": "DNX 14e6c8bd49",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4276.99,
+    "sl": 4273.53,
+    "tp": 4281.45,
+    "expiration_ms": 1790321160000
+   },
+   "ticket": 8939231,
+   "position": 8939231,
+   "fill_price": 4277.0,
+   "close_price": 4273.35,
+   "outcome": "stop",
+   "r": -1.052,
+   "profit": -3.69,
+   "events": [
+    [
+     1790320262906,
+     "sending",
+     ""
+    ],
+    [
+     1790320263182,
+     "placed",
+     "stop ticket 8939231"
+    ],
+    [
+     1790320280482,
+     "filled",
+     "position 8939231"
+    ],
+    [
+     1790320763921,
+     "closed",
+     "stop at 4273.35"
+    ]
+   ],
+   "created_ms": 1790320262906,
+   "updated_ms": 1790320763921,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1790320140000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1790320140000",
+   "tag": "DNX 92196b8e0e",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4276.67,
+    "sl": 4255.78,
+    "tp": 4318.45,
+    "expiration_ms": 1790323920000
+   },
+   "ticket": 8939271,
+   "position": 8939271,
+   "fill_price": 4276.67,
+   "close_price": 4294.48,
+   "outcome": "trail",
+   "r": 0.853,
+   "profit": 17.77,
+   "events": [
+    [
+     1790320518828,
+     "sending",
+     ""
+    ],
+    [
+     1790320519090,
+     "placed",
+     "stop ticket 8939271"
+    ],
+    [
+     1790320576328,
+     "filled",
+     "position 8939271"
+    ],
+    [
+     1790327015628,
+     "filled",
+     "stop -> 4287.11"
+    ],
+    [
+     1790327156138,
+     "filled",
+     "stop -> 4294.56"
+    ],
+    [
+     1790327167954,
+     "closed",
+     "trail at 4294.48"
+    ]
+   ],
+   "created_ms": 1790320518828,
+   "updated_ms": 1790327167954,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:flag_continuation:buy:1790329140000": {
+   "id": "XAUUSD.a:3m:flag_continuation:buy:1790329140000",
+   "tag": "DNX 349b63a7bc",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4297.61,
+    "sl": 4289.09,
+    "tp": 4316.73,
+    "expiration_ms": 1790332200000
+   },
+   "ticket": 8942227,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790329315881,
+     "sending",
+     ""
+    ],
+    [
+     1790329316151,
+     "placed",
+     "stop ticket 8942227"
+    ],
+    [
+     1790329526570,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.7 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790329315881,
+   "updated_ms": 1790329526570,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:flag_continuation:buy:1790329200000": {
+   "id": "XAUUSD.a:5m:flag_continuation:buy:1790329200000",
+   "tag": "DNX 1ae3c96f17",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4297.61,
+    "sl": 4288.85,
+    "tp": 4320.63,
+    "expiration_ms": 1790334300000
+   },
+   "ticket": 8942266,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790329496924,
+     "sending",
+     ""
+    ],
+    [
+     1790329497257,
+     "placed",
+     "stop ticket 8942266"
+    ],
+    [
+     1790330438534,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790329496924,
+   "updated_ms": 1790330438534,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:mtf_pullback:buy:1790329680000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:buy:1790329680000",
+   "tag": "DNX 5461af5a7b",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4287.31,
+    "tp": 4298.05,
+    "expiration_ms": 0
+   },
+   "ticket": 8942306,
+   "position": 8942306,
+   "fill_price": 4292.21,
+   "close_price": 4298.1,
+   "outcome": "target",
+   "r": 1.202,
+   "profit": 5.85,
+   "events": [
+    [
+     1790329854791,
+     "sending",
+     ""
+    ],
+    [
+     1790329855044,
+     "placed",
+     "market ticket 8942306"
+    ],
+    [
+     1790329857411,
+     "filled",
+     "position 8942306"
+    ],
+    [
+     1790330733697,
+     "filled",
+     "stop -> 4294.66"
+    ],
+    [
+     1790330743987,
+     "closed",
+     "target at 4298.1"
+    ]
+   ],
+   "created_ms": 1790329854791,
+   "updated_ms": 1790330743987,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:flag_continuation:buy:1790330400000": {
+   "id": "XAUUSD.a:5m:flag_continuation:buy:1790330400000",
+   "tag": "DNX 92655ed6f1",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4288.93,
+    "tp": 4320.63,
+    "expiration_ms": 0
+   },
+   "ticket": 8942523,
+   "position": 8942523,
+   "fill_price": 4298.15,
+   "close_price": 4303.88,
+   "outcome": "trail",
+   "r": 0.621,
+   "profit": 5.69,
+   "events": [
+    [
+     1790330741351,
+     "sending",
+     ""
+    ],
+    [
+     1790330741637,
+     "placed",
+     "market ticket 8942523"
+    ],
+    [
+     1790330744223,
+     "filled",
+     "position 8942523"
+    ],
+    [
+     1790331238424,
+     "filled",
+     "stop -> 4302.76"
+    ],
+    [
+     1790331294109,
+     "filled",
+     "stop -> 4303.99"
+    ],
+    [
+     1790331551110,
+     "closed",
+     "trail at 4303.88"
+    ]
+   ],
+   "created_ms": 1790330741351,
+   "updated_ms": 1790331551110,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1790330580000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1790330580000",
+   "tag": "DNX d7e669e323",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4298.42,
+    "sl": 4291.67,
+    "tp": 4309.88,
+    "expiration_ms": 1790334360000
+   },
+   "ticket": 8942538,
+   "position": 8942538,
+   "fill_price": 4298.5,
+   "close_price": 4304.92,
+   "outcome": "trail",
+   "r": 0.94,
+   "profit": 6.38,
+   "events": [
+    [
+     1790330766491,
+     "sending",
+     ""
+    ],
+    [
+     1790330766771,
+     "placed",
+     "stop ticket 8942538"
+    ],
+    [
+     1790330814117,
+     "filled",
+     "position 8942538"
+    ],
+    [
+     1790331216490,
+     "filled",
+     "stop -> 4301.92"
+    ],
+    [
+     1790331294609,
+     "filled",
+     "stop -> 4305.02"
+    ],
+    [
+     1790331390257,
+     "closed",
+     "trail at 4304.92"
+    ]
+   ],
+   "created_ms": 1790330766491,
+   "updated_ms": 1790331390257,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:mtf_pullback:buy:1790332560000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:buy:1790332560000",
+   "tag": "DNX 05ea0ec104",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4289.92,
+    "tp": 4330.78,
+    "expiration_ms": 0
+   },
+   "ticket": 8943070,
+   "position": 8943070,
+   "fill_price": 4303.56,
+   "close_price": 4289.91,
+   "outcome": "stop",
+   "r": -1.001,
+   "profit": -13.69,
+   "events": [
+    [
+     1790332737246,
+     "sending",
+     ""
+    ],
+    [
+     1790332737520,
+     "placed",
+     "market ticket 8943070"
+    ],
+    [
+     1790332740038,
+     "filled",
+     "position 8943070"
+    ],
+    [
+     1790342366835,
+     "closed",
+     "stop at 4289.91"
+    ]
+   ],
+   "created_ms": 1790332737246,
+   "updated_ms": 1790342366835,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:pattern_break:sell:1790335800000": {
+   "id": "XAUUSD.a:15m:pattern_break:sell:1790335800000",
+   "tag": "DNX 7c21ae7aeb",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4301.72,
+    "sl": 4320.89,
+    "tp": 4263.38,
+    "expiration_ms": 1790354700000
+   },
+   "ticket": 8944152,
+   "position": 8944152,
+   "fill_price": 4301.72,
+   "close_price": 4280.74,
+   "outcome": "trail",
+   "r": 1.094,
+   "profit": 20.94,
+   "events": [
+    [
+     1790337596521,
+     "sending",
+     ""
+    ],
+    [
+     1790337596814,
+     "placed",
+     "stop ticket 8944152"
+    ],
+    [
+     1790337957414,
+     "filled",
+     "position 8944152"
+    ],
+    [
+     1790342747574,
+     "filled",
+     "stop -> 4292.14"
+    ],
+    [
+     1790342995166,
+     "filled",
+     "stop -> 4285.24"
+    ],
+    [
+     1790343894768,
+     "filled",
+     "stop -> 4280.72"
+    ],
+    [
+     1790344223174,
+     "closed",
+     "trail at 4280.74"
+    ]
+   ],
+   "created_ms": 1790337596521,
+   "updated_ms": 1790344223174,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:pattern_break:sell:1790337600000": {
+   "id": "XAUUSD.a:30m:pattern_break:sell:1790337600000",
+   "tag": "DNX bbf93bc4bf",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4297.83,
+    "sl": 4320.02,
+    "tp": 4255.81,
+    "expiration_ms": 1790375400000
+   },
+   "ticket": 8944885,
+   "position": 8944885,
+   "fill_price": 4297.78,
+   "close_price": 4254.7,
+   "outcome": "target",
+   "r": 1.937,
+   "profit": 43.04,
+   "events": [
+    [
+     1790339506027,
+     "sending",
+     ""
+    ],
+    [
+     1790339506312,
+     "placed",
+     "stop ticket 8944885"
+    ],
+    [
+     1790340225669,
+     "filled",
+     "position 8944885"
+    ],
+    [
+     1790343014313,
+     "filled",
+     "stop -> 4286.66"
+    ],
+    [
+     1790344794826,
+     "filled",
+     "stop -> 4283.84"
+    ],
+    [
+     1790345118542,
+     "closed",
+     "target at 4254.7"
+    ]
+   ],
+   "created_ms": 1790339506027,
+   "updated_ms": 1790345118542,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:pattern_break:sell:1790341560000": {
+   "id": "XAUUSD.a:3m:pattern_break:sell:1790341560000",
+   "tag": "DNX b7810cd152",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4295.92,
+    "sl": 4311.54,
+    "tp": 4264.68,
+    "expiration_ms": 1790345340000
+   },
+   "ticket": 8946256,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790342995635,
+     "sending",
+     ""
+    ],
+    [
+     1790342995929,
+     "placed",
+     "limit ticket 8946256"
+    ],
+    [
+     1790343176813,
+     "cancelled",
+     "invalidated on the closed bar - confidence 42 below the 55 floor after 3 warning(s)"
+    ]
+   ],
+   "created_ms": 1790342995635,
+   "updated_ms": 1790343176813,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1790345520000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1790345520000",
+   "tag": "DNX dc3070c018",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4275.5,
+    "sl": 4248.23,
+    "tp": 4330.01,
+    "expiration_ms": 1790349300000
+   },
+   "ticket": 8947626,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790345698470,
+     "sending",
+     ""
+    ],
+    [
+     1790345698821,
+     "placed",
+     "stop ticket 8947626"
+    ],
+    [
+     1790346066029,
+     "cancelled",
+     "invalidated on the closed bar - ATR is in the 97th percentile of its own range - news-spike conditions"
+    ]
+   ],
+   "created_ms": 1790345698470,
+   "updated_ms": 1790346066029,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:false_break_fade:buy:1790346960000": {
+   "id": "XAUUSD.a:3m:false_break_fade:buy:1790346960000",
+   "tag": "DNX 1e926c8d9f",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4272.24,
+    "sl": 4261.0,
+    "tp": 4315.83,
+    "expiration_ms": 1790349300000
+   },
+   "ticket": 8947960,
+   "position": 8947960,
+   "fill_price": 4272.24,
+   "close_price": 4280.32,
+   "outcome": "trail",
+   "r": 0.719,
+   "profit": 8.04,
+   "events": [
+    [
+     1790347318845,
+     "sending",
+     ""
+    ],
+    [
+     1790347319125,
+     "placed",
+     "stop ticket 8947960"
+    ],
+    [
+     1790347377586,
+     "filled",
+     "position 8947960"
+    ],
+    [
+     1790350208538,
+     "filled",
+     "stop -> 4277.86"
+    ],
+    [
+     1790350373743,
+     "filled",
+     "stop -> 4280.19"
+    ],
+    [
+     1790350555405,
+     "filled",
+     "stop -> 4280.39"
+    ],
+    [
+     1790350631499,
+     "closed",
+     "trail at 4280.32"
+    ]
+   ],
+   "created_ms": 1790347318845,
+   "updated_ms": 1790350631499,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:false_break_fade:buy:1790348100000": {
+   "id": "XAUUSD.a:5m:false_break_fade:buy:1790348100000",
+   "tag": "DNX a123e4a472",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4279.18,
+    "sl": 4260.66,
+    "tp": 4315.83,
+    "expiration_ms": 1790352000000
+   },
+   "ticket": 8948666,
+   "position": 8948666,
+   "fill_price": 4279.19,
+   "close_price": 4292.39,
+   "outcome": "trail",
+   "r": 0.712,
+   "profit": 13.16,
+   "events": [
+    [
+     1790349032254,
+     "sending",
+     ""
+    ],
+    [
+     1790349033032,
+     "placed",
+     "stop ticket 8948666"
+    ],
+    [
+     1790349282646,
+     "filled",
+     "position 8948666"
+    ],
+    [
+     1790352221709,
+     "filled",
+     "stop -> 4288.46"
+    ],
+    [
+     1790352295666,
+     "filled",
+     "stop -> 4292.68"
+    ],
+    [
+     1790352357157,
+     "closed",
+     "trail at 4292.39"
+    ]
+   ],
+   "created_ms": 1790349032254,
+   "updated_ms": 1790352357157,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1790350560000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1790350560000",
+   "tag": "DNX f5b03549b3",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4277.18,
+    "sl": 4269.88,
+    "tp": 4289.05,
+    "expiration_ms": 1790354340000
+   },
+   "ticket": 8949196,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790351099623,
+     "sending",
+     ""
+    ],
+    [
+     1790351099951,
+     "placed",
+     "stop ticket 8949196"
+    ],
+    [
+     1790351280874,
+     "reversed",
+     "opposite FINAL XAUUSD.a:3m:pattern_break:sell:1790351100000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1790351099623,
+   "updated_ms": 1790351280874,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:4h:pattern_break:sell:1790326800000": {
+   "id": "XAUUSD.a:4h:pattern_break:sell:1790326800000",
+   "tag": "DNX 90617b3cee",
+   "state": "refused",
+   "attempts": 72,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4298.19,
+    "sl": 4390.17,
+    "tp": 4114.24,
+    "expiration_ms": 1790629200000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790379555155,
+     "sending",
+     ""
+    ],
+    [
+     1790379555425,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379585674,
+     "sending",
+     ""
+    ],
+    [
+     1790379585928,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379616038,
+     "sending",
+     ""
+    ],
+    [
+     1790379616288,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379647782,
+     "sending",
+     ""
+    ],
+    [
+     1790379648034,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379679421,
+     "sending",
+     ""
+    ],
+    [
+     1790379679716,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379711521,
+     "sending",
+     ""
+    ],
+    [
+     1790379711777,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379742898,
+     "sending",
+     ""
+    ],
+    [
+     1790379743163,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379774554,
+     "sending",
+     ""
+    ],
+    [
+     1790379774821,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379806408,
+     "sending",
+     ""
+    ],
+    [
+     1790379806696,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379836616,
+     "sending",
+     ""
+    ],
+    [
+     1790379836936,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379868342,
+     "sending",
+     ""
+    ],
+    [
+     1790379868596,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379899998,
+     "sending",
+     ""
+    ],
+    [
+     1790379900254,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379930091,
+     "sending",
+     ""
+    ],
+    [
+     1790379930359,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379961975,
+     "sending",
+     ""
+    ],
+    [
+     1790379962221,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790379993590,
+     "sending",
+     ""
+    ],
+    [
+     1790379993842,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380025094,
+     "sending",
+     ""
+    ],
+    [
+     1790380025387,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380057061,
+     "sending",
+     ""
+    ],
+    [
+     1790380057319,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380088939,
+     "sending",
+     ""
+    ],
+    [
+     1790380089261,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380120935,
+     "sending",
+     ""
+    ],
+    [
+     1790380121200,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380151045,
+     "sending",
+     ""
+    ],
+    [
+     1790380151325,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380183032,
+     "sending",
+     ""
+    ],
+    [
+     1790380183322,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380215201,
+     "sending",
+     ""
+    ],
+    [
+     1790380215474,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380247089,
+     "sending",
+     ""
+    ],
+    [
+     1790380247349,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380279066,
+     "sending",
+     ""
+    ],
+    [
+     1790380279362,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380309100,
+     "sending",
+     ""
+    ],
+    [
+     1790380309391,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380339287,
+     "sending",
+     ""
+    ],
+    [
+     1790380339554,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380369427,
+     "sending",
+     ""
+    ],
+    [
+     1790380369690,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380401355,
+     "sending",
+     ""
+    ],
+    [
+     1790380401611,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380431607,
+     "sending",
+     ""
+    ],
+    [
+     1790380431866,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380463385,
+     "sending",
+     ""
+    ],
+    [
+     1790380463665,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380493418,
+     "sending",
+     ""
+    ],
+    [
+     1790380493708,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380523522,
+     "sending",
+     ""
+    ],
+    [
+     1790380523775,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380553577,
+     "sending",
+     ""
+    ],
+    [
+     1790380553830,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380584068,
+     "sending",
+     ""
+    ],
+    [
+     1790380584362,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380614631,
+     "sending",
+     ""
+    ],
+    [
+     1790380614911,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380644916,
+     "sending",
+     ""
+    ],
+    [
+     1790380645221,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380675209,
+     "sending",
+     ""
+    ],
+    [
+     1790380675508,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380705526,
+     "sending",
+     ""
+    ],
+    [
+     1790380705781,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380735978,
+     "sending",
+     ""
+    ],
+    [
+     1790380736304,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380766314,
+     "sending",
+     ""
+    ],
+    [
+     1790380766571,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380798152,
+     "sending",
+     ""
+    ],
+    [
+     1790380798403,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380830229,
+     "sending",
+     ""
+    ],
+    [
+     1790380830502,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380861242,
+     "sending",
+     ""
+    ],
+    [
+     1790380861508,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380892641,
+     "sending",
+     ""
+    ],
+    [
+     1790380892954,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380923735,
+     "sending",
+     ""
+    ],
+    [
+     1790380923989,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380955865,
+     "sending",
+     ""
+    ],
+    [
+     1790380956166,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790380986193,
+     "sending",
+     ""
+    ],
+    [
+     1790380986456,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381017487,
+     "sending",
+     ""
+    ],
+    [
+     1790381017781,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381048585,
+     "sending",
+     ""
+    ],
+    [
+     1790381048842,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381078996,
+     "sending",
+     ""
+    ],
+    [
+     1790381079258,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381109431,
+     "sending",
+     ""
+    ],
+    [
+     1790381109692,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381139734,
+     "sending",
+     ""
+    ],
+    [
+     1790381139989,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381170132,
+     "sending",
+     ""
+    ],
+    [
+     1790381170391,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381200803,
+     "sending",
+     ""
+    ],
+    [
+     1790381201056,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381231876,
+     "sending",
+     ""
+    ],
+    [
+     1790381232163,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381262934,
+     "sending",
+     ""
+    ],
+    [
+     1790381263188,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381294053,
+     "sending",
+     ""
+    ],
+    [
+     1790381294311,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381324814,
+     "sending",
+     ""
+    ],
+    [
+     1790381325127,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381355535,
+     "sending",
+     ""
+    ],
+    [
+     1790381355886,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381386613,
+     "sending",
+     ""
+    ],
+    [
+     1790381386871,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381416664,
+     "sending",
+     ""
+    ],
+    [
+     1790381416923,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381447441,
+     "sending",
+     ""
+    ],
+    [
+     1790381447724,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381478087,
+     "sending",
+     ""
+    ],
+    [
+     1790381478338,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381509175,
+     "sending",
+     ""
+    ],
+    [
+     1790381509487,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381540911,
+     "sending",
+     ""
+    ],
+    [
+     1790381541185,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381572125,
+     "sending",
+     ""
+    ],
+    [
+     1790381572391,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381604046,
+     "sending",
+     ""
+    ],
+    [
+     1790381604354,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381635610,
+     "sending",
+     ""
+    ],
+    [
+     1790381635894,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381666788,
+     "sending",
+     ""
+    ],
+    [
+     1790381667050,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381698349,
+     "sending",
+     ""
+    ],
+    [
+     1790381698641,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790381729763,
+     "sending",
+     ""
+    ],
+    [
+     1790381730071,
+     "refused",
+     "broker returned 10018: Market closed"
+    ],
+    [
+     1790382925551,
+     "sending",
+     ""
+    ],
+    [
+     1790382925882,
+     "refused",
+     "broker returned 10018: Market closed"
+    ]
+   ],
+   "created_ms": 1790379555155,
+   "updated_ms": 1790382925882,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790379900000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790379900000",
+   "tag": "DNX 549d35df84",
+   "state": "refused",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4285.27,
+    "sl": 4297.81,
+    "tp": 4260.19,
+    "expiration_ms": 1790386200000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790382916691,
+     "sending",
+     ""
+    ],
+    [
+     1790382917057,
+     "refused",
+     "broker returned 10018: Market closed"
+    ]
+   ],
+   "created_ms": 1790382916691,
+   "updated_ms": 1790382917057,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
   }
  },
- "saved_ms": 1790297822047
+ "saved_ms": 1790382925882
 }

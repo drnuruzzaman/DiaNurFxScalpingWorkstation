@@ -8,14 +8,16 @@
  *             trail from the signal to the exit - plus a tag and a note
  *   STRATEGY  this session's settings against the live ones; applying a
  *             change starts a new run
+ *   FORECAST  the forecast engine at the bar on screen - LabForecast.tsx
  */
 import React, { useEffect, useMemo, useState } from 'react'
-import type { Signal } from '../chart/types'
+import type { Bar, Signal } from '../chart/types'
 import { fmt, signed } from '../lib/format'
 import { Meter } from '../panels/common'
-import type { LabEvent, LabFrame, LabSession, LabTrade, SchemaRow } from './types'
+import { ForecastSide } from './LabForecast'
+import type { LabEvent, LabForecast, LabFrame, LabSession, LabTrade, SchemaRow } from './types'
 
-export type SideTab = 'now' | 'trade' | 'strategy'
+export type SideTab = 'now' | 'trade' | 'strategy' | 'forecast'
 
 const when = (ms: number) => {
   const d = new Date(ms)
@@ -45,13 +47,19 @@ export function LabSide(p: {
   live: Record<string, Record<string, any>>
   playbooks: string[]
   onConfigure: (patch: Record<string, any>) => void
+  bars: Bar[]
+  pinned: LabForecast | null
+  onPin: () => void
+  coneOn: boolean
+  onCone: (on: boolean) => void
+  onSeekTime?: (t: number) => void
 }) {
   return (
     <div className="lab-side">
       <div className="lab-side-tabs">
-        {(['now', 'trade', 'strategy'] as SideTab[]).map((t) => (
+        {(['now', 'forecast', 'trade', 'strategy'] as SideTab[]).map((t) => (
           <button key={t} className={`lab-tab ${p.tab === t ? 'on' : ''}`} onClick={() => p.onTab(t)}>
-            {t === 'now' ? 'This bar' : t === 'trade' ? 'Trade' : 'Strategy'}
+            {t === 'now' ? 'This bar' : t === 'forecast' ? 'Forecast' : t === 'trade' ? 'Trade' : 'Strategy'}
           </button>
         ))}
       </div>
@@ -59,8 +67,13 @@ export function LabSide(p: {
         {!p.session || !p.frame ? (
           <div className="lab-empty">Start or open a session to see the simulated account here.</div>
         ) : p.tab === 'now' ? <NowTab {...p} />
-          : p.tab === 'trade' ? <TradeTab {...p} />
-            : <StrategyTab {...p} />}
+          : p.tab === 'forecast' ? (
+            <ForecastSide forecast={p.frame.forecast ?? null} digits={p.digits} bars={p.bars}
+              cursorV={p.frame.cursor.v} pinned={p.pinned} onPin={p.onPin}
+              coneOn={p.coneOn} onCone={p.onCone} onSeekTime={p.onSeekTime} />
+          )
+            : p.tab === 'trade' ? <TradeTab {...p} />
+              : <StrategyTab {...p} />}
       </div>
     </div>
   )

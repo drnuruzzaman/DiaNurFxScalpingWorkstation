@@ -1344,3 +1344,438 @@ C:/workspace-ml-ausloans/Forex/DiaNurFxScalpingWorkstation/web/src/lib/snapshot.
 [2m9:56:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
 [2m9:58:41 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
 [2m10:15:23 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/lab/LabView.tsx[22m
+[2m2:42:12 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx[22m
+[2m2:42:15 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx[22m
+[2m2:42:53 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/chart/ChartMenus.tsx, /src/lab/LabView.tsx[22m
+[2m2:42:54 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/chart/ChartMenus.tsx[22m Could not Fast Refresh ("LAYOUT_ROWS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:42:54 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/lab/LabView.tsx[22m
+[2m2:43:26 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m2:43:46 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx[22m
+[2m2:48:22 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m2:50:42 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabSide.tsx[22m
+[2m2:50:42 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m2:50:57 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m2:51:31 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+[2m2:51:39 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/lib/workspace.ts[22m
+[2m2:57:20 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabForecast.tsx[22m
+[2m3:34:28 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabForecast.tsx[22m
+[2m3:34:28 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabSide.tsx[22m
+[2m3:34:28 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m3:34:28 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+
+===== 2026-09-25 15:44:14 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1944[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m3:57:54 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/NewSession.tsx[22m
+[2m3:57:54 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx, /src/lab/LabForecast.tsx[22m
+[2m3:57:54 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabForecast.tsx[22m
+[2m3:58:31 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m9:43:56 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/NewSession.tsx[22m
+[2m9:43:56 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m10:08:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx, /src/lab/LabForecast.tsx[22m
+[2m10:08:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx, /src/lab/LabForecast.tsx[22m
+[2m10:08:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabForecast.tsx[22m
+[2m10:08:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+[2m10:20:16 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx, /src/lab/LabForecast.tsx[22m
+[2m10:20:16 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabForecast.tsx[22m
+
+===== 2026-09-26 00:37:18 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1738[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-09-26 00:38:12 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m514[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m12:38:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:38:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m1:00:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m1:00:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m1:00:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+[2m1:00:45 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m1:02:15 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/DeleteSession.tsx[22m
+[2m1:04:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/DeleteSession.tsx[22m
+[2m1:08:50 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/DeleteSession.tsx[22m
+[2m1:08:50 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/lab/DeleteSession.tsx[22m Could not Fast Refresh (new export)
+[2m1:08:50 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx, /src/lab/LabView.tsx[22m
+[2m1:09:19 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/LabDock.tsx, /src/lab/LabForecast.tsx, /src/lab/DeleteSession.tsx[22m
+[2m1:09:19 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m1:09:19 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+[2m1:13:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m1:13:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+[2m1:25:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:25:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartMenus.tsx[22m
+[2m1:25:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/chart/ChartMenus.tsx, /src/lab/LabView.tsx[22m
+[2m1:25:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/chart/ChartMenus.tsx[22m Could not Fast Refresh ("LAYOUT_ROWS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m1:25:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/lab/LabView.tsx[22m
+[2m1:29:12 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:29:12 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m1:29:12 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx[22m
+[2m1:29:12 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m1:31:23 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m1:31:23 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:32:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:34:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m1:34:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m1:36:54 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:37:23 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:38:15 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:39:18 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:39:37 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:41:41 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m1:42:51 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx, /src/panels/RightRail.tsx[22m
+[2m2:02:00 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/panels/SymbolPicker.tsx, /src/panels/AgentDock.tsx, /src/lab/LabView.tsx, /src/panels/BottomDock.tsx, /src/panels/Settings.tsx[22m
+[2m2:02:00 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/Settings.tsx[22m
+[2m2:02:00 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m2:02:01 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/app.css[22m
+[2m2:02:01 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/BottomDock.tsx[22m Could not Fast Refresh ("DOCK_TABS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:02:01 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m2:02:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m2:05:15 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m2:09:25 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+
+===== 2026-09-26 02:10:47 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1379[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m2:10:50 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+
+===== 2026-09-26 02:12:47 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m426[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-09-26 09:34:46 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1485[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-09-26 09:39:06 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m417[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:12:26 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m10:12:26 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/MarketData.tsx[22m Could not Fast Refresh (new export)
+[2m10:12:26 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/panels/Settings.tsx[22m
+[2m10:12:52 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m10:12:52 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/app.css[22m
+[2m10:13:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/panels/AgentDock.tsx, /src/lab/LabView.tsx, /src/panels/BottomDock.tsx, /src/panels/Settings.tsx, /src/panels/SymbolPicker.tsx, /src/panels/MarketData.tsx[22m
+[2m10:13:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/BottomDock.tsx[22m Could not Fast Refresh ("DOCK_TABS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m10:13:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m10:14:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m10:15:19 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m10:34:48 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+
+===== 2026-09-26 10:35:08 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1223[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:35:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+
+===== 2026-09-26 10:35:53 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m483[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:35:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:35:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:35:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:35:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:36:24 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+
+===== 2026-09-26 10:40:11 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m441[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=1d[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=1d[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=1d[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=1d&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=1d[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=1d&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m10:40:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:14:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m11:14:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/panels/SymbolPicker.tsx, /src/panels/AgentDock.tsx, /src/lab/LabView.tsx, /src/panels/BottomDock.tsx, /src/panels/Settings.tsx, /src/panels/MarketData.tsx[22m
+[2m11:14:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/lab/DeleteSession.tsx, /src/lab/LabDock.tsx, /src/lab/LabForecast.tsx[22m
+[2m11:14:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/app.css[22m
+[2m11:14:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabForecast.tsx[22m
+[2m11:14:43 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/BottomDock.tsx[22m Could not Fast Refresh ("DOCK_TABS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m11:14:43 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m11:16:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:06 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:16:12 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m11:22:35 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m11:22:37 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m12:18:47 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m12:19:29 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/app.css[22m
+[2m12:19:29 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/panels/SymbolPicker.tsx, /src/panels/AgentDock.tsx, /src/lab/LabView.tsx, /src/panels/BottomDock.tsx, /src/panels/Settings.tsx, /src/panels/MarketData.tsx[22m
+[2m12:19:29 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/BottomDock.tsx[22m Could not Fast Refresh ("DOCK_TABS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m12:19:29 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m12:20:20 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/status[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:22 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:23 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:23 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:24 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:24 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:25 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:26 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:26 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:27 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:27 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:20:28 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m12:21:36 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m12:31:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/panels/SymbolPicker.tsx, /src/panels/AgentDock.tsx, /src/lab/LabView.tsx, /src/panels/BottomDock.tsx, /src/panels/Settings.tsx, /src/panels/MarketData.tsx[22m
+[2m12:31:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/MarketData.tsx[22m
+[2m12:31:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m12:31:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/app.css[22m
+[2m12:31:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/Settings.tsx[22m
+[2m12:31:03 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/BottomDock.tsx[22m Could not Fast Refresh ("DOCK_TABS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m12:31:03 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m12:31:03 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/MarketData.tsx[22m Could not Fast Refresh (new export)
+[2m12:31:03 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx, /src/panels/Settings.tsx, /src/App.tsx[22m

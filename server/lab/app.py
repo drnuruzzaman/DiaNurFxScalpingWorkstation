@@ -33,7 +33,10 @@ from fastapi.responses import FileResponse, Response
 
 from ..config import TF_SECONDS
 from ..engine.signals import PLAYBOOKS
+from ..forecast import SYMBOL as FC_SYMBOL
+from . import challenge as lab_challenge
 from . import data as lab_data
+from . import forecast as lab_forecast
 from . import session as S
 from . import settings as lab_settings
 
@@ -504,6 +507,97 @@ def schema():
             'live': lab_settings.jsonable(lab_settings.effective(None))}
 
 
+def _fc_symbol(symbol: str | None) -> str:
+    """The symbol a forecast panel asks about: named, else the open session's, else gold."""
+    if symbol:
+        return symbol
+    s = LAB.sess
+    return (s.cfg.get('symbol') if s is not None else None) or FC_SYMBOL
+
+
+@app.get('/lab/forecast/summary')
+def forecast_summary(symbol: str | None = None):
+    """The symbol's latest batch run's scorecard summary: gates, decay, calibration."""
+    return lab_forecast.summary(_fc_symbol(symbol))
+
+
+@app.get('/lab/forecast/filtertest')
+def forecast_filtertest(symbol: str | None = None):
+    """The newest Phase D filter-test results (tools/forecast_filtertest.py), or {}."""
+    if _fc_symbol(symbol) != FC_SYMBOL:
+        return {}                       # the filter test was run on gold only
+    base = ROOT / 'runs' / 'forecast' / 'filtertest'
+    try:
+        runs = sorted((p for p in base.iterdir() if (p / 'results.json').exists()),
+                      key=lambda p: (p / 'results.json').stat().st_mtime)
+    except OSError:
+        return {}
+    if not runs:
+        return {}
+    try:
+        doc = json.loads((runs[-1] / 'results.json').read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {}
+    doc['run_id'] = runs[-1].name
+    return doc
+
+
+@app.get('/lab/forecast/news')
+def forecast_news(symbol: str | None = None):
+    """The symbol's newest Phase E news-layer run: its gate per timeframe and the reaction
+    tables (without the per-release rows, which only the payload's causal lookup needs)."""
+    doc = lab_forecast.news_summary(_fc_symbol(symbol))
+    if not doc:
+        return {}
+    out = {'run_id': doc.get('run_id'), 'created_utc': doc.get('created_utc'), 'tfs': {}}
+    for tf, r in (doc.get('tfs') or {}).items():
+        out['tfs'][tf] = {k: v for k, v in r.items() if k != 'reactions'}
+        out['tfs'][tf]['reactions'] = {k: {kk: vv for kk, vv in v.items() if kk != 'events'}
+                                       for k, v in (r.get('reactions') or {}).items()}
+    return out
+
+
+_CHALLENGES: dict = {}          # (session, run, bar, signal) -> reply, newest kept
+
+
+@app.post('/lab/forecast/challenge')
+async def forecast_challenge(body: dict = Body(default={})):
+    """
+    Phase E: the supervisor's challenge of the forecast (and the signal, if one is live or
+    qualified) at the bar on screen. On demand only; one answer per bar is kept.
+    """
+    s = LAB.sess
+    if s is None:
+        raise HTTPException(409, 'no session is open')
+    sig_id = body.get('signal_id') or None
+    with s.lock:
+        v = s.v
+        fr = s.frames[v - s.i0]
+        key = (s.sid, s.run_no, v, sig_id)
+        if key in _CHALLENGES and not body.get('fresh'):
+            return dict(_CHALLENGES[key], cached=True)
+        fc = s.fc.payload(s, v, fr)
+        close = int(s.series.t[v]) + s.tf_ms
+        news = s._minutes_to_release(close) if s.cfg.get('news_gate') else None
+        pack = lab_challenge.build(fc, fr, int(s.spec.get('digits') or 2), sig_id, news)
+    res = await lab_challenge.challenge(pack)
+    res.update(v=v, t=int(s.series.t[v]))
+    _CHALLENGES[key] = res
+    while len(_CHALLENGES) > 64:
+        _CHALLENGES.pop(next(iter(_CHALLENGES)))
+    return res
+
+
+@app.get('/lab/forecast/log')
+def forecast_log(limit: int = 300):
+    """This session's settled forecasts, newest last, and how they scored."""
+    s = LAB.sess
+    if s is None:
+        return {'rows': [], 'stats': {'n': 0}}
+    return {'rows': s.fc.rows(max(1, min(int(limit), 5000))), 'stats': s.fc.stats(),
+            'tf': s.cfg['tf']}
+
+
 @app.get('/lab/sessions')
 def sessions():
     rows = S.list_sessions()
@@ -549,13 +643,31 @@ _FILE = re.compile(r'^snap-[0-9]{3}-[0-9]{8}-[0-9]{4}\.png$')
 
 
 @app.get('/lab/sessions/{sid}/snapshots/{name}')
-def snapshot_file(sid: str, name: str):
+def snapshot_file(sid: str, name: str, download: int = 0):
     if not (S.valid_sid(sid) and _FILE.match(name)):
         raise HTTPException(400, 'bad name')
     path = S.RUNS / sid / 'snapshots' / name
     if not path.exists():
         raise HTTPException(404, 'no such snapshot')
-    return FileResponse(path, media_type='image/png')
+    # ?download=1 sends it as an attachment: the web app is on another port, where
+    # an <a download> link is ignored by the browser.
+    return FileResponse(path, media_type='image/png', filename=name if download else None)
+
+
+@app.delete('/lab/sessions/{sid}/snapshots/{name}')
+async def snapshot_delete(sid: str, name: str):
+    s = LAB.sess
+    if s is None or s.sid != sid:
+        raise HTTPException(409, 'that session is not the one open')
+    if not _FILE.match(name):
+        raise HTTPException(400, 'bad name')
+    ok = await asyncio.to_thread(s.delete_snapshot, name)
+    if not ok:
+        raise HTTPException(404, 'no such snapshot in this session')
+    s._emit('snapshot', f'snapshot {name} deleted')
+    await _autosave(force=True)
+    await broadcast({'type': 'snaps', 'snaps': s.snaps})
+    return {'ok': True}
 
 
 @app.get('/lab/sessions/{sid}/export')

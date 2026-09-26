@@ -36,6 +36,9 @@ export function NewSession({ data, current, onCreate, onClose }: {
   const [mode, setMode] = useState<'auto' | 'manual'>(current?.cfg.mode ?? 'auto')
   const [name, setName] = useState('')
   const [record, setRecord] = useState(true)
+  const [filter, setFilter] = useState<string>((current?.cfg as any)?.forecast_filter ?? '')
+  // On by default: live trades with the news blackout, and the lab can now replay it.
+  const [newsGate, setNewsGate] = useState<boolean>((current?.cfg as any)?.news_gate ?? true)
   const [copySettings, setCopySettings] = useState(false)
   const [picker, setPicker] = useState(false)
 
@@ -76,6 +79,8 @@ export function NewSession({ data, current, onCreate, onClose }: {
     onCreate({
       symbol, tf, start: s, end: Number.isFinite(e) ? e : null, mode, name, record,
       overrides: copySettings && current ? current.cfg.overrides : {},
+      forecast_filter: filter || null,
+      news_gate: newsGate,
     })
   }
 
@@ -127,6 +132,20 @@ export function NewSession({ data, current, onCreate, onClose }: {
                 ? 'Signals are sent exactly as the live executor would: same entry tolerance, pending orders re-judged on each closed bar, trail after TP1.'
                 : 'The engine still finds and qualifies signals; you decide. Take a signal, or place your own orders from the ticket.'}
             </div>
+            <label>Forecast filter
+              <select value={filter} onChange={(ev) => setFilter(ev.target.value)}
+                title="Phase D: a forecast may veto sends the live gates qualified. Lab only - the live system never uses it.">
+                <option value="">none - the live strategy as it is</option>
+                <option value="regime_agree">regime agrees - no trade into the trend the forecast expects against it</option>
+                <option value="range_active">range active - only when the range forecast is above usual</option>
+                <option value="both">both of those</option>
+                <option value="no_transition">no transition - skip when transition is the likeliest regime ahead</option>
+              </select>
+            </label>
+            <label className="lab-check"
+              title="Live blocks sends from 15 minutes before a high-impact release. The lab replays that blackout from the release history (US releases: FRED + FOMC). Live's calendar also has other currencies.">
+              <input type="checkbox" checked={newsGate} onChange={(ev) => setNewsGate(ev.target.checked)} /> News blackout, as live (from the release history)
+            </label>
             <label>Name <input value={name} placeholder="optional" onChange={(ev) => setName(ev.target.value)} /></label>
             <label className="lab-check"><input type="checkbox" checked={record} onChange={(ev) => setRecord(ev.target.checked)} /> Record to disk (reopen, review, compare later)</label>
             {current && Object.keys(current.cfg.overrides ?? {}).length > 0 && (

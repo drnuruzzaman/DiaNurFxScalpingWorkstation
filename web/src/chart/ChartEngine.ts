@@ -21,7 +21,7 @@
  */
 
 import type {
-  Bar, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
+  Bar, ForecastCone, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
   PriceArea, Snapshot, Signal, TradeMark, Viewport,
 } from './types'
 
@@ -297,6 +297,14 @@ const TAG_GAP = TAG_H + 2
 const TIME_AXIS_H = 22
 const PANE_GAP = 6
 
+// Watermarks: DIANUR in the chart's text colour at WM_ALPHA. The brand pink is far
+// darker than that near-white text, so at the same opacity "FX" all but vanished on
+// the dark themes; it is drawn a brighter pink at a higher opacity so the two halves
+// read equally faint.
+const WM_ALPHA = 0.07
+const WM_FX_COLOR = '#ff4d9d'
+const WM_FX_ALPHA = 0.18
+
 export class ChartEngine {
   private base: HTMLCanvasElement
   private top: HTMLCanvasElement
@@ -345,6 +353,13 @@ export class ChartEngine {
   private cursorT: number | null = null
   /** Faint text behind everything - BACKTEST on the lab's chart. */
   private watermark: string | null = null
+  /** 'center': big and faint in the middle (the lab). 'brand': the DIANURFX word at the
+   *  left middle, never past the left half of the plot (the live chart). */
+  private watermarkStyle: 'center' | 'brand' = 'center'
+  /** True while withTheme() re-draws for an export: the snapshot stamps its own brand mark. */
+  private exporting = false
+  /** The range cone to the right of a bar (forecast engine, lab only). */
+  private forecast: ForecastCone | null = null
 
   private mtfLines: MtfTrendline[] = []
   /** Source timeframes to draw. Exactly these - an empty list draws none. */
@@ -568,8 +583,15 @@ export class ChartEngine {
     this.scheduleBase()
   }
 
-  setWatermark(text: string | null) {
+  setWatermark(text: string | null, style: 'center' | 'brand' = 'center') {
     this.watermark = text || null
+    this.watermarkStyle = style
+    this.scheduleBase()
+  }
+
+  /** The range cone (forecast engine). null removes it. */
+  setForecast(f: ForecastCone | null) {
+    this.forecast = f && f.up?.length && f.dn?.length ? f : null
     this.scheduleBase()
   }
 
@@ -649,6 +671,7 @@ export class ChartEngine {
     const pw = this.width
     const ph = this.height
     this.theme = next
+    this.exporting = true
     try {
       // An export wants a different shape from the on-screen pane, which is
       // wide and short. Re-drawing at the export size gives real pixels
@@ -659,6 +682,7 @@ export class ChartEngine {
       fn(this.base)
     } finally {
       this.theme = prev
+      this.exporting = false
       if (size && (pw !== this.width || ph !== this.height)) this.resize(pw, ph)
       this.drawBase()
     }
@@ -921,6 +945,17 @@ export class ChartEngine {
         if (Number.isFinite(p)) { lo = Math.min(lo, p); hi = Math.max(hi, p) }
       }
     }
+    // The cone's outer edge pulls it too, when its bar is on screen: a P80
+    // clipped at the pane edge would read as a much tighter forecast.
+    const fc = this.forecast
+    if (fc) {
+      const i = this.barIndexAtOrBefore(fc.anchorT)
+      if (i >= from - 1 && i < to + 1) {
+        const top = fc.close + fc.up[fc.up.length - 1][2] * fc.atr
+        const bot = fc.close - fc.dn[fc.dn.length - 1][2] * fc.atr
+        if (Number.isFinite(top) && Number.isFinite(bot)) { lo = Math.min(lo, bot); hi = Math.max(hi, top) }
+      }
+    }
     const pad = (hi - lo) * 0.08 || 1
 
     if (this.priceAuto) {
@@ -988,7 +1023,6 @@ export class ChartEngine {
     if (this.layoutOpts.legRead) this.drawLegUnder()
 
     this.drawCandles()
-    if (this.overlays.engulfing) this.drawEngulfing()
 
     if (this.overlays.swings) this.drawSwings()
     if (this.overlays.structure) this.drawStructureBreaks()
@@ -998,6 +1032,7 @@ export class ChartEngine {
     if (this.tradeMarks.length) this.drawTradeMarks()
     if (this.layoutOpts.positions) this.drawPositions()
     if (this.cursorT != null) this.drawFuture()
+    if (this.forecast) this.drawForecast()
 
     this.drawSubPanes()
     this.drawPriceAxis()
@@ -1901,89 +1936,6 @@ export class ChartEngine {
     ctx.restore()
   }
 
-  // --- engulfing candles -------------------------------------------------- //
-  private engulfCache: { bars: Bar[]; closed: number; marks: Int8Array } | null = null
-
-  /**
-   * +1 / -1 on every CLOSED bar that is a bullish / bearish engulfing: the
-   * previous bar the opposite colour, this body covering the previous body,
-   * and the body at least 0.3 ATR(14) - the definition measured in
-   * tools/research_engulfing.py. ATR is Wilder's, as the engine computes it.
-   *
-   * The forming bar is never marked: an engulfing that is still being built
-   * can stop being one before it closes, and the mark would come and go.
-   * Worth knowing what the measurement said: on its own it trades no better
-   * than any decent candle - this is context, not a signal.
-   */
-  private engulfing(): Int8Array {
-    const bars = this.bars
-    const n = bars.length
-    const last = n ? bars[n - 1] : null
-    const closed = last && this.tfMs && last.t + this.tfMs > Date.now() ? n - 1 : n
-    const hit = this.engulfCache
-    if (hit && hit.bars === bars && hit.closed === closed) return hit.marks
-    const marks = new Int8Array(n)
-    let atr = NaN
-    let acc = 0
-    for (let i = 0; i < closed; i++) {
-      const b = bars[i]
-      const pc = i ? bars[i - 1].c : b.c
-      const tr = Math.max(b.h - b.l, Math.abs(b.h - pc), Math.abs(b.l - pc))
-      if (i < 14) {
-        acc += tr
-        if (i === 13) atr = acc / 14
-      } else {
-        atr = (atr * 13 + tr) / 14
-      }
-      if (i < 1 || !(atr > 0)) continue
-      const p = bars[i - 1]
-      const body = b.c - b.o
-      const prev = p.c - p.o
-      if (Math.abs(body) < 0.3 * atr) continue
-      if (body > 0 && prev < 0 && b.o <= p.c && b.c >= p.o) marks[i] = 1
-      else if (body < 0 && prev > 0 && b.o >= p.c && b.c <= p.o) marks[i] = -1
-    }
-    this.engulfCache = { bars, closed, marks }
-    return marks
-  }
-
-  /** A thin frame round each engulfing candle, and an E beside it when there is room. */
-  private drawEngulfing() {
-    const marks = this.engulfing()
-    const n = this.bars.length
-    if (!n) return
-    const ctx = this.bctx
-    const bw = this.barW()
-    const from = Math.max(1, Math.floor(this.view.start))
-    const to = Math.min(n, Math.ceil(this.view.start + this.view.span) + 1)
-    ctx.save()
-    ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
-    ctx.lineWidth = 1
-    ctx.font = `800 8.5px ${UI_FONT}`
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
-    const w = Math.max(3, Math.round(bw * 0.9))
-    for (let i = from; i < to; i++) {
-      const m = marks[i]
-      if (!m) continue
-      const b = this.bars[i]
-      const up = m > 0
-      const col = up ? this.theme.up : this.theme.down
-      const x = Math.round(this.xOf(i))
-      const yh = Math.round(this.yOf(b.h))
-      const yl = Math.round(this.yOf(b.l))
-      ctx.globalAlpha = 0.8
-      ctx.strokeStyle = col
-      ctx.strokeRect(x - Math.floor(w / 2) - 2.5, yh - 3.5, w + 5, yl - yh + 7)
-      if (bw >= 5) {
-        ctx.globalAlpha = 0.95
-        ctx.fillStyle = col
-        ctx.fillText('E', x, up ? yl + 11 : yh - 10)
-      }
-    }
-    ctx.restore()
-  }
-
   private drawStructureBreaks() {
     const s = this.snap
     if (!s?.breaks) return
@@ -2368,15 +2320,81 @@ export class ChartEngine {
    */
   // --- backtest furniture ------------------------------------------------ //
   private drawWatermark() {
+    if (this.watermarkStyle === 'brand') return this.drawBrandMark()
     const ctx = this.bctx
     ctx.save()
     ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
-    const size = Math.max(28, Math.min(96, this.pane.w / 9))
+    let size = Math.max(28, Math.min(96, this.pane.w / 9))
     ctx.font = `900 ${size}px ${UI_FONT}`
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
-    ctx.globalAlpha = 0.055
+    // A longer word ("DIANURFX BACKTEST") still keeps clear of the chart's edges.
+    const w = ctx.measureText(this.watermark!).width
+    if (w > this.pane.w * 0.8) {
+      size = Math.max(18, size * (this.pane.w * 0.8) / w)
+      ctx.font = `900 ${size}px ${UI_FONT}`
+    }
+    ctx.textBaseline = 'middle'
+    ctx.globalAlpha = 0.07
+    const y = this.pane.y + this.pane.h / 2
+    // Written as the brand is: DIANUR in the text colour, FX in the brand pink,
+    // then whatever follows ("DIANURFX BACKTEST"). Laid out left to right from a
+    // start that centres the whole word.
+    const text = this.watermark!
+    const at = text.indexOf('DIANURFX')
+    if (at >= 0) {
+      const parts: [string, string, number][] = [
+        [text.slice(0, at + 6), this.theme.text, WM_ALPHA], ['FX', WM_FX_COLOR, WM_FX_ALPHA],
+        [text.slice(at + 8), this.theme.text, WM_ALPHA]]
+      let x = this.pane.w / 2 - ctx.measureText(text).width / 2
+      ctx.textAlign = 'left'
+      for (const [t, c, a] of parts) {
+        if (!t) continue
+        ctx.fillStyle = c
+        ctx.globalAlpha = a
+        ctx.fillText(t, x, y)
+        x += ctx.measureText(t).width
+      }
+    } else {
+      ctx.textAlign = 'center'
+      ctx.fillStyle = this.theme.text
+      ctx.fillText(text, this.pane.w / 2, y)
+    }
+    ctx.restore()
+  }
+
+  /**
+   * The brand at the LEFT MIDDLE of the price pane: DIANUR in the chart's text
+   * colour, FX in the brand pink, both faint. It is sized so it never reaches
+   * past half the plot's width - the right half is where the latest price is
+   * read. Left out of exports: the snapshot stamps its own coloured mark there.
+   */
+  private drawBrandMark() {
+    if (this.exporting) return
+    const ctx = this.bctx
+    const text = this.watermark!
+    const head = text.endsWith('FX') ? text.slice(0, -2) : text
+    const tail = text.endsWith('FX') ? 'FX' : ''
+    const left = Math.max(24, this.pane.w * 0.08)
+    const room = this.pane.w * 0.5 - left
+    if (room < 40) return
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
+    let size = Math.max(20, Math.min(84, this.pane.h * 0.16))
+    ctx.font = `900 ${size}px ${UI_FONT}`
+    const w = ctx.measureText(text).width
+    if (w > room) {
+      size = size * room / w
+      ctx.font = `900 ${size}px ${UI_FONT}`
+    }
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
+    ctx.globalAlpha = 0.07
+    const y = this.pane.y + this.pane.h / 2
     ctx.fillStyle = this.theme.text
-    ctx.fillText(this.watermark!, this.pane.w / 2, this.pane.y + this.pane.h / 2)
+    ctx.fillText(head, left, y)
+    if (tail) {
+      ctx.fillStyle = WM_FX_COLOR
+      ctx.globalAlpha = WM_FX_ALPHA
+      ctx.fillText(tail, left + ctx.measureText(head).width, y)
+    }
     ctx.restore()
   }
 
@@ -2403,6 +2421,100 @@ export class ChartEngine {
     ctx.setLineDash([4, 3])
     ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, this.pane.y + this.pane.h); ctx.stroke()
     ctx.setLineDash([])
+    ctx.restore()
+  }
+
+  /**
+   * The range cone: from the forecast bar's close, the band each side holds
+   * the middle 60% of how far price travelled over the next k bars (P20 to
+   * P80), with the median dashed and the baseline's median dotted beside it.
+   * Laid out in bar-index space, so it sits over empty space at the frontier
+   * and over the (dimmed) real path when the future is revealed - which is
+   * the point: the forecast and what happened, side by side.
+   */
+  private drawForecast() {
+    const f = this.forecast
+    if (!f || !this.bars.length) return
+    const i0 = this.barIndexAtOrBefore(f.anchorT)
+    if (i0 < 0) return
+    const H = Math.min(f.up.length, f.dn.length)
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, this.pane.y, this.pane.w, this.pane.h); ctx.clip()
+    const xs: number[] = [this.xOf(i0)]
+    for (let k = 1; k <= H; k++) xs.push(this.xOf(i0 + k))
+    if (xs[H] < 0 || xs[0] > this.pane.w) { ctx.restore(); return }
+    const y0 = this.yOf(f.close)
+    const yU = (q: number) => this.yOf(f.close + q * f.atr)
+    const yD = (q: number) => this.yOf(f.close - q * f.atr)
+    const band = (qs: [number, number, number][], y: (q: number) => number, col: string) => {
+      ctx.beginPath()
+      ctx.moveTo(xs[0], y0)
+      for (let k = 1; k <= H; k++) ctx.lineTo(xs[k], y(qs[k - 1][2]))
+      for (let k = H; k >= 1; k--) ctx.lineTo(xs[k], y(qs[k - 1][0]))
+      ctx.closePath()
+      ctx.globalAlpha = f.pinned ? 0.16 : 0.12
+      ctx.fillStyle = col
+      ctx.fill()
+      ctx.globalAlpha = 0.55
+      ctx.strokeStyle = col
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(xs[0], y0)
+      for (let k = 1; k <= H; k++) ctx.lineTo(xs[k], y(qs[k - 1][2]))
+      ctx.stroke()
+    }
+    const median = (qs: number[], y: (q: number) => number, col: string, dash: number[], alpha: number) => {
+      ctx.globalAlpha = alpha
+      ctx.strokeStyle = col
+      ctx.lineWidth = 1.3
+      ctx.setLineDash(dash)
+      ctx.beginPath()
+      ctx.moveTo(xs[0], y0)
+      for (let k = 1; k <= H; k++) ctx.lineTo(xs[k], y(qs[k - 1]))
+      ctx.stroke()
+      ctx.setLineDash([])
+    }
+    band(f.up, yU, this.theme.up)
+    band(f.dn, yD, this.theme.down)
+    median(f.up.map((q) => q[1]), yU, this.theme.up, [5, 3], 0.95)
+    median(f.dn.map((q) => q[1]), yD, this.theme.down, [5, 3], 0.95)
+    if (f.baseUp?.length === H && f.baseDn?.length === H) {
+      median(f.baseUp, yU, this.theme.textDim, [1.5, 3], 0.8)
+      median(f.baseDn, yD, this.theme.textDim, [1.5, 3], 0.8)
+    }
+    // anchor: the close the cone measures from
+    ctx.globalAlpha = 1
+    ctx.fillStyle = f.pinned ? this.theme.warn : this.theme.text
+    ctx.beginPath(); ctx.arc(xs[0], y0, 2.6, 0, Math.PI * 2); ctx.fill()
+    // P80 / P50 / P20 prices at the horizon, both sides, on small plates
+    const dp = this.digits
+    ctx.font = `600 9.5px ${UI_FONT}`
+    ctx.textBaseline = 'middle'
+    const tag = (text: string, x: number, y: number, col: string) => {
+      const tw = ctx.measureText(text).width
+      const xx = Math.min(x + 4, this.pane.w - tw - 8)
+      ctx.globalAlpha = 0.85
+      ctx.fillStyle = `rgba(${this.theme.plateRgb},0.85)`
+      ctx.fillRect(xx - 3, y - 7, tw + 6, 14)
+      ctx.globalAlpha = 1
+      ctx.fillStyle = col
+      ctx.fillText(text, xx, y)
+    }
+    const xe = xs[H]
+    const last = (qs: [number, number, number][]) => qs[H - 1]
+    const [u20, u50, u80] = last(f.up)
+    const [d20, d50, d80] = last(f.dn)
+    tag(`P80 ${(f.close + u80 * f.atr).toFixed(dp)}`, xe, yU(u80), this.theme.up)
+    tag(`P50 ${(f.close + u50 * f.atr).toFixed(dp)}`, xe, yU(u50), this.theme.up)
+    if (Math.abs(yU(u20) - yU(u50)) > 13) tag(`P20 ${(f.close + u20 * f.atr).toFixed(dp)}`, xe, yU(u20), this.theme.up)
+    tag(`P80 ${(f.close - d80 * f.atr).toFixed(dp)}`, xe, yD(d80), this.theme.down)
+    tag(`P50 ${(f.close - d50 * f.atr).toFixed(dp)}`, xe, yD(d50), this.theme.down)
+    if (Math.abs(yD(d20) - yD(d50)) > 13) tag(`P20 ${(f.close - d20 * f.atr).toFixed(dp)}`, xe, yD(d20), this.theme.down)
+    if (f.label) {
+      ctx.font = `800 9px ${UI_FONT}`
+      tag(f.label + (f.pinned ? ' · PINNED' : ''), xs[0] + 2, yU(u80) - 16, f.pinned ? this.theme.warn : this.theme.textDim)
+    }
     ctx.restore()
   }
 

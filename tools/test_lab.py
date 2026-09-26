@@ -6,6 +6,8 @@ tools/test_lab.py - the backtest lab's guarantees, checked.
     2. NO LOOK-AHEAD: bars after a moment cannot change what was decided at it
     3. a saved session re-runs to the same trades
     4. the lab never loads the live API (separate process, separate state)
+    5. the in-memory store and ledger answer from indexes exactly as a full scan
+    6. the news gate from the release history reads what live's gate reads
 
 Run:  python tools/test_lab.py      (about a minute: it replays real history)
 """
@@ -178,6 +180,65 @@ def main() -> int:
     from server import clock
     check('the execution clock is the replay\'s while a session runs',
           clock.now_ms() == r.now_ms, f'{clock.now_ms()} == {r.now_ms}')
+
+    # ------------------------------------------------------------------ 5 --- #
+    section('5. the in-memory store and ledger answer from indexes, exactly')
+    from server.lab.session import MemStore, _ORDER_LIVE
+    from server.order_ledger import OrderLedger
+    from server.signal_store import ACTIVE, SignalStore
+    st, lg, sym = long_.store, long_.ledger, 'XAUUSD.a'
+    check('the live-signal index is every ACTIVE record, in store order',
+          list(st.recs.live) == [k for k, x in st.recs.items() if x['stage'] in ACTIVE],
+          f'{len(st.recs.live)} of {len(st.recs)} signals')
+    check('active() and active_for() match the full scan',
+          st.active() == SignalStore.active(st)
+          and st.active_for(sym, '15m') == SignalStore.active_for(st, sym, '15m')
+          and st.active_for(sym, '15m', 'sell') == SignalStore.active_for(st, sym, '15m', 'sell'))
+    check('the live-order index is every live row, in ledger order',
+          list(lg.rows.live) == [k for k, x in lg.rows.items() if x['state'] in _ORDER_LIVE],
+          f'{len(lg.rows.live)} of {len(lg.rows)} orders')
+    check('live_for(), live_count() and has_unresolved() match the full scan',
+          lg.live_for(sym, '15m') == OrderLedger.live_for(lg, sym, '15m')
+          and lg.live_count() == OrderLedger.live_count(lg)
+          and lg.has_unresolved() == any(x['state'] in ('sending', 'unknown')
+                                         for x in lg.rows.values()))
+    ms = MemStore(lambda *a: None, lambda *a: None)
+    for i in range(3):
+        ms.recs[f'f{i}'] = {'id': f'f{i}', 'symbol': sym, 'tf': '5m', 'side': 'buy',
+                            'stage': 'FINAL', 'history': [], 'updated_ms': 0}
+    ms.move('f1', 'EXPIRED', 'test')
+    gone = list(ms.recs.live) == ['f0', 'f2']
+    ms.move('f1', 'SENT', 'found at the broker after all')
+    check('a finished signal that comes back keeps its place in the order',
+          gone and list(ms.recs.live) == ['f0', 'f1', 'f2'], str(list(ms.recs.live)))
+
+    # ------------------------------------------------------------------ 6 --- #
+    section('6. the news gate, from the release history')
+    from server.forecast import news as release_history
+    from server.forecast.timebase import utc_to_broker
+    ev = release_history.events()
+    nfp = [int(t) for t, k in zip(*ev['major']) if release_history.KINDS[k] == 'NFP']
+    b = utc_to_broker([t for t in nfp if t > 1_704_067_200_000])
+    check('08:30 New York releases sit at 15:30 on the broker clock, summer and winter',
+          bool(len(b)) and all(int(x) % 86_400_000 == 55_800_000 for x in b), f'{len(b)} NFPs')
+    g = ReplaySession({'symbol': 'XAUUSD.a', 'tf': '15m', 'start': '2026-06-01T00:00',
+                       'end': '2026-06-12T00:00', 'record': False, 'news_gate': True})
+    plain = ReplaySession({'symbol': 'XAUUSD.a', 'tf': '15m', 'start': '2026-06-01T00:00',
+                           'end': '2026-06-12T00:00', 'record': False})
+    rel = int(g._releases[g._releases > g.now_ms][0])
+    g.now_ms = plain.now_ms = rel - 20 * 60_000
+    check('with the gate on, the context carries minutes to the next release',
+          g.context()['minutes_to_high_impact'] == 20.0, str(g.context()['minutes_to_high_impact']))
+    check('...and without it, nothing (as before the history existed)',
+          plain.context()['minutes_to_high_impact'] is None)
+    g.now_ms = rel + 60_000
+    after = g.context()['minutes_to_high_impact']
+    check('a release that has printed no longer counts - never negative minutes',
+          after is None or after > 0, str(after))
+    g.now_ms = rel - 7 * 3_600_000
+    far = g.context()['minutes_to_high_impact']
+    check('beyond live\'s 6-hour look-ahead there is no release to count',
+          far is None or far <= 360, str(far))
 
     print(f'\n{"=" * 52}\n  {PASS} passed, {FAIL} failed\n{"=" * 52}')
     return 0 if FAIL == 0 else 1

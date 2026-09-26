@@ -182,15 +182,21 @@ def load_disk(symbol: str, tf: str, years: list = None,
     chunks = []
     for year in want:
         key = (symbol, tf, year)
+        path = DATA_DIR / symbol / tf / f'{year}.csv.gz'
+        try:
+            mtime = path.stat().st_mtime
+        except OSError:
+            continue
         with _DISK_LOCK:
-            arr = _DISK_CACHE.get(key)
+            hit = _DISK_CACHE.get(key)
+        # Keyed on the file's mtime too: the monthly update (server/marketdata.py)
+        # rewrites the current year, and a process holding the old copy would
+        # otherwise keep replaying history that stops at the previous download.
+        arr = hit[1] if hit is not None and hit[0] == mtime else None
         if arr is None:
-            path = DATA_DIR / symbol / tf / f'{year}.csv.gz'
-            if not path.exists():
-                continue
             arr = _read_year(path)
             with _DISK_LOCK:
-                _DISK_CACHE[key] = arr
+                _DISK_CACHE[key] = (mtime, arr)
         if arr.size:
             chunks.append(arr)
 

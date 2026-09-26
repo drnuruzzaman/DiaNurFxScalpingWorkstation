@@ -1,0 +1,44 @@
+FORECAST ENGINE - PHASE D: DO THE FORECASTS IMPROVE THE STRATEGY?     run phase-d
+Each year replayed through the live engine, executor and simulated broker (auto mode,
+live settings, 0.01 lots); each filter only VETOES sends the live gates had qualified.
+PASS = better expectancy (R/trade), total R AND net P&L after costs in EVERY year.
+Removed / added: trades the filter took out, and trades its freed capacity let in.
+news_gate is not a forecast: the live news blackout, simulated from the release history.
+These are measurements on history, not trading advice.
+Settings: NOT the same for every result - compare within a timeframe-year only; each year shows its fingerprint (- = not recorded, live when it ran)
+
+15m
+  2024  baseline: 439 trades, win 48%, -0.035R/trade, total -15.5R, net 55.86, PF 1.03, max DD 177.37   (cache check: identical; settings cde4953e25bf)
+    regime_agree     389 trades  -0.082R/trade (-0.047 [-0.167,+0.055])  total -16.4R  net -117.20  | removed 117 at -0.006R, added 67 at -0.254R
+    range_active     395 trades  0.044R/trade (+0.079 [-0.037,+0.195])  total +33.0R  net +149.53  | removed 200 at -0.068R, added 156 at 0.113R
+    both             335 trades  -0.033R/trade (+0.002 [-0.111,+0.115])  total +4.5R  net -153.44  | removed 267 at -0.009R, added 163 at 0.014R
+    no_transition    348 trades  -0.102R/trade (-0.067 [-0.185,+0.049])  total -19.9R  net -218.77  | removed 216 at 0.023R, added 125 at -0.125R
+    news_gate        432 trades  -0.038R/trade (-0.003 [-0.109,+0.103])  total -0.8R  net -2.52  | removed 15 at 0.015R, added 8 at -0.077R
+  2025  baseline: 442 trades, win 54%, 0.052R/trade, total 23.1R, net 866.21, PF 1.25, max DD 321.52   (cache check: identical; settings cde4953e25bf)
+    regime_agree     386 trades  0.088R/trade (+0.036 [-0.081,+0.158])  total +10.8R  net +130.70  | removed 140 at -0.025R, added 84 at 0.084R
+    range_active     370 trades  0.046R/trade (-0.006 [-0.130,+0.118])  total -6.3R  net -134.83  | removed 224 at 0.025R, added 152 at -0.004R
+    both             310 trades  0.039R/trade (-0.013 [-0.143,+0.118])  total -11.1R  net -172.05  | removed 287 at 0.003R, added 155 at -0.066R
+    no_transition    343 trades  0.056R/trade (+0.004 [-0.115,+0.134])  total -3.8R  net -520.89  | removed 220 at 0.035R, added 121 at 0.038R
+    news_gate        437 trades  0.043R/trade (-0.009 [-0.127,+0.103])  total -4.5R  net -52.99  | removed 15 at 0.317R, added 10 at 0.026R
+  2026  baseline: 265 trades, win 53%, 0.066R/trade, total 17.5R, net 984.68, PF 1.24, max DD 437.56   (cache check: identical; settings cde4953e25bf)
+    regime_agree     224 trades  0.007R/trade (-0.059 [-0.224,+0.105])  total -16.0R  net -704.93  | removed 98 at 0.187R, added 57 at 0.041R
+    range_active     223 trades  0.052R/trade (-0.014 [-0.164,+0.135])  total -6.0R  net -353.34  | removed 121 at 0.081R, added 79 at 0.053R
+    both             181 trades  -0.014R/trade (-0.080 [-0.254,+0.078])  total -20.1R  net -1152.24  | removed 165 at 0.068R, added 81 at -0.112R
+    no_transition    197 trades  0.047R/trade (-0.019 [-0.187,+0.151])  total -8.3R  net -940.61  | removed 125 at 0.127R, added 57 at 0.108R
+    news_gate        265 trades  0.066R/trade (+0.000 [-0.146,+0.143])  total +0.0R  net +0.00  | removed 1 at -1.001R, added 1 at -1.001R
+  verdicts: both fail, news_gate fail, no_transition fail, range_active fail, regime_agree fail
+
+5m
+  2024  baseline: 1164 trades, win 51%, -0.001R/trade, total -1.4R, net -29.72, PF 0.99, max DD 269.34   (cache check: identical; settings cde4953e25bf)
+    regime_agree    1022 trades  0.004R/trade (+0.005 [-0.056,+0.074])  total +5.7R  net +34.17  | removed 341 at 0.020R, added 199 at 0.072R
+    range_active     867 trades  0.026R/trade (+0.027 [-0.042,+0.104])  total +23.7R  net +102.38  | removed 684 at -0.015R, added 387 at 0.041R
+    news_gate       1160 trades  -0.001R/trade (+0.000 [-0.062,+0.062])  total -0.3R  net -2.26  | removed 9 at -0.120R, added 5 at -0.286R
+  2025  baseline: 1152 trades, win 51%, 0.002R/trade, total 2.4R, net 105.29, PF 1.02, max DD 427.59   (cache check: identical; settings -)
+    regime_agree     979 trades  0.015R/trade (+0.013 [-0.061,+0.087])  total +11.8R  net +267.06  | removed 339 at -0.026R, added 166 at 0.018R
+    range_active     816 trades  -0.028R/trade (-0.030 [-0.109,+0.054])  total -25.2R  net -474.79  | removed 708 at 0.021R, added 372 at -0.027R
+    news_gate       1148 trades  0.000R/trade (-0.002 [-0.072,+0.072])  total -2.2R  net -29.40  | removed 8 at -0.014R, added 4 at -0.573R
+  2026  baseline: 816 trades, win 51%, 0.037R/trade, total 29.8R, net 657.95, PF 1.08, max DD 556.36   (cache check: identical; settings -)
+    regime_agree     665 trades  0.059R/trade (+0.022 [-0.070,+0.115])  total +9.5R  net +411.70  | removed 281 at -0.031R, added 130 at 0.004R
+    range_active     555 trades  0.013R/trade (-0.024 [-0.125,+0.074])  total -22.6R  net -411.33  | removed 504 at 0.030R, added 243 at -0.030R
+    news_gate        814 trades  0.033R/trade (-0.004 [-0.103,+0.094])  total -2.5R  net -49.89  | removed 5 at -0.091R, added 3 at -1.001R
+  verdicts: news_gate fail, range_active fail, regime_agree PASS

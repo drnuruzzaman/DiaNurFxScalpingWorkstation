@@ -33,7 +33,6 @@ export const OVERLAY_GROUPS: { title: string; rows: OverlayRow[] }[] = [
       { key: 'signal', label: 'Signal levels', hint: 'entry / stop / targets' },
       { key: 'zigzag', label: 'ZigZag line', hint: 'swing skeleton' },
       { key: 'regimeBands', label: 'Regime ribbon', hint: 'trending / ranging runs' },
-      { key: 'engulfing', label: 'Engulfing candles', hint: 'body covers the prior body' },
     ],
   },
   {

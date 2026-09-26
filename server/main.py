@@ -50,7 +50,11 @@ from .engine.analysis import analyse, build_mtf
 from .engine.qualify import qualify_all
 from .engine.signals import generate
 from . import alerts as alerts_mod
+from . import marketdata
 from .executor import Executor
+# Shadow live (Phase D's marginal 5m pass): logs what a forecast filter WOULD
+# have said beside each send. Log only - it has no path back to a decision.
+from .forecast import shadow as forecast_shadow
 from .order_ledger import OrderLedger
 from .signal_store import SignalStore, FINAL
 from .daily import DailyLimits, day_start_ms, judging_context
@@ -160,7 +164,7 @@ class State:
     #
     # Building it costs three bridge round trips - account, positions, quotes -
     # and it is rebuilt by every engine pass that is not handed one. The push
-    # socket runs about once a second and the board sweeps eight timeframes, so
+    # socket runs about once a second and the board sweeps nine timeframes, so
     # the same three calls were being made many times for answers that are
     # identical within the same second.
     #
@@ -298,6 +302,7 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
             snap_c = analyse(closed, mtf_c, spec)
             if snap_c.get('ok'):
                 STATE.closed[(symbol, tf)] = snap_c
+                forecast_shadow.remember_closed(symbol, tf, closed, snap_c)   # never raises
                 STORE.finalize(symbol, tf, generate(snap_c, closed), spec,
                                int(closed.t[-1]), int(TF_SECONDS.get(tf, 300) * 1000))
         detected = STORE.view(symbol, tf)
@@ -329,10 +334,12 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
 # --------------------------------------------------------------------------- #
 # the multi-timeframe signal board                                            #
 # --------------------------------------------------------------------------- #
-# Which timeframes the board watches. 2h is omitted deliberately: it carries
-# almost no information 1h and 4h do not already give, and every extra
-# timeframe is a full engine pass.
-BOARD_TFS = ['1m', '3m', '5m', '15m', '30m', '1h', '4h', '1d']
+# Which timeframes the board watches - and so which ones alerts and auto trading
+# can be switched on for. 2h was left out at first (1h and 4h already carry most
+# of it, and every timeframe is a full engine pass); it was added 2026-09-26 at
+# the trader's request. Alerts and auto trading on 2h are still OFF until
+# switched on in Settings.
+BOARD_TFS = ['1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '1d']
 
 
 def account_currency() -> str:
@@ -971,7 +978,87 @@ async def _start_workers() -> None:
     asyncio.create_task(news_alert_worker())
     asyncio.create_task(board_supervisor())
     asyncio.create_task(executor_loop())
+    asyncio.create_task(marketdata_routine())
     TELEGRAM_COMMANDS.start()
+
+
+async def marketdata_routine() -> None:
+    """
+    The monthly history update, when switched on (Settings > Market data).
+    Checks every 30 minutes; marketdata.routine_tick decides - on, due, and
+    only at the weekend when gold is shut, because the download holds the
+    bridge's MT5 session while it runs.
+    """
+    await asyncio.sleep(120)                  # let the bridge and the board settle first
+    while True:
+        try:
+            await asyncio.to_thread(marketdata.routine_tick, BRIDGE)
+        except Exception:                                  # noqa: BLE001
+            pass
+        await asyncio.sleep(1800)
+
+
+class MarketDataBody(BaseModel):
+    rebuild: bool = True
+    rescore: bool = False
+    force: bool = False
+    # Update just these (a selection, or a new instrument) instead of everything on
+    # disk; tfs limits the timeframes, years is the history a new timeframe gets.
+    symbols: list[str] | None = None
+    tfs: list[str] | None = None
+    years: int = 5
+    # False: leave MT5 alone and only rebuild / rescore the forecast tables.
+    download: bool = True
+    # Switch the forecast engine on once their history is down: True for every
+    # symbol in the update, or a list of them.
+    enable_forecast: bool | list[str] = False
+
+
+@app.get('/api/data/status')
+def data_status():
+    """History on disk per timeframe, the running update, and the monthly routine."""
+    return marketdata.status()
+
+
+@app.get('/api/data/job')
+def data_job():
+    """The running (or last) update alone - progress and what it is doing, for the footer."""
+    return marketdata.job_status()
+
+
+@app.post('/api/data/update')
+def data_update(body: MarketDataBody):
+    """Top up the history from MT5 now (all, or the chosen symbols), then rebuild the forecast tables."""
+    return marketdata.start(BRIDGE, rebuild=body.rebuild, rescore=body.rescore,
+                            force=body.force, reason='manual', symbols=body.symbols,
+                            tfs=body.tfs, years=body.years, spec=FEED.spec,
+                            download=body.download, enable_forecast=body.enable_forecast)
+
+
+class ForecastSwitchBody(BaseModel):
+    symbol: str
+    on: bool
+
+
+@app.post('/api/data/forecast')
+def data_forecast(body: ForecastSwitchBody):
+    """Switch the forecast engine on or off for one symbol (on needs history from its training start)."""
+    return marketdata.set_forecast(body.symbol, body.on)
+
+
+@app.post('/api/data/cancel')
+def data_cancel():
+    return marketdata.cancel(BRIDGE)
+
+
+class RoutineBody(BaseModel):
+    auto: bool
+
+
+@app.post('/api/data/routine')
+def data_routine(body: RoutineBody):
+    """Switch the monthly update on or off."""
+    return marketdata.set_auto(body.auto)
 
 
 WORKSPACE_FILE = Path(__file__).resolve().parent.parent / 'configs' / 'workspace.json'
@@ -1992,6 +2079,9 @@ def _on_sent(rec: dict) -> None:
     # 'placed' event is already written); dropping the cached context makes
     # the very next decision count this order rather than a second later.
     STATE.invalidate_context()
+    # Shadow live: queue what regime_agree would have said about this send, for
+    # the log. Returns at once, never raises, and changes nothing about the order.
+    forecast_shadow.note_send(rec, STATE.closed.get((rec.get('symbol'), rec.get('tf'))))
 
 
 EXECUTOR = Executor(

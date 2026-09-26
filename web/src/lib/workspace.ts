@@ -38,6 +38,7 @@ const KEYS = [
   'dianur.lab.overlays',   // the backtest lab keeps its own studies
   'dianur.lab.dock',       // the lab's open research tab
   'dianur.lab.dockH',      // and how tall it is
+  'dianur.lab.cone',       // the forecast engine's range cone on/off
 ]
 
 const URL = '/api/workspace'

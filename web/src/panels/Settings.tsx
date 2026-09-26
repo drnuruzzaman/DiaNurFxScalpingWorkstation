@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from 'react'
 import { api } from '../lib/api'
 import { dateUTC, fmt } from '../lib/format'
 import { Empty } from './common'
+import { MarketData } from './MarketData'
 
-type Tab = 'alerts' | 'news' | 'destinations' | 'risk' | 'log'
+type Tab = 'alerts' | 'news' | 'destinations' | 'risk' | 'data' | 'log'
+export type SettingsTab = Tab
 
 /**
  * What each exit plan actually does, and what the measurements said.
@@ -52,6 +54,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'news', label: 'NEWS' },
   { key: 'destinations', label: 'DESTINATIONS' },
   { key: 'risk', label: 'RISK & GATES' },
+  { key: 'data', label: 'MARKET DATA' },
   { key: 'log', label: 'LOG' },
 ]
 
@@ -76,8 +79,10 @@ type AlertsPayload = {
  * usually noise on 1m. Row and column headers toggle whole lines so filling it
  * in does not take forty clicks.
  */
-export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
+export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
   onClose: () => void
+  /** The tab to open on - Market data when opened from the footer's update. */
+  initialTab?: Tab
   liveTf?: string
   /** Signals only exist for these, so they are the only rows worth showing. */
   watchlist?: string[]
@@ -92,7 +97,7 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
   mt5?: { login: number | null; server: string | null;
           account_type?: string; connected?: boolean } | null
 }) {
-  const [tab, setTab] = useState<Tab>('alerts')
+  const [tab, setTab] = useState<Tab>(initialTab ?? 'alerts')
   const [data, setData] = useState<AlertsPayload | null>(null)
   const [engine, setEngine] = useState<any>(null)
   const [log, setLog] = useState<any[]>([])
@@ -335,6 +340,8 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5 }: {
     .filter((c: any) => c.enabled && onWatch(c.symbol)).length
 
   const body = () => {
+    // Market data needs nothing from the alerts or engine settings.
+    if (tab === 'data') return <MarketData />
     if (!data || !draft) return <Empty>Loading settings…</Empty>
 
     if (tab === 'alerts') {

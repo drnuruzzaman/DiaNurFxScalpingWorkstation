@@ -823,6 +823,42 @@
   height: 14px;
   background: var(--line-strong);
 }
+/* A market data update on the footer: its words, a bar, the percentage. The
+   words keep the footer's one colour; the bar carries the state - info while
+   it runs, green when finished, red when stopped. */
+.foot-job {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.foot-job-text {
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.foot-job-track {
+  flex: none;
+  width: 96px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-raise);
+  border: 1px solid var(--line-strong);
+  overflow: hidden;
+}
+.foot-job-track i {
+  display: block;
+  height: 100%;
+  background: var(--info);
+  transition: width 0.6s ease;
+}
+.foot-job.done .foot-job-track i { background: var(--bull); }
+.foot-job.failed .foot-job-track i { background: var(--bear); }
 
 /* The account ribbon carries the MT5 state as colour.
    Green means every figure on it came from a live broker session; red means
@@ -1893,3 +1929,61 @@
   letter-spacing: 0.14em;
   color: var(--ink-low);
 }
+
+/* Market data (Settings > Market data, and the lab's start page) */
+.md-table { border-collapse: collapse; font-size: 10.5px; margin: 4px 0 8px; }
+.md-table th, .md-table td { padding: 2px 9px 2px 0; text-align: left; white-space: nowrap; }
+.md-table th { color: var(--ink-low); font-weight: 700; }
+.md-steps { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 10.5px; margin: 6px 0 4px; }
+.md-step.done { color: var(--bull); }
+.md-step.running { color: var(--info); }
+.md-step.failed, .md-step.cancelled { color: var(--bear); }
+.md-step.skipped, .md-step.waiting { color: var(--ink-low); }
+.md-log { font-family: var(--mono); font-size: 9.5px; line-height: 1.45; color: var(--ink-mid);
+  background: var(--bg-raise); border: 1px solid var(--line-soft); border-radius: 4px;
+  padding: 6px 8px; margin: 6px 0 4px; max-height: 190px; overflow: auto; white-space: pre-wrap; }
+.md-compact { font-size: 10px; margin-top: 10px; }
+.md-progress { margin: 8px 0 6px; }
+.md-progress.compact { margin: 6px 0 0; max-width: 420px; }
+.md-progress-top { display: flex; align-items: baseline; gap: 8px; font-size: 10.5px; margin-bottom: 3px; }
+.md-progress-detail { font-size: 10px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-progress-track { height: 8px; border-radius: 4px; background: var(--bg-raise);
+  border: 1px solid var(--line-soft); overflow: hidden; }
+.md-progress-track i { display: block; height: 100%; background: var(--info);
+  transition: width 0.6s ease; }
+.md-progress-track i.done { background: var(--bull); }
+.md-progress-track i.failed { background: var(--bear); }
+.md-progress-sub { display: flex; gap: 8px; font-size: 9.5px; margin-top: 3px; }
+.md-progress-sub .spacer { flex: 1; }
+.md-search { width: 320px; }
+.md-symlist { display: flex; flex-direction: column; max-height: 190px; overflow: auto;
+  border: 1px solid var(--line-soft); border-radius: 4px; margin-bottom: 8px; }
+.md-sym { display: flex; align-items: center; gap: 8px; padding: 4px 8px; font-size: 10.5px;
+  text-align: left; border-bottom: 1px solid var(--line-soft); }
+.md-sym:hover { background: var(--bg-hover); }
+.md-sym.on { background: var(--bg-raise); outline: 1px solid var(--info); }
+.md-sym-g { margin-left: auto; font-size: 9.5px; }
+/* three cards: history on disk, download & forecast engine, monthly routine */
+.md-card { background: var(--bg-panel-2); border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 8px 10px 10px; margin-bottom: 10px; }
+.md-card > .set-head { margin-top: 0; }
+.md-card .set-row { margin-bottom: 8px; }
+.md-hist { width: 100%; border-top: 1px solid var(--line-soft); margin: 2px 0 0; }
+.md-hist th { padding-top: 7px; }
+.md-hist th:first-child, .md-hist td:first-child { width: 64px; }
+.md-hist .md-hist-sym td { color: var(--ink-mid); font-weight: 700; padding-top: 9px; }
+.md-wrap { flex-wrap: wrap; row-gap: 6px; }
+.md-lbl { width: 66px; flex: none; font-size: 10.5px; }
+.md-x { margin-left: 6px; opacity: 0.55; }
+.pill:hover .md-x { opacity: 1; }
+.md-years { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; font-size: 10.5px; }
+.md-off { color: var(--ink-low); }
+.md-fcrow { align-items: flex-start; }
+.md-fclist { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.md-fc { display: flex; align-items: baseline; gap: 10px; font-size: 10.5px; }
+.md-fc .set-toggle { flex: none; min-width: 104px; }
+.md-notice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 4px; }
+.md-link { color: var(--info); font-size: 10px; margin-left: 8px; background: none; border: 0;
+  padding: 0; cursor: pointer; }
+.md-link:hover { text-decoration: underline; }
+.md-details { font-size: 10px; margin-top: 2px; }

@@ -8,6 +8,10 @@
 #logs/
 #runs/
 runs/lab/lab.pid
+# forecast engine: rebuildable caches (also matched by cache/), big per-forecast rows, build logs
+runs/forecast/cache/
+runs/forecast/batch/*/forecasts_*.parquet
+runs/forecast/*.log
 cache/
 #*.log
 

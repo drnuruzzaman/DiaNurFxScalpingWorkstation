@@ -1,0 +1,51 @@
+{
+ "auto": true,
+ "last_ok_ms": 1790382466407,
+ "history": [
+  {
+   "at_ms": 1790380458556,
+   "reason": "manual",
+   "ok": true,
+   "error": null
+  },
+  {
+   "at_ms": 1790381193482,
+   "reason": "manual",
+   "ok": true,
+   "error": null
+  },
+  {
+   "at_ms": 1790382117003,
+   "reason": "manual",
+   "ok": true,
+   "error": null
+  },
+  {
+   "at_ms": 1790382466407,
+   "reason": "manual",
+   "ok": true,
+   "error": null
+  },
+  {
+   "at_ms": 1790386037885,
+   "reason": "add symbol",
+   "ok": false,
+   "error": "cancelled",
+   "symbols": [
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1790389820928,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "USDJPY.a"
+   ]
+  }
+ ],
+ "forecast_symbols": [
+  "XAUUSD.a"
+ ]
+}

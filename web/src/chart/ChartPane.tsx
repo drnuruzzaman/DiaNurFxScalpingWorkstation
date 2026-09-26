@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ChartEngine, type HoverInfo } from './ChartEngine'
-import type { Bar, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot, TradeMark } from './types'
+import type { Bar, ForecastCone, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot, TradeMark } from './types'
 import { fmt } from '../lib/format'
 
 /**
@@ -125,8 +125,8 @@ export function ChartPane({
   bars, snapshot, signal, overlays, digits, money, badge, onNeedHistory, status, onEngine,
   tfMs = 0,
   mtfLines = [], mtfSources = [], layout, news = [], positions = [], legBlocked = [],
-  trades, cursorT = null, watermark = null, preferredSpan = null, chartKey, workspace,
-  theme = 'glossy',
+  trades, cursorT = null, watermark = null, watermarkStyle = 'center', preferredSpan = null, chartKey, workspace,
+  theme = 'glossy', forecast = null,
 }: {
   bars: Bar[]
   snapshot: Snapshot | null
@@ -153,6 +153,10 @@ export function ChartPane({
   cursorT?: number | null
   /** Faint text behind the chart (BACKTEST on the lab's). */
   watermark?: string | null
+  /** 'brand' = the DIANURFX word at the left middle (live); 'center' = the lab's. */
+  watermarkStyle?: 'center' | 'brand'
+  /** The range cone to draw right of a bar (the lab's forecast engine). */
+  forecast?: ForecastCone | null
   /** The zoom this chart was saved at, if its workspace is saved. */
   preferredSpan?: number | null
   /** Which chart this is (instrument|timeframe) - a change applies its saved zoom. */
@@ -241,7 +245,8 @@ export function ChartPane({
   useEffect(() => { engine.current?.setLegBlocked(legBlocked) }, [legBlocked])
   useEffect(() => { engine.current?.setTrades(trades ?? []) }, [trades])
   useEffect(() => { engine.current?.setCursor(cursorT) }, [cursorT])
-  useEffect(() => { engine.current?.setWatermark(watermark) }, [watermark])
+  useEffect(() => { engine.current?.setWatermark(watermark, watermarkStyle) }, [watermark, watermarkStyle])
+  useEffect(() => { engine.current?.setForecast(forecast) }, [forecast])
   // The saved zoom is APPLIED only when a different chart opens; a new save
   // on the same chart just updates what Reset returns to.
   const lastKey = useRef<string | undefined>(undefined)

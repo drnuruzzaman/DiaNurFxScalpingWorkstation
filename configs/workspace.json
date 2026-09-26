@@ -2,43 +2,43 @@
  "values": {
   "dianur.tabs.v2": [
    {
-    "id": "tmug4tjy6",
-    "symbol": "XAUUSD.a",
-    "tf": "1h"
-   },
-   {
     "id": "tmug6r5p2",
     "symbol": "XAUUSD.a",
-    "tf": "4h"
+    "tf": "1d"
    },
    {
     "id": "tmug7vomm",
     "symbol": "XAUUSD.a",
-    "tf": "15m"
+    "tf": "5m"
+   },
+   {
+    "id": "tmugjg7gh",
+    "symbol": "XAUUSD.a",
+    "tf": "3m"
    }
   ],
-  "dianur.activeTab": "tmug7vomm",
+  "dianur.activeTab": "tmug6r5p2",
   "dianur.overlays": {
    "mtfTrendlines": true,
    "zigzag": false,
    "macd": false,
-   "levels": true,
+   "levels": false,
    "trendlines": false,
-   "channels": true,
-   "patterns": true,
+   "channels": false,
+   "patterns": false,
    "fvg": false,
-   "zones": true,
+   "zones": false,
    "fib": false,
-   "engulfing": false,
-   "swings": true,
-   "structure": true,
+   "swings": false,
+   "structure": false,
    "events": false,
-   "liquidity": true,
-   "signal": true,
+   "liquidity": false,
+   "signal": false,
    "volumeProfile": false,
-   "regimeBands": true,
+   "regimeBands": false,
    "rsi": true,
-   "volume": false
+   "volume": false,
+   "engulfing": false
   },
   "dianur.layout": {
    "grid": false,
@@ -47,7 +47,7 @@
    "legRead": false
   },
   "dianur.mtfSources": null,
-  "dianur.hideFigures": 0,
+  "dianur.hideFigures": 1,
   "dianur.watchlist": [
    "XAUUSD.a",
    "USDJPY.a"
@@ -63,7 +63,7 @@
   "dianur.panels": {
    "left": true,
    "right": true,
-   "bottom": false
+   "bottom": true
   },
   "dianur.dockTab": "execution",
   "dianur.boardSort": {
@@ -153,8 +153,8 @@
      "volume": false
     },
     "mtfSources": null,
-    "span": 199,
-    "saved_ms": 1790296468902
+    "span": 227,
+    "saved_ms": 1790333031453
    },
    "XAUUSD.a|4h": {
     "overlays": {
@@ -182,6 +182,60 @@
     "mtfSources": null,
     "span": 227,
     "saved_ms": 1790296446789
+   },
+   "XAUUSD.a|5m": {
+    "overlays": {
+     "mtfTrendlines": true,
+     "zigzag": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "patterns": true,
+     "fvg": false,
+     "zones": true,
+     "fib": false,
+     "engulfing": false,
+     "swings": true,
+     "structure": true,
+     "events": false,
+     "liquidity": true,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false
+    },
+    "mtfSources": null,
+    "span": 197,
+    "saved_ms": 1790332999734
+   },
+   "XAUUSD.a|3m": {
+    "overlays": {
+     "mtfTrendlines": true,
+     "zigzag": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "patterns": true,
+     "fvg": false,
+     "zones": true,
+     "fib": false,
+     "engulfing": false,
+     "swings": true,
+     "structure": true,
+     "events": false,
+     "liquidity": true,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false
+    },
+    "mtfSources": null,
+    "span": 228,
+    "saved_ms": 1790333009557
    }
   },
   "dianur.lab.overlays": {
@@ -195,18 +249,20 @@
    "fvg": false,
    "zones": true,
    "fib": false,
-   "swings": true,
-   "structure": true,
+   "engulfing": false,
+   "swings": false,
+   "structure": false,
    "events": false,
-   "liquidity": true,
+   "liquidity": false,
    "signal": true,
    "volumeProfile": false,
    "regimeBands": true,
    "rsi": true,
    "volume": false
   },
-  "dianur.lab.dock": "trades",
-  "dianur.lab.dockH": 230
+  "dianur.lab.dock": "snapshots",
+  "dianur.lab.dockH": 209,
+  "dianur.lab.cone": true
  },
- "saved_ms": 1790298158509
+ "saved_ms": 1790389868696
 }

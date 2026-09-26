@@ -53,13 +53,18 @@ from ..engine.analysis import analyse, quick_trend
 from ..engine.qualify import fixed_lots, qualify, qualify_all
 from ..engine.signals import Signal, generate
 from ..executor import Executor
+from ..forecast import news as release_history
+from ..forecast.timebase import utc_to_broker
 from ..order_ledger import OrderLedger, tag_for
-from ..signal_store import (CANCELLED, CLOSED, EXPIRED, FILLED, REVERSED, SENT,
+from ..signal_store import (ACTIVE, CANCELLED, CLOSED, EXPIRED, FILLED, REVERSED, SENT,
                             SignalStore)
 from . import data as lab_data
 from . import settings as lab_settings
 from . import stats as lab_stats
 from .broker import REASON_SL, REASON_TP, SimBroker, SimFeed
+from .filters import FILTERS
+from .filters import verdict as filter_verdict
+from .forecast import SessionForecast
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNS = ROOT / 'runs' / 'lab'
@@ -68,6 +73,7 @@ WARM = 720              # history loaded before the first decision bar
 MAX_BARS = 60_000       # longer than this is a batch job, not a replay
 SNAP_CACHE = 240        # analyses kept for instant back-stepping
 ENGINE_REV = 'unknown'  # set by app.py from git at start-up
+NEWS_LOOKAHEAD_MS = 6 * 3_600_000   # live asks the calendar 6 hours ahead (main.py)
 
 _SID = re.compile(r'^[0-9]{8}-[0-9]{6}-[0-9a-f]{4}$')
 
@@ -100,6 +106,45 @@ def _wall_ms() -> int:
 # --------------------------------------------------------------------------- #
 # the live store and ledger, in memory, reporting to the recorder             #
 # --------------------------------------------------------------------------- #
+# The live store and ledger scan every record they hold on every executor tick.
+# Live, that is a week of signals (the store prunes on save); a lab session
+# keeps a year of them, and those scans made long replays quadratic - a 5m
+# year ran three times slower at its end than its start. So the in-memory
+# copies keep the records that can still act, in the same order, beside the
+# full dicts, and answer the hot queries from them. Same answers, same order:
+# records enter only by item assignment and change stage/state only through
+# the methods below, which keep each index exact.
+_ORDER_LIVE = ('sending', 'placed', 'unknown', 'filled')    # OrderLedger.live_for
+_ORDER_UNRESOLVED = ('sending', 'unknown')                   # Executor._reconcile_unknown
+
+
+class _Indexed(dict):
+    """A dict of records plus `live`: the ones `is_live` holds for, in dict order."""
+
+    def __init__(self, is_live):
+        super().__init__()
+        self.is_live = is_live
+        self.live: dict = {}
+
+    def __setitem__(self, key, rec):
+        super().__setitem__(key, rec)
+        self.sync(key)
+
+    def __delitem__(self, key):
+        super().__delitem__(key)
+        self.live.pop(key, None)
+
+    def sync(self, key) -> None:
+        rec = self.get(key)
+        if rec is None or not self.is_live(rec):
+            self.live.pop(key, None)
+        elif key not in self.live:
+            if next(reversed(self)) == key:
+                self.live[key] = rec                # the newest record: order holds
+            else:                                   # an old one back in play: rare
+                self.live = {k: r for k, r in self.items() if self.is_live(r)}
+
+
 class MemStore(SignalStore):
     """The live SignalStore unchanged, minus the disk, plus a journal hook."""
 
@@ -108,7 +153,7 @@ class MemStore(SignalStore):
         super().__init__(ROOT / 'runs' / 'lab' / '.unused')
 
     def load(self) -> None:
-        self.recs = {}
+        self.recs = _Indexed(lambda r: r['stage'] in ACTIVE)
 
     def save(self) -> None:
         pass
@@ -116,15 +161,28 @@ class MemStore(SignalStore):
     def _move(self, rec, stage, note, **fields):
         before = rec['stage']
         super()._move(rec, stage, note, **fields)
+        self.recs.sync(rec['id'])
         if before != stage:
             self._on_move(rec, stage, note)
 
     def update(self, fid, **fields):
         before = (self.recs.get(fid) or {}).get('note')
         super().update(fid, **fields)
+        if 'stage' in fields:
+            self.recs.sync(fid)
         note = fields.get('note')
         if note and note != before:
             self._on_note(fid, note)
+
+    def active_for(self, symbol: str, tf: str, side: str = None) -> list:
+        with self._lock:
+            return [r for r in self.recs.live.values()
+                    if r['symbol'] == symbol and r['tf'] == tf
+                    and r['stage'] in ACTIVE and (side is None or r['side'] == side)]
+
+    def active(self) -> list:
+        with self._lock:
+            return [copy.deepcopy(r) for r in self.recs.live.values() if r['stage'] in ACTIVE]
 
 
 class MemLedger(OrderLedger):
@@ -132,7 +190,7 @@ class MemLedger(OrderLedger):
 
     def __init__(self, on_mark):
         self._lock = threading.RLock()
-        self.rows = {}
+        self.rows = _Indexed(lambda r: r['state'] in _ORDER_LIVE)
         self.path = None
         self._on_mark = on_mark
 
@@ -141,7 +199,36 @@ class MemLedger(OrderLedger):
 
     def mark(self, fid, state, note='', **fields):
         super().mark(fid, state, note, **fields)
+        self.rows.sync(fid)
         self._on_mark(fid, state, note)
+
+    def live_for(self, symbol: str, tf: str) -> list:
+        with self._lock:
+            return [dict(r) for r in self.rows.live.values()
+                    if r.get('symbol') == symbol and r.get('tf') == tf
+                    and r['state'] in _ORDER_LIVE]
+
+    def live_count(self) -> int:
+        with self._lock:
+            return sum(1 for r in self.rows.live.values() if r['state'] in _ORDER_LIVE)
+
+    def has_unresolved(self) -> bool:
+        """Any order whose outcome was never learned ('sending'/'unknown')?"""
+        with self._lock:
+            return any(r['state'] in _ORDER_UNRESOLVED for r in self.rows.live.values())
+
+
+class LabExecutor(Executor):
+    """
+    The live Executor unchanged, except that its crash-recovery sweep is skipped
+    while no order is in doubt. The sweep sorts the whole ledger every tick
+    looking for 'sending'/'unknown' rows and touches nothing else, so with none
+    it provably does nothing.
+    """
+
+    def _reconcile_unknown(self, positions, orders) -> None:
+        if self.ledger.has_unresolved():
+            super()._reconcile_unknown(positions, orders)
 
 
 # --------------------------------------------------------------------------- #
@@ -185,10 +272,18 @@ class ReplaySession:
         mode = cfg.get('mode') if cfg.get('mode') in ('auto', 'manual') else 'auto'
         name = str(cfg.get('name') or '').strip() or \
             f"{symbol} {tf} from {dt.datetime.fromtimestamp(start / 1000, dt.timezone.utc):%d %b %Y %H:%M}"
+        ff = cfg.get('forecast_filter') or None
+        if ff is not None and ff not in FILTERS:
+            raise ValueError(f'unknown forecast filter {ff}')
+        news_gate = bool(cfg.get('news_gate', False))
+        if news_gate and not release_history.events()['n']:
+            raise ValueError('the news gate needs data/_news/history.json '
+                             '(python tools/news_backfill.py)')
         return {'symbol': symbol, 'tf': tf, 'start': int(start), 'end': int(end),
                 'mode': mode, 'name': name[:80], 'record': bool(cfg.get('record', True)),
                 'overrides': copy.deepcopy(cfg.get('overrides') or {}),
-                'notes': str(cfg.get('notes') or ''), 'tags': list(cfg.get('tags') or [])}
+                'notes': str(cfg.get('notes') or ''), 'tags': list(cfg.get('tags') or []),
+                'forecast_filter': ff, 'news_gate': news_gate}
 
     def _load_data(self) -> None:
         c = self.cfg
@@ -233,6 +328,10 @@ class ReplaySession:
             self.v = self.k
             self._bar_i = self.i0
             self.closed_snap = None
+            # The forecast engine's view of this run: per-bar payloads, and each
+            # forecast settled once the replay passes its horizon.
+            self.fc = SessionForecast(self.cfg['symbol'], self.cfg['tf'])
+            self._releases = self._release_times() if self.cfg.get('news_gate') else None
             self.cancel = False
             self.now_ms = int(self.series.t[self.k]) + self.tf_ms
             self.balance0 = float(self.eff['risk']['equity'])
@@ -245,7 +344,7 @@ class ReplaySession:
             self.store = MemStore(self._on_move, self._on_note)
             self.ledger = MemLedger(self._on_mark)
             self.feed = SimFeed(self)
-            self.executor = Executor(
+            self.executor = LabExecutor(
                 self.store, self.ledger, self.broker, self.feed, CONFIG,
                 requalify=self._requalify, auto=lambda: self.cfg['mode'] == 'auto',
                 trading_enabled=lambda: True, on_sent=self._on_sent,
@@ -433,9 +532,35 @@ class ReplaySession:
             'daily_pnl_pct': pct if pct is not None else 0.0,
             'spread_points': self._spread(self.k),
             'risk_per_trade_pct': CONFIG.risk.risk_per_trade_pct,
-            # No historical calendar on disk: the news gate is not simulated.
-            'minutes_to_high_impact': None,
+            # The news gate, from the release history when the session asks for
+            # it; otherwise not simulated, as before the history existed.
+            'minutes_to_high_impact': self._minutes_to_release(),
         }
+
+    @staticmethod
+    def _release_times() -> np.ndarray:
+        """Every timed, scheduled release in the history, on the broker clock."""
+        ev = release_history.events()
+        ts = np.sort(np.concatenate([ev['major'][0], ev['minor'][0]]))
+        return utc_to_broker(ts)
+
+    def _minutes_to_release(self, now_ms: int = None):
+        """
+        What live's news gate reads (main.py news()): minutes to the next
+        high-impact release within 6 hours, never negative, None if there is
+        none. Two differences, both stated in the lab: the history holds the
+        US releases the backfill knows (FRED + FOMC) where live's calendar also
+        has other currencies, and live reuses a figure for up to 5 minutes
+        where the lab reads the exact minute.
+        """
+        ts = getattr(self, '_releases', None)
+        if ts is None or not ts.size:
+            return None
+        now = int(self.now_ms if now_ms is None else now_ms)
+        j = int(np.searchsorted(ts, now, 'left'))
+        if j >= ts.size or int(ts[j]) - now > NEWS_LOOKAHEAD_MS:
+            return None
+        return round((int(ts[j]) - now) / 60_000, 1)
 
     def _requalify(self, rec):
         snap = self.closed_snap
@@ -445,6 +570,14 @@ class ReplaySession:
         out = qualify(sig, snap, self.spec, judging_context(self.context(), rec.get('stage')))
         if out is not None:
             out.judged_bar_ms = int(snap.get('bar_time_ms') or 0)
+            # Phase D: a forecast filter vetoes a qualified send, like a gate would.
+            ff = self.cfg.get('forecast_filter')
+            if ff and out.status == 'qualified':
+                why = filter_verdict(ff, self.cfg['symbol'], self.cfg['tf'],
+                                     int(snap.get('bar_time_ms') or 0), out.side)
+                if why:
+                    out.status = 'rejected'
+                    out.reason = why
         return out
 
     def _day_check(self) -> None:
@@ -535,6 +668,7 @@ class ReplaySession:
                                snap, self.spec, self.context())
             self.store.note_qualification(sigs)
         self.frames.append(self._frame_state(k1, sigs))
+        self.fc.settle(self, k1)
         return True
 
     def _frame_state(self, k: int, sigs: list) -> dict:
@@ -689,6 +823,7 @@ class ReplaySession:
                            'now': fr['now'], 'at_end': self.at_end()},
                 'snapshot': snap, 'signals': fr['signals'], 'positions': fr['positions'],
                 'orders': fr['orders'], 'account': fr['account'],
+                'forecast': self.fc.payload(self, v, fr),
                 'ev': fr['ev'], 'tr': fr['tr'],
             }
 
@@ -735,13 +870,27 @@ class ReplaySession:
     def save_snapshot(self, png: bytes, note: str = '') -> dict:
         with self.lock:
             (self.dir / 'snapshots').mkdir(parents=True, exist_ok=True)
-            n = len(self.snaps) + 1
+            # Next number after the highest in use - a deleted snapshot never frees a name.
+            n = max([int(str(s['file'])[5:8]) for s in self.snaps
+                     if str(s.get('file', '')).startswith('snap-')] or [0]) + 1
             t = int(self.series.t[self.v])
             name = f"snap-{n:03d}-{dt.datetime.fromtimestamp(t / 1000, dt.timezone.utc):%Y%m%d-%H%M}.png"
             (self.dir / 'snapshots' / name).write_bytes(png)
             meta = {'file': name, 'i': self.v, 't': t, 'note': str(note)[:300], 'at': _wall_ms()}
             self.snaps.append(meta)
             return meta
+
+    def delete_snapshot(self, name: str) -> bool:
+        """Remove one snapshot: its PNG and its entry. False if it is not this session's."""
+        with self.lock:
+            hit = next((s for s in self.snaps if s.get('file') == name), None)
+            if hit is None:
+                return False
+            path = self.dir / 'snapshots' / name
+            if path.exists() and path.parent == self.dir / 'snapshots':
+                path.unlink()
+            self.snaps.remove(hit)
+            return True
 
     @classmethod
     def open(cls, sid: str) -> 'ReplaySession':
