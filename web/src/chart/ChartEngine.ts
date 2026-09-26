@@ -1267,6 +1267,24 @@ export class ChartEngine {
     return out
   }
 
+  /**
+   * Daily or weekly bars: 20 hours or more between the last few. They open at
+   * the broker's midnight - 21:00 or 22:00 UTC the evening BEFORE - so read in
+   * UTC every one is labelled a day early, and Friday's candle as Thursday's.
+   */
+  private dayBars(): boolean {
+    const b = this.bars
+    if (b.length < 3) return false
+    let gap = Infinity
+    for (let i = Math.max(1, b.length - 6); i < b.length; i++) gap = Math.min(gap, b[i].t - b[i - 1].t)
+    return gap >= 20 * 3_600_000
+  }
+
+  /** The instant a bar's label is read from: a day bar's trading day (12 h into it), else its open. */
+  private labelTime(t: number, day: boolean): Date {
+    return new Date(day ? t + 12 * 3_600_000 : t)
+  }
+
   private timeTicks(): { i: number; label: string; major: boolean }[] {
     const out: { i: number; label: string; major: boolean }[] = []
     const from = Math.max(0, Math.floor(this.view.start))
@@ -1274,9 +1292,10 @@ export class ChartEngine {
     if (to - from < 2) return out
     const minPx = 78
     const stepBars = Math.max(1, Math.ceil(minPx / this.barW()))
+    const dayBars = this.dayBars()
     let lastDay = -1
     for (let i = from; i < to; i += stepBars) {
-      const d = new Date(this.bars[i].t)
+      const d = this.labelTime(this.bars[i].t, dayBars)
       const day = d.getUTCDate()
       const major = day !== lastDay
       lastDay = day
@@ -3079,8 +3098,12 @@ export class ChartEngine {
     }
 
     if (h.bar) {
-      const d = new Date(h.bar.t)
-      const label = `${String(d.getUTCDate()).padStart(2, '0')} ${d.toLocaleString('en', { month: 'short', timeZone: 'UTC' })} ${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`
+      // A day bar is its trading day, and has no clock time worth showing.
+      const dayBars = this.dayBars()
+      const d = this.labelTime(h.bar.t, dayBars)
+      const date = `${String(d.getUTCDate()).padStart(2, '0')} ${d.toLocaleString('en', { month: 'short', timeZone: 'UTC' })}`
+      const label = dayBars ? `${d.toLocaleString('en', { weekday: 'short', timeZone: 'UTC' })} ${date}`
+        : `${date} ${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`
       ctx.font = `11px ${NUM_FONT}`
       const tw = ctx.measureText(label).width
       const bx = Math.max(0, Math.min(this.pane.w - tw - 12, h.x - tw / 2 - 6))

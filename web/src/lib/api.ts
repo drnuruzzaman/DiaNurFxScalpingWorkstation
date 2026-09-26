@@ -181,7 +181,11 @@ export type Health = {
 }
 
 async function jget<T>(url: string): Promise<T> {
-  const r = await fetch(url, { headers: { Accept: 'application/json' } })
+  // Never from the browser's cache: these are live answers. An API from before
+  // an endpoint existed answered it with the app's page (a cacheable 200), and
+  // the browser kept serving that page as the endpoint's answer after the API
+  // that has it had started - the footer's update progress never appeared.
+  const r = await fetch(url, { headers: { Accept: 'application/json' }, cache: 'no-store' })
   if (!r.ok) throw new Error(`${r.status} ${r.statusText} on ${url}`)
   return (await r.json()) as T
 }

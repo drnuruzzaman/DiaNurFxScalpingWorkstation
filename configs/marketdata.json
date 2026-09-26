@@ -43,9 +43,38 @@
    "symbols": [
     "USDJPY.a"
    ]
+  },
+  {
+   "at_ms": 1790392488744,
+   "reason": "selected",
+   "ok": false,
+   "error": "cancelled",
+   "symbols": [
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1790392696875,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1790393622441,
+   "reason": "manual",
+   "ok": false,
+   "error": "cancelled",
+   "symbols": [
+    "USDJPY.a",
+    "XAUUSD.a"
+   ]
   }
  ],
  "forecast_symbols": [
-  "XAUUSD.a"
+  "XAUUSD.a",
+  "USDJPY.a"
  ]
 }

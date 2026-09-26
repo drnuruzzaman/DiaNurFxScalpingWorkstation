@@ -26,6 +26,7 @@ Route map:
 from __future__ import annotations
 
 import asyncio
+import dataclasses
 import json
 import threading
 import time
@@ -1525,11 +1526,37 @@ def bars(symbol: str = Query(None), tf: str = '5m', count: int = 600,
             'status': series.status, 'count': len(series)}
 
 
+_CLOCK = {'offset_ms': None, 'at': 0.0}
+
+
+def _chart_offset_ms() -> int:
+    """
+    What the bridge takes off every live bar: the broker's clock minus UTC
+    (3 h in the northern summer), re-read once a minute while MT5 answers.
+    0 while it never has - the live chart is on disk time too then.
+    """
+    if time.time() - _CLOCK['at'] > 60:
+        h = BRIDGE.health() or {}
+        if h.get('connected') and h.get('time_offset_ms') is not None:
+            _CLOCK.update(offset_ms=int(h['time_offset_ms']), at=time.time())
+    return _CLOCK['offset_ms'] or 0
+
+
 @app.get('/api/history')
 def history(symbol: str = Query(None), tf: str = '5m',
             from_ms: int = 0, to_ms: int = 0):
+    """
+    Older bars for the live chart's scroll-back, on the live bars' clock. The
+    disk holds broker time and the bridge sends UTC; merged unshifted, every
+    scrolled-back bar sat 3 hours late and the day where the two met was drawn
+    twice, with different prices.
+    """
     symbol = symbol or CONFIG.symbol
-    series = load_disk(symbol, tf, None, from_ms or None, to_ms or None)
+    off = _chart_offset_ms()
+    series = load_disk(symbol, tf, None, (from_ms + off) if from_ms else None,
+                       (to_ms + off) if to_ms else None)
+    if off and len(series):
+        series = dataclasses.replace(series, t=series.t - off, tz_offset_ms=off)
     # A year of M1 is 350k bars; the chart cannot use them and the browser
     # should not be asked to hold them.
     if len(series) > 20000:
@@ -2293,16 +2320,25 @@ _DIST = Path(__file__).resolve().parent.parent / 'web' / 'dist'
 if _DIST.exists():
     app.mount('/assets', StaticFiles(directory=_DIST / 'assets'), name='assets')
 
+    # The page itself is always revalidated: it names the hashed bundles, and a
+    # copy held from before a rebuild would load the old ones.
+    _PAGE_HEADERS = {'Cache-Control': 'no-cache'}
+
     @app.get('/')
     def index():
-        return FileResponse(_DIST / 'index.html')
+        return FileResponse(_DIST / 'index.html', headers=_PAGE_HEADERS)
 
     @app.get('/{path:path}')
     def spa(path: str):
+        # An API path that does not exist is an error, not the app. Answering it
+        # with the page (a cacheable 200) let a browser keep that page as a new
+        # endpoint's answer long after the API that has it had started.
+        if path == 'api' or path.startswith('api/'):
+            raise HTTPException(404, f'no such endpoint: /{path}')
         candidate = _DIST / path
         if candidate.is_file():
             return FileResponse(candidate)
-        return FileResponse(_DIST / 'index.html')
+        return FileResponse(_DIST / 'index.html', headers=_PAGE_HEADERS)
 else:
     @app.get('/')
     def dev_index():

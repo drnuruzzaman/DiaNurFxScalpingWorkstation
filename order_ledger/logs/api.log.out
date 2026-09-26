@@ -1,3 +1,5 @@
 DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
   bridge  : http://127.0.0.1:8765
   symbol  : XAUUSD.a
+! executor USDJPY.a:15m:pattern_break:sell:1790379000000: PermissionError: [WinError 5] Access is denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1h:pattern_break:buy:1790330400000: PermissionError: [WinError 5] Access is denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'

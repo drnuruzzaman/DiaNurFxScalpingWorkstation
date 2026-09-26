@@ -263,6 +263,7 @@ def job_status(log: int = 0) -> dict:
         if log:
             job['log'] = list(_JOB['log'][-log:])
     job['pct'] = overall(job['steps']) if job['steps'] else 0.0
+    job['eta_s'] = _eta(job['steps'], job['pct']) if job.get('running') else None
     # What it is doing now - or, once stopped, the last thing it was doing.
     cur = next((x for x in job['steps'] if x['state'] == 'running'), None) or next(
         (x for x in reversed(job['steps'])
@@ -315,7 +316,10 @@ def _step(name: str, state: str, note: str = '') -> None:
     with _LOCK:
         for s in _JOB['steps']:
             if s['name'] == name:
-                s.update(state=state, note=note, at_ms=int(time.time() * 1000))
+                now = int(time.time() * 1000)
+                s.update(state=state, note=note, at_ms=now)
+                if state == 'running':
+                    s.setdefault('started_ms', now)      # the first symbol's start
                 if state == 'done':
                     s['frac'] = 1.0
         _JOB['phase'] = name if state == 'running' else _JOB['phase']
@@ -336,6 +340,23 @@ def _progress(name: str, frac: float, detail: str = '') -> None:
 # rescore 70 s. A new symbol's first download is longer; its forecast step is
 # skipped, so the download then carries the bar. Skipped steps drop out.
 WEIGHTS = {'download': 10, 'releases': 3, 'forecast': 80, 'rescore': 7}
+
+
+def _eta(steps: list, pct: float, now: float | None = None) -> float | None:
+    """
+    Seconds to go: the rest of the job at the pace the running step has kept -
+    None until that step has moved. The steps run at very different speeds (a
+    download takes seconds, a first forecast build an hour), so the pace of the
+    whole job so far is no estimate at all.
+    """
+    cur = next((s for s in steps if s['state'] == 'running'), None)
+    if not cur or (cur.get('frac') or 0) < 0.02 or not cur.get('started_ms'):
+        return None
+    live = [s for s in steps if s['state'] != 'skipped']
+    share = WEIGHTS.get(cur['name'], 10) / (sum(WEIGHTS.get(s['name'], 10) for s in live) or 1)
+    spent = max(1.0, (time.time() if now is None else now) - cur['started_ms'] / 1000)
+    rate = share * float(cur['frac']) / spent                 # of the whole job, per second
+    return round(max(0.0, 1 - pct / 100) / rate) if rate > 0 else None
 
 
 def overall(steps: list) -> float:
@@ -473,10 +494,23 @@ class _BuildProgress:
 
     def __call__(self, line: str):
         m = re.search(r'\[\s*(\d+)/(\d+)\]', line)
+        plan = re.match(r'reads: (\d+) timeframe-years to build', line)
+        share = re.search(r'\((\d+)% of the reads\)', line)
+        reading = line.lstrip().startswith('reading ') and share
         if line.startswith('reads:') and 'fresh' in line:
             self.reads = 1.0
+        elif plan:
+            # Said at once: a first build's longest reads take a quarter of an
+            # hour before the first of them reports.
+            return 0.0, f'reads: 0 of {plan.group(1)} timeframe-years, the longest first'
+        elif reading:
+            # A worker's progress between finished timeframe-years.
+            self.reads = max(self.reads, int(share.group(1)) / 100)
         elif m and not line.startswith('store'):
-            self.reads = int(m.group(1)) / max(1, int(m.group(2)))
+            # By the work done, as the build reports it (the longest run first,
+            # so a count would race ahead of the time); by count from an older build.
+            self.reads = (int(share.group(1)) / 100 if share
+                          else int(m.group(1)) / max(1, int(m.group(2))))
         elif line.startswith('labels:'):
             self.reads, self.labels = 1.0, self.labels + 1
         elif line.startswith('store:'):
@@ -519,6 +553,27 @@ class _PerSymbol:
         return (self.i + frac) / self.n, f'{self.symbol} · {detail}'
 
 
+def _kill_tree(p) -> None:
+    """Stop a tool and everything it started - a forecast build's worker processes too."""
+    if p.poll() is not None:
+        return
+    if sys.platform == 'win32':
+        subprocess.run(['taskkill', '/PID', str(p.pid), '/T', '/F'], capture_output=True)
+    else:
+        p.kill()
+
+
+def _watch_cancel(p) -> None:
+    """Once a second while the tool runs: on Cancel, stop it and its workers."""
+    tick = threading.Event()
+    while p.poll() is None:
+        if _cancelled():
+            _log('cancel: stopping ' + ' '.join(map(str, p.args[2:4])))
+            _kill_tree(p)
+            return
+        tick.wait(1.0)
+
+
 def _subprocess(name: str, argv: list, parse=None, final: bool = True) -> bool:
     """
     Run one tool below normal priority, streaming its output into the log.
@@ -531,17 +586,20 @@ def _subprocess(name: str, argv: list, parse=None, final: bool = True) -> bool:
         p = subprocess.Popen([sys.executable, '-u'] + argv, cwd=str(ROOT), text=True,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                              creationflags=flags, encoding='utf-8', errors='replace')
+        # Cancel is watched apart from the output: a first forecast build can go
+        # twenty minutes without printing a line, and Cancel used to wait for one.
+        threading.Thread(target=_watch_cancel, args=(p,), daemon=True,
+                         name=f'marketdata-{name}-cancel').start()
         for line in p.stdout:
             if line.strip():
                 _log(f'  {line.rstrip()[:300]}')
                 got = parse(line.strip()) if parse else None
                 if got:
                     _progress(name, *got)
-            if _cancelled():
-                p.terminate()
-                _step(name, 'cancelled')
-                return False
         code = p.wait()
+        if _cancelled():
+            _step(name, 'cancelled')
+            return False
     except OSError as exc:
         _log(f'{name}: {exc}')
         if final:
@@ -695,6 +753,9 @@ def _run(bridge, plan: list, years: int, rebuild: bool, rescore: bool, spec=None
         now = int(time.time() * 1000)
         _COVER['at'] = _FCINFO['at'] = 0.0
         with _LOCK:
+            # A cancelled run is not a good one, whichever step it was stopped in.
+            if _JOB['cancel'] and not _JOB['error']:
+                _JOB['error'] = 'cancelled'
             err, reason = _JOB['error'], _JOB['reason']
             syms, full = list(_JOB.get('symbols') or []), bool(_JOB.get('full'))
             # Record first, then say finished: a status read in between must never

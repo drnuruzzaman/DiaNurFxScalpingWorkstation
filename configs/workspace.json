@@ -4,7 +4,7 @@
    {
     "id": "tmug6r5p2",
     "symbol": "XAUUSD.a",
-    "tf": "1d"
+    "tf": "4h"
    },
    {
     "id": "tmug7vomm",
@@ -22,20 +22,20 @@
    "mtfTrendlines": true,
    "zigzag": false,
    "macd": false,
-   "levels": false,
+   "levels": true,
    "trendlines": false,
-   "channels": false,
-   "patterns": false,
+   "channels": true,
+   "patterns": true,
    "fvg": false,
-   "zones": false,
+   "zones": true,
    "fib": false,
-   "swings": false,
-   "structure": false,
+   "swings": true,
+   "structure": true,
    "events": false,
-   "liquidity": false,
-   "signal": false,
+   "liquidity": true,
+   "signal": true,
    "volumeProfile": false,
-   "regimeBands": false,
+   "regimeBands": true,
    "rsi": true,
    "volume": false,
    "engulfing": false
@@ -63,7 +63,7 @@
   "dianur.panels": {
    "left": true,
    "right": true,
-   "bottom": true
+   "bottom": false
   },
   "dianur.dockTab": "execution",
   "dianur.boardSort": {
@@ -264,5 +264,5 @@
   "dianur.lab.dockH": 209,
   "dianur.lab.cone": true
  },
- "saved_ms": 1790389868696
+ "saved_ms": 1790393846603
 }

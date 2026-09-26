@@ -2,45 +2,45 @@
  "clock": {
   "offset_ms": 10800000,
   "offset_hours": 3.0,
-  "measured_at_ms": 1790383210475
+  "measured_at_ms": 1790393273198
  },
  "coverage": {
   "USDJPY.a": {
    "1m": {
     "first_year": 2016,
-    "last_ts": 1790380380
+    "last_ts": 1790380440
    },
    "3m": {
     "first_year": 1996,
-    "last_ts": 1790380260
+    "last_ts": 1790380440
    },
    "5m": {
     "first_year": 1996,
-    "last_ts": 1790379900
+    "last_ts": 1790380200
    },
    "15m": {
     "first_year": 1996,
-    "last_ts": 1790379000
+    "last_ts": 1790379900
    },
    "30m": {
     "first_year": 1996,
-    "last_ts": 1790377200
+    "last_ts": 1790379000
    },
    "1h": {
     "first_year": 1996,
-    "last_ts": 1790373600
+    "last_ts": 1790377200
    },
    "2h": {
     "first_year": 1996,
-    "last_ts": 1790366400
+    "last_ts": 1790373600
    },
    "4h": {
     "first_year": 1996,
-    "last_ts": 1790352000
+    "last_ts": 1790366400
    },
    "1d": {
     "first_year": 1996,
-    "last_ts": 1790208000
+    "last_ts": 1790294400
    },
    "1w": {
     "first_year": 1996,
@@ -54,7 +54,7 @@
    },
    "3m": {
     "first_year": 1998,
-    "last_ts": 1790380260
+    "last_ts": 1790380440
    },
    "5m": {
     "first_year": 1998,
@@ -62,27 +62,27 @@
    },
    "15m": {
     "first_year": 1998,
-    "last_ts": 1790379000
+    "last_ts": 1790379900
    },
    "30m": {
     "first_year": 1998,
-    "last_ts": 1790377200
+    "last_ts": 1790379000
    },
    "1h": {
     "first_year": 1998,
-    "last_ts": 1790373600
+    "last_ts": 1790377200
    },
    "2h": {
     "first_year": 1998,
-    "last_ts": 1790366400
+    "last_ts": 1790373600
    },
    "4h": {
     "first_year": 1998,
-    "last_ts": 1790352000
+    "last_ts": 1790366400
    },
    "1d": {
     "first_year": 1998,
-    "last_ts": 1790208000
+    "last_ts": 1790294400
    },
    "1w": {
     "first_year": 2007,
@@ -90,5 +90,5 @@
    }
   }
  },
- "coverage_ms": 1790389790252
+ "coverage_ms": 1790393658122
 }

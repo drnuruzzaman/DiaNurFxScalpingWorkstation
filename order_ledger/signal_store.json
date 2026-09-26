@@ -123899,7 +123899,7 @@
    "final_bar_ms": 1790154000000,
    "expires_ms": 1790456400000,
    "created_ms": 1790168530711,
-   "updated_ms": 1790389239515,
+   "updated_ms": 1790393010452,
    "history": [
     [
      1790168530711,
@@ -123912,7 +123912,7 @@
     "reason": "fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
     "confidence": 51,
     "net_rr2": 2.15,
-    "at_ms": 1790389805323
+    "at_ms": 1790393158945
    },
    "trail": {},
    "reverse": null,
@@ -130263,7 +130263,7 @@
    "final_bar_ms": 1790110800000,
    "expires_ms": 1791925200000,
    "created_ms": 1790200853732,
-   "updated_ms": 1790389234198,
+   "updated_ms": 1790393003400,
    "history": [
     [
      1790200853732,
@@ -130276,7 +130276,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 6.66% against a 0.50% limit",
     "confidence": 53,
     "net_rr2": 2.0,
-    "at_ms": 1790389858039
+    "at_ms": 1790393278023
    },
    "trail": {},
    "reverse": null,
@@ -173771,7 +173771,7 @@
    "final_bar_ms": 1790110800000,
    "expires_ms": 1791925200000,
    "created_ms": 1790245887859,
-   "updated_ms": 1790389239722,
+   "updated_ms": 1790393010817,
    "history": [
     [
      1790245887859,
@@ -173784,7 +173784,7 @@
     "reason": "fades an up leg that has run 4.8 ATR - long legs are no likelier to turn, and this lost in all three years tested",
     "confidence": 36,
     "net_rr2": 1.96,
-    "at_ms": 1790389806092
+    "at_ms": 1790393159588
    },
    "trail": {},
    "reverse": null,
@@ -201532,7 +201532,7 @@
    "final_bar_ms": 1790330400000,
    "expires_ms": 1790406000000,
    "created_ms": 1790334111510,
-   "updated_ms": 1790389234495,
+   "updated_ms": 1790393006591,
    "history": [
     [
      1790334111510,
@@ -201545,7 +201545,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 0.88% against a 0.50% limit",
     "confidence": 28,
     "net_rr2": 1.98,
-    "at_ms": 1790389857644
+    "at_ms": 1790393148326
    },
    "trail": {},
    "reverse": null,
@@ -202607,7 +202607,7 @@
    "final_bar_ms": 1790326800000,
    "expires_ms": 1790478000000,
    "created_ms": 1790336773002,
-   "updated_ms": 1790389239928,
+   "updated_ms": 1790393006901,
    "history": [
     [
      1790336773002,
@@ -202620,7 +202620,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 1.10% against a 0.50% limit",
     "confidence": 36,
     "net_rr2": 1.99,
-    "at_ms": 1790389857711
+    "at_ms": 1790393148467
    },
    "trail": {},
    "reverse": null,
@@ -206737,7 +206737,7 @@
    "final_bar_ms": 1790326800000,
    "expires_ms": 1790629200000,
    "created_ms": 1790347104521,
-   "updated_ms": 1790389858122,
+   "updated_ms": 1790393278886,
    "history": [
     [
      1790347104521,
@@ -206750,7 +206750,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 1.31% against a 0.50% limit",
     "confidence": 71,
     "net_rr2": 1.99,
-    "at_ms": 1790389857937
+    "at_ms": 1790393278046
    },
    "trail": {},
    "reverse": null,
@@ -209767,7 +209767,7 @@
    "final_bar_ms": 1790366400000,
    "expires_ms": 1790404200000,
    "created_ms": 1790379299005,
-   "updated_ms": 1790389236931,
+   "updated_ms": 1790393007236,
    "history": [
     [
      1790379299005,
@@ -209780,7 +209780,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 0.51% against a 0.50% limit",
     "confidence": 28,
     "net_rr2": 1.22,
-    "at_ms": 1790389857548
+    "at_ms": 1790393148212
    },
    "trail": {},
    "reverse": null,
@@ -210363,7 +210363,7 @@
    "final_bar_ms": 1790366400000,
    "expires_ms": 1790404200000,
    "created_ms": 1790380887258,
-   "updated_ms": 1790389237266,
+   "updated_ms": 1790393007708,
    "history": [
     [
      1790380887258,
@@ -210376,7 +210376,7 @@
     "reason": "down 43.69% today - daily loss limit reached",
     "confidence": 63,
     "net_rr2": 1.84,
-    "at_ms": 1790389829206
+    "at_ms": 1790393155533
    },
    "trail": {},
    "reverse": null,
@@ -211119,7 +211119,7 @@
    "final_bar_ms": 1790378100000,
    "expires_ms": 1790397000000,
    "created_ms": 1790389578199,
-   "updated_ms": 1790389813202,
+   "updated_ms": 1790393008044,
    "history": [
     [
      1790389578199,
@@ -211132,7 +211132,7 @@
     "reason": "fades the down impulse while 1h is trending down too - lost in all three years tested",
     "confidence": 52,
     "net_rr2": 1.65,
-    "at_ms": 1790389857474
+    "at_ms": 1790393148154
    },
    "trail": {},
    "reverse": null,
@@ -211214,7 +211214,7 @@
    "final_bar_ms": 1790379000000,
    "expires_ms": 1790397900000,
    "created_ms": 1790389629700,
-   "updated_ms": 1790389810481,
+   "updated_ms": 1790393004165,
    "history": [
     [
      1790389629700,
@@ -211227,12 +211227,12 @@
     "reason": "ATR 112 pts is under 123 - less than 4x the 31 pt round trip",
     "confidence": 53,
     "net_rr2": 1.4,
-    "at_ms": 1790389857968
+    "at_ms": 1790393278634
    },
    "trail": {},
    "reverse": null,
    "note": "not sent: rejected - ATR 112 pts is under 123 - less than 4x the 31 pt round trip"
   }
  },
- "saved_ms": 1790389858122
+ "saved_ms": 1790393278886
 }

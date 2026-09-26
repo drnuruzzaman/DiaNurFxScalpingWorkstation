@@ -1151,7 +1151,6 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
             <span className="mono">{mt5?.login ?? '—'}</span>
             <span className="mono t-dim">{mt5?.server ?? '—'}</span>
           </span>
-          <button className="tool-btn" onClick={cancel}>Close</button>
         </div>
         <div className="modal-tabs">
           {TABS.map((t) => {
@@ -1176,7 +1175,8 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
               .filter(Boolean).join(' and ')}
           </span>}
           <span className="spacer" />
-          <button className="tool-btn" onClick={cancel}>Cancel</button>
+          {/* Closes without saving - unsaved edits are dropped, as Cancel did. */}
+          <button className="tool-btn" onClick={cancel}>Close</button>
           <button className="tool-btn primary" onClick={saveAll}
             disabled={busy || !anyDirty}>
             Save

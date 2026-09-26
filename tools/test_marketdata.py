@@ -100,6 +100,20 @@ def main() -> int:
         check('a first download written in pieces holds every closed bar once',
               sorted(flushed) == [t for t in ts if t + 900 <= ts[-1] + 60], f'{len(flushed)} bars')
         shutil.rmtree(tmp / 'XAUUSD.a' / '15m')
+        # The market shut after the last tick: its bar has closed, though no later
+        # tick will ever say so. Judged by the broker clock the bridge measured.
+        main = sys.modules['__main__']
+        (tmp / 'XAUUSD.a' / '15m').mkdir()
+        main.STATE = {'time_offset_ms': 3 * 3_600_000}
+        try:
+            dl.fetch_bars(['XAUUSD.a'], ['15m'], 1)
+        finally:
+            del main.STATE
+        shut = dl._read_rows(tmp / 'XAUUSD.a' / '15m' / '2026.csv.gz')
+        check("with the market shut, the week's last bar is written, not held for next week",
+              max(shut) == max(t for t in ts if t % 900 == 0 or True) - (max(ts) % 900)
+              or max(shut) >= ts[-2], f'last {max(shut)} vs ticks to {ts[-1]}')
+        shutil.rmtree(tmp / 'XAUUSD.a' / '15m')
         jan = int(datetime(2027, 1, 1, tzinfo=timezone.utc).timestamp())
         dl.merge('XAUUSD.a', '5m', {jan: f'{jan},1,1,1,1,1,0,1'})
         check('a bar in a new year opens a new year file',
@@ -217,12 +231,36 @@ def main() -> int:
         check('a name that is not a symbol is refused (it becomes a folder)',
               not md.start(Bridge(), symbols=['../evil'])['ok'])
         bp = md._BuildProgress()
-        fr = [x[0] for x in map(bp, ['reads: 4 timeframe-years to build on 2 workers',
-                                    '  [ 1/4]  5m 2026  1 bars', '  [4/4] 4h 2026 1 bars',
-                                    'labels: market 5m 1 rows', 'store:   5m 1 rows',
-                                    'store:  15m cached']) if x]
+        got = [x for x in map(bp, ['reads: 4 timeframe-years to build on 2 workers',
+                                  '  [ 1/4]  5m 2026  1 bars', '  [4/4] 4h 2026 1 bars',
+                                  'labels: market 5m 1 rows', 'store:   5m 1 rows',
+                                  'store:  15m cached']) if x]
+        fr = [x[0] for x in got]
         check("the rebuild's progress is read from its own output, and only rises",
-              fr == sorted(fr) and 0 < fr[0] < 1 and len(fr) == 5, ' '.join(f'{x:.2f}' for x in fr))
+              fr == sorted(fr) and fr[0] == 0 and 0 < fr[1] < 1 and len(fr) == 6,
+              ' '.join(f'{x:.2f}' for x in fr))
+        check('...and says what it is doing from its first line',
+              got[0][1].startswith('reads: 0 of 4 timeframe-years'), got[0][1])
+        bp2 = md._BuildProgress()
+        bp2('reads: 50 timeframe-years to build on 4 workers')
+        w = bp2('  [ 4/50]  5m 2019  74880 bars  980s   elapsed 990s   (31% of the reads)')
+        check("...by the work done, when the build reports it - not by the count of tasks",
+              abs(w[0] - 0.65 * 0.31) < 1e-9, f'{w[0]:.3f}')
+        w2 = bp2('  reading 5m 2020, 5m 2021   elapsed   1200s   (38% of the reads)')
+        check('...and between finished tasks, from how far the running ones have got',
+              abs(w2[0] - 0.65 * 0.38) < 1e-9 and 'reading 5m 2020' in w2[1], f'{w2[0]:.3f}')
+        now_s = time.time()
+        steps_ = [{'name': 'download', 'state': 'done', 'frac': 1.0},
+                  {'name': 'releases', 'state': 'done', 'frac': 1.0},
+                  {'name': 'forecast', 'state': 'running', 'frac': 0.5,
+                   'started_ms': (now_s - 100) * 1000},
+                  {'name': 'rescore', 'state': 'skipped', 'frac': 0.0}]
+        eta = md._eta(steps_, md.overall(steps_), now=now_s)
+        check('the time to go runs at the pace of the step running now, not the whole job so far',
+              eta is not None and abs(eta - 100) <= 1, f'{eta}s')
+        steps_[2]['frac'] = 0.0
+        check('...and is not guessed before that step has moved',
+              md._eta(steps_, md.overall(steps_), now=now_s) is None)
         check('the overall percentage weighs each step and drops the skipped ones',
               md.overall([{'name': 'download', 'state': 'done', 'frac': 1.0},
                           {'name': 'releases', 'state': 'done', 'frac': 1.0},

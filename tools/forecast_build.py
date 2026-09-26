@@ -21,9 +21,10 @@ under runs/forecast/.
 from __future__ import annotations
 
 import argparse
+import multiprocessing
 import sys
 import time
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -50,9 +51,15 @@ def _below_normal() -> None:
             pass
 
 
-def _task(symbol: str, tf: str, year: int) -> dict:
+def _task(symbol: str, tf: str, year: int, shares=None) -> dict:
     from server.forecast import reads
-    return reads.build_year(symbol, tf, year)
+
+    def progress(x: float) -> None:
+        try:
+            shares[(tf, year)] = x
+        except Exception:                                              # noqa: BLE001
+            pass                              # progress is a nicety, never a failure
+    return reads.build_year(symbol, tf, year, progress if shares is not None else None)
 
 
 def build_reads(symbol: str, workers: int, last_year: int) -> int:
@@ -78,21 +85,49 @@ def build_reads(symbol: str, workers: int, last_year: int) -> int:
     tasks.sort(reverse=True)                       # longest first: better packing
     print(f'reads: {len(tasks)} timeframe-years to build on {workers} workers '
           f'(below-normal priority)', flush=True)
+    # Each task's share of the work, for the progress: the longest run first, so
+    # a count of tasks done would race ahead of the time actually spent.
+    cost = {(tf, y): c for c, tf, y in tasks}
+    total_cost, done_cost = sum(cost.values()) or 1.0, 0.0
     t0 = time.perf_counter()
     done = 0
-    with ProcessPoolExecutor(max_workers=workers, initializer=_below_normal) as pool:
-        futs = {pool.submit(_task, symbol, tf, y): (tf, y) for _, tf, y in tasks}
-        for f in as_completed(futs):
-            tf, y = futs[f]
-            try:
-                r = f.result()
+    # How far each running task has got, written by the workers: a first build's
+    # 5m years take 20+ minutes each, and without this the progress (and so the
+    # time remaining) would not move until the first of them finished.
+    manager = multiprocessing.Manager()
+    shares = manager.dict()
+    said = -1
+    with manager, ProcessPoolExecutor(max_workers=workers, initializer=_below_normal) as pool:
+        futs = {pool.submit(_task, symbol, tf, y, shares): (tf, y) for _, tf, y in tasks}
+        pending = set(futs)
+        while pending:
+            finished, pending = wait(pending, timeout=10, return_when=FIRST_COMPLETED)
+            done_now = []
+            for f in finished:
+                tf, y = futs[f]
+                try:
+                    r = f.result()
+                except Exception as e:                                 # noqa: BLE001
+                    print(f'  [FAIL] {tf} {y}: {e!r}', flush=True)
+                    return 1
                 done += 1
+                done_cost += cost[(tf, y)]
+                shares.pop((tf, y), None)
+                done_now.append((tf, y, r))
+            # Finished work plus how far the running tasks have got - never less
+            # than was said before, so the bar does not step back.
+            running = dict(shares)
+            part = sum(cost[k] * min(1.0, float(v)) for k, v in running.items() if k in cost)
+            pct = max(said, int(100 * (done_cost + part) / total_cost))
+            for tf, y, r in done_now:
                 print(f'  [{done:>2}/{len(tasks)}] {tf:>3} {y}  {r["bars"]:>6} bars  '
-                      f'{r["seconds"]:>6.0f}s   elapsed {time.perf_counter() - t0:>6.0f}s',
-                      flush=True)
-            except Exception as e:                                     # noqa: BLE001
-                print(f'  [FAIL] {tf} {y}: {e!r}', flush=True)
-                return 1
+                      f'{r["seconds"]:>6.0f}s   elapsed {time.perf_counter() - t0:>6.0f}s   '
+                      f'({pct}% of the reads)', flush=True)
+            if pending and not done_now and pct > said:
+                now = ', '.join(f'{tf} {y}' for tf, y in sorted(running))
+                print(f'  reading {now}   elapsed {time.perf_counter() - t0:>6.0f}s   '
+                      f'({pct}% of the reads)', flush=True)
+            said = pct
     return 0
 
 

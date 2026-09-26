@@ -2200,3 +2200,55 @@
 2026-09-26T12:30:02+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
 2026-09-26T12:30:02+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
 2026-09-26T12:30:02+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T12:36:13+10:00  download  start symbols=USDJPY.a tfs=1m,3m,5m,15m,30m,1h,2h,4h,1d,1w years=30 days=0
+2026-09-26T12:36:15+10:00  download  finished rows=0 phase=done error=None reindex=reindex failed (ImportError: cannot import name 'reindex_runs' from 'tools' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\tools\__init__.py)) -- run tools/reindex_runs.py
+2026-09-26T13:18:09+10:00  download  start symbols=USDJPY.a tfs=1m,3m,5m,15m,30m,1h,2h,4h,1d,1w years=30 days=0
+2026-09-26T13:18:10+10:00  download  finished rows=0 phase=done error=None reindex=reindex failed (ImportError: cannot import name 'reindex_runs' from 'tools' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\tools\__init__.py)) -- run tools/reindex_runs.py
+2026-09-26T13:27:53+10:00  clock     server offset +10800000 ms (UTC+3.00h) confidence=measured from 5 tick(s)
+2026-09-26T13:27:53+10:00  start     bridge on 127.0.0.1:8765 mock=False connected=True server=Pepperstone-MT5-Live01
+2026-09-26T13:27:53+10:00  start     EXECUTION ARMED demo_only=True max_lots=0.05
+2026-09-26T13:32:34+10:00  download  start symbols=USDJPY.a tfs=1m,3m,5m,15m,30m,1h,2h,4h,1d,1w years=30 days=0
+2026-09-26T13:32:43+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  download  finished rows=9 phase=done error=None reindex=reindex failed (ImportError: cannot import name 'reindex_runs' from 'tools' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\tools\__init__.py)) -- run tools/reindex_runs.py
+2026-09-26T13:32:43+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /orders ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:43+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:44+10:00  download  start symbols=XAUUSD.a tfs=1m,3m,5m,15m,30m,1h,2h,4h,1d,1w years=30 days=0
+2026-09-26T13:32:51+10:00  download  finished rows=4597 phase=done error=None reindex=reindex failed (ImportError: cannot import name 'reindex_runs' from 'tools' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\tools\__init__.py)) -- run tools/reindex_runs.py
+2026-09-26T13:32:51+10:00  error     /orders ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /account ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /deals ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /bars ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /positions ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /quotes ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:32:51+10:00  error     /health ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+2026-09-26T13:34:14+10:00  download  start symbols=USDJPY.a tfs=1m,3m,5m,15m,30m,1h,2h,4h,1d,1w years=5 days=0
+2026-09-26T13:34:16+10:00  download  finished rows=0 phase=done error=None reindex=reindex failed (ImportError: cannot import name 'reindex_runs' from 'tools' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\tools\__init__.py)) -- run tools/reindex_runs.py
+2026-09-26T13:34:16+10:00  download  start symbols=XAUUSD.a tfs=1m,3m,5m,15m,30m,1h,2h,4h,1d,1w years=5 days=0
+2026-09-26T13:34:18+10:00  download  finished rows=0 phase=done error=None reindex=reindex failed (ImportError: cannot import name 'reindex_runs' from 'tools' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\tools\__init__.py)) -- run tools/reindex_runs.py

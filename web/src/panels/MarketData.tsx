@@ -55,8 +55,9 @@ const behind = (tf: string, ms?: number | null) =>
 /**
  * The update's progress: one bar for the whole job (the steps weighted by how
  * long they take - server/marketdata.WEIGHTS), what it is doing - or, once
- * stopped, the last thing it did - and the time. The estimate to finish is
- * shown only once there is enough done to base one on.
+ * stopped, the last thing it did - and the time. The estimate to finish is the
+ * server's, from the pace of the step running now (a download takes seconds, a
+ * first forecast build an hour); it is left out until that step has moved.
  */
 export function UpdateProgress({ job, compact = false, aside }: {
   job: any; compact?: boolean; aside?: React.ReactNode
@@ -66,7 +67,7 @@ export function UpdateProgress({ job, compact = false, aside }: {
   // A finished, successful job is 100% whatever the steps' own fractions say.
   const pct = done && !failed ? 100 : Math.max(0, Math.min(100, Number(job?.pct ?? 0)))
   const elapsed = ((done ? job?.finished_ms : Date.now()) - (job?.started_ms ?? Date.now())) / 1000
-  const eta = !done && pct >= 5 && pct < 100 ? elapsed * (100 - pct) / pct : null
+  const eta = !done && job?.eta_s != null ? Number(job.eta_s) : null
   const step = STEP_LABEL[job?.phase] ?? job?.phase ?? ''
   const error = failed && job?.error && job.error !== 'cancelled' ? String(job.error) : null
   return (
@@ -101,6 +102,9 @@ const FOOT_LABEL: Record<string, string> = {
 }
 /** How long a finished update stays on the footer. */
 const FOOT_KEEP_MS = 5 * 60_000
+/** Sent when an update is started or cancelled here, so the footer looks at once. */
+const JOB_EVENT = 'marketdata:job'
+const jobChanged = () => window.dispatchEvent(new Event(JOB_EVENT))
 
 /**
  * The update on the footer - what it is doing, a bar and the percentage - so it
@@ -114,15 +118,22 @@ export function FooterJob({ onOpen }: { onOpen: () => void }) {
   useEffect(() => {
     let stop = false
     let t: number | undefined
+    let gen = 0                       // only the newest poll schedules the next
     const tick = () => {
+      const g = ++gen
+      window.clearTimeout(t)
       api.dataJob()
-        .then((j) => { if (!stop) setJob(j); return j })
+        .then((j) => { if (!stop && g === gen) setJob(j); return j })
         // An API from before this endpoint: nothing to show, and nothing to say.
         .catch(() => null)
-        .then((j: any) => { if (!stop) t = window.setTimeout(tick, j?.running ? 2000 : 15_000) })
+        .then((j: any) => {
+          if (!stop && g === gen) t = window.setTimeout(tick, j?.running ? 2000 : 15_000)
+        })
     }
     tick()
-    return () => { stop = true; window.clearTimeout(t) }
+    // Settings started or cancelled one: show it now, not at the next slow poll.
+    window.addEventListener(JOB_EVENT, tick)
+    return () => { stop = true; window.clearTimeout(t); window.removeEventListener(JOB_EVENT, tick) }
   }, [])
   if (!job?.started_ms) return null
   const done = !job.running
@@ -130,7 +141,7 @@ export function FooterJob({ onOpen }: { onOpen: () => void }) {
   const failed = done && job.phase === 'failed'
   const pct = done && !failed ? 100 : Math.max(0, Math.min(100, Number(job.pct ?? 0)))
   const elapsed = ((done ? job.finished_ms : Date.now()) - job.started_ms) / 1000
-  const eta = !done && pct >= 5 && pct < 100 ? elapsed * (100 - pct) / pct : null
+  const eta = !done && job.eta_s != null ? Number(job.eta_s) : null
   const label = failed ? 'Update stopped' : done ? 'Update finished'
     : `${FOOT_LABEL[job.phase] ?? 'Updating'}`
   const detail = failed ? (job.error === 'cancelled' ? 'cancelled' : job.error)
@@ -208,6 +219,7 @@ export function MarketData({ compact = false }: { compact?: boolean }) {
         if (r.ok) {
           setPendingOn([])
           load()
+          jobChanged()
         } else setNotice({ where, kind: r.needs_force ? 'force' : 'error', text: r.error })
       })
       .catch((e) => setNotice({ where, kind: 'error', text: String(e?.message ?? e) }))
@@ -361,11 +373,11 @@ export function MarketData({ compact = false }: { compact?: boolean }) {
         {syms.length > 0 && (
           <table className="md-table mono md-hist">
             <thead><tr><th />{cols.map((t) => <th key={t}>{t}</th>)}</tr></thead>
-            <tbody>
-              {syms.map((s) => {
+            {/* One body per symbol: the separator and the hover light the block as a whole. */}
+            {syms.map((s) => {
                 const cov = st.coverage[s]
                 return (
-                  <React.Fragment key={s}>
+                  <tbody key={s} className="md-hist-g">
                     <tr className="md-hist-sym"><td colSpan={cols.length + 1}>{s}</td></tr>
                     <tr>
                       <td className="t-dim">from</td>
@@ -380,10 +392,9 @@ export function MarketData({ compact = false }: { compact?: boolean }) {
                           {cov[t] ? day(ms) : ''}</td>
                       })}
                     </tr>
-                  </React.Fragment>
+                  </tbody>
                 )
               })}
-            </tbody>
           </table>
         )}
       </section>
@@ -458,7 +469,8 @@ export function MarketData({ compact = false }: { compact?: boolean }) {
         )}
         <div className="set-row">
           {job.running
-            ? <button className="tool-btn" onClick={() => api.dataCancel().then(load)}>Cancel</button>
+            ? <button className="tool-btn" onClick={() => api.dataCancel().then(() => { load(); jobChanged() })}>
+              Cancel</button>
             : <button className="tool-btn primary" onClick={() => run('update', body)} disabled={busy || nothing}>
               {busy && last?.where === 'update' ? 'Starting…' : label}</button>}
         </div>

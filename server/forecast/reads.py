@@ -171,12 +171,13 @@ def is_fresh(symbol: str, tf: str, year: int) -> bool:
         return False
 
 
-def build_year(symbol: str, tf: str, year: int) -> dict:
+def build_year(symbol: str, tf: str, year: int, progress=None) -> dict:
     """
     Every bar of `tf` whose (broker-time) open falls in `year`: the regime and
     leg read on the WINDOW bars ending at it (forecast timeframes only) and
     the quick_trend() read on the QT_WINDOW bars ending at it. Writes the
-    cache and returns a small summary. Runs in a worker process.
+    cache and returns a small summary. Runs in a worker process. `progress`,
+    if given, is told the share done (0..1) about every 2% of the bars.
     """
     t0 = time.perf_counter()
     sync_engine_settings()                 # compute with the settings live runs with
@@ -189,7 +190,10 @@ def build_year(symbol: str, tf: str, year: int) -> dict:
     out = _empty(n)
     out['t'] = s.t[first:last].astype(np.int64)
     h, l, c, t = s.h, s.l, s.c, s.t
+    every = max(1, n // 50)
     for j, k in enumerate(range(first, last)):
+        if progress is not None and j % every == 0:
+            progress(j / max(1, n))
         lo = k + 1 - WINDOW
         if key['regime'] and lo >= 0:
             regime, leg, atr_now = regime_read(h[lo:k + 1], l[lo:k + 1], c[lo:k + 1],

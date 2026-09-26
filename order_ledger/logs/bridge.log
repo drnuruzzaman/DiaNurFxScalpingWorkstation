@@ -83704,3 +83704,1442 @@ Traceback (most recent call last):
     self._sock.sendall(b)
 ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
 ----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65260)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-09-26 13:27:48 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+3.00h (measured)
++ connected: account 51527502 on Pepperstone-MT5-Live01 (Mohammad Nuruzzaman #2 AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: DEMO ACCOUNTS ONLY   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62291)----------------------------------------
+
+Exception occurred during processing of request from ('127.0.0.1', 62298)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50830)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49683)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49690)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49688)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49692)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52910)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52906)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62225)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49681)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62227)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52978)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52979)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50902)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52980)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50903)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50900)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56780)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62020)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1835, in do_GET
+    return self._json({'orders': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1827, in do_GET
+    return self._json(MOCK.account() if STATE['mock'] else read_account())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1884, in do_GET
+    return self._json({'quotes': out})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+Traceback (most recent call last):
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+Traceback (most recent call last):
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1831, in do_GET
+    return self._json({'positions': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1827, in do_GET
+    return self._json(MOCK.account() if STATE['mock'] else read_account())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+
+During handling of the above exception, another exception occurred:
+
+
+During handling of the above exception, another exception occurred:
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1884, in do_GET
+    return self._json({'quotes': out})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+Traceback (most recent call last):
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1884, in do_GET
+    return self._json({'quotes': out})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+
+During handling of the above exception, another exception occurred:
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+----------------------------------------
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1831, in do_GET
+    return self._json({'positions': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+
+During handling of the above exception, another exception occurred:
+
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Traceback (most recent call last):
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Traceback (most recent call last):
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+----------------------------------------
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+----------------------------------------
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------------------------------------------------------------------------------------
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+----------------------------------------
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+--------------------------------------------------------------------------------
+
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61588)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1835, in do_GET
+    return self._json({'orders': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+Exception occurred during processing of request from 
+During handling of the above exception, another exception occurred:
+
+('127.0.0.1', 61587)Traceback (most recent call last):
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+----------------------------------------
+Exception occurred during processing of request from   File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+Traceback (most recent call last):
+('127.0.0.1', 61589)  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1884, in do_GET
+    return self._json({'quotes': out})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+Exception occurred during processing of request fromTraceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1831, in do_GET
+    return self._json({'positions': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+   File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+----------------------------------------('127.0.0.1', 50228)  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+
+During handling of the above exception, another exception occurred:
+
+Exception occurred during processing of request from ('127.0.0.1', 61590)  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+Traceback (most recent call last):
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1827, in do_GET
+    return self._json(MOCK.account() if STATE['mock'] else read_account())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+----------------------------------------
+Exception occurred during processing of request from  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+
+During handling of the above exception, another exception occurred:
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ ('127.0.0.1', 50220)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+----------------------------------------
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+Exception occurred during processing of request from ('127.0.0.1', 61592)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50229)
+----------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1840, in do_GET
+    return self._json({'deals': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+----------------------------------------Traceback (most recent call last):
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+Exception occurred during processing of request from ('127.0.0.1', 64091)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64089)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60973)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1884, in do_GET
+    return self._json({'quotes': out})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64092)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------Exception occurred during processing of request from
+ 
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+('127.0.0.1', 52035)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57925)
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1831, in do_GET
+    return self._json({'positions': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Exception occurred during processing of request from
+During handling of the above exception, another exception occurred:
+
+ ('127.0.0.1', 60975)  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+Exception occurred during processing of request from   File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+('127.0.0.1', 60981)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+----------------------------------------
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+----------------------------------------  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1884, in do_GET
+    return self._json({'quotes': out})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Exception occurred during processing of request from ('127.0.0.1', 59351)
+----------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+----------------------------------------ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+--------------------------------------------------------------------------------  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+
+
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------

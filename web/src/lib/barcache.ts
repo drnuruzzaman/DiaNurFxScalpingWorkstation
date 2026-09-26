@@ -18,7 +18,10 @@ import type { Bar } from '../chart/types'
  * stale tail is corrected within a tick rather than believed.
  */
 
-const KEY = 'dianur.bars.v1'
+// v2: series cached before 2026-09-26 could hold scrolled-back disk bars in
+// broker time beside UTC live ones - 3 hours apart, one day drawn twice.
+// A new key drops them rather than drawing them again.
+const KEY = 'dianur.bars.v2'
 
 /** Per series. Enough for a deep scroll-back; beyond this, re-fetch. */
 const MAX_BARS = 1500
@@ -42,6 +45,7 @@ let loaded = false
 function hydrate(): void {
   if (loaded) return
   loaded = true
+  try { localStorage.removeItem('dianur.bars.v1') } catch { /* private mode */ }
   try {
     const raw = localStorage.getItem(KEY)
     if (!raw) return

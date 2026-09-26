@@ -132,6 +132,31 @@ def merge(symbol: str, tf: str, lines: dict) -> int:
     return changed
 
 
+# A symbol's last tick older than this means its market is shut (the weekend, a
+# holiday, the daily break) rather than merely quiet.
+IDLE_S = 15 * 60
+
+
+def _server_now(tick_time: int) -> int:
+    """
+    "Now" on the broker's clock, for deciding which bars have closed.
+
+    The last tick's time is that clock while the market trades. Once it shuts,
+    no later tick ever arrives, so the bar holding the final tick - Friday's
+    last bar on every timeframe - looked forever unfinished and was never
+    written until the next week's download. When the tick is stale, the true
+    broker time is used instead: the bridge that loads this module keeps the
+    measured offset of its clock from UTC (STATE['time_offset_ms']).
+    """
+    import sys
+    st = getattr(sys.modules.get('__main__'), 'STATE', None)
+    off = st.get('time_offset_ms') if isinstance(st, dict) else None
+    if off is None or not tick_time:
+        return tick_time
+    real = int(time.time() + int(off) / 1000)
+    return real if real - tick_time > IDLE_S else tick_time
+
+
 def fetch_bars(symbols, tfs, years, progress=None, cancelled=None) -> int:
     """Top up every (symbol, timeframe). Returns bars written (new or corrected)."""
     import MetaTrader5 as mt5                                   # the bridge's session
@@ -148,7 +173,7 @@ def fetch_bars(symbols, tfs, years, progress=None, cancelled=None) -> int:
         info = mt5.symbol_info(sym)
         digits = int(getattr(info, 'digits', 2) or 2)
         tick = mt5.symbol_info_tick(sym)
-        now_srv = int(getattr(tick, 'time', 0) or 0)
+        now_srv = _server_now(int(getattr(tick, 'time', 0) or 0))
         step = TF_SECONDS[tf]
         last = last_ts(sym, tf)
         start = (last - OVERLAP_S) if last else int(time.time()) - int(years) * 365 * DAY_S
