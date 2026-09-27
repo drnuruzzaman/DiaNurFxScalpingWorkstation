@@ -1,0 +1,47 @@
+{
+ "rules": {
+  "bias_tf": "4h",
+  "bias_k": 3,
+  "pool_tf": "1h",
+  "pool_k": 3,
+  "pool_days": 20.0,
+  "asia_utc": [
+   0,
+   7
+  ],
+  "entry_tf": "15m",
+  "entry_k": 2,
+  "confirm_bars": 12,
+  "session_utc": [
+   7,
+   20
+  ],
+  "stop_buffer_atr": 0.1,
+  "stop_atr_min": 0.5,
+  "stop_atr_max": 3.0,
+  "stop_band_tf": "entry",
+  "entry": "limit",
+  "limit_frac": 0.5,
+  "limit_valid_min": 180,
+  "displacement": true,
+  "disp_body_atr": 1.0,
+  "target_r": 2.0,
+  "max_hold_min": 1440,
+  "slip_points": 3.0
+ },
+ "costs": {
+  "XAUUSD.a": {
+   "mode": "recorded",
+   "floor": 10.0,
+   "stress": 10.0
+  },
+  "USDJPY.a": {
+   "mode": "fixed",
+   "points": 5.0,
+   "stress": 3.0
+  }
+ },
+ "first_year": 2018,
+ "variant": "v4",
+ "baseline_seeds": 50
+}

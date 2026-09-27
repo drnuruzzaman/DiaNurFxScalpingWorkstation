@@ -1,6 +1,6 @@
 {
  "auto": true,
- "last_ok_ms": 1790382466407,
+ "last_ok_ms": 1790398522845,
  "history": [
   {
    "at_ms": 1790380458556,
@@ -67,6 +67,16 @@
    "reason": "manual",
    "ok": false,
    "error": "cancelled",
+   "symbols": [
+    "USDJPY.a",
+    "XAUUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1790398522845,
+   "reason": "manual",
+   "ok": true,
+   "error": null,
    "symbols": [
     "USDJPY.a",
     "XAUUSD.a"

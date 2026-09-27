@@ -26,7 +26,6 @@ Route map:
 from __future__ import annotations
 
 import asyncio
-import dataclasses
 import json
 import threading
 import time
@@ -44,7 +43,7 @@ from pydantic import BaseModel
 from .config import CONFIG, MTF_LADDER, RUN_DIR, TF_SECONDS, TIMEFRAMES
 from . import news as news_mod
 from .datafeed import (BRIDGE, FEED, available_symbols, available_timeframes,
-                       load_disk)
+                       broker_offset_ms, load_disk, on_live_clock)
 from .engine import backtest as bt
 from .engine import narrator
 from .engine.analysis import analyse, build_mtf
@@ -1526,22 +1525,6 @@ def bars(symbol: str = Query(None), tf: str = '5m', count: int = 600,
             'status': series.status, 'count': len(series)}
 
 
-_CLOCK = {'offset_ms': None, 'at': 0.0}
-
-
-def _chart_offset_ms() -> int:
-    """
-    What the bridge takes off every live bar: the broker's clock minus UTC
-    (3 h in the northern summer), re-read once a minute while MT5 answers.
-    0 while it never has - the live chart is on disk time too then.
-    """
-    if time.time() - _CLOCK['at'] > 60:
-        h = BRIDGE.health() or {}
-        if h.get('connected') and h.get('time_offset_ms') is not None:
-            _CLOCK.update(offset_ms=int(h['time_offset_ms']), at=time.time())
-    return _CLOCK['offset_ms'] or 0
-
-
 @app.get('/api/history')
 def history(symbol: str = Query(None), tf: str = '5m',
             from_ms: int = 0, to_ms: int = 0):
@@ -1552,11 +1535,10 @@ def history(symbol: str = Query(None), tf: str = '5m',
     twice, with different prices.
     """
     symbol = symbol or CONFIG.symbol
-    off = _chart_offset_ms()
-    series = load_disk(symbol, tf, None, (from_ms + off) if from_ms else None,
-                       (to_ms + off) if to_ms else None)
-    if off and len(series):
-        series = dataclasses.replace(series, t=series.t - off, tz_offset_ms=off)
+    off = broker_offset_ms(BRIDGE)
+    series = on_live_clock(
+        load_disk(symbol, tf, None, (from_ms + off) if from_ms else None,
+                  (to_ms + off) if to_ms else None), off)
     # A year of M1 is 350k bars; the chart cannot use them and the browser
     # should not be asked to hold them.
     if len(series) > 20000:

@@ -62,6 +62,7 @@ from . import data as lab_data
 from . import settings as lab_settings
 from . import stats as lab_stats
 from .broker import REASON_SL, REASON_TP, SimBroker, SimFeed
+from . import strategies as lab_strategies
 from .filters import FILTERS
 from .filters import verdict as filter_verdict
 from .forecast import SessionForecast
@@ -275,6 +276,14 @@ class ReplaySession:
         ff = cfg.get('forecast_filter') or None
         if ff is not None and ff not in FILTERS:
             raise ValueError(f'unknown forecast filter {ff}')
+        # A research strategy replayed instead of the engine's playbooks (strategies.py).
+        strategy = cfg.get('strategy') or None
+        if strategy is not None:
+            if strategy not in lab_strategies.STRATEGIES:
+                raise ValueError(f'unknown strategy {strategy}')
+            if tf not in lab_strategies.ladder_tfs():
+                raise ValueError(f"{strategy} runs on {', '.join(lab_strategies.ladder_tfs())} "
+                                 f'- not {tf}')
         news_gate = bool(cfg.get('news_gate', False))
         if news_gate and not release_history.events()['n']:
             raise ValueError('the news gate needs data/_news/history.json '
@@ -283,7 +292,7 @@ class ReplaySession:
                 'mode': mode, 'name': name[:80], 'record': bool(cfg.get('record', True)),
                 'overrides': copy.deepcopy(cfg.get('overrides') or {}),
                 'notes': str(cfg.get('notes') or ''), 'tags': list(cfg.get('tags') or []),
-                'forecast_filter': ff, 'news_gate': news_gate}
+                'forecast_filter': ff, 'news_gate': news_gate, 'strategy': strategy}
 
     def _load_data(self) -> None:
         c = self.cfg
@@ -352,6 +361,14 @@ class ReplaySession:
             self._day = None
             self._day_sends = 0
             self._day_start = self.balance0
+            self.strategy = None
+            if self.cfg.get('strategy'):
+                if getattr(self, '_strategy_signals', None) is None:
+                    self._strategy_signals = lab_strategies.build(
+                        self.cfg['strategy'], self.cfg['symbol'], self.cfg['tf'],
+                        int(self.series.t[self.i0]), self.cfg['end'] + self.tf_ms)
+                self.strategy = self._strategy_signals
+            self._strat = {'order': None, 'seen': set(), 'time_exit': set(), 'n': 0}
             # Manual actions start over with the run. Re-applying recorded ones
             # is open()'s job: it queues them in `pending` before re-running.
             self.commands = []
@@ -422,6 +439,8 @@ class ReplaySession:
 
     def _on_close(self, pos, deal) -> None:
         """Every closed position becomes a trade record - executor or manual."""
+        if str(pos['comment']).startswith(lab_strategies.MtfLsV4.tag):
+            return self._strategy_trade(pos, deal)
         rec = self._rec_for_comment(pos['comment'])
         sig = (rec or {}).get('signal') or {}
         buy = pos['side'] == 'buy'
@@ -462,6 +481,114 @@ class ReplaySession:
         }
         self.trades.append(t)
         self._emit('exit', f"{pos['side'].upper()} {t['playbook']}: {outcome} at {exit_px} "
+                           f"({r:+.2f}R, {profit:+.2f})", id=tid, r=r, profit=profit)
+
+    # ---------------------------------------------------- the strategy
+    def _strategy_close(self, t_close: int) -> None:
+        """
+        A research strategy at a bar close: what became of its order, the time
+        stop, then this close's signal - one position or order at a time.
+        """
+        st, rules, b = self._strat, self.strategy.rules, self.broker
+        tag = self.strategy.tag
+        if st['order'] is not None:
+            ticket, sig = st['order']
+            if ticket not in {o['ticket'] for o in b._ord}:
+                filled = next((d for d in b._deals if d['position_id'] == ticket and d['entry'] == 0),
+                              None)
+                if filled:
+                    self._emit('fill', f"{sig['label']}: limit filled at {filled['price']}",
+                               ticket=ticket)
+                else:
+                    self._emit('cancel', f"{sig['label']}: limit at {sig['limit_px']} expired "
+                                         'unfilled', ticket=ticket)
+                st['order'] = None
+        hold = int(rules['max_hold_min']) * 60_000
+        for pos in [x for x in b._pos if str(x['comment']).startswith(tag)]:
+            if t_close - int(pos['time_ms']) >= hold:
+                st['time_exit'].add(pos['ticket'])
+                b.trade('/position/close', ticket=pos['ticket'])
+        sig = self.strategy.at(t_close)
+        if sig is None or sig['sweep_ms'] in st['seen']:
+            return
+        st['seen'].add(sig['sweep_ms'])
+        buy = sig['side'] > 0
+        label = f"{'BUY' if buy else 'SELL'} mtf_ls_v4"
+        busy = st['order'] is not None or any(str(x['comment']).startswith(tag) for x in b._pos)
+        if busy:
+            self._emit('decision', f'{label}: signal skipped - a position or order is open')
+            return
+        point = float(self.spec.get('point') or 0.01)
+        buf = rules['stop_buffer_atr'] * sig['atr']
+        limit = sig['limit']
+        stop = sig['anchor'] - buf if buy else sig['anchor'] + b.spread_pts * point + buf
+        risk = (limit - stop) * sig['side']
+        if not (rules['stop_atr_min'] * sig['band'] <= risk <= rules['stop_atr_max'] * sig['band']):
+            self._emit('decision', f'{label}: signal skipped - stop {risk:.2f} outside '
+                                   f"{rules['stop_atr_min']}-{rules['stop_atr_max']} ATR")
+            return
+        target = limit + sig['side'] * rules['target_r'] * risk
+        st['n'] += 1
+        lots = fixed_lots(self.cfg['symbol'])
+        order = dict(symbol=self.cfg['symbol'], side='buy' if buy else 'sell', lots=lots,
+                     sl=stop, tp=target, comment=f"{tag} {st['n']}", confirm=1)
+        code, res = b.trade('/order/send', kind='limit', price=limit,
+                            expiration_ms=t_close + int(rules['limit_valid_min']) * 60_000, **order)
+        kind = 'limit'
+        if not res.get('ok') and res.get('error') == 'invalid price':
+            # Price is already through the limit: it would fill at once - at market.
+            code, res = b.trade('/order/send', kind='market', price=0.0, expiration_ms=0, **order)
+            kind = 'market'
+        sig_rec = dict(sig, label=label, limit_px=round(limit, 2), stop_px=round(stop, 2),
+                       target_px=round(target, 2))
+        self._emit('signal', f"{label}: sweep then change of character with displacement - "
+                             f"{kind} {lots} at {round(limit, 2)}, stop {round(stop, 2)}, "
+                             f"target {round(target, 2)}" + ('' if res.get('ok') else
+                                                            f" - refused: {res.get('error')}"),
+                   playbook='mtf_ls_v4', side='buy' if buy else 'sell', ticket=res.get('ticket'))
+        if res.get('ok'):
+            st.setdefault('sigs', {})[res['ticket']] = sig_rec
+            if kind == 'limit':
+                st['order'] = (res['ticket'], sig_rec)
+
+    def _strategy_trade(self, pos, deal) -> None:
+        """A strategy position closed: the same trade record the engine's trades get."""
+        st = self._strat
+        sig = (st.get('sigs') or {}).get(pos['ticket']) or {}
+        buy = pos['side'] == 'buy'
+        sign = 1.0 if buy else -1.0
+        entry, exit_px = float(pos['price_open']), float(deal['price'])
+        stop0 = float(pos.get('initial_sl') or 0)
+        risk = abs(entry - stop0) if stop0 else 0.0
+        r = round(sign * (exit_px - entry) / risk, 3) if risk else 0.0
+        reason = deal['reason']
+        outcome = ('target' if reason == REASON_TP else 'stop' if reason == REASON_SL else
+                   'time' if pos['ticket'] in st['time_exit'] else 'manual')
+        profit = round(float(deal['profit']) + float(deal['commission'])
+                       + float(pos.get('commission') or 0), 2)
+        entry_t, exit_t = int(pos['time_ms']), int(deal['time_ms'])
+        mfe = mae = 0.0
+        if risk:
+            a = int(np.searchsorted(self.m1.t, (entry_t // 60_000) * 60_000, 'left'))
+            bb = int(np.searchsorted(self.m1.t, exit_t, 'right'))
+            if bb > a:
+                hi, lo = float(self.m1.h[a:bb].max()), float(self.m1.l[a:bb].min())
+                fav, adv = ((hi - entry), (entry - lo)) if buy else ((entry - lo), (hi - entry))
+                mfe, mae = round(max(0.0, fav) / risk, 2), round(max(0.0, adv) / risk, 2)
+        tid = f"mtfls-{pos['ticket']}"
+        t = {
+            'id': tid, 'n': len(self.trades) + 1, 'manual': False, 'playbook': 'mtf_ls_v4',
+            'side': pos['side'], 'lots': pos['volume'], 'entry_t': entry_t, 'exit_t': exit_t,
+            'entry_i': int(np.searchsorted(self.series.t, entry_t, 'right') - 1),
+            'exit_i': int(np.searchsorted(self.series.t, exit_t, 'right') - 1),
+            'entry': entry, 'exit': exit_px, 'stop0': stop0, 'sl_final': pos.get('sl'),
+            'tp1': None, 'tp2': sig.get('target_px'), 'tp': pos.get('tp'),
+            'outcome': outcome, 'r': r, 'profit': profit,
+            'bars': round((exit_t - entry_t) / self.tf_ms, 1), 'mfe_r': mfe, 'mae_r': mae,
+            'confidence': None, 'kind': 'limit', 'final_bar_ms': sig.get('close_ms'),
+        }
+        self.trades.append(t)
+        self._emit('exit', f"{pos['side'].upper()} mtf_ls_v4: {outcome} at {exit_px} "
                            f"({r:+.2f}R, {profit:+.2f})", id=tid, r=r, profit=profit)
 
     # --------------------------------------------------------- the engine
@@ -626,7 +753,8 @@ class ReplaySession:
             self.broker.run_minute(mt, float(m1.o[j]), float(m1.h[j]), float(m1.l[j]),
                                    float(m1.c[j]), sp or self._spread(k1))
             self.now_ms = mt + 60_000
-            self.executor.step()
+            if self.strategy is None:
+                self.executor.step()
 
         # ---- the close
         self.now_ms = t_close
@@ -637,9 +765,10 @@ class ReplaySession:
         if snap.get('ok'):
             self.closed_snap = snap
             self._keep_snap(k1, snap)
-            window = self.series.slice(k1 + 1 - WINDOW, k1 + 1)
-            created = self.store.finalize(self.cfg['symbol'], self.cfg['tf'],
-                                          generate(snap, window), self.spec, t_open, self.tf_ms)
+            if self.strategy is None:
+                window = self.series.slice(k1 + 1 - WINDOW, k1 + 1)
+                created = self.store.finalize(self.cfg['symbol'], self.cfg['tf'],
+                                              generate(snap, window), self.spec, t_open, self.tf_ms)
         # The price when the close is acted on: the next minute's open.
         nxt_bid = float(m1.o[b]) if b < len(m1) and int(m1.t[b]) < t_close + self.tf_ms \
             else float(self.series.c[k1])
@@ -656,14 +785,17 @@ class ReplaySession:
                            + (f" - {blocks[0]}" if blocks else f" (confidence {s.confidence})"),
                            id=s.id, status=s.status, playbook=s.playbook, side=s.side,
                            confidence=s.confidence, blocks=blocks[:3])
-        self.executor.step()
+        if self.strategy is None:
+            self.executor.step()
+        else:
+            self._strategy_close(t_close)
         while self.pending and int(self.pending[0].get('i', -1)) <= k1:
             cmd = self.pending.pop(0)
             if int(cmd.get('i', -1)) == k1:
                 self._apply(cmd)
                 self.commands.append(cmd)
         sigs = []
-        if snap.get('ok'):
+        if snap.get('ok') and self.strategy is None:
             sigs = qualify_all(self.store.view(self.cfg['symbol'], self.cfg['tf']),
                                snap, self.spec, self.context())
             self.store.note_qualification(sigs)

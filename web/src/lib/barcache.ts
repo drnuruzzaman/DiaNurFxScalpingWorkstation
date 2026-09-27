@@ -18,10 +18,13 @@ import type { Bar } from '../chart/types'
  * stale tail is corrected within a tick rather than believed.
  */
 
-// v2: series cached before 2026-09-26 could hold scrolled-back disk bars in
-// broker time beside UTC live ones - 3 hours apart, one day drawn twice.
-// A new key drops them rather than drawing them again.
-const KEY = 'dianur.bars.v2'
+// v3/v4: series cached before 2026-09-26 could hold disk bars in broker time
+// beside UTC live ones (3 hours apart, one day drawn twice), and a timeframe
+// switched away from could land its bars in the next one's series (a 4H chart
+// of 1-minute candles, or a stray block of older bars scrolled in from another
+// chart's dates). A new key drops them rather than drawing them again.
+const KEY = 'dianur.bars.v4'
+const OLD_KEYS = ['dianur.bars.v1', 'dianur.bars.v2', 'dianur.bars.v3']
 
 /** Per series. Enough for a deep scroll-back; beyond this, re-fetch. */
 const MAX_BARS = 1500
@@ -45,7 +48,7 @@ let loaded = false
 function hydrate(): void {
   if (loaded) return
   loaded = true
-  try { localStorage.removeItem('dianur.bars.v1') } catch { /* private mode */ }
+  try { for (const k of OLD_KEYS) localStorage.removeItem(k) } catch { /* private mode */ }
   try {
     const raw = localStorage.getItem(KEY)
     if (!raw) return
@@ -61,6 +64,18 @@ function hydrate(): void {
     // will refill it within a second.
     try { localStorage.removeItem(KEY) } catch { /* private mode */ }
   }
+}
+
+/**
+ * Only the bars that belong to a series of `stepMs` bars: on the newest bar's
+ * grid. Every bar of one series opens a whole number of steps from every
+ * other; a bar off that grid is from another timeframe, or on another clock.
+ */
+export function onGrid(bars: Bar[], stepMs: number): Bar[] {
+  if (!stepMs || bars.length < 2) return bars
+  const last = bars[bars.length - 1].t
+  const kept = bars.filter((b) => (last - b.t) % stepMs === 0)
+  return kept.length === bars.length ? bars : kept
 }
 
 /** Bars held for this series, or an empty array. Never null - callers paint it. */

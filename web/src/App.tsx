@@ -351,6 +351,15 @@ export default function App() {
   const feed = useRef<LiveFeed | null>(null)
   const loadingHistory = useRef(false)
   const requestedBefore = useRef(0)
+  // The series on screen. An answer for another one - a scroll-back or a live
+  // frame still in flight when the timeframe changed - is dropped, not merged.
+  const seriesKey = useRef('')
+  // Which series each bars array belongs to. For one render after a switch the
+  // bars in state are still the previous chart's while symbol and tf are the
+  // new one's; a scroll-back built from that pair asked for the new timeframe
+  // over the old chart's dates - how a 4H chart came to hold 1-minute bars.
+  const barsOwner = useRef(new WeakMap<Bar[], string>())
+  const own = (key: string, arr: Bar[]) => { barsOwner.current.set(arr, key); return arr }
 
   /**
    * Fetch the window of bars immediately before the oldest one held.
@@ -359,15 +368,22 @@ export default function App() {
    * the drag does not stall waiting for the response.
    */
   const loadOlderBars = async () => {
+    const key = barcache.keyFor(symbol, tf)
+    // Nothing is prepended on any path below but the one that merges: the
+    // engine is told, or it would never ask this chart for history again.
+    const notLoaded = () => chartEngine.current?.historyLoaded()
     if (loadingHistory.current) return
+    // Only from this series' own bars (see barsOwner).
+    if (barsOwner.current.get(bars) !== key || seriesKey.current !== key) { notLoaded(); return }
     const first = bars.length ? bars[0].t : 0
-    if (!first) return
+    if (!first) { notLoaded(); return }
     // Do not re-request a window we already asked for. Without this a drag
     // that keeps nudging the left edge fires the same fetch repeatedly.
-    if (requestedBefore.current && first >= requestedBefore.current) return
+    if (requestedBefore.current && first >= requestedBefore.current) { notLoaded(); return }
 
     loadingHistory.current = true
     requestedBefore.current = first
+    let merged = false
     try {
       // Derive the window from the TIMEFRAME, not from bar spacing. Measuring
       // bars[1] - bars[0] looked reasonable and produced from_ms AFTER to_ms
@@ -378,14 +394,21 @@ export default function App() {
       const to = first - 1
       if (from >= to) return
       const r = await api.history(symbol, tf, from, to)
+      if (seriesKey.current !== key) return        // switched away while it loaded
       const older = toBars(r.bars).filter((b) => b.t < first)
-      if (older.length) setBars((prev) => {
-        const next = mergeBars(older, prev)
-        barcache.put(symbol, tf, next)
-        return next
-      })
+      if (older.length) {
+        merged = true
+        setBars((prev) => {
+          // Switched in between: a new chart resets the engine's wait itself.
+          if (barsOwner.current.get(prev) !== key) return prev
+          const next = own(key, barcache.onGrid(mergeBars(older, prev), step))
+          barcache.put(symbol, tf, next)
+          return next
+        })
+      }
     } catch { /* leave the chart as it is */ } finally {
       loadingHistory.current = false
+      if (!merged) notLoaded()
     }
   }
 
@@ -517,7 +540,10 @@ export default function App() {
     // already downloaded for THIS series are still good, so seed from the
     // cache: switching back to a tab repaints instead of showing a spinner
     // while MetaTrader re-sends what we already had.
-    const cached = barcache.get(symbol, tf)
+    const step = TF_MS[tf] ?? 0
+    const key = barcache.keyFor(symbol, tf)
+    seriesKey.current = key
+    const cached = own(key, barcache.onGrid(barcache.get(symbol, tf), step))
     setBars(cached)
     // A fresh symbol starts as 'loading', never as 'no data'. MetaTrader
     // downloads history on demand, so an empty chart a second after a
@@ -551,7 +577,7 @@ export default function App() {
         const early = toBars(r.bars as any)
         if (!early.length) return
         setBars((prev) => {
-          const next = mergeBars(prev, early)
+          const next = own(key, barcache.onGrid(mergeBars(prev, early), step))
           barcache.put(symbol, tf, next)
           return next
         })
@@ -561,10 +587,13 @@ export default function App() {
     const f = new LiveFeed(symbol, tf)
     f.onState = setConn
     f.onMessage = (p: LivePayload) => {
+      // A frame for the series switched away from, still in flight: not ours.
+      if (!alive || (p.symbol && p.symbol !== symbol) || (p.tf && p.tf !== tf)) return
       // Merge rather than replace: the socket sends a fixed tail, and
       // replacing would discard any older bars the user scrolled back to.
+      // Kept on the live bars' grid, so nothing off it survives a frame.
       setBars((prev) => {
-        const next = mergeBars(prev, toBars(p.bars))
+        const next = own(key, barcache.onGrid(mergeBars(prev, toBars(p.bars)), step))
         barcache.put(symbol, tf, next)
         return next
       })

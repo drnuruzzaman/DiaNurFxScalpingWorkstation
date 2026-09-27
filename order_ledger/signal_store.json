@@ -123828,7 +123828,7 @@
    "tf": "4h",
    "side": "buy",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -123899,12 +123899,17 @@
    "final_bar_ms": 1790154000000,
    "expires_ms": 1790456400000,
    "created_ms": 1790168530711,
-   "updated_ms": 1790393010452,
+   "updated_ms": 1790465895384,
    "history": [
     [
      1790168530711,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1790465895384,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -123912,7 +123917,7 @@
     "reason": "fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
     "confidence": 51,
     "net_rr2": 2.15,
-    "at_ms": 1790393158945
+    "at_ms": 1790420171485
    },
    "trail": {},
    "reverse": null,
@@ -130263,7 +130268,7 @@
    "final_bar_ms": 1790110800000,
    "expires_ms": 1791925200000,
    "created_ms": 1790200853732,
-   "updated_ms": 1790393003400,
+   "updated_ms": 1790465903280,
    "history": [
     [
      1790200853732,
@@ -130276,7 +130281,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 6.66% against a 0.50% limit",
     "confidence": 53,
     "net_rr2": 2.0,
-    "at_ms": 1790393278023
+    "at_ms": 1790465902506
    },
    "trail": {},
    "reverse": null,
@@ -173771,7 +173776,7 @@
    "final_bar_ms": 1790110800000,
    "expires_ms": 1791925200000,
    "created_ms": 1790245887859,
-   "updated_ms": 1790393010817,
+   "updated_ms": 1790465903485,
    "history": [
     [
      1790245887859,
@@ -173784,7 +173789,7 @@
     "reason": "fades an up leg that has run 4.8 ATR - long legs are no likelier to turn, and this lost in all three years tested",
     "confidence": 36,
     "net_rr2": 1.96,
-    "at_ms": 1790393159588
+    "at_ms": 1790465902434
    },
    "trail": {},
    "reverse": null,
@@ -201467,7 +201472,7 @@
    "tf": "1h",
    "side": "buy",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -201532,12 +201537,17 @@
    "final_bar_ms": 1790330400000,
    "expires_ms": 1790406000000,
    "created_ms": 1790334111510,
-   "updated_ms": 1790393006591,
+   "updated_ms": 1790406001088,
    "history": [
     [
      1790334111510,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1790406001088,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -201545,7 +201555,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 0.88% against a 0.50% limit",
     "confidence": 28,
     "net_rr2": 1.98,
-    "at_ms": 1790393148326
+    "at_ms": 1790405942596
    },
    "trail": {},
    "reverse": null,
@@ -202607,7 +202617,7 @@
    "final_bar_ms": 1790326800000,
    "expires_ms": 1790478000000,
    "created_ms": 1790336773002,
-   "updated_ms": 1790393006901,
+   "updated_ms": 1790465903680,
    "history": [
     [
      1790336773002,
@@ -202620,7 +202630,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 1.10% against a 0.50% limit",
     "confidence": 36,
     "net_rr2": 1.99,
-    "at_ms": 1790393148467
+    "at_ms": 1790465901435
    },
    "trail": {},
    "reverse": null,
@@ -206737,7 +206747,7 @@
    "final_bar_ms": 1790326800000,
    "expires_ms": 1790629200000,
    "created_ms": 1790347104521,
-   "updated_ms": 1790393278886,
+   "updated_ms": 1790465903885,
    "history": [
     [
      1790347104521,
@@ -206750,7 +206760,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 1.31% against a 0.50% limit",
     "confidence": 71,
     "net_rr2": 1.99,
-    "at_ms": 1790393278046
+    "at_ms": 1790465902029
    },
    "trail": {},
    "reverse": null,
@@ -209702,7 +209712,7 @@
    "tf": "30m",
    "side": "buy",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -209767,12 +209777,17 @@
    "final_bar_ms": 1790366400000,
    "expires_ms": 1790404200000,
    "created_ms": 1790379299005,
-   "updated_ms": 1790393007236,
+   "updated_ms": 1790404201667,
    "history": [
     [
      1790379299005,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1790404201667,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -209780,7 +209795,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 0.51% against a 0.50% limit",
     "confidence": 28,
     "net_rr2": 1.22,
-    "at_ms": 1790393148212
+    "at_ms": 1790404138044
    },
    "trail": {},
    "reverse": null,
@@ -210297,7 +210312,7 @@
    "tf": "30m",
    "side": "buy",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -210363,12 +210378,17 @@
    "final_bar_ms": 1790366400000,
    "expires_ms": 1790404200000,
    "created_ms": 1790380887258,
-   "updated_ms": 1790393007708,
+   "updated_ms": 1790404201882,
    "history": [
     [
      1790380887258,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1790404201882,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -210376,7 +210396,7 @@
     "reason": "down 43.69% today - daily loss limit reached",
     "confidence": 63,
     "net_rr2": 1.84,
-    "at_ms": 1790393155533
+    "at_ms": 1790404076197
    },
    "trail": {},
    "reverse": null,
@@ -211044,7 +211064,7 @@
    "tf": "15m",
    "side": "buy",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -211119,12 +211139,17 @@
    "final_bar_ms": 1790378100000,
    "expires_ms": 1790397000000,
    "created_ms": 1790389578199,
-   "updated_ms": 1790393008044,
+   "updated_ms": 1790397002158,
    "history": [
     [
      1790389578199,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1790397002158,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -211132,11 +211157,11 @@
     "reason": "fades the down impulse while 1h is trending down too - lost in all three years tested",
     "confidence": 52,
     "net_rr2": 1.65,
-    "at_ms": 1790393148154
+    "at_ms": 1790396981316
    },
    "trail": {},
    "reverse": null,
-   "note": "not sent: rejected - fades the down impulse while 1h is trending down too - lost in all three years tested"
+   "note": "not sent: no fresh analysis - "
   },
   "USDJPY.a:15m:pattern_break:sell:1790379000000": {
    "id": "USDJPY.a:15m:pattern_break:sell:1790379000000",
@@ -211144,7 +211169,7 @@
    "tf": "15m",
    "side": "sell",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -211214,12 +211239,17 @@
    "final_bar_ms": 1790379000000,
    "expires_ms": 1790397900000,
    "created_ms": 1790389629700,
-   "updated_ms": 1790393004165,
+   "updated_ms": 1790397901031,
    "history": [
     [
      1790389629700,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1790397901031,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -211227,12 +211257,293 @@
     "reason": "ATR 112 pts is under 123 - less than 4x the 31 pt round trip",
     "confidence": 53,
     "net_rr2": 1.4,
-    "at_ms": 1790393278634
+    "at_ms": 1790397819543
    },
    "trail": {},
    "reverse": null,
-   "note": "not sent: rejected - ATR 112 pts is under 123 - less than 4x the 31 pt round trip"
+   "note": "not sent: no fresh analysis - "
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1790369640000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1790369640000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "pattern_break",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 4285.58,
+    "stop": 4294.77,
+    "tp1": 4276.4,
+    "tp2": 4267.22,
+    "entry_type": "stop",
+    "trigger": 4285.58,
+    "confidence": 52,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 9.19,
+    "atr_at_signal": 1.1357,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.5,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Head & Shoulders (forming), quality 52/100",
+      "weight": 12,
+      "kind": "pattern"
+     },
+     {
+      "text": "shoulder symmetry 18%",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "head depth 3.4 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     }
+    ],
+    "against": [
+     "the break level has not traded yet - this is a pending order"
+    ],
+    "invalidation": "Head & Shoulders fails on a close beyond 4294.54",
+    "expiry_bars": 20,
+    "created_ms": 1790465896778,
+    "bar_time_ms": 1790369640000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:pattern_break:sell:1790369640000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1790369640000,
+   "expires_ms": 1790370900000,
+   "created_ms": 1790465896778,
+   "updated_ms": 1790465898795,
+   "history": [
+    [
+     1790465896778,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1790465898795,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "ATR 114 pts is under 177 - less than 4x the 44 pt round trip",
+    "confidence": 40,
+    "net_rr2": 1.85,
+    "at_ms": 1790465896953
+   },
+   "trail": {},
+   "reverse": null
+  },
+  "XAUUSD.a:1h:pattern_break:buy:1790362800000": {
+   "id": "XAUUSD.a:1h:pattern_break:buy:1790362800000",
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "buy",
+   "playbook": "pattern_break",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "entry": 4291.13,
+    "stop": 4236.34,
+    "tp1": 4345.92,
+    "tp2": 4400.7,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 66,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 54.79,
+    "atr_at_signal": 16.7894,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.5,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Double Bottom (confirmed), quality 80/100",
+      "weight": 20,
+      "kind": "pattern"
+     },
+     {
+      "text": "peaks within 0.04 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "depth 2.4 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "against higher-timeframe direction",
+      "weight": -10,
+      "kind": "mtf"
+     },
+     {
+      "text": "PATTERN BREAK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "PATTERN BREAK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [
+     "pattern points against the higher-timeframe lean (-89)"
+    ],
+    "invalidation": "Double Bottom fails on a close beyond 4239.70",
+    "expiry_bars": 20,
+    "created_ms": 1790465900629,
+    "bar_time_ms": 1790362800000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1h:pattern_break:buy:1790362800000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1790362800000,
+   "expires_ms": 1790438400000,
+   "created_ms": 1790465900630,
+   "updated_ms": 1790465901071,
+   "history": [
+    [
+     1790465900630,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1790465901071,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "stop is too wide for the risk budget - 0.01 lots would risk 0.78% against a 0.50% limit",
+    "confidence": 52,
+    "net_rr2": 1.98,
+    "at_ms": 1790465900789
+   },
+   "trail": {},
+   "reverse": null
+  },
+  "USDJPY.a:4h:pattern_break:buy:1790341200000": {
+   "id": "USDJPY.a:4h:pattern_break:buy:1790341200000",
+   "symbol": "USDJPY.a",
+   "tf": "4h",
+   "side": "buy",
+   "playbook": "pattern_break",
+   "stage": "FINAL",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "buy",
+    "symbol": "USDJPY.a",
+    "tf": "4h",
+    "entry": 157.205,
+    "stop": 156.379,
+    "tp1": 158.031,
+    "tp2": 158.853,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 59,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 0.826,
+    "atr_at_signal": 0.4448,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.5,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Double Bottom (confirmed), quality 57/100",
+      "weight": 12,
+      "kind": "pattern"
+     },
+     {
+      "text": "peaks within 0.55 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "depth 2.4 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "higher timeframes agree (+29)",
+      "weight": 12,
+      "kind": "mtf"
+     }
+    ],
+    "against": [],
+    "invalidation": "Double Bottom fails on a close beyond 156.47",
+    "expiry_bars": 20,
+    "created_ms": 1790465901759,
+    "bar_time_ms": 1790341200000,
+    "bar_idx": 598,
+    "id": "USDJPY.a:4h:pattern_break:buy:1790341200000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1790341200000,
+   "expires_ms": 1790643600000,
+   "created_ms": 1790465901759,
+   "updated_ms": 1790465904077,
+   "history": [
+    [
+     1790465901759,
+     "FINAL",
+     "bar closed with the setup intact"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 59,
+    "net_rr2": 1.88,
+    "at_ms": 1790465901922
+   },
+   "trail": {},
+   "reverse": null,
+   "note": "not sent: rejected - fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
   }
  },
- "saved_ms": 1790393278886
+ "saved_ms": 1790465904077
 }

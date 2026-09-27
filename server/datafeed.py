@@ -26,7 +26,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
@@ -458,6 +458,10 @@ class Feed:
             if series.empty():
                 # Nothing on disk either. The bridge's reason is the useful one.
                 series.status = live_status
+            # Disk is broker time and the bridge sends UTC. Unshifted, a chart that
+            # saw both - the API starting before MT5 answered - kept every bar
+            # twice, three hours apart.
+            series = on_live_clock(series, broker_offset_ms(self.bridge))
 
         with self._lock:
             self._cache[key] = series
@@ -586,6 +590,39 @@ def _save_spec(symbol: str, spec: dict) -> None:
         pass
 
 
+_CLOCK = {'offset_ms': None, 'at': 0.0}
+
+
+def broker_offset_ms(bridge: 'BridgeClient' = None) -> int:
+    """
+    The broker's clock minus UTC - what the bridge takes off every bar it
+    sends (3 h in the northern summer). Its live measurement, re-read once a
+    minute; while it does not answer, the last one it stored in
+    data/manifest.json (sim/clock.py); 0 if neither ever existed.
+    """
+    now = time.time()
+    if now - _CLOCK['at'] > 60:
+        _CLOCK['at'] = now
+        h = (bridge or BRIDGE).health() or {}
+        off = h.get('time_offset_ms') if h.get('connected') else None
+        if off is None:
+            try:
+                from sim.clock import manifest_offset
+                off, _ = manifest_offset(str(DATA_DIR))
+            except Exception:                                       # noqa: BLE001
+                off = None
+        if off is not None:
+            _CLOCK['offset_ms'] = int(off)
+    return _CLOCK['offset_ms'] or 0
+
+
+def on_live_clock(series: Series, offset_ms: int) -> Series:
+    """Disk bars (broker time) moved onto the live bars' clock (UTC)."""
+    if not offset_ms or series.empty():
+        return series
+    return replace(series, t=series.t - offset_ms, tz_offset_ms=offset_ms)
+
+
 def _is_stale(series: Series, tf: str, max_bars_behind: int = 400) -> bool:
     """Has this series stopped well short of now?"""
     if series.empty():
@@ -598,5 +635,6 @@ def _is_stale(series: Series, tf: str, max_bars_behind: int = 400) -> bool:
 FEED = Feed()
 
 __all__ = ['Series', 'Feed', 'FEED', 'BridgeClient', 'BRIDGE', 'load_disk',
+           'broker_offset_ms', 'on_live_clock',
            'load_recent', 'resample', 'empty_series', 'available_symbols',
            'available_timeframes', 'available_years']

@@ -1,0 +1,163 @@
+{
+ "run_id": "20260926-045243",
+ "symbol": "USDJPY.a",
+ "created_utc": "2026-09-26T04:53:54+00:00",
+ "versions": {
+  "feature": "f1",
+  "label": "l2",
+  "baseline": "b2",
+  "engine": "1077afccf0c69a88",
+  "git": "2f14e14"
+ },
+ "train_start": "2018-01-01",
+ "eval_years": [
+  2024,
+  2025,
+  2026
+ ],
+ "half_life_days": 365,
+ "min_baseline_n": 5000,
+ "bootstrap_reps": 400,
+ "horizons": {
+  "5m": 12,
+  "15m": 8,
+  "1h": 6,
+  "4h": 3
+ },
+ "templates": [
+  [
+   "buy",
+   1.0,
+   1.0
+  ],
+  [
+   "buy",
+   1.0,
+   1.5
+  ],
+  [
+   "buy",
+   1.0,
+   2.0
+  ],
+  [
+   "buy",
+   1.5,
+   1.0
+  ],
+  [
+   "buy",
+   1.5,
+   1.5
+  ],
+  [
+   "buy",
+   1.5,
+   2.0
+  ],
+  [
+   "sell",
+   1.0,
+   1.0
+  ],
+  [
+   "sell",
+   1.0,
+   1.5
+  ],
+  [
+   "sell",
+   1.0,
+   2.0
+  ],
+  [
+   "sell",
+   1.5,
+   1.0
+  ],
+  [
+   "sell",
+   1.5,
+   1.5
+  ],
+  [
+   "sell",
+   1.5,
+   2.0
+  ]
+ ],
+ "news_events": 1427,
+ "forecasters": {
+  "climatology": "empirical baseline, expanding from TRAIN_START, resolved-only, refreshed each broker day",
+  "recency": "climatology with a 365-day half-life",
+  "state_transition": "REFERENCE check: P(state later | state now), shrunk to climatology (50 pseudo-counts)",
+  "pooled": "trade outputs only - the climatology at the costs history actually paid, kept to show what ignoring the spread costs"
+ },
+ "trade_baseline": "replayed at the row's own cost: templates from outcomes re-run at spread levels [0.0, 0.01, 0.02, 0.03, 0.045, 0.065, 0.09, 0.13, 0.2] ATR (interpolated), MFE/MAE from raw excursions at cost-shifted thresholds",
+ "data": {
+  "tfs": {
+   "5m": {
+    "rows": 651652,
+    "scored": 204059,
+    "first_ms": 1514855100000,
+    "last_ms": 1790380500000,
+    "seconds": 20.6
+   },
+   "15m": {
+    "rows": 217415,
+    "scored": 68086,
+    "first_ms": 1514855700000,
+    "last_ms": 1790380800000,
+    "seconds": 7.1
+   },
+   "1h": {
+    "rows": 54365,
+    "scored": 17024,
+    "first_ms": 1514858400000,
+    "last_ms": 1790380800000,
+    "seconds": 3.7
+   },
+   "4h": {
+    "rows": 13596,
+    "scored": 4257,
+    "first_ms": 1514865600000,
+    "last_ms": 1790380800000,
+    "seconds": 1.7
+   }
+  },
+  "trade": {
+   "5m": {
+    "rows": 651580,
+    "scored": 203999,
+    "median_spread_atr_by_year": {
+     "2018": 1.0749,
+     "2019": 1.7075,
+     "2020": 0.7471,
+     "2021": 0.7277,
+     "2022": 0.322,
+     "2023": 0.336,
+     "2024": 0.2926,
+     "2025": 0.298,
+     "2026": 0.4036
+    },
+    "seconds": 23.8
+   },
+   "15m": {
+    "rows": 217390,
+    "scored": 68069,
+    "median_spread_atr_by_year": {
+     "2018": 0.4632,
+     "2019": 0.9066,
+     "2020": 0.4057,
+     "2021": 0.4044,
+     "2022": 0.1836,
+     "2023": 0.19,
+     "2024": 0.1794,
+     "2025": 0.1715,
+     "2026": 0.2343
+    },
+    "seconds": 8.9
+   }
+  }
+ }
+}

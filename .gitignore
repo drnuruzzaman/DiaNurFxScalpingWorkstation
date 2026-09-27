@@ -4,8 +4,8 @@
 !.env.example
 
 # --- data & artefacts ---
-#data/
-#logs/
+data/
+logs/
 #runs/
 runs/lab/lab.pid
 # forecast engine: rebuildable caches (also matched by cache/), big per-forecast rows, build logs
@@ -25,6 +25,6 @@ venv/
 
 # --- node ---
 node_modules/
-#web/dist/
+web/dist/
 web/.vite/
 npm-debug.log*

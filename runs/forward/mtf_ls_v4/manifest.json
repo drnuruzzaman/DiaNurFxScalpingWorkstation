@@ -1,0 +1,164 @@
+{
+ "test": "MTF-LS v4 forward test",
+ "symbol": "XAUUSD.a",
+ "variant": "v4",
+ "start_utc": "2026-09-26T15:13:00+00:00",
+ "start_ms": 1790435580000,
+ "fingerprint": "f20b373febe0dc04",
+ "fingerprinted": [
+  "tools/research_mtf_liquidity.py",
+  "server/forecast/labels.py",
+  "server/engine/indicators.py",
+  "server/forecast/timebase.py"
+ ],
+ "rules_default": {
+  "bias_tf": "1h",
+  "bias_k": 3,
+  "pool_tf": "15m",
+  "pool_k": 3,
+  "pool_days": 5,
+  "asia_utc": [
+   0,
+   7
+  ],
+  "entry_tf": "5m",
+  "entry_k": 2,
+  "confirm_bars": 12,
+  "session_utc": [
+   7,
+   20
+  ],
+  "stop_buffer_atr": 0.1,
+  "stop_atr_min": 0.5,
+  "stop_atr_max": 3.0,
+  "stop_band_tf": "5m",
+  "entry": "market",
+  "limit_frac": 0.5,
+  "limit_valid_min": 60,
+  "displacement": false,
+  "disp_body_atr": 1.0,
+  "target_r": 2.0,
+  "max_hold_min": 480,
+  "slip_points": 3.0
+ },
+ "variant_rules": {
+  "stop_band_tf": "entry",
+  "entry": "limit",
+  "displacement": true
+ },
+ "ladders": {
+  "1m": [
+   "5m",
+   "15m"
+  ],
+  "3m": [
+   "15m",
+   "1h"
+  ],
+  "5m": [
+   "15m",
+   "1h"
+  ],
+  "15m": [
+   "1h",
+   "4h"
+  ],
+  "30m": [
+   "2h",
+   "4h"
+  ],
+  "1h": [
+   "4h",
+   "1d"
+  ]
+ },
+ "reference": {
+  "1m": {
+   "n": 582,
+   "mean": -0.15661683651639938,
+   "total": -91.15099885254443,
+   "win": 0.30927835051546393,
+   "lo": -0.24397759987841372,
+   "hi": -0.062281266757700536,
+   "per_year": 66.62484576711394,
+   "timeframes": [
+    "1m",
+    "5m",
+    "15m"
+   ]
+  },
+  "3m": {
+   "n": 207,
+   "mean": -0.0885276697680132,
+   "total": -18.32522764197873,
+   "win": 0.3333333333333333,
+   "lo": -0.2419987637710593,
+   "hi": 0.07095108535295523,
+   "per_year": 23.696465762530217,
+   "timeframes": [
+    "3m",
+    "15m",
+    "1h"
+   ]
+  },
+  "5m": {
+   "n": 215,
+   "mean": 0.1429340642590019,
+   "total": 30.73082381568541,
+   "win": 0.413953488372093,
+   "lo": -0.019485140088056227,
+   "hi": 0.3040499419812793,
+   "per_year": 24.612271202628,
+   "timeframes": [
+    "5m",
+    "15m",
+    "1h"
+   ]
+  },
+  "15m": {
+   "n": 81,
+   "mean": 0.2061534357069995,
+   "total": 16.69842829226696,
+   "win": 0.43209876543209874,
+   "lo": -0.04267965559935525,
+   "hi": 0.4707232482256776,
+   "per_year": 9.272530080990084,
+   "timeframes": [
+    "15m",
+    "1h",
+    "4h"
+   ]
+  },
+  "30m": {
+   "n": 78,
+   "mean": -0.13623660135446775,
+   "total": -10.626454905648485,
+   "win": 0.3333333333333333,
+   "lo": -0.3659442962290602,
+   "hi": 0.09694356537875606,
+   "per_year": 8.929103040953414,
+   "timeframes": [
+    "30m",
+    "2h",
+    "4h"
+   ]
+  },
+  "1h": {
+   "n": 29,
+   "mean": 0.08707191156436127,
+   "total": 2.525085435366477,
+   "win": 0.3793103448275862,
+   "lo": -0.32778551610175016,
+   "hi": 0.5404565535630091,
+   "per_year": 3.3197947203544746,
+   "timeframes": [
+    "1h",
+    "4h",
+    "1d"
+   ]
+  }
+ },
+ "candidate": "5m",
+ "min_trades": 40,
+ "reading": "the candidate HOLDS if, after >= min_trades forward trades, its mean net R is above zero; the backtest is CONSISTENT with it if the backtest mean lies inside the forward 90% interval. Other ladders are recorded only."
+}

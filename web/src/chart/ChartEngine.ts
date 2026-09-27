@@ -475,6 +475,8 @@ export class ChartEngine {
     }
 
     if (!keepView || prevLen === 0) {
+      // A new chart: whatever the last one was waiting on is not its history.
+      this.loadingHistory = false
       const span = Math.min(this.baseSpan(), bars.length || this.baseSpan())
       this.view = { start: Math.max(0, bars.length - span + this.rightPadBars), span }
     } else if (bars.length > prevLen && prevFirstT && bars[0].t < prevFirstT) {

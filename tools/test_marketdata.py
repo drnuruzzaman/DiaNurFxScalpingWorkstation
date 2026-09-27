@@ -101,19 +101,30 @@ def main() -> int:
               sorted(flushed) == [t for t in ts if t + 900 <= ts[-1] + 60], f'{len(flushed)} bars')
         shutil.rmtree(tmp / 'XAUUSD.a' / '15m')
         # The market shut after the last tick: its bar has closed, though no later
-        # tick will ever say so. Judged by the broker clock the bridge measured.
-        main = sys.modules['__main__']
-        (tmp / 'XAUUSD.a' / '15m').mkdir()
-        main.STATE = {'time_offset_ms': 3 * 3_600_000}
-        try:
-            dl.fetch_bars(['XAUUSD.a'], ['15m'], 1)
-        finally:
-            del main.STATE
-        shut = dl._read_rows(tmp / 'XAUUSD.a' / '15m' / '2026.csv.gz')
+        # tick will ever say so. The bridge that loads the module keeps its
+        # clock's measured offset from UTC (STATE), and the clock is pinned here.
+        def fetch_at(broker_now: int) -> list:
+            off = 3 * 3600
+            main = sys.modules['__main__']
+            real_time = dl.time
+            main.STATE = {'time_offset_ms': off * 1000}
+            dl.time = types.SimpleNamespace(time=lambda: float(broker_now - off))
+            d15 = tmp / 'XAUUSD.a' / '15m'
+            d15.mkdir()
+            try:
+                dl.fetch_bars(['XAUUSD.a'], ['15m'], 1)
+                return sorted(dl._read_rows(d15 / '2026.csv.gz'))
+            finally:
+                dl.time = real_time
+                del main.STATE
+                shutil.rmtree(d15)
+        tick = ts[-1] + 60                                  # the fake MT5's last tick
+        shut = fetch_at(tick + 3600)                        # an hour after it: shut
         check("with the market shut, the week's last bar is written, not held for next week",
-              max(shut) == max(t for t in ts if t % 900 == 0 or True) - (max(ts) % 900)
-              or max(shut) >= ts[-2], f'last {max(shut)} vs ticks to {ts[-1]}')
-        shutil.rmtree(tmp / 'XAUUSD.a' / '15m')
+              shut == sorted(ts), f'last written {shut[-1]}, last bar {ts[-1]}')
+        live = fetch_at(tick + 60)                          # a minute after it: trading
+        check('...while it trades, the bar still forming is still left out',
+              live == [t for t in ts if t + 900 <= tick], f'last written {live[-1]}')
         jan = int(datetime(2027, 1, 1, tzinfo=timezone.utc).timestamp())
         dl.merge('XAUUSD.a', '5m', {jan: f'{jan},1,1,1,1,1,0,1'})
         check('a bar in a new year opens a new year file',

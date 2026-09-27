@@ -1,0 +1,49 @@
+MTF LIQUIDITY + STRUCTURE (MTF-LS v3) - fixed rules, backtested        run 20260927-003722-v3
+VARIANT v3: limit entry at the 50% retracement of the move off the sweep, valid 60 min; otherwise v1's rules.
+Bias 1H structure; sell-/buy-side 15m liquidity swept and closed back inside; 5m change of
+character within an hour; market entry, stop beyond the sweep, 2R target, 8-hour time stop.
+Every cost charged: spread, commission, slippage; fills on the 1m path. R = fill to stop.
+Rules fixed before any result - see the tool header. Nothing tuned; every year is out of sample.
+
+================================================================================================
+XAUUSD.a
+================================================================================================
+year   trades   win%  gross R  net R/tr  total R    PF  maxDD R  timed%     random p5/p50/p95  +stress
+2018       49  32.7%   +0.034    -0.008     -0.4  0.99     16.9    6.1%  -0.473/-0.148/+0.032   -0.111
+2019       38  36.8%   +0.271    +0.241     +9.2  1.44      4.7   10.5%  -0.366/-0.148/+0.317   +0.067
+2020       46  23.9%   -0.205    -0.223    -10.3  0.69     13.9    6.5%  -0.382/-0.120/+0.235   -0.271
+2021       39  17.9%   -0.405    -0.425    -16.6  0.47     20.3    5.1%  -0.360/-0.174/+0.056   -0.502
+2022       50  36.0%   +0.164    +0.141     +7.1  1.23     12.6    6.0%  -0.436/-0.160/+0.194   +0.103
+2023       47  34.0%   +0.253    +0.232    +10.9  1.43      6.4   14.9%  -0.408/-0.063/+0.249   +0.027
+2024       41  29.3%   +0.001    -0.013     -0.5  0.98     13.0    9.8%  -0.336/-0.083/+0.293   -0.020
+2025       45  33.3%   +0.138    +0.127     +5.7  1.21      9.8    6.7%  -0.289/+0.042/+0.371   +0.126
+2026       36  41.7%   +0.337    +0.332    +11.9  1.62      4.0    5.6%  -0.451/-0.113/+0.276   +0.248
+all       391  31.7%   +0.065    +0.044    +17.0  1.07     38.4    7.9%  -0.215/-0.093/+0.012   -0.038
+2018-2026 net R per trade +0.044, 90% interval [-0.068, +0.164] (day-block bootstrap)
+random entries on the bias side, same stops and exits: 95th percentile +0.012 R per trade
+limit orders 905: unfilled in the hour 506, stop outside the band 8, traded 391 (one position at a time)
+VERDICT: NOT PROFITABLE - not positive in every one of 2024-2026; the 2018-2026 interval includes zero or less
+
+================================================================================================
+USDJPY.a
+================================================================================================
+year   trades   win%  gross R  net R/tr  total R    PF  maxDD R  timed%     random p5/p50/p95  +stress
+2018       36  27.8%   -0.134    -0.247     -8.9  0.68     14.8    5.6%  -0.602/-0.263/+0.067   -0.218
+2019       35   5.7%   -0.686    -0.807    -28.2  0.15     28.3   14.3%  -0.635/-0.376/-0.080   -0.807
+2020       33  36.4%   +0.071    -0.063     -2.1  0.92      7.5    3.0%  -0.599/-0.218/+0.088   -0.112
+2021       27  29.6%   -0.083    -0.238     -6.4  0.71      8.3    3.7%  -0.546/-0.252/+0.179   -0.453
+2022       45  28.9%   +0.045    -0.029     -1.3  0.96      5.1   13.3%  -0.489/-0.156/+0.237   -0.049
+2023       35  25.7%   -0.129    -0.202     -7.1  0.74      9.7    5.7%  -0.467/-0.103/+0.146   -0.240
+2024       40  20.0%   -0.376    -0.439    -17.6  0.47     17.6    5.0%  -0.603/-0.298/+0.061   -0.499
+2025       53  28.3%   -0.104    -0.164     -8.7  0.78     13.9    3.8%  -0.514/-0.241/+0.028   -0.244
+2026       23  30.4%   -0.056    -0.138     -3.2  0.81     11.4    4.3%  -0.613/-0.217/+0.202   -0.138
+all       327  25.7%   -0.162    -0.255    -83.3  0.67     89.4    6.7%  -0.340/-0.235/-0.097   -0.303
+2018-2026 net R per trade -0.255, 90% interval [-0.373, -0.133] (day-block bootstrap)
+random entries on the bias side, same stops and exits: 95th percentile -0.097 R per trade
+limit orders 791: unfilled in the hour 458, stop outside the band 6, traded 327 (one position at a time)
+VERDICT: NOT PROFITABLE - not positive in every one of 2024-2026; the 2018-2026 interval includes zero or less; no better than random entries on the bias side
+
+Columns: win% = target reached; gross R before costs; net R per trade after every cost;
+PF = profit factor; maxDD in R; timed% = closed by the 8-hour stop; random = the same
+year from 50 random-entry runs (p5/p50/p95); +stress = net R with 10 more points of spread
+on gold, 3 on USDJPY. Measurements on history, not trading advice.

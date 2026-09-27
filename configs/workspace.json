@@ -2,22 +2,12 @@
  "values": {
   "dianur.tabs.v2": [
    {
-    "id": "tmug6r5p2",
-    "symbol": "XAUUSD.a",
-    "tf": "4h"
-   },
-   {
-    "id": "tmug7vomm",
-    "symbol": "XAUUSD.a",
-    "tf": "5m"
-   },
-   {
     "id": "tmugjg7gh",
     "symbol": "XAUUSD.a",
-    "tf": "3m"
+    "tf": "15m"
    }
   ],
-  "dianur.activeTab": "tmug6r5p2",
+  "dianur.activeTab": "tmugjg7gh",
   "dianur.overlays": {
    "mtfTrendlines": true,
    "zigzag": false,
@@ -141,7 +131,6 @@
      "fvg": false,
      "zones": true,
      "fib": false,
-     "engulfing": false,
      "swings": true,
      "structure": true,
      "events": false,
@@ -150,11 +139,12 @@
      "volumeProfile": false,
      "regimeBands": true,
      "rsi": true,
-     "volume": false
+     "volume": false,
+     "engulfing": false
     },
     "mtfSources": null,
-    "span": 227,
-    "saved_ms": 1790333031453
+    "span": 150,
+    "saved_ms": 1790432646933
    },
    "XAUUSD.a|4h": {
     "overlays": {
@@ -260,9 +250,9 @@
    "rsi": true,
    "volume": false
   },
-  "dianur.lab.dock": "snapshots",
-  "dianur.lab.dockH": 209,
-  "dianur.lab.cone": true
+  "dianur.lab.dock": "sessions",
+  "dianur.lab.dockH": 183,
+  "dianur.lab.cone": false
  },
- "saved_ms": 1790393846603
+ "saved_ms": 1790465912526
 }
