@@ -6,7 +6,7 @@
 # --- data & artefacts ---
 data/
 logs/
-#runs/
+runs/
 runs/lab/lab.pid
 # forecast engine: rebuildable caches (also matched by cache/), big per-forecast rows, build logs
 runs/forecast/cache/
