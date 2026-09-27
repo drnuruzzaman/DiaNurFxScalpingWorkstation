@@ -42,3 +42,55 @@ Traceback (most recent call last):
   File "C:\Users\MohammadNuruzzaman\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\websockets.py", line 117, in receive_text
     raise RuntimeError('WebSocket is not connected. Need to call "accept" first.')
 RuntimeError: WebSocket is not connected. Need to call "accept" first.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 31, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 21, in main
+    from .app import app
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\app.py", line 40, in <module>
+    from . import session as S
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\session.py", line 65, in <module>
+    from . import strategies as lab_strategies
+ImportError: cannot import name 'strategies' from 'server.lab' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__init__.py)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 31, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 21, in main
+    from .app import app
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\app.py", line 40, in <module>
+    from . import session as S
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\session.py", line 65, in <module>
+    from . import strategies as lab_strategies
+ImportError: cannot import name 'strategies' from 'server.lab' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__init__.py)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 31, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 21, in main
+    from .app import app
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\app.py", line 40, in <module>
+    from . import session as S
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\session.py", line 65, in <module>
+    from . import strategies as lab_strategies
+ImportError: cannot import name 'strategies' from 'server.lab' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__init__.py)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 31, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__main__.py", line 21, in main
+    from .app import app
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\app.py", line 40, in <module>
+    from . import session as S
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\session.py", line 65, in <module>
+    from . import strategies as lab_strategies
+ImportError: cannot import name 'strategies' from 'server.lab' (C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\lab\__init__.py)
