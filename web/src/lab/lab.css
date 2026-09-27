@@ -255,6 +255,11 @@
 .lab-break .tabular { font-size: 9.5px; }
 .lab-break .tabular th { font-size: 8px; padding: 2px 4px; }
 .lab-break .tabular td { padding: 2px 4px; }
+/* Why signals stopped: the gate table beside the playbook x gate matrix */
+.lab-gates-body { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 10px; align-items: start; }
+@media (max-width: 900px) { .lab-gates-body { grid-template-columns: minmax(0, 1fr); } }
+.lab-gate-barcell { width: 70px; }
+.lab-gate-bar { display: block; height: 6px; border-radius: 2px; background: var(--bear); opacity: 0.55; }
 .lab-compare { margin: 8px; background: var(--bg-panel-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 6px; }
 .lab-link { color: var(--info); font-size: 9.5px; margin-right: 8px; text-decoration: none; }
 .lab-link.danger { color: var(--bear); }

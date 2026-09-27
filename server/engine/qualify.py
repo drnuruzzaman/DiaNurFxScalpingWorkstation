@@ -252,7 +252,15 @@ def qualify(sig, snap: dict, spec: dict, context: dict = None):
     want_up = sig.side == 'buy'
     aligned = (mtf_score >= g.min_mtf_score) if want_up else (mtf_score <= -g.min_mtf_score)
     opposed = (mtf_score <= -g.min_mtf_score) if want_up else (mtf_score >= g.min_mtf_score)
-    if mtf.get('verdict') == 'not evaluated':
+    # Research rule F1 (CONFIG.quality.htf_block, off in live): opposed higher
+    # timeframes block every playbook, and the two continuation playbooks
+    # under test need them aligned, not just not-opposed.
+    strict = CONFIG.quality.htf_block and mtf.get('verdict') != 'not evaluated'
+    if strict and (opposed or (not aligned and sig.playbook in (
+            'mtf_pullback', 'flag_continuation'))):
+        gates.append(_gate('mtf', 'BLOCK',
+                           f'higher timeframes not with the trade ({mtf_score:+d})'))
+    elif mtf.get('verdict') == 'not evaluated':
         gates.append(_gate('mtf', 'WARN', 'higher timeframes not evaluated', 8))
     elif aligned:
         gates.append(_gate('mtf', 'PASS',
@@ -292,12 +300,17 @@ def qualify(sig, snap: dict, spec: dict, context: dict = None):
     else:
         where = (f"{'up' if leg['dir'] == 1 else 'down'} leg {leg['ext_atr']:.1f} ATR, "
                  f"{leg['pull_atr']:.1f} ATR off its extreme")
+        fight = CONFIG.quality.leg_fight_atr
+        with_leg = (sig.side == 'buy') == (leg['dir'] == 1)
         if why and g.avoid_fades:
             gates.append(_gate('leg', 'BLOCK', why))
         elif why:
             gates.append(_gate('leg', 'PASS', f'{where} - avoid rules off ({why})'))
+        elif fight and not with_leg and float(leg['ext_atr']) >= fight:
+            # Research rule F4 (off in live): fighting a strong leg costs
+            # confidence even where the avoid rules do not block it.
+            gates.append(_gate('leg', 'WARN', f'{where}, trading against a strong leg', 10))
         else:
-            with_leg = (sig.side == 'buy') == (leg['dir'] == 1)
             gates.append(_gate('leg', 'PASS',
                                f"{where}, trading {'with' if with_leg else 'against'} it"))
 

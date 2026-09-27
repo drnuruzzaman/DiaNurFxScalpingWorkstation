@@ -56,6 +56,7 @@ from ..executor import Executor
 from ..forecast import news as release_history
 from ..forecast.timebase import utc_to_broker
 from ..order_ledger import OrderLedger, tag_for
+from .. import trade_journal
 from ..signal_store import (ACTIVE, CANCELLED, CLOSED, EXPIRED, FILLED, REVERSED, SENT,
                             SignalStore)
 from . import data as lab_data
@@ -321,6 +322,8 @@ class ReplaySession:
             self.run_no += 1
             self.events: list = []
             self.trades: list = []
+            self.journal: list = []       # trade_journal lines, one per closed trade
+            self.verdicts: list = []      # each FINAL signal's first verdict (stats.gates)
             self.frames: list = []
             self._snaps = OrderedDict()
             self._mtf = {}
@@ -342,12 +345,14 @@ class ReplaySession:
             self.broker.on_event = self._on_broker_event
             self.broker.set_quote(float(self.series.c[self.k]), self._spread(self.k))
             self.store = MemStore(self._on_move, self._on_note)
+            self.store.on_first_verdict = self.verdicts.append
             self.ledger = MemLedger(self._on_mark)
             self.feed = SimFeed(self)
             self.executor = LabExecutor(
                 self.store, self.ledger, self.broker, self.feed, CONFIG,
                 requalify=self._requalify, auto=lambda: self.cfg['mode'] == 'auto',
                 trading_enabled=lambda: True, on_sent=self._on_sent,
+                on_closed=self._on_closed,
                 tf_ms=lambda tf: self.tf_ms, log=self._log)
             self._day = None
             self._day_sends = 0
@@ -413,6 +418,14 @@ class ReplaySession:
 
     def _on_sent(self, rec) -> None:
         self._day_sends += 1
+
+    def _on_closed(self, fid: str) -> None:
+        """The executor closed a trade: its journal line, as live writes it."""
+        rec = self.store.get(fid)
+        if rec is not None:
+            self.journal.append(trade_journal.record(
+                rec, self.ledger.get(fid), source='lab', session=self.sid,
+                exit_snap=self.closed_snap))
 
     def _rec_for_comment(self, comment: str):
         for r in self.store.recs.values():
@@ -639,7 +652,8 @@ class ReplaySession:
             self._keep_snap(k1, snap)
             window = self.series.slice(k1 + 1 - WINDOW, k1 + 1)
             created = self.store.finalize(self.cfg['symbol'], self.cfg['tf'],
-                                          generate(snap, window), self.spec, t_open, self.tf_ms)
+                                          generate(snap, window), self.spec, t_open, self.tf_ms,
+                                          context=trade_journal.market_context(snap))
         # The price when the close is acted on: the next minute's open.
         nxt_bid = float(m1.o[b]) if b < len(m1) and int(m1.t[b]) < t_close + self.tf_ms \
             else float(self.series.c[k1])
@@ -809,7 +823,13 @@ class ReplaySession:
 
     # -------------------------------------------------------------- output
     def stats(self) -> dict:
-        return lab_stats.compute(self.trades, self.balance0)
+        out = lab_stats.compute(self.trades, self.balance0)
+        # Which gates stopped the signals: a signal counts as sent once it has
+        # an order that the broker did not refuse.
+        sent = {fid for fid, r in list(self.ledger.rows.items()) if r.get('state') != 'refused'}
+        out['gates'] = lab_stats.gates(self.verdicts, sent,
+                                       int(self.eff['gates']['min_confidence']))
+        return out
 
     def view_payload(self) -> dict:
         with self.lock:
@@ -865,6 +885,10 @@ class ReplaySession:
                    'settings': lab_settings.jsonable(self.eff)}
             _write_json(self.dir / 'session.json', doc)
             _write_json(self.dir / 'trades.json', self.trades)
+            try:                        # measurement only: never the reason a save fails
+                _write_json(self.dir / 'journal.json', self.journal)
+            except (OSError, ValueError, TypeError):
+                pass
             _write_json(self.dir / 'events.json', self.events)
 
     def save_snapshot(self, png: bytes, note: str = '') -> dict:

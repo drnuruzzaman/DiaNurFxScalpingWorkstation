@@ -84,7 +84,17 @@ def broker_round(sig: dict, spec: dict) -> dict:
     return sig
 
 
+def first_verdict(s) -> dict:
+    """A signal's verdict in brief: status, confidence, and every gate that was not a PASS."""
+    return {'status': s.status, 'confidence': int(s.confidence or 0), 'at_ms': _now(),
+            'gates': [[g['name'], g['verdict'], int(g.get('penalty') or 0)]
+                      for g in (s.gates or []) if g.get('verdict') != 'PASS']}
+
+
 class SignalStore:
+    # Called with a short record the first time a FINAL signal is qualified.
+    on_first_verdict = None
+
     def __init__(self, path: Path):
         self.path = Path(path)
         self._lock = threading.RLock()
@@ -130,12 +140,14 @@ class SignalStore:
                     and r['stage'] in ACTIVE and (side is None or r['side'] == side)]
 
     def finalize(self, symbol: str, tf: str, detections: list, spec: dict,
-                 closed_bar_ms: int, tf_ms: int) -> list:
+                 closed_bar_ms: int, tf_ms: int, context: dict = None) -> list:
         """
         Lock what the engine found on the bar that just closed.
 
         Returns the ids created. A side that already has a live signal on this
         symbol and timeframe is not re-issued - the live one carries the idea.
+        `context` is the market read of the bar that made them (regime, higher
+        timeframes, leg - trade_journal.market_context), kept for the journal.
         """
         created = []
         with self._lock:
@@ -166,6 +178,7 @@ class SignalStore:
                     'created_ms': now, 'updated_ms': now,
                     'history': [[now, FINAL, 'bar closed with the setup intact']],
                     'qual': None, 'trail': {}, 'reverse': None,
+                    'entry_context': context,
                 }
                 created.append(fid)
             if created:
@@ -204,16 +217,37 @@ class SignalStore:
         return out
 
     def note_qualification(self, sigs: list) -> None:
-        """Remember each live signal's latest verdict, for the board and the ledger."""
+        """
+        Remember each live signal's latest verdict, for the board and the ledger.
+
+        The FIRST verdict a signal gets - its gate ledger on the bar it was
+        made - is also kept (first_qual) and handed to on_first_verdict,
+        if set: the input to the gate distribution (which gates stop the most
+        signals; server/lab/stats.gates, tools/gate_report.py). Measurement
+        only - it changes no verdict.
+        """
+        first = []
         with self._lock:
             for s in sigs:
                 r = self.recs.get(s.id)
                 if r is None or r['stage'] not in ACTIVE:
                     continue
+                # The first verdict, whatever the stage: a signal that qualified
+                # can be SENT by the executor before this pass records it.
+                if r.get('qual') is None and 'first_qual' not in r:
+                    r['first_qual'] = first_verdict(s)
+                    first.append({k: r.get(k) for k in ('id', 'symbol', 'tf', 'playbook',
+                                                        'side', 'final_bar_ms', 'first_qual')})
                 r['qual'] = {'status': s.status, 'reason': s.reason,
                              'confidence': s.confidence,
                              'net_rr2': (s.sizing or {}).get('net_rr2'),
                              'at_ms': _now()}
+        hook = getattr(self, 'on_first_verdict', None)
+        for rec in first if hook else ():
+            try:
+                hook(rec)
+            except Exception:                                  # noqa: BLE001
+                pass
 
     def move(self, fid: str, stage: str, note: str = '', **fields) -> None:
         with self._lock:

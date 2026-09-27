@@ -382,8 +382,15 @@ select:focus {
   color: var(--ink);
   white-space: nowrap;
 }
+/* Row hover: an info-cyan tint and a 2px marker on the row's left edge, so a
+   wide row (Positions, History, the lab's Trades) can be followed across the
+   screen. Cyan is the same in every theme; the marker sits on the first cell
+   because a table row itself does not reliably paint a box-shadow. */
 .tabular tbody tr:hover {
-  background: #ffffff06;
+  background: rgba(53, 214, 239, 0.1);
+}
+.tabular tbody tr:hover > td:first-child {
+  box-shadow: inset 2px 0 0 var(--info);
 }
 .num {
   text-align: right;

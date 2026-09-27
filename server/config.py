@@ -297,6 +297,36 @@ class ExecutionSettings:
 
 
 @dataclass
+class QualitySettings:
+    """
+    Playbook quality rules UNDER TEST - research only, every one OFF.
+
+    Set only inside tools/playbook_quality.py's own process. Not a lab or live
+    settings group (server/lab/settings.GROUPS leaves it out), so nothing the
+    UI saves can switch one on. With everything off, signals and gates are
+    exactly what they were before these rules existed.
+    """
+    # A. mtf_pullback
+    pb_require_reclaim: bool = False      # A1 rejection/sweep or CHoCH within reclaim_bars
+    reclaim_bars: int = 5
+    pb_min_mtf_score: int = 30            # A2 (30 = today)
+    pb_deep_needs_level: bool = False     # A3 'deep' zone only with a level scoring >= 65
+    pb_extended_atr: float = 0.0          # A4 leg WITH the entry already this far -> -10 (0 = off)
+    # B. flag_continuation
+    flag_need_htf: bool = False           # B1 HTF trend with the flag, |score| >= flag_htf_score
+    flag_htf_score: int = 45
+    flag_min_quality: int = 0             # B2 (0 = off)
+    flag_stop_pad_atr: float = 0.2        # B3 pad beyond the whole flag (0.2 = today)
+    # C. pattern_break
+    pattern_classic_only: bool = False    # C1 H&S / double-triple top-bottom, quality >= 65
+    pattern_need_confirm: bool = False    # C2 already broken, momentum + volume behind it
+    pattern_trend_only: bool = False      # C3 regime must be 'trend'
+    # Filters on every playbook (qualify.py)
+    htf_block: bool = False               # F1 opposed HTF blocks; pullback/flag need it aligned
+    leg_fight_atr: float = 0.0            # F4 against a leg this long -> -10 (0 = off)
+
+
+@dataclass
 class AppConfig:
     host: str = field(default_factory=lambda: _env('DIANUR_HOST', '127.0.0.1'))
     port: int = field(default_factory=lambda: int(_env('DIANUR_PORT', '8770')))
@@ -314,6 +344,7 @@ class AppConfig:
     gates: GateSettings = field(default_factory=GateSettings)
     engine: EngineSettings = field(default_factory=EngineSettings)
     execution: ExecutionSettings = field(default_factory=ExecutionSettings)
+    quality: QualitySettings = field(default_factory=QualitySettings)
 
     def to_dict(self) -> dict:
         return asdict(self)

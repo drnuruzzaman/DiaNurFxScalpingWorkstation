@@ -222,8 +222,9 @@ def pb_mtf_pullback(snap: dict, series) -> list:
     atr_v = snap['atr']
     price = snap['price']
 
+    q = CONFIG.quality
     direction = mtf.get('direction')
-    if not direction or abs(mtf.get('score', 0)) < 30:
+    if not direction or abs(mtf.get('score', 0)) < q.pb_min_mtf_score:
         return []
     if regime.get('state') not in ('trend', 'transition'):
         return []
@@ -259,6 +260,11 @@ def pb_mtf_pullback(snap: dict, series) -> list:
         ev_list.append(_ev(f"level confluence at {best['price']:.2f} "
                            f"({best['touches']} touches, score {best['score']})",
                            14, 'level'))
+    # Research rule A3 (off in live): a deep pullback is only a pullback when
+    # a strong level holds it.
+    if q.pb_deep_needs_level and fib.get('zone') == 'deep' and \
+            not any(lv['score'] >= 65 for lv in confluent):
+        return []
 
     # A reclaim signal on the entry timeframe is what turns a falling knife into
     # a pullback: rejection wick, or a CHoCH back in the trend direction.
@@ -271,6 +277,27 @@ def pb_mtf_pullback(snap: dict, series) -> list:
                            f"({trigger_ev['strength']}/100)", 14, 'event'))
     else:
         against.append('no reclaim confirmation on this timeframe yet')
+    # Research rule A1 (off in live): no reclaim, no trade. A CHoCH back in the
+    # trend direction counts as well as a rejection or sweep.
+    if q.pb_require_reclaim:
+        last = int(snap.get('bars') or 0) - 1
+        want_dir = 'up' if side == 'buy' else 'down'
+        choch = any(b.get('kind') == 'CHoCH' and b.get('direction') == want_dir
+                    and last - int(b.get('idx', -10**9)) <= q.reclaim_bars
+                    for b in (snap.get('breaks') or []))
+        near = any(e['bars_since'] <= q.reclaim_bars and e['bias'] == want_bias
+                   and e['kind'] in ('rejection', 'sweep')
+                   for e in (snap.get('events') or []))
+        if not (near or choch):
+            return []
+    # Research rule A4 (off in live): the leg WITH the entry has already run
+    # far - the entry is chasing, not buying a pullback.
+    leg_now = snap.get('leg') or {}
+    if q.pb_extended_atr and leg_now and \
+            (int(leg_now.get('dir', 0)) == 1) == (side == 'buy') and \
+            float(leg_now.get('ext_atr', 0.0)) > q.pb_extended_atr:
+        ev_list.append(_ev(f"leg already {float(leg_now['ext_atr']):.1f} ATR long",
+                           -10, 'leg'))
 
     mom = snap.get('momentum') or {}
     if (side == 'buy' and mom.get('total', 0) > 10) or \
@@ -528,10 +555,37 @@ def pb_false_break_fade(snap: dict, series) -> list:
 # --------------------------------------------------------------------------- #
 # playbook 5: classical pattern reaching its trigger                          #
 # --------------------------------------------------------------------------- #
+CLASSIC_PATTERNS = ('head_shoulders', 'inverse_head_shoulders', 'double_top',
+                    'double_bottom', 'triple_top', 'triple_bottom')
+
+
+def _break_confirmed(p: dict, side: str, snap: dict, series) -> bool:
+    """
+    Research rule C2: the break has happened and has force behind it -
+    momentum at least +15 with the break, and tick volume over the last 3 bars
+    at least 1.2x the median of the 50 before them. A pending (forming)
+    pattern has nothing to confirm yet, so it does not pass.
+    """
+    if p.get('status') != 'confirmed':
+        return False
+    tot = int((snap.get('momentum') or {}).get('total') or 0)
+    if (tot if side == 'buy' else -tot) < 15:
+        return False
+    v = getattr(series, 'v', None)
+    if v is None or len(v) < 53:
+        return False
+    base = float(np.median(v[-53:-3]))
+    return base > 0 and float(np.mean(v[-3:])) >= 1.2 * base
+
+
 def pb_pattern_break(snap: dict, series) -> list:
     atr_v = snap['atr']
     price = snap['price']
     out = []
+    q = CONFIG.quality
+    # Research rule C3 (off in live): trend regime only.
+    if q.pattern_trend_only and (snap.get('regime') or {}).get('state') != 'trend':
+        return out
 
     for p in (snap.get('patterns') or [])[:4]:
         if p['direction'] == 'neutral':
@@ -543,6 +597,12 @@ def pb_pattern_break(snap: dict, series) -> list:
             continue                      # trigger too far to be a live plan
 
         side = 'buy' if p['direction'] == 'bullish' else 'sell'
+        # Research rules C1, C2 (off in live).
+        if q.pattern_classic_only and (p['kind'] not in CLASSIC_PATTERNS
+                                       or int(p.get('quality') or 0) < 65):
+            continue
+        if q.pattern_need_confirm and not _break_confirmed(p, side, snap, series):
+            continue
         # For a forming pattern this is a STOP order at the break level; for a
         # freshly confirmed one price is already through, so enter at market.
         if p['status'] == 'forming':
@@ -670,6 +730,16 @@ def pb_flag_continuation(snap: dict, series) -> list:
     side = 'buy' if p['direction'] == 'bullish' else 'sell'
     if abs(p['break_level'] - price) / atr_v > 1.5:
         return []
+    q = CONFIG.quality
+    # Research rules B1, B2 (off in live): a clear higher-timeframe trend
+    # behind the flag, and a cleaner flag.
+    if q.flag_need_htf:
+        mtf = snap.get('mtf') or {}
+        if mtf.get('direction') != ('up' if side == 'buy' else 'down') or \
+                abs(int(mtf.get('score') or 0)) < q.flag_htf_score:
+            return []
+    if q.flag_min_quality and int(p.get('quality') or 0) < q.flag_min_quality:
+        return []
 
     ev_list = [
         _ev(f"{p['label']} with a {p['notes'][0]}", 20, 'pattern'),
@@ -684,7 +754,10 @@ def pb_flag_continuation(snap: dict, series) -> list:
 
     entry = p['break_level'] if p['status'] == 'forming' else price
     entry_type = 'stop' if p['status'] == 'forming' else 'market'
-    stop = p['invalidation'] + (-atr_v * 0.2 if side == 'buy' else atr_v * 0.2)
+    # invalidation is the far edge of the WHOLE flag; research rule B3 widens
+    # the pad past the pattern's own 0.3 ATR failure buffer (0.2 in live).
+    pad = atr_v * q.flag_stop_pad_atr
+    stop = p['invalidation'] + (-pad if side == 'buy' else pad)
     if (side == 'buy' and stop >= entry) or (side == 'sell' and stop <= entry):
         return []
     tp1, tp2 = _targets(entry, stop, side, p.get('target'))

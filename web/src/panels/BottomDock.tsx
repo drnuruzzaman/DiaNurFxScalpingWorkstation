@@ -926,22 +926,22 @@ export function BottomDock({
       {/* Double-click anywhere on the bar - a tab or the empty space - to hide
           the panel; its tabs then move to the footer, where a double-click
           brings it back. */}
-      {/* All ten, in the toolbar's own visual language. No groups and no
-          separators: ten short labels in a row read fine on their own, and
-          dividing them asked you to learn a taxonomy to find a tab you could
-          already see. */}
+      {/* All ten, in the backtest lab's tab style (LabDock): flat labels, the
+          open one underlined. No groups and no separators: ten short labels
+          in a row read fine on their own, and dividing them asked you to
+          learn a taxonomy to find a tab you could already see. */}
       <div className="dock-tabs" onDoubleClick={() => onToggle?.()}
         title="Double-click to hide the bottom panel">
         {DOCK_TABS.map((t) => {
           const on = tab === t.key
           const n = count(t.key)
           return (
-            <button key={t.key} className={`tool-btn ${on ? 'on' : ''}`}
+            <button key={t.key} className={`dock-tab ${on ? 'on' : ''}`}
               onClick={() => setTab(t.key)}
               aria-current={on ? 'page' : undefined}
               title={t.hint}>
               {t.label}
-              {n ? <span className="tool-count">{n}</span> : null}
+              {n ? <span className="dock-count">{n}</span> : null}
               {t.key === 'matrix' && board && !board.complete
                 ? <span className="t-dim">{'\u2026'}</span> : null}
             </button>

@@ -702,51 +702,43 @@
 }
 .dock-tabs {
   display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 8px;
+  align-items: stretch;
+  gap: 2px;
+  padding: 0 8px;
   border-bottom: 1px solid var(--line-soft);
   flex: 0 0 auto;
   flex-wrap: wrap;
 }
 
-/* The dock's tabs, in the toolbar's own language.
+/* The dock's tabs, in the backtest lab's style (.lab-tab in lab/lab.css):
+ * flat uppercase labels, the open one in --warn with an underline, the count
+ * a plain number beside the label - so the live and the lab panels read as
+ * one tool.
  *
  * Scoped to `.dock-tabs` on purpose: the Settings modal shares the .dock-tab
- * class for ALERTS / NEWS / RISK & GATES, and those live in a dialog where
- * the underline reads correctly. Restyling the bare class would have dragged
- * them along for a change that was only ever about the bottom panel.
- *
- * Matches .tool-btn rather than copying it, so the two cannot drift: the same
- * padding, border, radius and weight Indicators and Layout use.
- */
+ * class for ALERTS / NEWS / RISK & GATES, and a change that was only ever
+ * about the bottom panel must not drag them along. */
 .dock-tabs .dock-tab {
-  padding: 4.5px 9px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-sm);
-  border-bottom-width: 1px;
-  background: var(--bg-panel-2);
-  color: var(--ink-mid);
-  font-size: 10px;
+  padding: 6px 10px 5px;
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.07em;
-  transition: all 0.12s;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-low);
+  border-bottom: 2px solid transparent;
+  transition: color 0.12s;
 }
 .dock-tabs .dock-tab:hover {
-  border-color: var(--ink-dim);
-  color: var(--ink-hi);
-  background: var(--bg-hover);
+  color: var(--ink-mid);
 }
-/* Active is INFO, not the bearish magenta it used to be.
- *
- * The old underline borrowed --bear, which the palette reserves for "this is
- * a sell / this is losing money". Spending it on "this tab is open" is the
- * one thing the theme file asks nobody to do, and it put a red marker on the
- * footer of a terminal where red means something else entirely. */
 .dock-tabs .dock-tab.on {
-  color: var(--info);
-  border-color: var(--info-dim);
-  background: var(--info-glow);
+  color: var(--warn);
+  border-bottom-color: var(--warn);
+}
+.dock-count {
+  margin-left: 5px;
+  color: var(--ink-mid);
+  font-weight: 600;
 }
 .dock-tab {
   padding: 7px 12px;
@@ -1847,18 +1839,6 @@
   bottom: 30px;
 }
 
-/* The dock bar runs the full width and its buttons are denser than the
-   toolbar's - ten of them have to fit beside the drag handle. */
-.dock-tabs .tool-btn {
-  padding: 3.5px 7px;
-  font-size: 9px;
-  letter-spacing: 0.06em;
-}
-.dock-tabs .tool-btn.on {
-  color: var(--ink-hi);
-  border-color: var(--line-strong);
-  background: var(--bg-raise);
-}
 
 /* --------------------------------------------------- sessions, on the bar */
 /* The card is positioned against this, and it opens UPWARD - the status bar

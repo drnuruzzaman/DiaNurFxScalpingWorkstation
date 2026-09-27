@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-tools/shadow_report.py - shadow live: did the trades regime_agree would have vetoed do worse?
+tools/shadow_report.py - shadow live: did the trades a filter would have vetoed do worse?
 
     python tools/shadow_report.py
 
@@ -18,6 +18,12 @@ The rule for reading it was fixed before any row existed:
 
 "Worth a look" means a filter test on the newer history and a decision by the
 trader - never an automatic switch. Read-only. Measurements, not trading advice.
+
+The same report, with the same rule, reads the second shadow log:
+order_ledger/logs/shadow_quality.jsonl, written by server/quality_shadow.py
+beside every 5m pattern_break send - would playbook rule C1 (classic patterns,
+quality >= 65; tools/playbook_quality.py) have vetoed it? Added 2026-09-27,
+before any row existed.
 """
 from __future__ import annotations
 
@@ -30,15 +36,24 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 LOG = ROOT / 'order_ledger' / 'logs' / 'shadow_forecast.jsonl'
+LOG_C1 = ROOT / 'order_ledger' / 'logs' / 'shadow_quality.jsonl'
+# log -> (title, what "not doing it" means); one reading rule for both
+SHADOWS = {
+    LOG: ('SHADOW LIVE - regime_agree beside every 5m send (log only, never used)',
+          'the filter is not doing live what Phase D hoped'),
+    LOG_C1: ('SHADOW LIVE - C1 (classic patterns, quality >= 65) beside every 5m '
+             'pattern_break send (log only, never used)',
+             'C1 is not doing live what the backtest hoped'),
+}
 LEDGER = ROOT / 'order_ledger' / 'order_ledger.json'
 MIN_N = 30
 
 
-def _rows() -> list:
-    if not LOG.exists():
+def _rows(log: Path = LOG) -> list:
+    if not log.exists():
         return []
     out = []
-    for line in LOG.read_text(encoding='utf-8').splitlines():
+    for line in log.read_text(encoding='utf-8').splitlines():
         try:
             out.append(json.loads(line))
         except ValueError:
@@ -63,8 +78,8 @@ def _diff_ci(a: list, b: list, reps: int = 2000, seed: int = 5) -> tuple:
     return float(np.quantile(v, 0.05)), float(np.quantile(v, 0.95))
 
 
-def summary() -> dict:
-    rows = _rows()
+def summary(log: Path = LOG) -> dict:
+    rows = _rows(log)
     ledger = (json.loads(LEDGER.read_text(encoding='utf-8')).get('orders') or {}) \
         if LEDGER.exists() else {}
     groups = {'veto': [], 'pass': []}
@@ -110,15 +125,16 @@ def summary() -> dict:
         out['reading'] = ('worth a look - the trades it would have vetoed did worse, interval '
                           'clear of zero. Next: a filter test on the newer history, then your call.')
     else:
-        out['reading'] = 'the filter is not doing live what Phase D hoped (interval includes zero or favours the vetoed)'
+        out['reading'] = (f'{SHADOWS[log][1]} (interval includes zero or favours '
+                          f'the vetoed)')
     return out
 
 
-def report(s: dict) -> str:
+def report(s: dict, title: str = SHADOWS[LOG][0]) -> str:
     f = lambda x, d=3: '-' if x is None or x != x else f'{x:+.{d}f}'   # noqa: E731
     since = datetime.fromtimestamp(s['first_ms'] / 1000, timezone.utc).strftime('%Y-%m-%d') \
         if s.get('first_ms') else '-'
-    lines = ['SHADOW LIVE - regime_agree beside every 5m send (log only, never used)',
+    lines = [title,
              f"log since {since}: {s['rows']} rows - would veto {s['counts']['veto']}, "
              f"pass {s['counts']['pass']}, abstain {s['counts']['abstain']}, "
              f"errors {s['counts']['error']}; {s['not_closed']} not closed yet"]
@@ -137,7 +153,7 @@ def report(s: dict) -> str:
 
 
 def main() -> int:
-    print(report(summary()))
+    print('\n\n'.join(report(summary(log), title) for log, (title, _) in SHADOWS.items()))
     return 0
 
 

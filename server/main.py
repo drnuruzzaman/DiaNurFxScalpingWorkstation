@@ -55,6 +55,8 @@ from .executor import Executor
 # Shadow live (Phase D's marginal 5m pass): logs what a forecast filter WOULD
 # have said beside each send. Log only - it has no path back to a decision.
 from .forecast import shadow as forecast_shadow
+from . import quality_shadow
+from . import trade_journal
 from .order_ledger import OrderLedger
 from .signal_store import SignalStore, FINAL
 from .daily import DailyLimits, day_start_ms, judging_context
@@ -231,6 +233,10 @@ STATE = State()
 LEDGER_DIR = Path(__file__).resolve().parent.parent / 'order_ledger'
 STORE = SignalStore(LEDGER_DIR / 'signal_store.json')
 LEDGER = OrderLedger(LEDGER_DIR / 'order_ledger.json')
+# Each FINAL signal's first verdict, one JSON line - which gates stop the most
+# signals (tools/gate_report.py). Measurement only; it changes no verdict.
+VERDICT_LOG = LEDGER_DIR / 'logs' / 'signal_verdicts.jsonl'
+STORE.on_first_verdict = lambda rec: trade_journal.append(VERDICT_LOG, rec)
 
 
 def _closed_leg(series, snap: dict):
@@ -303,8 +309,10 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
             if snap_c.get('ok'):
                 STATE.closed[(symbol, tf)] = snap_c
                 forecast_shadow.remember_closed(symbol, tf, closed, snap_c)   # never raises
+                quality_shadow.remember_closed(symbol, tf, snap_c)            # never raises
                 STORE.finalize(symbol, tf, generate(snap_c, closed), spec,
-                               int(closed.t[-1]), int(TF_SECONDS.get(tf, 300) * 1000))
+                               int(closed.t[-1]), int(TF_SECONDS.get(tf, 300) * 1000),
+                               context=trade_journal.market_context(snap_c))
         detected = STORE.view(symbol, tf)
     else:
         detected = generate(snap, series)
@@ -2091,6 +2099,23 @@ def _on_sent(rec: dict) -> None:
     # Shadow live: queue what regime_agree would have said about this send, for
     # the log. Returns at once, never raises, and changes nothing about the order.
     forecast_shadow.note_send(rec, STATE.closed.get((rec.get('symbol'), rec.get('tf'))))
+    # And what playbook rule C1 would have said, on the signal's own bar. Log only.
+    quality_shadow.note_send(rec)
+
+
+def _on_closed(fid: str) -> None:
+    # The trade journal: one line per closed trade, for tools/trade_journal_report.py.
+    # Written after the trade is over; it has no path back to a decision.
+    try:
+        rec = STORE.get(fid)
+        if rec is None:
+            return
+        snap = STATE.closed.get((rec.get('symbol'), rec.get('tf')))
+        trade_journal.append(trade_journal.LIVE_LOG,
+                             trade_journal.record(rec, LEDGER.get(fid), source='live',
+                                                  exit_snap=snap))
+    except Exception:                                          # noqa: BLE001
+        pass
 
 
 EXECUTOR = Executor(
@@ -2099,6 +2124,7 @@ EXECUTOR = Executor(
     auto=lambda: bool(CONFIG.execution.auto),
     trading_enabled=lambda: _trading_enabled(),
     on_sent=_on_sent,
+    on_closed=_on_closed,
     tf_ms=lambda tf: int(TF_SECONDS.get(tf, 300) * 1000),
 )
 

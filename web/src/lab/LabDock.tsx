@@ -3,8 +3,9 @@
  *
  *   TRADES       every closed trade; click one to put the chart on its entry
  *   JOURNAL      everything the engine and the executor decided, bar by bar
- *   PERFORMANCE  the numbers, the equity curve, R distribution, MAE/MFE and
- *                breakdowns by playbook, session, hour, side and exit
+ *   PERFORMANCE  the numbers, the equity curve, R distribution, MAE/MFE,
+ *                which gates stopped the signals, and breakdowns by
+ *                playbook, session, hour, side and exit
  *   SESSIONS     saved runs: reopen (re-runs and checks it still matches),
  *                compare two, export, delete
  *   SNAPSHOTS    chart images taken in this session, each tied to its bar
@@ -17,7 +18,7 @@ import { EquityCurve, ExcursionScatter, RHistogram } from './LabCharts'
 import { DeleteSession, DownloadIcon, TrashConfirm } from './DeleteSession'
 import { ForecastDock } from './LabForecast'
 import { lab } from './labApi'
-import type { LabEvent, LabForecast, LabMeta, LabNote, LabSession, LabSnap, LabStats,
+import type { LabEvent, LabForecast, LabGates, LabMeta, LabNote, LabSession, LabSnap, LabStats,
   LabTrade } from './types'
 
 export type DockTab = 'trades' | 'journal' | 'performance' | 'forecast' | 'sessions' | 'snapshots'
@@ -239,11 +240,85 @@ function PerformanceTab(p: Parameters<typeof LabDock>[0]) {
           <ExcursionScatter trades={p.trades} selected={p.selectedTrade} onPick={p.onPickTrade} />
         </div>
       </div>
+      {s.gates && <GateBreakdown g={s.gates} />}
       <div className="lab-breaks">
         {(['playbook', 'session', 'side', 'outcome', 'hour'] as const).map((k) => (
           <Breakdown key={k} title={k === 'hour' ? 'Entry hour (UTC)' : k} rows={s.by?.[k] ?? {}} />
         ))}
       </div>
+    </div>
+  )
+}
+
+/**
+ * Why signals stopped: every signal's FIRST verdict (its gate ledger on the bar
+ * it was made), counted per gate. A signal is re-judged every bar until it
+ * expires, so "sent later" shows how often a first block was not the last word.
+ */
+function GateBreakdown({ g }: { g: LabGates }) {
+  const names = Object.keys(g.gates)
+  const blockCols = names.filter((n) => g.gates[n].block > 0)
+  const top = Math.max(1, ...names.map((n) => g.gates[n].block))
+  const pbs = Object.entries(g.playbooks).sort((a, b) => b[1].n - a[1].n)
+  const st = g.status
+  return (
+    <div className="lab-break lab-gates">
+      <div className="lab-chartbox-h">
+        Why signals stopped
+        <span className="t-dim">first verdict of {g.n} signals · {st.qualified ?? 0} qualified · {st.watch ?? 0} watch · {st.rejected ?? 0} rejected · {g.sent} went on to an order</span>
+      </div>
+      {!g.n ? <div className="lab-empty">No signals yet - step or play forward.</div> : (
+        <div className="lab-gates-body">
+          <table className="tabular">
+            <thead><tr>
+              <th>Gate</th>
+              <th className="num" title="signals this gate BLOCKED on their first verdict">Blocked</th>
+              <th />
+              <th className="num" title="signals where it was the only block">Only</th>
+              <th className="num" title="blocked at first, but sent on a later bar">Sent later</th>
+              <th className="num" title="signals it warned on">Warned</th>
+              <th className="num" title="average confidence a warning cost">−conf</th>
+              <th className="num" title={`'watch' signals this penalty alone put under the ${g.floor} floor`}>Decided</th>
+              <th>Usually means</th>
+            </tr></thead>
+            <tbody>
+              {names.map((n) => {
+                const x = g.gates[n]
+                return (
+                  <tr key={n}>
+                    <td className="mono">{n}</td>
+                    <td className="num">{x.block || ''}</td>
+                    <td className="lab-gate-barcell"><span className="lab-gate-bar" style={{ width: `${(x.block / top) * 100}%` }} /></td>
+                    <td className="num">{x.sole || ''}</td>
+                    <td className="num t-dim">{x.sent_after_block || ''}</td>
+                    <td className="num">{x.warn || ''}</td>
+                    <td className="num t-dim">{x.pen_avg ?? ''}</td>
+                    <td className="num">{x.decided || ''}</td>
+                    <td className="t-dim">{g.meaning[n] ?? ''}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          <table className="tabular">
+            <thead><tr>
+              <th>Playbook</th><th className="num">n</th><th className="num">qual</th><th className="num">watch</th>
+              <th className="num">rej</th><th className="num">sent</th>
+              {blockCols.map((n) => <th key={n} className="num" title={`blocked by ${n}`}>{n}</th>)}
+            </tr></thead>
+            <tbody>
+              {pbs.map(([pb, x]) => (
+                <tr key={pb}>
+                  <td>{pb}</td><td className="num">{x.n}</td>
+                  <td className="num t-up">{x.qualified || ''}</td><td className="num">{x.watch || ''}</td>
+                  <td className="num t-down">{x.rejected || ''}</td><td className="num">{x.sent || ''}</td>
+                  {blockCols.map((n) => <td key={n} className="num">{x.blocks[n] || ''}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 }

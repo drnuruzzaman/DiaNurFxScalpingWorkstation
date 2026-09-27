@@ -153,6 +153,8 @@ async def push_frame() -> None:
             msg['events'] = s.events[sent.get('ev', 0):ev_n]
         if sent.get('tr', 0) < tr_n:
             msg['trades'] = s.trades[sent.get('tr', 0):tr_n]
+        # New events can mean new signal verdicts, which the gate breakdown counts.
+        if sent.get('tr', 0) < tr_n or sent.get('ev', 0) < ev_n:
             if stats is None:
                 stats = await asyncio.to_thread(s.stats)
             msg['stats'] = stats

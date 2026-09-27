@@ -88,10 +88,83 @@ def compute(trades: list, balance0: float) -> dict:
     return out
 
 
+# What a gate stopping many signals usually means - shown beside the counts.
+GATE_MEANING = {
+    'mtf': 'signals fighting the higher-timeframe direction',
+    'leg': 'the fade rules at work (fading a leg where it lost before)',
+    'reward': 'net R after costs too low - spread and commission eat the target',
+    'volatility': 'ATR too small for the costs, or in its extreme percentile',
+    'spread': 'news or a thin session blowing out the spread',
+    'room': 'a strong level blocks the path to TP1',
+    'regime': 'playbook firing outside its home regimes',
+    'session': 'thin or closed session',
+    'news': 'high-impact release nearby',
+    'sizing': 'stop too wide for the risk budget',
+    'broker': "stop inside the broker's minimum distance",
+    'daily': 'daily trade or loss limit reached',
+    'exposure': 'too many positions open',
+    'engine': 'qualification error',
+}
+
+
+def gates(verdicts: list, sent: set, floor: int) -> dict:
+    """
+    Which gates stop the most signals - each FINAL signal's FIRST verdict (its
+    gate ledger on the bar it was made; SignalStore.first_verdict).
+
+    Per gate:
+      block    signals it BLOCKED (a signal can be blocked by several gates)
+      sole     signals it was the ONLY block on - without it they would have
+               reached at least 'watch'
+      warn     signals it warned on, and the average confidence it took
+      decided  'watch' signals its penalty alone put under the confidence
+               floor (they would have qualified without it)
+    'sent' counts signals that went on to an order anyway - a verdict is
+    re-taken every bar until the signal expires, so a first block is not
+    always the last word.
+    """
+    out = {'n': len(verdicts), 'floor': floor, 'status': {}, 'sent': 0, 'gates': {},
+           'playbooks': {}, 'meaning': GATE_MEANING}
+    if not verdicts:
+        return out
+    G: dict = {}
+    for v in verdicts:
+        q = v.get('first_qual') or {}
+        st = q.get('status') or 'unknown'
+        was_sent = v.get('id') in sent
+        out['status'][st] = out['status'].get(st, 0) + 1
+        out['sent'] += was_sent
+        pb = out['playbooks'].setdefault(v.get('playbook') or '?', {
+            'n': 0, 'qualified': 0, 'watch': 0, 'rejected': 0, 'sent': 0, 'blocks': {}})
+        pb['n'] += 1
+        pb[st] = pb.get(st, 0) + 1
+        pb['sent'] += was_sent
+        rows = q.get('gates') or []
+        blocks = [g for g in rows if g[1] == 'BLOCK']
+        for name, verdict, pen in rows:
+            g = G.setdefault(name, {'block': 0, 'sole': 0, 'warn': 0, 'pen_sum': 0,
+                                    'decided': 0, 'sent_after_block': 0})
+            if verdict == 'BLOCK':
+                g['block'] += 1
+                g['sole'] += len(blocks) == 1
+                g['sent_after_block'] += was_sent
+                pb['blocks'][name] = pb['blocks'].get(name, 0) + 1
+            elif verdict == 'WARN':
+                g['warn'] += 1
+                g['pen_sum'] += int(pen or 0)
+                if st == 'watch' and not blocks and                         int(q.get('confidence') or 0) + int(pen or 0) >= floor:
+                    g['decided'] += 1
+    for name, g in G.items():
+        g['pen_avg'] = round(g.pop('pen_sum') / g['warn'], 1) if g['warn'] else None
+    out['gates'] = dict(sorted(G.items(), key=lambda kv: (-kv[1]['block'], -kv[1]['decided'],
+                                                           -kv[1]['warn'])))
+    return out
+
+
 def summary(s: dict) -> dict:
     """The few numbers a session list shows."""
     return {k: s.get(k) for k in ('n', 'net', 'sum_r', 'exp_r', 'win', 'pf', 'max_dd',
                                   'end_balance')}
 
 
-__all__ = ['compute', 'summary']
+__all__ = ['compute', 'summary', 'gates', 'GATE_MEANING']

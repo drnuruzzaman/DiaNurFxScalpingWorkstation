@@ -2095,3 +2095,69 @@ Error: connect ECONNREFUSED 127.0.0.1:8770
   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
 [2m10:43:49 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/NewSession.tsx[22m
 [2m10:43:49 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+[2m2:24:47 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m2:24:49 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m2:24:51 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m2:24:53 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:05:03 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:05:05 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:05:07 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:28:35 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m3:28:35 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabDock.tsx[22m
+[2m3:28:35 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/lab.css[22m
+[2m3:30:03 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:04 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:05 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:07 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:09 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:11 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:13 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:14 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/lab/start[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+[2m3:30:15 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CUSDJPY.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+
+===== 2026-09-27 15:56:02 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m3263[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m5:06:59 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/BottomDock.tsx[22m
+[2m5:06:59 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/app.css[22m
+[2m5:06:59 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/panels/BottomDock.tsx[22m Could not Fast Refresh ("DOCK_TABS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:06:59 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx[22m
+[2m5:15:28 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/theme.css[22m

@@ -86,6 +86,23 @@ export type LabStats = {
   equity: [number, number][]
   by: Record<string, Record<string, LabGroup>>
   hist: [number, number][]
+  gates?: LabGates
+}
+
+/** Which gates stopped the signals - each signal's first verdict (server/lab/stats.gates). */
+export type LabGateRow = {
+  block: number; sole: number; warn: number; pen_avg: number | null
+  decided: number; sent_after_block: number
+}
+export type LabGates = {
+  n: number
+  floor: number
+  status: Record<string, number>
+  sent: number
+  gates: Record<string, LabGateRow>
+  playbooks: Record<string, { n: number; qualified?: number; watch?: number; rejected?: number
+                              sent: number; blocks: Record<string, number> }>
+  meaning: Record<string, string>
 }
 
 export type LabMeta = {

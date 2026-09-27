@@ -130268,7 +130268,7 @@
    "final_bar_ms": 1790110800000,
    "expires_ms": 1791925200000,
    "created_ms": 1790200853732,
-   "updated_ms": 1790487086059,
+   "updated_ms": 1790483101324,
    "history": [
     [
      1790200853732,
@@ -130281,7 +130281,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 6.66% against a 0.50% limit",
     "confidence": 47,
     "net_rr2": 2.0,
-    "at_ms": 1790487069379
+    "at_ms": 1790483100123
    },
    "trail": {},
    "reverse": null,
@@ -173776,7 +173776,7 @@
    "final_bar_ms": 1790110800000,
    "expires_ms": 1791925200000,
    "created_ms": 1790245887859,
-   "updated_ms": 1790487089294,
+   "updated_ms": 1790483101540,
    "history": [
     [
      1790245887859,
@@ -173789,7 +173789,7 @@
     "reason": "fades an up leg that has run 4.8 ATR - long legs are no likelier to turn, and this lost in all three years tested",
     "confidence": 30,
     "net_rr2": 1.96,
-    "at_ms": 1790487070486
+    "at_ms": 1790483100107
    },
    "trail": {},
    "reverse": null,
@@ -206752,7 +206752,7 @@
    "final_bar_ms": 1790326800000,
    "expires_ms": 1790629200000,
    "created_ms": 1790347104521,
-   "updated_ms": 1790487071141,
+   "updated_ms": 1790483101808,
    "history": [
     [
      1790347104521,
@@ -206765,7 +206765,7 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 1.31% against a 0.50% limit",
     "confidence": 65,
     "net_rr2": 1.99,
-    "at_ms": 1790487061986
+    "at_ms": 1790483099540
    },
    "trail": {},
    "reverse": null,
@@ -211530,7 +211530,7 @@
    "final_bar_ms": 1790341200000,
    "expires_ms": 1790643600000,
    "created_ms": 1790465901759,
-   "updated_ms": 1790487073527,
+   "updated_ms": 1790483102058,
    "history": [
     [
      1790465901759,
@@ -211543,7 +211543,7 @@
     "reason": "fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
     "confidence": 53,
     "net_rr2": 1.86,
-    "at_ms": 1790487064669
+    "at_ms": 1790483099513
    },
    "trail": {},
    "reverse": null,
@@ -211625,7 +211625,7 @@
    "final_bar_ms": 1790355600000,
    "expires_ms": 1790506800000,
    "created_ms": 1790483098813,
-   "updated_ms": 1790487063206,
+   "updated_ms": 1790483099106,
    "history": [
     [
      1790483098813,
@@ -211638,12 +211638,12 @@
     "reason": "stop is too wide for the risk budget - 0.01 lots would risk 0.88% against a 0.50% limit",
     "confidence": 38,
     "net_rr2": 1.98,
-    "at_ms": 1790487050750
+    "at_ms": 1790483098991
    },
    "trail": {},
    "reverse": null,
    "note": "not sent: rejected - stop is too wide for the risk budget - 0.01 lots would risk 0.88% against a 0.50% limit"
   }
  },
- "saved_ms": 1790487089294
+ "saved_ms": 1790483102058
 }

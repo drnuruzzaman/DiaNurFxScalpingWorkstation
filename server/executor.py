@@ -34,6 +34,7 @@ from __future__ import annotations
 from .engine.qualify import is_gold
 from . import clock
 from .order_ledger import comment_for, tag_for
+from .trade_journal import send_verdict
 from .signal_store import (CANCELLED, CLOSED, EXPIRED, FILLED, FINAL, REVERSED, SENT,
                            round_to_tick)
 
@@ -61,13 +62,16 @@ def _now() -> int:
 
 class Executor:
     def __init__(self, store, ledger, bridge, feed, config, *, requalify, auto,
-                 trading_enabled, on_sent=None, tf_ms=None, log=print):
+                 trading_enabled, on_sent=None, on_closed=None, tf_ms=None, log=print):
         self.store, self.ledger, self.bridge, self.feed = store, ledger, bridge, feed
         self.cfg = config
         self.requalify = requalify              # rec -> Signal (fresh verdict) or None
         self.auto = auto                        # () -> bool
         self.trading_enabled = trading_enabled  # () -> bool (bridge armed)
         self.on_sent = on_sent or (lambda rec: None)
+        # Called with the signal id once a position is CLOSED - the trade
+        # journal (server/trade_journal.py). Measurement only, never raises here.
+        self.on_closed = on_closed or (lambda fid: None)
         self.tf_ms = tf_ms or (lambda tf: 300_000)
         self.log = log
 
@@ -212,7 +216,8 @@ class Executor:
             # cancel an order on the very bar that justified it.
             self.store.move(fid, SENT, f'{kind} {lots} lots, ticket {body.get("ticket")}',
                             lots=lots, kind=kind,
-                            checked_bar_ms=int(getattr(q, 'judged_bar_ms', 0) or 0))
+                            checked_bar_ms=int(getattr(q, 'judged_bar_ms', 0) or 0),
+                            send_verdict=send_verdict(q))
             self.on_sent(rec)
         else:
             self.ledger.mark(fid, 'refused', body.get('error', f'HTTP {code}'))
@@ -401,10 +406,15 @@ class Executor:
         r = round(sign * (close - fill) / risk, 3)
         profit = round(sum(float(x.get('profit') or 0) + float(x.get('commission') or 0)
                            + float(x.get('swap') or 0) for x in out), 2)
+        exit_ms = int(d.get('time_ms') or 0) or None      # the closing deal's own time
         self.ledger.mark(fid, 'closed', f'{outcome} at {close}', close_price=close,
-                         outcome=outcome, r=r, profit=profit)
+                         outcome=outcome, r=r, profit=profit, exit_ms=exit_ms)
         self.store.move(fid, CLOSED, f'{outcome} at {close} ({r:+.2f}R)',
-                        close_price=close, outcome=outcome, r=r)
+                        close_price=close, outcome=outcome, r=r, exit_ms=exit_ms)
+        try:
+            self.on_closed(fid)
+        except Exception:                                      # noqa: BLE001
+            pass
 
     def _trail(self, rec, pos) -> None:
         fid, sig = rec['id'], rec['signal']

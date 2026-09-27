@@ -4,15 +4,10 @@
    {
     "id": "tmugjg7gh",
     "symbol": "XAUUSD.a",
-    "tf": "15m"
-   },
-   {
-    "id": "tmuj2qp2z",
-    "symbol": "USDJPY.a",
-    "tf": "15m"
+    "tf": "5m"
    }
   ],
-  "dianur.activeTab": "tmuj2qp2z",
+  "dianur.activeTab": "tmugjg7gh",
   "dianur.overlays": {
    "mtfTrendlines": true,
    "zigzag": false,
@@ -60,7 +55,7 @@
    "right": true,
    "bottom": true
   },
-  "dianur.dockTab": "signals",
+  "dianur.dockTab": "positions",
   "dianur.boardSort": {
    "key": "symbol",
    "dir": 1
@@ -255,9 +250,9 @@
    "rsi": true,
    "volume": false
   },
-  "dianur.lab.dock": "sessions",
-  "dianur.lab.dockH": 183,
+  "dianur.lab.dock": "trades",
+  "dianur.lab.dockH": 307,
   "dianur.lab.cone": false
  },
- "saved_ms": 1790469939771
+ "saved_ms": 1790493475615
 }
