@@ -635,6 +635,7 @@ export function BottomDock({
               return (
                 <tr
                   key={`${s.symbol}:${s.tf}:${s.id}`}
+                  className={onChart ? 'row-on' : undefined}
                   onClick={() => (onOpen && s.symbol !== activeSymbol
                     ? onOpen(s.symbol, s.tf) : onTf(s.tf))}
                   title={`Show ${s.symbol} ${s.tf} on the chart`}
@@ -643,10 +644,9 @@ export function BottomDock({
                     // Hairline between timeframe groups: the ordering is the
                     // whole point of this table, so make it visible.
                     borderTop: newTf ? '1px solid var(--line-strong)' : undefined,
-                    background: onChart ? 'var(--bear-glow)' : undefined,
                   }}
                 >
-                  <td style={{ fontWeight: 700, color: onChart ? 'var(--bear)' : 'var(--info)' }}>
+                  <td style={{ fontWeight: 700, color: onChart ? 'var(--warn)' : 'var(--info)' }}>
                     {s.tf.toUpperCase()}
                   </td>
                   <td className="t-hi" style={{ fontWeight: 700 }}>{s.symbol}</td>
@@ -787,11 +787,9 @@ export function BottomDock({
               const onChart = r.tf === activeTf
               const q = r.signals.filter((x) => x.status === 'qualified').length
               return (
-                <tr key={r.tf} onClick={() => onTf(r.tf)} style={{
-                  cursor: 'pointer',
-                  background: onChart ? 'var(--bear-glow)' : undefined,
-                }}>
-                  <td style={{ fontWeight: 700, color: onChart ? 'var(--bear)' : 'var(--info)' }}>
+                <tr key={r.tf} onClick={() => onTf(r.tf)} className={onChart ? 'row-on' : undefined}
+                  style={{ cursor: 'pointer' }}>
+                  <td style={{ fontWeight: 700, color: onChart ? 'var(--warn)' : 'var(--info)' }}>
                     {r.tf.toUpperCase()}
                   </td>
                   {!r.ok ? (

@@ -4,7 +4,7 @@
    {
     "id": "tmugjg7gh",
     "symbol": "XAUUSD.a",
-    "tf": "5m"
+    "tf": "1h"
    }
   ],
   "dianur.activeTab": "tmugjg7gh",
@@ -39,8 +39,7 @@
   "dianur.mtfSources": null,
   "dianur.hideFigures": 1,
   "dianur.watchlist": [
-   "XAUUSD.a",
-   "USDJPY.a"
+   "XAUUSD.a"
   ],
   "dianur.theme": "glossy",
   "dianur.snapPanels.v2": [
@@ -55,7 +54,7 @@
    "right": true,
    "bottom": true
   },
-  "dianur.dockTab": "positions",
+  "dianur.dockTab": "signals",
   "dianur.boardSort": {
    "key": "symbol",
    "dir": 1
@@ -77,7 +76,6 @@
      "fvg": false,
      "zones": true,
      "fib": false,
-     "engulfing": false,
      "swings": true,
      "structure": true,
      "events": false,
@@ -86,11 +84,12 @@
      "volumeProfile": false,
      "regimeBands": true,
      "rsi": true,
-     "volume": false
+     "volume": false,
+     "engulfing": false
     },
     "mtfSources": null,
-    "span": 226,
-    "saved_ms": 1790296454317
+    "span": 229,
+    "saved_ms": 1790511130048
    },
    "USDJPY.a|15m": {
     "overlays": {
@@ -251,8 +250,8 @@
    "volume": false
   },
   "dianur.lab.dock": "trades",
-  "dianur.lab.dockH": 307,
+  "dianur.lab.dockH": 254,
   "dianur.lab.cone": false
  },
- "saved_ms": 1790493475615
+ "saved_ms": 1790515844696
 }

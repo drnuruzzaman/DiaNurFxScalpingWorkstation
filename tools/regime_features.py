@@ -93,6 +93,8 @@ def features(trades: list) -> list:
     r1 = np.diff(np.log(c), prepend=np.log(c[0]))
     out = []
     for x in trades:
+        if not x.get('fill_ms') or not x.get('final_bar_ms'):
+            continue                    # no fill time recorded (a handful of lab closes)
         i = int(np.searchsorted(s.t, int(x['final_bar_ms'])))
         if i >= len(s) or int(s.t[i]) != int(x['final_bar_ms']) or i < 520:
             continue

@@ -452,6 +452,10 @@ function Compare({ a, b }: { a: LabMeta; b: LabMeta }) {
 
 // --------------------------------------------------------------- snapshots
 /** Full-size view of one snapshot: ← → to step, Esc to close. */
+/** A screen recording in the snapshot list (lab/recorder.ts), not an image. */
+const isVideo = (s: LabSnap) => s.kind === 'video' || /\.(mp4|webm)$/.test(s.file)
+const secs = (n?: number) => (n == null ? '' : `${Math.floor(n / 60)}:${String(Math.round(n % 60)).padStart(2, '0')}`)
+
 function SnapViewer({ sid, snap, list, onMove, onClose, onSeek, onDelete }: {
   sid: string
   snap: LabSnap
@@ -489,7 +493,9 @@ function SnapViewer({ sid, snap, list, onMove, onClose, onSeek, onDelete }: {
           <TrashConfirm compact title={`Delete ${snap.file}`} onConfirm={onDelete} />
           <button className="lab-link" onClick={onClose} title="Close (Esc)">✕</button>
         </div>
-        <img src={lab.snapshotUrl(sid, snap.file)} alt={snap.file} />
+        {isVideo(snap)
+          ? <video key={snap.file} src={lab.snapshotUrl(sid, snap.file)} controls autoPlay />
+          : <img src={lab.snapshotUrl(sid, snap.file)} alt={snap.file} />}
         {snap.note && <div className="lab-snap-n" style={{ padding: '6px 2px 0' }}>{snap.note}</div>}
       </div>
     </div>
@@ -511,18 +517,25 @@ function SnapshotsTab(p: Parameters<typeof LabDock>[0]) {
     <div className="lab-snaps">
       <div className="lab-jbar">
         <button className="tool-btn" onClick={p.onSnapshot}>📷 Save a snapshot of this bar</button>
-        <span className="t-dim" style={{ fontSize: 9.5 }}>Saved inside the session folder (runs/lab/{sid}/snapshots). Shortcut: S.</span>
+        <span className="t-dim" style={{ fontSize: 9.5 }}>Saved inside the session folder (runs/lab/{sid}/snapshots). Shortcut: S. Videos: Snapshot ▾ → Record video.</span>
       </div>
       {!p.snaps.length ? <div className="lab-empty">No snapshots in this session yet.</div> : (
         <div className="lab-snapgrid">
           {list.map((s) => (
-            <div key={s.file} className="lab-snap" onClick={() => setView(s.file)} title="View this snapshot">
+            <div key={s.file} className="lab-snap" onClick={() => setView(s.file)}
+              title={isVideo(s) ? 'Play this video' : 'View this snapshot'}>
               <span className="lab-snap-hover" onClick={(e) => e.stopPropagation()}>
                 <a className="lab-link lab-del-x" href={lab.snapshotDownloadUrl(sid, s.file)}
                   title={`Download ${s.file}`}><DownloadIcon size={15} /></a>
                 <TrashConfirm compact title={`Delete ${s.file}`} onConfirm={() => del(s.file)} />
               </span>
-              <img src={lab.snapshotUrl(sid, s.file)} alt={s.file} loading="lazy" />
+              {isVideo(s) ? (
+                <>
+                  {/* #t= makes the browser paint a frame as the thumbnail */}
+                  <video src={`${lab.snapshotUrl(sid, s.file)}#t=0.5`} preload="metadata" muted />
+                  <span className="lab-snap-play">▶ video{s.secs ? ` ${secs(s.secs)}` : ''}</span>
+                </>
+              ) : <img src={lab.snapshotUrl(sid, s.file)} alt={s.file} loading="lazy" />}
               <div className="lab-snap-f">
                 <span className="mono">{when(s.t)}</span>
                 <span className="lab-snap-acts" onClick={(e) => e.stopPropagation()}>

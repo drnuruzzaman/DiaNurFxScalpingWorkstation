@@ -39,6 +39,18 @@ export const lab = {
   /** The same PNG sent as an attachment (a cross-port <a download> is ignored). */
   snapshotDownloadUrl: (sid: string, file: string) =>
     `${LAB_HTTP}/lab/sessions/${sid}/snapshots/${file}?download=1`,
+  /** Screen recording (lab/recorder.ts): start, append chunks in order, finish. */
+  recStart: (sid: string, ext: 'mp4' | 'webm') => j<{ id: string; file: string }>(
+    `/lab/sessions/${sid}/recording/start`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ext }),
+    }),
+  recChunk: (id: string, data: Blob) => j<{ ok: boolean; bytes: number }>(
+    `/lab/recording/${id}/chunk`, {
+      method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: data,
+    }),
+  recFinish: (id: string) => j<{ ok: boolean; file: string; path: string; bytes: number }>(
+    `/lab/recording/${id}/finish`, { method: 'POST' }),
   removeSnapshot: (sid: string, file: string) =>
     j<{ ok: boolean }>(`/lab/sessions/${sid}/snapshots/${file}`, { method: 'DELETE' }),
   /** A symbol's latest batch run's scorecard summary (gates, decay, calibration). */

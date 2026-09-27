@@ -25,9 +25,10 @@ import os
 import re
 import subprocess
 import time
+import uuid
 from pathlib import Path
 
-from fastapi import Body, FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import Body, FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, Response
 
@@ -641,7 +642,8 @@ async def snapshot(sid: str, body: dict = Body(...)):
     return meta
 
 
-_FILE = re.compile(r'^snap-[0-9]{3}-[0-9]{8}-[0-9]{4}\.png$')
+_FILE = re.compile(r'^(snap-[0-9]{3}-[0-9]{8}-[0-9]{4}\.png|video-[0-9]{3}-[0-9]{8}-[0-9]{4}\.(mp4|webm))$')
+_MEDIA = {'.png': 'image/png', '.mp4': 'video/mp4', '.webm': 'video/webm'}
 
 
 @app.get('/lab/sessions/{sid}/snapshots/{name}')
@@ -653,7 +655,7 @@ def snapshot_file(sid: str, name: str, download: int = 0):
         raise HTTPException(404, 'no such snapshot')
     # ?download=1 sends it as an attachment: the web app is on another port, where
     # an <a download> link is ignored by the browser.
-    return FileResponse(path, media_type='image/png', filename=name if download else None)
+    return FileResponse(path, media_type=_MEDIA[path.suffix], filename=name if download else None)
 
 
 @app.delete('/lab/sessions/{sid}/snapshots/{name}')
@@ -670,6 +672,77 @@ async def snapshot_delete(sid: str, name: str):
     await _autosave(force=True)
     await broadcast({'type': 'snaps', 'snaps': s.snaps})
     return {'ok': True}
+
+
+# ------------------------------------------------------------------- video
+# A screen recording of the lab, made in the browser (MediaRecorder over the
+# tab's own screen capture, cropped to the lab) and streamed here in chunks
+# while it records, so a long recording never sits in the page's memory. It is
+# saved in the session's snapshots folder beside the images and listed in its
+# snapshots, so the SNAPSHOTS tab shows and plays it. MP4 when the browser can
+# record MP4 (Chrome and Edge 126+), WebM otherwise - nothing is converted:
+# there is no ffmpeg on this machine.
+_REC: dict = {}                     # id -> {'sid', 'part', 'final', 'i', 't', 'bytes', 'at'}
+_REC_MAX = 4 * 1024 ** 3            # 4 GB - an hour of 1080p is well under
+
+
+@app.post('/lab/sessions/{sid}/recording/start')
+async def recording_start(sid: str, body: dict = Body(...)):
+    s = LAB.sess
+    if s is None or s.sid != sid:
+        raise HTTPException(409, 'that session is not the one open')
+    ext = 'mp4' if body.get('ext') == 'mp4' else 'webm'
+    final, i, t = await asyncio.to_thread(s.new_video, ext)
+    rid = uuid.uuid4().hex[:12]
+    part = final.parent / f'.recording-{rid}.part'
+    part.write_bytes(b'')
+    _REC[rid] = {'sid': sid, 'part': part, 'final': final, 'i': i, 't': t,
+                 'bytes': 0, 'at': time.time()}
+    s._emit('snapshot', f'video recording started ({final.name})')
+    return {'id': rid, 'file': final.name}
+
+
+@app.post('/lab/recording/{rid}/chunk')
+async def recording_chunk(rid: str, request: Request):
+    r = _REC.get(rid)
+    if r is None:
+        raise HTTPException(404, 'no such recording')
+    data = await request.body()
+    if r['bytes'] + len(data) > _REC_MAX:
+        raise HTTPException(413, 'recording too large')
+    await asyncio.to_thread(_append, r['part'], data)
+    r['bytes'] += len(data)
+    return {'ok': True, 'bytes': r['bytes']}
+
+
+def _append(path: Path, data: bytes) -> None:
+    with open(path, 'ab') as fh:
+        fh.write(data)
+
+
+@app.post('/lab/recording/{rid}/finish')
+async def recording_finish(rid: str):
+    r = _REC.pop(rid, None)
+    if r is None:
+        raise HTTPException(404, 'no such recording')
+    if not r['bytes']:
+        r['part'].unlink(missing_ok=True)
+        raise HTTPException(400, 'nothing was recorded')
+    r['part'].replace(r['final'])
+    s = LAB.sess
+    meta = {'file': r['final'].name, 'bytes': r['bytes']}
+    # Listed in the session only if it is still the one open; the file is kept either way.
+    if s is not None and s.sid == r['sid']:
+        meta = await asyncio.to_thread(s.add_video, r['final'].name, r['i'], r['t'],
+                                       r['bytes'], time.time() - r['at'])
+        s._emit('snapshot', f"video {r['final'].name} saved ({r['bytes'] / 1e6:.1f} MB)")
+        await _autosave(force=True)
+        await broadcast({'type': 'snaps', 'snaps': s.snaps})
+    try:
+        where = str(r['final'].relative_to(S.ROOT))
+    except ValueError:
+        where = str(r['final'])
+    return {'ok': True, **meta, 'path': where}
 
 
 @app.get('/lab/sessions/{sid}/export')

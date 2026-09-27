@@ -133,7 +133,11 @@ export type LabMeta = {
 }
 
 export type LabNote = { i: number; t: number; text: string; at: number }
-export type LabSnap = { file: string; i: number; t: number; note: string; at: number }
+export type LabSnap = {
+  file: string; i: number; t: number; note: string; at: number
+  /** Screen recordings sit in the same list: kind 'video', with size and length. */
+  kind?: 'video'; bytes?: number; secs?: number; end_i?: number; end_t?: number
+}
 
 export type LabSession = {
   meta: LabMeta

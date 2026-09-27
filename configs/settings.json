@@ -6,8 +6,8 @@
   "trail_atr": 1.0,
   "trail_lock_r": 0.5,
   "exit_mode": "trail",
-  "risk_per_trade_pct": 0.5,
-  "max_daily_loss_pct": 2.0,
+  "risk_per_trade_pct": 1.5,
+  "max_daily_loss_pct": 5.0,
   "max_daily_trades": 100,
   "min_rr": 0.5
  },
@@ -20,8 +20,7 @@
    "4h",
    "1h",
    "3m",
-   "2h",
-   "1d"
+   "2h"
   ],
   "auto": true,
   "max_per_symbol_tf": 5,
@@ -38,8 +37,8 @@
   "cooldown_bars": 2,
   "disabled_playbooks": [
    "sweep_reversal",
-   "breakout_retest",
-   "range_fade"
+   "range_fade",
+   "false_break_fade"
   ],
   "news_blocks": false,
   "news_blackout_min": 10,

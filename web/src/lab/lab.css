@@ -200,7 +200,7 @@
 
 .lab-table { font-size: 10px; }
 .lab-table tbody tr { cursor: pointer; }
-.lab-table tbody tr.sel { background: var(--warn-glow); }
+/* .lab-table tbody tr.sel: the shared selected-row yellow, styles/theme.css */
 .lab-table tfoot td { position: sticky; bottom: 0; background: var(--bg-panel); border-top: 1px solid var(--line); padding: 4px 6px; }
 .lab-table .chip { font-size: 8px; padding: 0 4px; line-height: 1.5; }
 
@@ -217,9 +217,11 @@
 .lab-search { height: 22px; font-size: 10px; margin-left: auto; width: 140px; }
 .lab-jlist { flex: 1 1 auto; overflow: auto; font-size: 10px; }
 .lab-j { display: grid; grid-template-columns: 94px 64px 1fr; gap: 8px; padding: 2px 10px; cursor: pointer; border-bottom: 1px solid var(--line-soft); align-items: baseline; }
-.lab-j:hover { background: #ffffff06; }
+/* The journal is a list, not a table: the same row hover (cyan tint and a
+   left marker) and selected-row yellow as .tabular in styles/theme.css. */
+.lab-j:hover { background: rgba(53, 214, 239, 0.1); box-shadow: inset 2px 0 0 var(--info); }
 .lab-j.future { opacity: 0.35; }
-.lab-j.now { background: var(--warn-glow); }
+.lab-j.now { background: rgba(255, 194, 26, 0.3); }
 .lab-jtext { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lab-kind {
   font-size: 8.5px;
@@ -483,3 +485,13 @@
 .fc-challenge { white-space: pre-wrap; font-size: 10.5px; line-height: 1.5; color: var(--ink); margin: 5px 0 3px; }
 .fc-facts { margin: 4px 0 2px; padding-left: 14px; }
 .fc-facts li { margin: 2px 0; }
+
+/* The screen recording in progress: red, with its running time. */
+.lab-vid-stop { color: var(--bear); border-color: var(--bear); animation: lab-vid-pulse 1.6s ease-in-out infinite; }
+@keyframes lab-vid-pulse { 50% { background: var(--bear-glow); } }
+/* A recording in the snapshots grid and viewer. */
+.lab-snap video { width: 100%; display: block; aspect-ratio: 16 / 9; object-fit: contain; background: #000; }
+.lab-snap-play { position: absolute; left: 8px; top: 8px; padding: 1px 6px; border-radius: 3px;
+  background: rgba(0, 0, 0, 0.65); color: #fff; font-size: 10px; font-weight: 700; pointer-events: none; }
+.lab-snapview-box video { max-width: 100%; max-height: calc(100vh - 140px); display: block; background: #000; }
+

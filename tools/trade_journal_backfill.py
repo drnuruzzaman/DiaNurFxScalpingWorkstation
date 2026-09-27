@@ -53,6 +53,8 @@ LIVE_OUT = ROOT / 'order_ledger' / 'logs' / 'trade_journal_backfill.jsonl'
 LAB_OUT = ROOT / 'runs' / 'research' / 'journal'
 NY = ZoneInfo('America/New_York')
 WINDOW = 600
+# Months per lab session, to stay under its 60,000-bar cap (5m kept at halves, as first run).
+CHUNK_MONTHS = {'1m': 1, '3m': 3, '5m': 6}
 
 
 def broker_offset(utc_ms: int) -> int:
@@ -158,10 +160,18 @@ def lab(year: int, symbol: str, tf: str) -> int:
     from server.lab import settings as lab_settings
     from server.lab.session import ReplaySession
     end = min(datetime(year + 1, 1, 1), datetime.now() - timedelta(days=1))
-    # A replay holds at most 60,000 bars (a year of 5m is ~71,000): two halves,
-    # each its own session. A trade open across the seam is cut by the first.
-    mid = datetime(year, 7, 1)
-    halves = [(datetime(year, 1, 1), min(mid, end))] + ([(mid, end)] if end > mid else [])
+    # A replay holds at most 60,000 bars (a year of 5m is ~71,000, of 1m
+    # ~350,000): the year in parts of CHUNK_MONTHS, each its own session. A
+    # trade open across a seam is cut by the earlier part.
+    step = CHUNK_MONTHS.get(tf, 12)
+    halves, m = [], 1
+    while m <= 12:
+        a0 = datetime(year, m, 1)
+        a1 = datetime(year + (m + step > 12), (m + step - 1) % 12 + 1, 1)
+        if a0 >= end:
+            break
+        halves.append((a0, min(a1, end)))
+        m += step
     t0, ran, journal, eff = time.time(), 0, [], None
     for a0, a1 in halves:
         s = ReplaySession({'symbol': symbol, 'tf': tf, 'start': a0.strftime('%Y-%m-%dT00:00'),
@@ -188,6 +198,76 @@ def lab(year: int, symbol: str, tf: str) -> int:
     return 0
 
 
+def window(start: str, end: str, symbol: str, tf: str, tag: str, ff: str | None,
+           all_playbooks: bool = False) -> int:
+    """
+    A headless lab run over [start, end) - live settings, auto mode, the lab's
+    forecast filter `ff` (None = off), no news blackout - cut into sessions of
+    CHUNK_MONTHS where the timeframe needs it. `all_playbooks` switches on the
+    playbooks live has disabled (a lab override - live is untouched).
+
+    Besides the trades, every signal's FIRST verdict is kept (its gates on the
+    bar it was made - SignalStore.first_verdict), with whether it went on to an
+    order and whether the forecast filter vetoed a send of it: the input to
+    the gate distribution per playbook.
+    -> runs/research/journal/win_<tag>_<tf>.json
+    """
+    from tools.forecast_build import _below_normal
+    _below_normal()
+    from server.forecast import store as fstore
+    from server.lab import settings as lab_settings
+    from server.lab.session import ReplaySession
+    a0, a1 = datetime.fromisoformat(start), datetime.fromisoformat(end)
+    step = CHUNK_MONTHS.get(tf, 12)
+    parts, cur = [], a0
+    while cur < a1:
+        m = cur.month - 1 + step
+        nxt = min(datetime(cur.year + m // 12, m % 12 + 1, min(cur.day, 28)), a1)
+        parts.append((cur, nxt))
+        cur = nxt
+    # The filter reads the forecast store; a timeframe without one is unfiltered.
+    has_store = fstore.load(symbol, tf, allow_stale=True) is not None
+    overrides = {'gates': {'disabled_playbooks': []}} if all_playbooks else {}
+    t0, ran, journal, eff, vetoes, verdicts = time.time(), 0, [], None, 0, []
+    for p0, p1 in parts:
+        s = ReplaySession({'symbol': symbol, 'tf': tf, 'start': p0.strftime('%Y-%m-%dT%H:%M'),
+                           'end': p1.strftime('%Y-%m-%dT%H:%M'), 'mode': 'auto',
+                           'forecast_filter': ff, 'news_gate': False, 'overrides': overrides,
+                           'name': f'timeframe window {tag} {tf}'})
+        while True:
+            n = s.advance(2000)
+            ran += n
+            del s.frames[:-50]              # the UI's per-bar frames: not needed headless
+            print(f'  {tf}: {ran} bars, {len(journal) + len(s.journal)} trades  '
+                  f'{time.time() - t0:6.0f}s', flush=True)
+            if n == 0:
+                break
+        journal += s.journal
+        vetoes += sum(1 for e in s.events if 'forecast filter' in str(e.get('text', '')))
+        filtered = {(e.get('data') or {}).get('id') for e in s.events
+                    if e.get('kind') == 'decision' and 'forecast filter' in str(e.get('text', ''))}
+        sent = {fid for fid, r in list(s.ledger.rows.items()) if r.get('state') != 'refused'}
+        for v in s.verdicts:
+            q = v.get('first_qual') or {}
+            verdicts.append({'id': v['id'], 'playbook': v.get('playbook'), 'side': v.get('side'),
+                             'status': q.get('status'), 'confidence': q.get('confidence'),
+                             'gates': q.get('gates') or [], 'sent': v['id'] in sent,
+                             'filtered': v['id'] in filtered})
+        eff = s.eff
+    LAB_OUT.mkdir(parents=True, exist_ok=True)
+    out = LAB_OUT / f'win_{tag}_{tf}.json'
+    out.write_text(json.dumps({
+        'symbol': symbol, 'tf': tf, 'start': start, 'end': end, 'bars': ran,
+        'forecast_filter': ff, 'filter_active': bool(ff and has_store),
+        'filter_notes': vetoes, 'news_gate': False, 'all_playbooks': all_playbooks,
+        'verdicts': verdicts,
+        'settings': lab_settings.jsonable(eff),
+        'made': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        'journal': journal}, default=str), encoding='utf-8')
+    print(f'{tf}: {len(journal)} trades -> {out.relative_to(ROOT)} ({time.time() - t0:.0f}s)')
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[1])
     sub = ap.add_subparsers(dest='cmd', required=True)
@@ -196,7 +276,18 @@ def main() -> int:
     b.add_argument('--year', type=int, required=True)
     b.add_argument('--symbol', default='XAUUSD.a')
     b.add_argument('--tf', default='5m')
+    w = sub.add_parser('window')
+    w.add_argument('--start', required=True, help='YYYY-MM-DD')
+    w.add_argument('--end', required=True, help='YYYY-MM-DD')
+    w.add_argument('--symbol', default='XAUUSD.a')
+    w.add_argument('--tf', required=True)
+    w.add_argument('--tag', required=True)
+    w.add_argument('--filter', default=None, help='the lab forecast filter, e.g. no_transition')
+    w.add_argument('--all-playbooks', action='store_true',
+                   help='switch on the playbooks live has disabled (lab override only)')
     a = ap.parse_args()
+    if a.cmd == 'window':
+        return window(a.start, a.end, a.symbol, a.tf, a.tag, a.filter, a.all_playbooks)
     return live() if a.cmd == 'live' else lab(a.year, a.symbol, a.tf)
 
 

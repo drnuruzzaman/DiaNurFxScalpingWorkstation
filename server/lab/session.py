@@ -904,6 +904,32 @@ class ReplaySession:
             self.snaps.append(meta)
             return meta
 
+    def new_video(self, ext: str) -> tuple:
+        """
+        Where a screen recording of this session goes: its snapshots folder,
+        video-NNN-<bar>.<ext>, numbered apart from the images. Returns (path,
+        the bar index and time on screen as it starts).
+        """
+        with self.lock:
+            d = self.dir / 'snapshots'
+            d.mkdir(parents=True, exist_ok=True)
+            used = [int(str(s['file'])[6:9]) for s in self.snaps
+                    if str(s.get('file', '')).startswith('video-')]
+            used += [int(p.name[6:9]) for p in d.glob('video-*') if p.name[6:9].isdigit()]
+            n = max(used or [0]) + 1
+            t = int(self.series.t[self.v])
+            name = f"video-{n:03d}-{dt.datetime.fromtimestamp(t / 1000, dt.timezone.utc):%Y%m%d-%H%M}.{ext}"
+            return d / name, self.v, t
+
+    def add_video(self, name: str, i: int, t: int, size: int, secs: float) -> dict:
+        """A finished recording joins the snapshot list, dated by the bar it began on."""
+        with self.lock:
+            meta = {'file': name, 'i': int(i), 't': int(t), 'note': '', 'at': _wall_ms(),
+                    'kind': 'video', 'bytes': int(size), 'secs': round(float(secs), 1),
+                    'end_i': self.v, 'end_t': int(self.series.t[self.v])}
+            self.snaps.append(meta)
+            return meta
+
     def delete_snapshot(self, name: str) -> bool:
         """Remove one snapshot: its PNG and its entry. False if it is not this session's."""
         with self.lock:

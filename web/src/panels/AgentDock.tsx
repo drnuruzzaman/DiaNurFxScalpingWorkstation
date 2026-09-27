@@ -4,13 +4,14 @@ import { api } from '../lib/api'
 import { fmt } from '../lib/format'
 import { Empty } from './common'
 
-type Mode = 'analysis' | 'challenge' | 'risk' | 'backtest' | 'ask'
+// No BACKTEST mode: backtests live in the BACKTEST tab (the lab), which has
+// the real runs; this panel only ever said 'no run yet' there.
+type Mode = 'analysis' | 'challenge' | 'risk' | 'ask'
 
 const MODES: { key: Mode; label: string }[] = [
   { key: 'analysis', label: 'ANALYSIS' },
   { key: 'challenge', label: 'CHALLENGE' },
   { key: 'risk', label: 'RISK' },
-  { key: 'backtest', label: 'BACKTEST' },
   { key: 'ask', label: 'ASK' },
 ]
 
@@ -28,7 +29,8 @@ export function AgentDock({ snap, signal, symbol, tf }: {
   symbol: string
   tf: string
 }) {
-  const [mode, setMode] = useState<Mode>('analysis')
+  // Opens on CHALLENGE: the case against the trade is the one to read first.
+  const [mode, setMode] = useState<Mode>('challenge')
   const [brief, setBrief] = useState<any>(null)
   const [narrative, setNarrative] = useState<any>(null)
   const [question, setQuestion] = useState('')
@@ -134,7 +136,7 @@ export function AgentDock({ snap, signal, symbol, tf }: {
           )}
           <div className="t-dim" style={{ fontSize: 9.5, marginTop: 12, lineHeight: 1.5 }}>
             No signal is selected. Select one from LIVE SIGNALS to get the full
-            four-mode brief, or use ASK.
+            brief, or use ASK.
           </div>
         </>
       )
@@ -220,36 +222,20 @@ export function AgentDock({ snap, signal, symbol, tf }: {
       )
     }
 
-    if (mode === 'risk') {
-      const r = brief.risk
-      return (
-        <>
-          {r.lines.map((l: string, i: number) => (
-            <div key={i} className="t-mid" style={{ fontSize: 10.5, padding: '3px 0' }}>· {l}</div>
-          ))}
-          <h4>Management plan</h4>
-          {r.management.map((m: string, i: number) => (
-            <div key={i} className="evidence-row">
-              <span className="ic t-info">{i + 1}</span>
-              <span className="t-mid">{m}</span>
-            </div>
-          ))}
-        </>
-      )
-    }
-
-    const b = brief.backtest
+    // mode === 'risk' - the last one left
+    const r = brief.risk
     return (
       <>
-        {b.lines.map((l: string, i: number) => (
+        {r.lines.map((l: string, i: number) => (
           <div key={i} className="t-mid" style={{ fontSize: 10.5, padding: '3px 0' }}>· {l}</div>
         ))}
-        {!b.stat && (
-          <div className="t-dim" style={{ fontSize: 9.5, marginTop: 10, lineHeight: 1.5 }}>
-            Backtest figures are quoted only when a run exists for this
-            configuration. The panel will not estimate them.
+        <h4>Management plan</h4>
+        {r.management.map((m: string, i: number) => (
+          <div key={i} className="evidence-row">
+            <span className="ic t-info">{i + 1}</span>
+            <span className="t-mid">{m}</span>
           </div>
-        )}
+        ))}
       </>
     )
   }

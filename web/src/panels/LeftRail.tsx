@@ -7,9 +7,10 @@ import { Empty, Panel, ScoreRow } from './common'
  * The Fear/Greed dial.
  *
  * Drawn as an SVG arc rather than a canvas or an image so it scales with the
- * rail and inherits theme colours. The needle angle maps 0..100 onto a 160
- * degree sweep, which leaves the extremes visually distinct from "nearly
- * extreme" - a full 270 sweep made 88 and 96 look identical.
+ * rail and inherits theme colours. The needle angle maps 0..100 onto a
+ * half circle: both ends of the dial sit on the level of the needle's hub,
+ * so 0 and 100 read as the floor of the dial rather than floating above it.
+ * (A full 270 sweep made 88 and 96 look identical; 180 keeps them apart.)
  *
  * Each band carries its own name along the arc, so the number is readable
  * without first learning what 0..100 means here. The band the needle is in is
@@ -49,7 +50,7 @@ function BandChip({ value }: { value: number }) {
 
 function Gauge({ value, label }: { value: number; label: string }) {
   const W = 206, H = 126, CX = W / 2, CY = 104, R = 72, BW = 23
-  const START = 190, SWEEP = 160
+  const START = 180, SWEEP = 180
   // Drawn larger than its own coordinate space. The rail widened to 272 for
   // the AI Analyst, and the dial had stayed at 206px with 6.4px band names -
   // legible only if you leaned in. Scaling the whole SVG keeps every angle,
@@ -64,6 +65,12 @@ function Gauge({ value, label }: { value: number; label: string }) {
     const rad = (d * Math.PI) / 180
     return [CX + r * Math.cos(rad), CY + r * Math.sin(rad)]
   }
+  /**
+   * Gap trimmed off a band's end where it meets a neighbour. The dial's two
+   * outer ends are not trimmed, so they land exactly on the hub's level.
+   */
+  const trimLo = (b: Band) => (b.lo === 0 ? 0 : 1.2)
+  const trimHi = (b: Band) => (b.hi === 100 ? 0 : 1.2)
   /** Arc path, always the short way round - every band here is under 180deg. */
   const path = (from: number, to: number, r: number) => {
     const [x1, y1] = polar(from, r)
@@ -110,7 +117,7 @@ function Gauge({ value, label }: { value: number; label: string }) {
         {BANDS.map((b, i) => {
           const on = b === active
           return (
-            <path key={`b${i}`} d={path(deg(b.lo) + 1.2, deg(b.hi) - 1.2, R)}
+            <path key={`b${i}`} d={path(deg(b.lo) + trimLo(b), deg(b.hi) - trimHi(b), R)}
               stroke={b.col} strokeWidth={on ? BW + 3 : BW} fill="none"
               strokeLinecap="butt" opacity={on ? 1 : 0.42} />
           )

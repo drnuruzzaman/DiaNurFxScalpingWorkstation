@@ -84,6 +84,10 @@
   color: var(--ink-mid);
   cursor: pointer;
 }
+/* The left padding is 0 because a check column (.menu-check, 22px) normally
+   sits there. An item without one - the Snapshot menus - gets the same inset
+   instead of starting hard against the menu's edge. */
+.menu-item:not(:has(.menu-check)) { padding-left: 12px; }
 .menu-item:hover { background: var(--bg-raise); }
 .menu-item.on { color: var(--ink-hi); }
 .menu-check {
@@ -942,29 +946,35 @@
   min-height: 0;
   height: 100%;
 }
+/* The analyst's modes, in the bottom panel's tab style (.dock-tabs .dock-tab):
+   flat uppercase labels, the open one in --warn with an underline. Spread
+   across the rail's width, since five have to fit in it. */
 .agent-modes {
   display: flex;
-  gap: 1px;
-  padding: 6px 8px;
+  align-items: stretch;
+  gap: 2px;
+  padding: 0 8px;
   border-bottom: 1px solid var(--line-soft);
   flex: 0 0 auto;
 }
 .agent-mode {
   flex: 1;
-  padding: 4px 0;
+  padding: 6px 0 5px;
   text-align: center;
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.09em;
-  color: var(--ink-dim);
-  background: var(--bg-panel-2);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--r-sm);
+  text-transform: uppercase;
+  color: var(--ink-low);
+  border-bottom: 2px solid transparent;
+  transition: color 0.12s;
+}
+.agent-mode:hover {
+  color: var(--ink-mid);
 }
 .agent-mode.on {
-  color: var(--info);
-  border-color: var(--info-dim);
-  background: var(--info-glow);
+  color: var(--warn);
+  border-bottom-color: var(--warn);
 }
 .agent-body {
   flex: 1 1 auto;

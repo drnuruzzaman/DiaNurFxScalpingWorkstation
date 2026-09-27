@@ -28,6 +28,7 @@ import { NewSession } from './NewSession'
 import { MarketData } from '../panels/MarketData'
 import { DeleteSession } from './DeleteSession'
 import { lab, LabSocket, type LabConn } from './labApi'
+import { canRecord, startRecording, type Recording } from './recorder'
 import type { LabDataInfo, LabEvent, LabForecast, LabFrame, LabJob, LabNote, LabSession, LabSnap,
   LabStats, LabTrade, SchemaRow } from './types'
 import './lab.css'
@@ -122,6 +123,15 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
   const centre = useRef<HTMLDivElement>(null)
   const menuBox = useRef<HTMLDivElement>(null)
   const toastTimer = useRef<number | null>(null)
+  // A screen recording of the lab in progress (recorder.ts), and when it began.
+  const root = useRef<HTMLDivElement>(null)
+  const [video, setVideo] = useState<{ rec: Recording; t0: number } | null>(null)
+  const [videoNow, setVideoNow] = useState(0)
+  useEffect(() => {
+    if (!video) return
+    const id = window.setInterval(() => setVideoNow(Date.now()), 500)
+    return () => window.clearInterval(id)
+  }, [video])
 
   const setOverlays = (o: Overlays) => { setOverlaysRaw(o); save('dianur.lab.overlays', o) }
   const setCone = (on: boolean) => { setConeOn(on); save('dianur.lab.cone', on) }
@@ -335,10 +345,19 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
   const composeSnap = () => {
     if (!session || !frame) return null
     const wrap = centre.current?.querySelector('.chart-wrap') as HTMLElement | null
+    // No logo stamped on the chart: its own DIANURFX BACKTEST watermark and the
+    // sheet's header already say whose it is. The THIS BAR panel rides along
+    // as the rail, so the image carries the account, trades and verdicts too.
     return snapshot.compose({
       wrap, engine: engine.current, panels: [], symbol: session.cfg.symbol, tf: session.cfg.tf,
       snap: frame.snapshot, signal: shownSignal, digits,
       badge: 'BACKTEST · SIMULATED', when: `${utc(frame.cursor.t)} UTC · replay`,
+      brandMark: false,
+      thisBar: {
+        when: utc(frame.cursor.t), behind: frame.cursor.k - frame.cursor.v,
+        account: frame.account, positions: frame.positions, orders: frame.orders,
+        signals: frame.signals,
+      },
     })
   }
   const snapToSession = async () => {
@@ -349,6 +368,31 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
       await lab.snapshot(session.meta.id, c.toDataURL('image/png'), '')
       flash('Snapshot saved in the session - see the Snapshots tab')
     } catch (e: any) { flash(`Snapshot not saved: ${e?.message ?? e}`) }
+  }
+  const videoStart = async () => {
+    setMenu(null)
+    if (!session || !root.current) return
+    if (!canRecord()) { flash('This browser cannot record the screen.'); return }
+    try {
+      const rec = await startRecording(session.meta.id, root.current)
+      setVideo({ rec, t0: Date.now() })
+      setVideoNow(Date.now())
+      flash(`Recording ${rec.file} - stop it with the red button`)
+      // Finishes here whether stopped by the button or the browser's "Stop sharing".
+      rec.done.then((r) => {
+        setVideo(null)
+        flash('error' in r ? `Video not saved: ${r.error}`
+          : `Video saved: ${r.file} (${(r.bytes / 1e6).toFixed(1)} MB) - see the Snapshots tab`)
+      })
+    } catch (e: any) {
+      // Cancelling the browser's "choose what to share" lands here too.
+      flash(e?.name === 'NotAllowedError' ? 'Recording cancelled' : `Recording not started: ${e?.message ?? e}`)
+    }
+  }
+  const videoStop = () => { video?.rec.stop() }
+  const clock = (ms: number) => {
+    const s = Math.max(0, Math.floor(ms / 1000))
+    return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
   }
   const snapCopy = () => {
     setMenu(null)
@@ -392,9 +436,8 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
   const tfMs = session ? TF_MS[session.cfg.tf] ?? 0 : 0
 
   return (
-    <div className="lab">
+    <div className="lab" ref={root}>
       <div className="lab-bar" ref={menuBox}>
-        <span className="lab-badge" title="Everything here is simulated on history. Nothing reaches MT5.">BACKTEST LAB</span>
         {conn !== 'up' && (
           <span className={`chip ${conn === 'offline' || conn === 'down' ? 'chip-down' : 'chip-warn'}`}>
             {conn === 'starting' ? 'STARTING LAB…' : conn === 'connecting' ? 'CONNECTING' : conn === 'down' ? 'LAB DISCONNECTED' : 'LAB OFFLINE'}
@@ -402,6 +445,10 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
         )}
         {session ? (
           <>
+            {/* The market first - the header already says BACKTEST, and the
+                chart's watermark says it again. */}
+            <span className="lab-mkt mono" title="Everything here is simulated on history. Nothing reaches MT5.">
+              {session.cfg.symbol} · {session.cfg.tf}</span>
             <div className="lab-pop">
               <button className={`tool-btn lab-sess ${menu === 'session' ? 'on' : ''}`}
                 onClick={() => setMenu(menu === 'session' ? null : 'session')} title={session.meta.name}>
@@ -423,7 +470,6 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
                 </div>
               )}
             </div>
-            <span className="lab-mkt mono">{session.cfg.symbol} · {session.cfg.tf}</span>
             <span className={`chip ${session.cfg.mode === 'auto' ? 'chip-info' : 'chip-warn'}`}
               title={session.cfg.mode === 'auto' ? 'The system trades, exactly as live would' : 'You trade; the engine advises'}>
               {session.cfg.mode === 'auto' ? 'SYSTEM' : 'MANUAL'}
@@ -522,9 +568,18 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
                   <button className="menu-item" onClick={snapToSession}><span className="menu-label">Save in this session</span><span className="menu-hint">S</span></button>
                   <button className="menu-item" onClick={snapCopy}>Copy image</button>
                   <button className="menu-item" onClick={snapFile}>Save image file</button>
+                  <button className="menu-item" onClick={videoStart} disabled={!!video}>
+                    <span className="menu-label">Record video</span><span className="menu-hint">mp4</span>
+                  </button>
                 </div>
               )}
             </div>
+            {video && (
+              <button className="tool-btn lab-vid-stop" onClick={videoStop}
+                title={`Stop and save ${video.rec.file} in this session's snapshots`}>
+                ■ Stop video <span className="mono">{clock(videoNow - video.t0)}</span>
+              </button>
+            )}
             <span className="spacer" />
             {cur && (
               <div className="lab-status">

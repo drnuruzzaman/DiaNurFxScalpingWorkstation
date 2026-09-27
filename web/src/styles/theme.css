@@ -392,6 +392,15 @@ select:focus {
 .tabular tbody tr:hover > td:first-child {
   box-shadow: inset 2px 0 0 var(--info);
 }
+/* The selected row - the one on the chart (Signal board, TF matrix), the
+   picked trade (lab). A warm yellow strong enough to read as yellow: amber at
+   the usual glow strength mixes with a navy panel into grey. Same in every
+   theme, like the other signal colours; after :hover so it stays yellow
+   under the pointer. */
+.tabular tbody tr.row-on,
+.tabular tbody tr.sel {
+  background: rgba(255, 194, 26, 0.3);
+}
 .num {
   text-align: right;
   font-variant-numeric: tabular-nums;

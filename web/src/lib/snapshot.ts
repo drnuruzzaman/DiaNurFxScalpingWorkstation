@@ -70,6 +70,22 @@ export type SnapshotOpts = {
   badge?: string
   /** Replaces "now" in the strap: a replay snapshot is dated by its bar. */
   when?: string
+  /** Stamp the faint brand mark on the chart (default true). The backtest lab
+      turns it off: its chart already carries the DIANURFX BACKTEST watermark. */
+  brandMark?: boolean
+  /** The backtest lab's THIS BAR panel, drawn as the rail - see thisBarRail. */
+  thisBar?: ThisBar | null
+}
+
+/** What the lab's THIS BAR tab shows, as the snapshot draws it (LabSide NowTab). */
+export type ThisBar = {
+  when: string
+  /** Bars between this one and the latest simulated bar; 0 at the frontier. */
+  behind: number
+  account: { equity: number; balance: number; floating: number; balance0: number }
+  positions: any[]
+  orders: any[]
+  signals: any[]
 }
 
 // ---------------------------------------------------------------- capture
@@ -188,6 +204,9 @@ function wrapText(g: CanvasRenderingContext2D, text: string, max: number): strin
 
 const num = (v: any, d = 2): string =>
   v == null || !Number.isFinite(Number(v)) ? '\u2014' : Number(v).toFixed(d)
+const sgn = (v: any, d = 2): string =>
+  v == null || !Number.isFinite(Number(v)) ? '\u2014'
+    : (Number(v) >= 0 ? '+' : '') + Number(v).toFixed(d)
 
 /**
  * A rail column with a cursor. Every section appends downward and the column
@@ -444,6 +463,7 @@ function layoutRail(g: CanvasRenderingContext2D, o: SnapshotOpts, w: number): nu
   const signal: any = o.signal
   const dp = o.digits ?? 2
   const r = new Rail(g, 0, w, 0)
+  if (o.thisBar) thisBarRail(r, o)
 
   const order = PANEL_LABELS.map((p) => p.key).filter((k) => o.panels.includes(k))
   for (const key of order) {
@@ -565,6 +585,104 @@ function layoutRail(g: CanvasRenderingContext2D, o: SnapshotOpts, w: number): nu
   return r.y
 }
 
+/**
+ * The backtest lab's THIS BAR tab, section for section as LabSide shows it:
+ * the bar, the account as it stood here, open trades and pending orders, the
+ * signals on this bar with their verdicts, and the market read. Only what
+ * the frame carries is drawn - nothing is filled in.
+ */
+function thisBarRail(r: Rail, o: SnapshotOpts) {
+  const tb = o.thisBar!
+  const snap: any = o.snap
+  const dp = o.digits ?? 2
+
+  r.head('This bar', num(snap?.price, dp), C.ink)
+  r.row('Bar (UTC)', tb.when, C.ink, true)
+  if (tb.behind) {
+    r.gap(2)
+    r.note(`Reviewing the past - ${tb.behind} bar${tb.behind === 1 ? '' : 's'} before the `
+      + 'latest simulated bar. The account shown is as it was here.', C.warn, 8.5)
+  }
+  r.gap(12)
+
+  const a = tb.account
+  const ret = a.balance0 ? (a.equity / a.balance0 - 1) * 100 : 0
+  r.head('Account')
+  r.row('Equity', num(a.equity, 2), a.equity >= a.balance0 ? C.up : C.down, true)
+  r.row('Balance', num(a.balance, 2))
+  r.row('Floating', sgn(a.floating, 2), a.floating >= 0 ? C.up : C.down)
+  r.row('Return', sgn(ret, 2) + '%', ret >= 0 ? C.up : C.down)
+  r.gap(12)
+
+  r.head('Open trades', String(tb.positions.length), C.mid)
+  if (!tb.positions.length) r.note('Flat.')
+  for (const pos of tb.positions) {
+    const buy = pos.side === 'buy'
+    const risk = Math.abs(pos.price_open - (pos.initial_sl || pos.sl || pos.price_open))
+    const rr = risk ? ((pos.price_current - pos.price_open) * (buy ? 1 : -1)) / risk : 0
+    const manual = String(pos.comment || '').startsWith('LAB')
+    r.row(`${buy ? 'BUY' : 'SELL'} ${pos.volume} \u00b7 ${manual ? 'manual' : 'system'}`,
+          `${sgn(pos.profit, 2)}   ${sgn(rr, 2)}R`, pos.profit >= 0 ? C.up : C.down, true)
+    r.row('entry / SL / TP', `${num(pos.price_open, dp)} / ${pos.sl ? num(pos.sl, dp) : '\u2014'}`
+      + ` / ${pos.tp ? num(pos.tp, dp) : '\u2014'}`, C.mid)
+    r.gap(3)
+  }
+  if (tb.orders.length) {
+    r.gap(9)
+    r.head('Pending orders', String(tb.orders.length), C.mid)
+    for (const od of tb.orders) {
+      r.row(`${String(od.side).toUpperCase()} ${od.kind}`,
+            `at ${num(od.price_open, dp)}   SL ${num(od.sl, dp)}`,
+            od.side === 'buy' ? C.up : C.down)
+    }
+  }
+  r.gap(12)
+
+  r.head('Signals at this bar', String(tb.signals.length), C.mid)
+  if (!tb.signals.length) r.note('The engine had nothing live here.')
+  for (const s of tb.signals) {
+    const buy = s.side === 'buy'
+    const gates: any[] = s.gates || []
+    const blocks = gates.filter((x) => x.verdict === 'BLOCK')
+    const warns = gates.filter((x) => x.verdict === 'WARN')
+    // As the panel says it: once a signal is an order or a position, today's
+    // verdict is information, not a decision.
+    const live = s.stage === 'FILLED' || s.stage === 'SENT'
+    const status = String(s.status || '')
+    const tag = live ? `${s.stage === 'FILLED' ? 'IN TRADE' : 'PENDING'} \u00b7 now ${status}`
+      : `${s.stage ? s.stage + ' \u00b7 ' : ''}${status.toUpperCase()}`
+    r.row(`${buy ? 'BUY' : 'SELL'} ${String(s.label || s.playbook || '').toUpperCase()}`, tag,
+          live ? C.info : status === 'qualified' ? C.up : status === 'watch' ? C.warn : C.down,
+          true)
+    r.row('confidence', String(s.confidence ?? '\u2014'), C.ink)
+    r.row('E / SL', `${num(s.entry, dp)} / ${num(s.stop, dp)}`, C.mid)
+    r.row('TP1 / TP2', `${num(s.tp1, dp)} / ${num(s.tp2, dp)}`, C.up)
+    for (const b of blocks) r.note(`${b.name}: ${b.detail}`, C.down, 8.5)
+    if (warns.length) {
+      r.note(`${warns.length} warning${warns.length === 1 ? '' : 's'}: `
+        + warns.map((x) => `${x.name} -${x.penalty}`).join(', '), C.dim, 8.5)
+    }
+    r.gap(6)
+  }
+  r.gap(6)
+
+  if (snap?.ok) {
+    const leg = snap.leg_gate ?? snap.leg
+    r.head('Market read')
+    r.row('regime', `${snap.regime?.label ?? '\u2014'} ${snap.regime?.confidence ?? ''}`.trim(),
+          C.ink, true)
+    r.row('structure', `${snap.trend?.state ?? '\u2014'} ${snap.trend?.strength ?? ''}`.trim())
+    r.row('timeframes', `${snap.mtf?.verdict ?? '\u2014'} ${snap.mtf?.score ?? ''}`.trim())
+    if (leg) {
+      r.row('leg', `${leg.dir === 1 ? 'up' : 'down'} ${num(leg.ext_atr, 1)} ATR \u00b7 `
+        + `${num(leg.pull_atr, 1)} back`, leg.dir === 1 ? C.up : C.down)
+      if (leg.fade_block) r.note(`fade ${leg.fade_side}: ${leg.fade_block}`, C.warn, 8.5)
+    }
+    r.row('ATR', `${snap.atr_points ?? '\u2014'} pts \u00b7 spread ${snap.spread_points ?? '\u2014'}`)
+  }
+  r.gap(16)
+}
+
 // ---------------------------------------------------------------- compose
 
 export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
@@ -586,7 +704,7 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
   const RAIL_D = 300                       // rail width, design units
   const PAD = Math.round(18 * S)
   // Detected patterns draw ON the chart; only the other panels need a rail.
-  const railPanels = o.panels.filter((k) => k !== 'patterns').length
+  const railPanels = o.panels.filter((k) => k !== 'patterns').length + (o.thisBar ? 1 : 0)
   const GUT = railPanels ? Math.round(22 * S) : 0
   const RAIL = railPanels ? Math.round(RAIL_D * S) : 0
   const HEAD = Math.round(66 * S)
@@ -682,7 +800,7 @@ export function compose(o: SnapshotOpts): HTMLCanvasElement | null {
   // the price pane. It is held to the left third of the plot so it never
   // sits over the middle of the chart, where the latest price action is
   // read. Drawn before the labels so their plates cover it, not the reverse.
-  {
+  if (o.brandMark !== false) {
     const plotW = geom ? geom.plotW : chart.width
     const paneH = geom ? (geom.subTop ?? geom.bottom) : chart.height
     let mark = Math.max(36 * S, Math.min(84 * S, paneH * 0.16))
