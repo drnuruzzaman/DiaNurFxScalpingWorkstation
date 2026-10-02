@@ -31833,7 +31833,7 @@
   "XAUUSD.a:5m:pattern_break:sell:1790941200000": {
    "id": "XAUUSD.a:5m:pattern_break:sell:1790941200000",
    "tag": "DNX 2aaa92dfe4",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -31849,10 +31849,10 @@
    "ticket": 9063291,
    "position": 9063291,
    "fill_price": 4179.52,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4180.62,
+   "outcome": "stop",
+   "r": -0.101,
+   "profit": -1.14,
    "events": [
     [
      1790941506752,
@@ -31868,20 +31868,26 @@
      1790941509504,
      "filled",
      "position 9063291"
+    ],
+    [
+     1790947146844,
+     "closed",
+     "stop at 4180.62"
     ]
    ],
    "created_ms": 1790941506752,
-   "updated_ms": 1790941509504,
+   "updated_ms": 1790947146844,
    "symbol": "XAUUSD.a",
    "tf": "5m",
    "side": "sell",
    "kind": "market",
-   "lots": 0.01
+   "lots": 0.01,
+   "exit_ms": 1790942868650
   },
   "AUDUSD.a:30m:mtf_pullback:sell:1790938800000": {
    "id": "AUDUSD.a:30m:mtf_pullback:sell:1790938800000",
    "tag": "DNX 4dd0fe4192",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "AUDUSD.a",
@@ -31897,10 +31903,10 @@
    "ticket": 9063389,
    "position": 9063389,
    "fill_price": 0.69404,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 0.69501,
+   "outcome": "stop",
+   "r": -1.01,
+   "profit": -5.03,
    "events": [
     [
      1790941927198,
@@ -31916,20 +31922,26 @@
      1790941930591,
      "filled",
      "position 9063389"
+    ],
+    [
+     1790947147387,
+     "closed",
+     "stop at 0.69501"
     ]
    ],
    "created_ms": 1790941927198,
-   "updated_ms": 1790941930591,
+   "updated_ms": 1790947147387,
    "symbol": "AUDUSD.a",
    "tf": "30m",
    "side": "sell",
    "kind": "market",
-   "lots": 0.05
+   "lots": 0.05,
+   "exit_ms": 1790944192860
   },
   "USDJPY.a:5m:pattern_break:buy:1790940900000": {
    "id": "USDJPY.a:5m:pattern_break:buy:1790940900000",
    "tag": "DNX 7b03ad148f",
-   "state": "placed",
+   "state": "cancelled",
    "attempts": 1,
    "request": {
     "symbol": "USDJPY.a",
@@ -31959,16 +31971,64 @@
      1790942546612,
      "placed",
      "stop ticket 9063657"
+    ],
+    [
+     1790947146070,
+     "cancelled",
+     "no longer at the broker"
     ]
    ],
    "created_ms": 1790942546357,
-   "updated_ms": 1790942546612,
+   "updated_ms": 1790947146070,
    "symbol": "USDJPY.a",
    "tf": "5m",
    "side": "buy",
    "kind": "stop",
    "lots": 0.05
+  },
+  "USDJPY.a:30m:pattern_break:sell:1790938800000": {
+   "id": "USDJPY.a:30m:pattern_break:sell:1790938800000",
+   "tag": "DNX 6540c593a1",
+   "state": "placed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 157.804,
+    "sl": 158.254,
+    "tp": 156.903,
+    "expiration_ms": 1790976600000
+   },
+   "ticket": 9068025,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790947570951,
+     "sending",
+     ""
+    ],
+    [
+     1790947571303,
+     "placed",
+     "limit ticket 9068025"
+    ]
+   ],
+   "created_ms": 1790947570951,
+   "updated_ms": 1790947571303,
+   "symbol": "USDJPY.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
   }
  },
- "saved_ms": 1790942584137
+ "saved_ms": 1790947571303
 }

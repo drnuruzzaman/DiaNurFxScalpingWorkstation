@@ -581,7 +581,9 @@ export default function App() {
         const early = toBars(r.bars as any)
         if (!early.length) return
         setBars((prev) => {
-          const next = own(key, barcache.onGrid(mergeBars(prev, early), step))
+          // Not trimmed to this answer's last bar, as a socket frame is: it can
+          // land a beat after a frame that already rolled to the next bar.
+          const next = own(key, barcache.onGrid(barcache.opened(mergeBars(prev, early)), step))
           barcache.put(symbol, tf, next)
           return next
         })
@@ -595,9 +597,12 @@ export default function App() {
       if (!alive || (p.symbol && p.symbol !== symbol) || (p.tf && p.tf !== tf)) return
       // Merge rather than replace: the socket sends a fixed tail, and
       // replacing would discard any older bars the user scrolled back to.
-      // Kept on the live bars' grid, so nothing off it survives a frame.
+      // Kept on the live bars' grid, so nothing off it survives a frame, and
+      // ending at the frame's forming bar, so nothing after it does either.
+      const live = toBars(p.bars)
+      const forming = live.length ? live[live.length - 1].t : Infinity
       setBars((prev) => {
-        const next = own(key, barcache.onGrid(mergeBars(prev, toBars(p.bars)), step))
+        const next = own(key, barcache.onGrid(barcache.notAfter(mergeBars(prev, live), forming), step))
         barcache.put(symbol, tf, next)
         return next
       })

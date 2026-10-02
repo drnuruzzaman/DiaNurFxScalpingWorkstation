@@ -23,8 +23,17 @@ import type { Bar } from '../chart/types'
 // switched away from could land its bars in the next one's series (a 4H chart
 // of 1-minute candles, or a stray block of older bars scrolled in from another
 // chart's dates). A new key drops them rather than drawing them again.
-const KEY = 'dianur.bars.v4'
-const OLD_KEYS = ['dianur.bars.v1', 'dianur.bars.v2', 'dianur.bars.v3']
+// v5: series cached on 2026-10-02 held copies of real bars stamped 2.5 hours
+// in the future. Merged, never replaced, they stayed the newest bar of every
+// timeframe, and each candle timer counted down to a bar that had not opened.
+const KEY = 'dianur.bars.v5'
+const OLD_KEYS = ['dianur.bars.v1', 'dianur.bars.v2', 'dianur.bars.v3', 'dianur.bars.v4']
+
+/**
+ * How far past this machine's clock a bar may open and still be believed: room
+ * for the clock running a little behind the broker's, nothing like a bar.
+ */
+const CLOCK_SLACK_MS = 2 * 60 * 1000
 
 /** Per series. Enough for a deep scroll-back; beyond this, re-fetch. */
 const MAX_BARS = 1500
@@ -78,13 +87,29 @@ export function onGrid(bars: Bar[], stepMs: number): Bar[] {
   return kept.length === bars.length ? bars : kept
 }
 
+/**
+ * Only the bars that open no later than `t`.
+ *
+ * The live socket's newest bar IS the forming bar, so anything held past it
+ * is not a bar that exists yet. Unchecked, one such bar outlives every frame
+ * (mergeBars only adds), stays the series' last bar, and onGrid then measures
+ * the real bars against ITS grid - a 1h bar at :30 drops every bar at :00.
+ */
+export function notAfter(bars: Bar[], t: number): Bar[] {
+  if (!bars.length || bars[bars.length - 1].t <= t) return bars
+  return bars.filter((b) => b.t <= t)
+}
+
+/** Only the bars that have opened by now, by this machine's clock. */
+export const opened = (bars: Bar[]): Bar[] => notAfter(bars, Date.now() + CLOCK_SLACK_MS)
+
 /** Bars held for this series, or an empty array. Never null - callers paint it. */
 export function get(symbol: string, tf: string): Bar[] {
   hydrate()
   const e = mem.get(keyFor(symbol, tf))
   if (!e) return []
   if (Date.now() - e.at > MAX_AGE_MS) { mem.delete(keyFor(symbol, tf)); return [] }
-  return e.bars
+  return opened(e.bars)
 }
 
 export function put(symbol: string, tf: string, bars: Bar[]): void {

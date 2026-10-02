@@ -4,7 +4,7 @@
    {
     "id": "tmugjg7gh",
     "symbol": "XAUUSD.a",
-    "tf": "15m"
+    "tf": "3m"
    }
   ],
   "dianur.activeTab": "tmugjg7gh",
@@ -253,5 +253,5 @@
   "dianur.lab.dockH": 254,
   "dianur.lab.cone": false
  },
- "saved_ms": 1790942582965
+ "saved_ms": 1790947677978
 }

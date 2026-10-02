@@ -3042,8 +3042,10 @@ export class ChartEngine {
     // Candle countdown, in a second chip under the price. Hidden when the
     // bar is long overdue - that is a closed market or a stalled feed, and a
     // clock reading 00:00 forever would claim a close that is not coming.
+    // Hidden too when more than a whole bar is left: that bar has not opened,
+    // and counting it down put a 2h timer on every chart from 5m up.
     const left = this.tfMs ? last.t + this.tfMs - Date.now() : NaN
-    if (Number.isFinite(left) && left > -this.tfMs) {
+    if (Number.isFinite(left) && left > -this.tfMs && left <= this.tfMs) {
       const s = Math.max(0, Math.floor(left / 1000))
       const hh = Math.floor(s / 3600)
       const mm = Math.floor((s % 3600) / 60)
