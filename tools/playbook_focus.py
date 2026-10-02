@@ -44,7 +44,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'tools'))
 
-from timeframe_costs import SRC, SYMBOL, YEARS, DEV, CONFIRM, ci, enrich, max_dd  # noqa: E402
+from timeframe_costs import (SRC, SYMBOL, YEARS, DEV, CONFIRM, _spec, ci, enrich,  # noqa: E402
+                             max_dd, tag_pp)
 
 TFS = ['3m', '5m', '15m', '30m', '1h', '2h', '4h']
 PLAYBOOKS = ['mtf_pullback', 'sweep_reversal', 'breakout_retest', 'false_break_fade',
@@ -60,7 +61,7 @@ def load(prefix: str, tf: str) -> tuple:
             continue
         d = json.loads(f.read_text(encoding='utf-8'))
         years.append(y)
-        trades += [x for x in d['journal'] if x.get('outcome') != 'manual'
+        trades += [x for x in tag_pp(d['journal'], _spec()) if x.get('outcome') != 'manual'
                    and x.get('fill_ms') and x.get('profit') is not None]
         verdicts += d.get('verdicts') or []
     return trades, verdicts, years

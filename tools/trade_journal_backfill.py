@@ -262,6 +262,9 @@ def window(start: str, end: str, symbol: str, tf: str, tag: str, ff: str | None,
         'filter_notes': vetoes, 'news_gate': False, 'all_playbooks': all_playbooks,
         'verdicts': verdicts,
         'settings': lab_settings.jsonable(eff),
+        # the contract facts the P&L was priced with (tick_value is in the account's currency)
+        'spec': {k: s.spec.get(k) for k in ('tick_value', 'tick_size', 'contract_size',
+                                            'commission_per_lot_side', 'source')},
         'made': datetime.now(timezone.utc).isoformat(timespec='seconds'),
         'journal': journal}, default=str), encoding='utf-8')
     print(f'{tf}: {len(journal)} trades -> {out.relative_to(ROOT)} ({time.time() - t0:.0f}s)')

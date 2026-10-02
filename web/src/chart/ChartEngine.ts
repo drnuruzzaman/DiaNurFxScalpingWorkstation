@@ -75,7 +75,7 @@ export type ChartTheme = {
  */
 export const CHART_THEMES: Record<string, ChartTheme> = {
   midnight: {
-    bg: '#080b14',
+    bg: '#06080f',              // was #080b14; chart area darkened 2026-10-02
     grid: 'rgba(26,34,54,0.55)',
     gridStrong: '#1a2236',
     text: '#b6c1d6',
@@ -91,7 +91,7 @@ export const CHART_THEMES: Record<string, ChartTheme> = {
     chipInk: '#05070e',
   },
   navy: {
-    bg: '#0a1730',
+    bg: '#081124',              // was #0a1730; chart area darkened 2026-10-02
     grid: 'rgba(35,64,110,0.55)',
     gridStrong: '#23406e',
     text: '#b9cbe6',
@@ -107,7 +107,7 @@ export const CHART_THEMES: Record<string, ChartTheme> = {
     chipInk: '#05070e',
   },
   carbon: {
-    bg: '#100f12',
+    bg: '#0c0b0e',              // was #100f12; chart area darkened 2026-10-02
     grid: 'rgba(48,47,55,0.55)',
     gridStrong: '#302f37',
     text: '#c3c1c9',
@@ -128,7 +128,7 @@ export const CHART_THEMES: Record<string, ChartTheme> = {
   // thing. Amber follows to Ausloans Orange; cyan and violet stay, because
   // the brand has no equivalent of either.
   glossy: {
-    bg: '#041e42',
+    bg: '#031632',              // was #041e42; chart area darkened 2026-10-02
     grid: 'rgba(27,68,113,0.55)',
     gridStrong: '#1b4471',
     text: '#d9d9d6',

@@ -4,7 +4,7 @@
    {
     "id": "tmugjg7gh",
     "symbol": "XAUUSD.a",
-    "tf": "1h"
+    "tf": "15m"
    }
   ],
   "dianur.activeTab": "tmugjg7gh",
@@ -34,7 +34,7 @@
    "grid": false,
    "newsMarks": false,
    "positions": false,
-   "legRead": false
+   "legRead": true
   },
   "dianur.mtfSources": null,
   "dianur.hideFigures": 1,
@@ -45,16 +45,16 @@
   "dianur.snapPanels.v2": [
    "signal",
    "gauge",
-   "trend",
    "evidence",
-   "patterns"
+   "patterns",
+   "trend"
   ],
   "dianur.panels": {
    "left": true,
    "right": true,
-   "bottom": true
+   "bottom": false
   },
-  "dianur.dockTab": "signals",
+  "dianur.dockTab": "calendar",
   "dianur.boardSort": {
    "key": "symbol",
    "dir": 1
@@ -249,9 +249,9 @@
    "rsi": true,
    "volume": false
   },
-  "dianur.lab.dock": "trades",
+  "dianur.lab.dock": "journal",
   "dianur.lab.dockH": 254,
   "dianur.lab.cone": false
  },
- "saved_ms": 1790515844696
+ "saved_ms": 1790942582965
 }

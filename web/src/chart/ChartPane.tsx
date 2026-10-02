@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ChartEngine, type HoverInfo } from './ChartEngine'
 import type { Bar, ForecastCone, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot, TradeMark } from './types'
-import { fmt } from '../lib/format'
+import { fmt, span } from '../lib/format'
 
 /**
  * React wrapper around ChartEngine.
@@ -40,12 +40,7 @@ function NewsCard({ hit, width }: { hit: NewsHover; width: number }) {
   const cmp = act != null && prev != null ? act - prev : null
 
   const when = e.minutes == null ? ''
-    : e.minutes >= 1440 ? `in ${Math.round(e.minutes / 1440)}d`
-      : e.minutes >= 60 ? `in ${Math.round(e.minutes / 60)}h`
-        : e.minutes > 0 ? `in ${e.minutes}m`
-          : e.minutes > -60 ? `${-e.minutes}m ago`
-            : e.minutes > -1440 ? `${Math.round(-e.minutes / 60)}h ago`
-              : `${Math.round(-e.minutes / 1440)}d ago`
+    : e.minutes > 0 ? `in ${span(e.minutes)}` : `${span(e.minutes)} ago`
 
   // Flip to the left of the cursor when the card would run off the pane.
   const CARD_W = 232

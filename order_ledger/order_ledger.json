@@ -27057,8 +27057,8 @@
   "XAUUSD.a:4h:pattern_break:sell:1790326800000": {
    "id": "XAUUSD.a:4h:pattern_break:sell:1790326800000",
    "tag": "DNX 90617b3cee",
-   "state": "refused",
-   "attempts": 72,
+   "state": "expired",
+   "attempts": 73,
    "request": {
     "symbol": "XAUUSD.a",
     "tf": "4h",
@@ -27070,7 +27070,7 @@
     "tp": 4114.24,
     "expiration_ms": 1790629200000
    },
-   "ticket": null,
+   "ticket": 8955344,
    "position": null,
    "fill_price": null,
    "close_price": null,
@@ -27797,10 +27797,25 @@
      1790382925882,
      "refused",
      "broker returned 10018: Market closed"
+    ],
+    [
+     1790551582127,
+     "sending",
+     ""
+    ],
+    [
+     1790551582389,
+     "placed",
+     "limit ticket 8955344"
+    ],
+    [
+     1790632920300,
+     "expired",
+     "no longer at the broker (expired)"
     ]
    ],
    "created_ms": 1790379555155,
-   "updated_ms": 1790382925882,
+   "updated_ms": 1790632920300,
    "symbol": "XAUUSD.a",
    "tf": "4h",
    "side": "sell",
@@ -27849,7 +27864,4111 @@
    "side": "sell",
    "kind": "stop",
    "lots": 0.01
+  },
+  "XAUUSD.a:5m:breakout_retest:sell:1790551200000": {
+   "id": "XAUUSD.a:5m:breakout_retest:sell:1790551200000",
+   "tag": "DNX 9b9f301ad2",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4270.29,
+    "tp": 4256.75,
+    "expiration_ms": 0
+   },
+   "ticket": 8955343,
+   "position": 8955343,
+   "fill_price": 4264.59,
+   "close_price": 4261.81,
+   "outcome": "trail",
+   "r": 0.488,
+   "profit": 2.74,
+   "events": [
+    [
+     1790551579269,
+     "sending",
+     ""
+    ],
+    [
+     1790551579526,
+     "placed",
+     "market ticket 8955343"
+    ],
+    [
+     1790551582644,
+     "filled",
+     "position 8955343"
+    ],
+    [
+     1790552306364,
+     "filled",
+     "stop -> 4261.74"
+    ],
+    [
+     1790552895761,
+     "closed",
+     "trail at 4261.81"
+    ]
+   ],
+   "created_ms": 1790551579269,
+   "updated_ms": 1790552895761,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790552893649
+  },
+  "XAUUSD.a:3m:mtf_pullback:sell:1790551620000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:sell:1790551620000",
+   "tag": "DNX 5c08252d30",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4263.39,
+    "sl": 4267.14,
+    "tp": 4257.49,
+    "expiration_ms": 1790555040000
+   },
+   "ticket": 8955377,
+   "position": 8955377,
+   "fill_price": 4263.48,
+   "close_price": 4261.34,
+   "outcome": "trail",
+   "r": 0.585,
+   "profit": 2.1,
+   "events": [
+    [
+     1790551826134,
+     "sending",
+     ""
+    ],
+    [
+     1790551826393,
+     "placed",
+     "limit ticket 8955377"
+    ],
+    [
+     1790551940772,
+     "filled",
+     "position 8955377"
+    ],
+    [
+     1790552428611,
+     "filled",
+     "stop -> 4261.65"
+    ],
+    [
+     1790552522547,
+     "filled",
+     "stop -> 4261.57"
+    ],
+    [
+     1790552700519,
+     "filled",
+     "stop -> 4261.3"
+    ],
+    [
+     1790552878559,
+     "closed",
+     "trail at 4261.34"
+    ]
+   ],
+   "created_ms": 1790551826134,
+   "updated_ms": 1790552878559,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790552878047
+  },
+  "XAUUSD.a:5m:flag_continuation:sell:1790553000000": {
+   "id": "XAUUSD.a:5m:flag_continuation:sell:1790553000000",
+   "tag": "DNX 16c3e9ef5a",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4258.99,
+    "sl": 4266.98,
+    "tp": 4229.41,
+    "expiration_ms": 1790558100000
+   },
+   "ticket": 8955606,
+   "position": 8955606,
+   "fill_price": 4258.86,
+   "close_price": 4229.09,
+   "outcome": "target",
+   "r": 3.666,
+   "profit": 29.73,
+   "events": [
+    [
+     1790553303219,
+     "sending",
+     ""
+    ],
+    [
+     1790553303526,
+     "placed",
+     "stop ticket 8955606"
+    ],
+    [
+     1790553619196,
+     "filled",
+     "position 8955606"
+    ],
+    [
+     1790555353494,
+     "filled",
+     "stop -> 4252.77"
+    ],
+    [
+     1790555471526,
+     "closed",
+     "target at 4229.09"
+    ]
+   ],
+   "created_ms": 1790553303219,
+   "updated_ms": 1790555471526,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790555470703
+  },
+  "XAUUSD.a:3m:pattern_break:sell:1790553420000": {
+   "id": "XAUUSD.a:3m:pattern_break:sell:1790553420000",
+   "tag": "DNX b997b2d1c9",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4258.99,
+    "sl": 4267.42,
+    "tp": 4242.13,
+    "expiration_ms": 1790557200000
+   },
+   "ticket": 8955740,
+   "position": 8955740,
+   "fill_price": 4259.0,
+   "close_price": 4238.63,
+   "outcome": "target",
+   "r": 2.419,
+   "profit": 20.33,
+   "events": [
+    [
+     1790553794662,
+     "sending",
+     ""
+    ],
+    [
+     1790553794948,
+     "placed",
+     "limit ticket 8955740"
+    ],
+    [
+     1790553871947,
+     "filled",
+     "position 8955740"
+    ],
+    [
+     1790555354478,
+     "filled",
+     "stop -> 4252.68"
+    ],
+    [
+     1790555403600,
+     "filled",
+     "stop -> 4252.37"
+    ],
+    [
+     1790555472014,
+     "closed",
+     "target at 4238.63"
+    ]
+   ],
+   "created_ms": 1790553794662,
+   "updated_ms": 1790555472014,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790555469694
+  },
+  "XAUUSD.a:3m:mtf_pullback:sell:1790555940000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:sell:1790555940000",
+   "tag": "DNX 1db8e37035",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4259.02,
+    "tp": 4193.27,
+    "expiration_ms": 0
+   },
+   "ticket": 8956552,
+   "position": 8956552,
+   "fill_price": 4237.13,
+   "close_price": 4220.83,
+   "outcome": "trail",
+   "r": 0.745,
+   "profit": 16.26,
+   "events": [
+    [
+     1790556136850,
+     "sending",
+     ""
+    ],
+    [
+     1790556137521,
+     "placed",
+     "market ticket 8956552"
+    ],
+    [
+     1790556146983,
+     "filled",
+     "position 8956552"
+    ],
+    [
+     1790557964121,
+     "filled",
+     "stop -> 4220.71"
+    ],
+    [
+     1790558053475,
+     "closed",
+     "trail at 4220.83"
+    ]
+   ],
+   "created_ms": 1790556136850,
+   "updated_ms": 1790558053475,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790558053249
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1790546400000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1790546400000",
+   "tag": "DNX 1b156cd0eb",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4253.08,
+    "sl": 4319.19,
+    "tp": 4120.85,
+    "expiration_ms": 1790622000000
+   },
+   "ticket": 8956871,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790557206201,
+     "sending",
+     ""
+    ],
+    [
+     1790557206517,
+     "placed",
+     "limit ticket 8956871"
+    ],
+    [
+     1790561940492,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790557206201,
+   "updated_ms": 1790561940492,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:pattern_break:sell:1790555400000": {
+   "id": "XAUUSD.a:30m:pattern_break:sell:1790555400000",
+   "tag": "DNX cd1d3196ff",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4230.18,
+    "sl": 4318.13,
+    "tp": 4054.27,
+    "expiration_ms": 1790593200000
+   },
+   "ticket": 8956949,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790557342327,
+     "sending",
+     ""
+    ],
+    [
+     1790557342656,
+     "placed",
+     "limit ticket 8956949"
+    ],
+    [
+     1790561995569,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790557342327,
+   "updated_ms": 1790561995569,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:pattern_break:sell:1790557200000": {
+   "id": "XAUUSD.a:15m:pattern_break:sell:1790557200000",
+   "tag": "DNX 00947c3c9b",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4215.61,
+    "sl": 4317.61,
+    "tp": 4011.62,
+    "expiration_ms": 1790576100000
+   },
+   "ticket": 8957165,
+   "position": 8957165,
+   "fill_price": 4215.32,
+   "close_price": 4159.01,
+   "outcome": "manual",
+   "r": 0.55,
+   "profit": 56.27,
+   "events": [
+    [
+     1790558102735,
+     "sending",
+     ""
+    ],
+    [
+     1790558103031,
+     "placed",
+     "stop ticket 8957165"
+    ],
+    [
+     1790559355402,
+     "filled",
+     "position 8957165"
+    ],
+    [
+     1790589889263,
+     "closed",
+     "manual at 4159.01"
+    ]
+   ],
+   "created_ms": 1790558102735,
+   "updated_ms": 1790589889263,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790589887515
+  },
+  "XAUUSD.a:3m:pattern_break:sell:1790560260000": {
+   "id": "XAUUSD.a:3m:pattern_break:sell:1790560260000",
+   "tag": "DNX 1e7f6cd0a4",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4206.09,
+    "sl": 4224.77,
+    "tp": 4163.17,
+    "expiration_ms": 1790564040000
+   },
+   "ticket": 8957664,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790560442925,
+     "sending",
+     ""
+    ],
+    [
+     1790560443205,
+     "placed",
+     "stop ticket 8957664"
+    ],
+    [
+     1790561004838,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.5 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790560442925,
+   "updated_ms": 1790561004838,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790560500000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790560500000",
+   "tag": "DNX 39bc25ed38",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4206.09,
+    "sl": 4225.0,
+    "tp": 4155.49,
+    "expiration_ms": 1790566800000
+   },
+   "ticket": 8957775,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790560803841,
+     "sending",
+     ""
+    ],
+    [
+     1790560804325,
+     "placed",
+     "stop ticket 8957775"
+    ],
+    [
+     1790561120187,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790560803841,
+   "updated_ms": 1790561120187,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:mtf_pullback:sell:1790560980000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:sell:1790560980000",
+   "tag": "DNX 9940860bc8",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4222.52,
+    "tp": 4199.36,
+    "expiration_ms": 0
+   },
+   "ticket": 8957911,
+   "position": 8957911,
+   "fill_price": 4215.84,
+   "close_price": 4198.19,
+   "outcome": "target",
+   "r": 2.642,
+   "profit": 17.61,
+   "events": [
+    [
+     1790561378671,
+     "sending",
+     ""
+    ],
+    [
+     1790561379343,
+     "placed",
+     "market ticket 8957911"
+    ],
+    [
+     1790561384194,
+     "filled",
+     "position 8957911"
+    ],
+    [
+     1790563108953,
+     "filled",
+     "stop -> 4210.83"
+    ],
+    [
+     1790563388660,
+     "filled",
+     "stop -> 4210.41"
+    ],
+    [
+     1790563742970,
+     "filled",
+     "stop -> 4210.13"
+    ],
+    [
+     1790563984900,
+     "filled",
+     "stop -> 4208.06"
+    ],
+    [
+     1790564044061,
+     "filled",
+     "stop -> 4205.66"
+    ],
+    [
+     1790564133669,
+     "closed",
+     "target at 4198.19"
+    ]
+   ],
+   "created_ms": 1790561378671,
+   "updated_ms": 1790564133669,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790564118854
+  },
+  "XAUUSD.a:5m:flag_continuation:sell:1790561100000": {
+   "id": "XAUUSD.a:5m:flag_continuation:sell:1790561100000",
+   "tag": "DNX 57ab8a5089",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4206.09,
+    "sl": 4224.98,
+    "tp": 4155.49,
+    "expiration_ms": 1790566200000
+   },
+   "ticket": 8957928,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790561471139,
+     "sending",
+     ""
+    ],
+    [
+     1790561472239,
+     "placed",
+     "stop ticket 8957928"
+    ],
+    [
+     1790561914252,
+     "cancelled",
+     "price went through the stop before the entry filled"
+    ]
+   ],
+   "created_ms": 1790561471139,
+   "updated_ms": 1790561914252,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1790557200000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1790557200000",
+   "tag": "DNX f4f886c3eb",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4206.22,
+    "sl": 4379.64,
+    "tp": 3859.37,
+    "expiration_ms": 1790632800000
+   },
+   "ticket": 8958029,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790562041069,
+     "sending",
+     ""
+    ],
+    [
+     1790562042238,
+     "placed",
+     "stop ticket 8958029"
+    ],
+    [
+     1790562945879,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790562041069,
+   "updated_ms": 1790562945879,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:pattern_break:sell:1790559000000": {
+   "id": "XAUUSD.a:30m:pattern_break:sell:1790559000000",
+   "tag": "DNX 83c53797fd",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4318.29,
+    "tp": 4011.72,
+    "expiration_ms": 0
+   },
+   "ticket": 8958042,
+   "position": 8958042,
+   "fill_price": 4216.53,
+   "close_price": 4158.98,
+   "outcome": "manual",
+   "r": 0.566,
+   "profit": 57.51,
+   "events": [
+    [
+     1790562177353,
+     "sending",
+     ""
+    ],
+    [
+     1790562177881,
+     "placed",
+     "market ticket 8958042"
+    ],
+    [
+     1790562193579,
+     "filled",
+     "position 8958042"
+    ],
+    [
+     1790589889469,
+     "closed",
+     "manual at 4158.98"
+    ]
+   ],
+   "created_ms": 1790562177353,
+   "updated_ms": 1790589889469,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790589887220
+  },
+  "XAUUSD.a:5m:mtf_pullback:sell:1790562000000": {
+   "id": "XAUUSD.a:5m:mtf_pullback:sell:1790562000000",
+   "tag": "DNX 1bcc15dab1",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4224.66,
+    "tp": 4198.64,
+    "expiration_ms": 0
+   },
+   "ticket": 8958071,
+   "position": 8958071,
+   "fill_price": 4216.75,
+   "close_price": 4198.19,
+   "outcome": "target",
+   "r": 2.346,
+   "profit": 18.52,
+   "events": [
+    [
+     1790562442552,
+     "sending",
+     ""
+    ],
+    [
+     1790562444923,
+     "placed",
+     "market ticket 8958071"
+    ],
+    [
+     1790562476313,
+     "filled",
+     "position 8958071"
+    ],
+    [
+     1790563069372,
+     "filled",
+     "stop -> 4210.82"
+    ],
+    [
+     1790563908978,
+     "filled",
+     "stop -> 4209.17"
+    ],
+    [
+     1790564136265,
+     "closed",
+     "target at 4198.19"
+    ]
+   ],
+   "created_ms": 1790562442552,
+   "updated_ms": 1790564136265,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790564118854
+  },
+  "XAUUSD.a:2h:pattern_break:sell:1790542800000": {
+   "id": "XAUUSD.a:2h:pattern_break:sell:1790542800000",
+   "tag": "DNX dac9a5553b",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "2h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4244.76,
+    "sl": 4326.26,
+    "tp": 4081.76,
+    "expiration_ms": 1790694000000
+   },
+   "ticket": 8958189,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790562882730,
+     "sending",
+     ""
+    ],
+    [
+     1790562883528,
+     "placed",
+     "limit ticket 8958189"
+    ],
+    [
+     1790563179308,
+     "cancelled",
+     "invalidated on the closed bar - confidence 53 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790562882730,
+   "updated_ms": 1790563179308,
+   "symbol": "XAUUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:2h:pattern_break:sell:1790550000000": {
+   "id": "XAUUSD.a:2h:pattern_break:sell:1790550000000",
+   "tag": "DNX 119c64aa8c",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "2h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4230.81,
+    "sl": 4326.77,
+    "tp": 4038.89,
+    "expiration_ms": 1790701200000
+   },
+   "ticket": 8958313,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790563601874,
+     "sending",
+     ""
+    ],
+    [
+     1790563602522,
+     "placed",
+     "limit ticket 8958313"
+    ],
+    [
+     1790636431983,
+     "cancelled",
+     "invalidated on the closed bar - confidence 41 below the 55 floor after 2 warning(s)"
+    ]
+   ],
+   "created_ms": 1790563601874,
+   "updated_ms": 1790636431983,
+   "symbol": "XAUUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:flag_continuation:sell:1790563800000": {
+   "id": "XAUUSD.a:5m:flag_continuation:sell:1790563800000",
+   "tag": "DNX 50c1fd9042",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4201.58,
+    "sl": 4224.77,
+    "tp": 4155.49,
+    "expiration_ms": 1790568900000
+   },
+   "ticket": 8958426,
+   "position": 8958426,
+   "fill_price": 4201.58,
+   "close_price": 4180.5,
+   "outcome": "trail",
+   "r": 0.909,
+   "profit": 21.04,
+   "events": [
+    [
+     1790564168721,
+     "sending",
+     ""
+    ],
+    [
+     1790564169802,
+     "placed",
+     "limit ticket 8958426"
+    ],
+    [
+     1790564864778,
+     "filled",
+     "position 8958426"
+    ],
+    [
+     1790575204854,
+     "filled",
+     "stop -> 4184.19"
+    ],
+    [
+     1790575502845,
+     "filled",
+     "stop -> 4180.46"
+    ],
+    [
+     1790575614585,
+     "closed",
+     "trail at 4180.5"
+    ]
+   ],
+   "created_ms": 1790564168721,
+   "updated_ms": 1790575614585,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790575613652
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1790560800000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1790560800000",
+   "tag": "DNX 8f57ec4eb7",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4206.22,
+    "sl": 4379.71,
+    "tp": 3859.23,
+    "expiration_ms": 1790636400000
+   },
+   "ticket": 8958564,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790564516207,
+     "sending",
+     ""
+    ],
+    [
+     1790564517243,
+     "placed",
+     "limit ticket 8958564"
+    ],
+    [
+     1790589628920,
+     "cancelled",
+     "invalidated on the closed bar - confidence 43 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790564516207,
+   "updated_ms": 1790589628920,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:mtf_pullback:sell:1790564760000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:sell:1790564760000",
+   "tag": "DNX a3f5082570",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4202.77,
+    "sl": 4218.69,
+    "tp": 4170.92,
+    "expiration_ms": 1790568180000
+   },
+   "ticket": 8958676,
+   "position": 8958676,
+   "fill_price": 4202.77,
+   "close_price": 4189.63,
+   "outcome": "trail",
+   "r": 0.825,
+   "profit": 13.1,
+   "events": [
+    [
+     1790564958621,
+     "sending",
+     ""
+    ],
+    [
+     1790564958905,
+     "placed",
+     "limit ticket 8958676"
+    ],
+    [
+     1790565006015,
+     "filled",
+     "position 8958676"
+    ],
+    [
+     1790572942482,
+     "filled",
+     "stop -> 4190.83"
+    ],
+    [
+     1790573042319,
+     "filled",
+     "stop -> 4189.61"
+    ],
+    [
+     1790573284475,
+     "closed",
+     "trail at 4189.63"
+    ]
+   ],
+   "created_ms": 1790564958621,
+   "updated_ms": 1790573284475,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790573282053
+  },
+  "XAUUSD.a:3m:breakout_retest:sell:1790573220000": {
+   "id": "XAUUSD.a:3m:breakout_retest:sell:1790573220000",
+   "tag": "DNX 73f31f5938",
+   "state": "expired",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4190.53,
+    "sl": 4194.88,
+    "tp": 4181.83,
+    "expiration_ms": 1790576100000
+   },
+   "ticket": 8960647,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790573615015,
+     "sending",
+     ""
+    ],
+    [
+     1790573615281,
+     "placed",
+     "limit ticket 8960647"
+    ],
+    [
+     1790576100437,
+     "expired",
+     "no longer at the broker (expired)"
+    ]
+   ],
+   "created_ms": 1790573615015,
+   "updated_ms": 1790576100437,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:mtf_pullback:sell:1790577360000": {
+   "id": "XAUUSD.a:3m:mtf_pullback:sell:1790577360000",
+   "tag": "DNX 48809387bf",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4182.69,
+    "tp": 4161.55,
+    "expiration_ms": 0
+   },
+   "ticket": 8962213,
+   "position": 8962213,
+   "fill_price": 4176.21,
+   "close_price": 4165.6,
+   "outcome": "trail",
+   "r": 1.637,
+   "profit": 10.57,
+   "events": [
+    [
+     1790577544446,
+     "sending",
+     ""
+    ],
+    [
+     1790577544801,
+     "placed",
+     "market ticket 8962213"
+    ],
+    [
+     1790577547333,
+     "filled",
+     "position 8962213"
+    ],
+    [
+     1790578469460,
+     "filled",
+     "stop -> 4171.35"
+    ],
+    [
+     1790578623126,
+     "filled",
+     "stop -> 4166.73"
+    ],
+    [
+     1790578803621,
+     "filled",
+     "stop -> 4165.6"
+    ],
+    [
+     1790578935381,
+     "closed",
+     "trail at 4165.6"
+    ]
+   ],
+   "created_ms": 1790577544446,
+   "updated_ms": 1790578935381,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790578934449
+  },
+  "XAUUSD.a:3m:flag_continuation:sell:1790580060000": {
+   "id": "XAUUSD.a:3m:flag_continuation:sell:1790580060000",
+   "tag": "DNX d961e46062",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4166.98,
+    "tp": 4144.07,
+    "expiration_ms": 0
+   },
+   "ticket": 8963157,
+   "position": 8963157,
+   "fill_price": 4159.18,
+   "close_price": 4153.38,
+   "outcome": "trail",
+   "r": 0.744,
+   "profit": 5.76,
+   "events": [
+    [
+     1790580242701,
+     "sending",
+     ""
+    ],
+    [
+     1790580243074,
+     "placed",
+     "market ticket 8963157"
+    ],
+    [
+     1790580245621,
+     "filled",
+     "position 8963157"
+    ],
+    [
+     1790582273944,
+     "filled",
+     "stop -> 4153.33"
+    ],
+    [
+     1790582318579,
+     "closed",
+     "trail at 4153.38"
+    ]
+   ],
+   "created_ms": 1790580242701,
+   "updated_ms": 1790582318579,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790582317653
+  },
+  "XAUUSD.a:5m:flag_continuation:sell:1790582700000": {
+   "id": "XAUUSD.a:5m:flag_continuation:sell:1790582700000",
+   "tag": "DNX da7f125a6f",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4151.09,
+    "sl": 4161.52,
+    "tp": 4126.14,
+    "expiration_ms": 1790587800000
+   },
+   "ticket": 8964234,
+   "position": 8964234,
+   "fill_price": 4150.77,
+   "close_price": 4158.98,
+   "outcome": "manual",
+   "r": -0.764,
+   "profit": -8.25,
+   "events": [
+    [
+     1790583023496,
+     "sending",
+     ""
+    ],
+    [
+     1790583023756,
+     "placed",
+     "stop ticket 8964234"
+    ],
+    [
+     1790583658089,
+     "filled",
+     "position 8964234"
+    ],
+    [
+     1790589886830,
+     "closed",
+     "manual at 4158.98"
+    ]
+   ],
+   "created_ms": 1790583023496,
+   "updated_ms": 1790589886830,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790589886781
+  },
+  "XAUUSD.a:15m:mtf_pullback:sell:1790589600000": {
+   "id": "XAUUSD.a:15m:mtf_pullback:sell:1790589600000",
+   "tag": "DNX bf4b84daad",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4203.04,
+    "tp": 4059.89,
+    "expiration_ms": 0
+   },
+   "ticket": 8966397,
+   "position": 8966397,
+   "fill_price": 4156.07,
+   "close_price": 4125.02,
+   "outcome": "manual",
+   "r": 0.661,
+   "profit": 31.01,
+   "events": [
+    [
+     1790590505658,
+     "sending",
+     ""
+    ],
+    [
+     1790590505936,
+     "placed",
+     "market ticket 8966397"
+    ],
+    [
+     1790590508284,
+     "filled",
+     "position 8966397"
+    ],
+    [
+     1790609370506,
+     "closed",
+     "manual at 4125.02"
+    ]
+   ],
+   "created_ms": 1790590505658,
+   "updated_ms": 1790609370506,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790609370902
+  },
+  "XAUUSD.a:30m:mtf_pullback:sell:1790589600000": {
+   "id": "XAUUSD.a:30m:mtf_pullback:sell:1790589600000",
+   "tag": "DNX 6cc720b94e",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4204.12,
+    "tp": 4067.3,
+    "expiration_ms": 0
+   },
+   "ticket": 8966638,
+   "position": 8966638,
+   "fill_price": 4156.71,
+   "close_price": 4121.26,
+   "outcome": "trail",
+   "r": 0.748,
+   "profit": 35.41,
+   "events": [
+    [
+     1790591426510,
+     "sending",
+     ""
+    ],
+    [
+     1790591426777,
+     "placed",
+     "market ticket 8966638"
+    ],
+    [
+     1790591429138,
+     "filled",
+     "position 8966638"
+    ],
+    [
+     1790607443060,
+     "filled",
+     "stop -> 4121.15"
+    ],
+    [
+     1790607693112,
+     "closed",
+     "trail at 4121.26"
+    ]
+   ],
+   "created_ms": 1790591426510,
+   "updated_ms": 1790607693112,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790607692064
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790600700000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790600700000",
+   "tag": "DNX 19b99af982",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4140.77,
+    "sl": 4172.3,
+    "tp": 4077.7,
+    "expiration_ms": 1790607000000
+   },
+   "ticket": 8969291,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790601003173,
+     "sending",
+     ""
+    ],
+    [
+     1790601003534,
+     "placed",
+     "stop ticket 8969291"
+    ],
+    [
+     1790601903973,
+     "cancelled",
+     "invalidated on the closed bar - confidence 43 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790601003173,
+   "updated_ms": 1790601903973,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790601900000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790601900000",
+   "tag": "DNX 0a7ab557b6",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4138.93,
+    "sl": 4172.27,
+    "tp": 4072.25,
+    "expiration_ms": 1790608200000
+   },
+   "ticket": 8969650,
+   "position": 8969650,
+   "fill_price": 4138.37,
+   "close_price": 4125.3,
+   "outcome": "manual",
+   "r": 0.386,
+   "profit": 13.03,
+   "events": [
+    [
+     1790602403672,
+     "sending",
+     ""
+    ],
+    [
+     1790602403938,
+     "placed",
+     "stop ticket 8969650"
+    ],
+    [
+     1790602493332,
+     "filled",
+     "position 8969650"
+    ],
+    [
+     1790609370727,
+     "closed",
+     "manual at 4125.3"
+    ]
+   ],
+   "created_ms": 1790602403672,
+   "updated_ms": 1790609370727,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790609370192
+  },
+  "XAUUSD.a:15m:mtf_pullback:sell:1790608500000": {
+   "id": "XAUUSD.a:15m:mtf_pullback:sell:1790608500000",
+   "tag": "DNX b68ebcbe2f",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4164.46,
+    "tp": 4046.69,
+    "expiration_ms": 0
+   },
+   "ticket": 8972252,
+   "position": 8972252,
+   "fill_price": 4125.14,
+   "close_price": 4117.91,
+   "outcome": "manual",
+   "r": 0.184,
+   "profit": 7.19,
+   "events": [
+    [
+     1790609400231,
+     "sending",
+     ""
+    ],
+    [
+     1790609400483,
+     "placed",
+     "market ticket 8972252"
+    ],
+    [
+     1790609402751,
+     "filled",
+     "position 8972252"
+    ],
+    [
+     1790610477670,
+     "closed",
+     "manual at 4117.91"
+    ]
+   ],
+   "created_ms": 1790609400231,
+   "updated_ms": 1790610477670,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790610476084
+  },
+  "XAUUSD.a:5m:mtf_pullback:sell:1790609100000": {
+   "id": "XAUUSD.a:5m:mtf_pullback:sell:1790609100000",
+   "tag": "DNX c8c7fb9266",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4125.2,
+    "sl": 4146.69,
+    "tp": 4082.21,
+    "expiration_ms": 1790614800000
+   },
+   "ticket": 8972271,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790609436422,
+     "sending",
+     ""
+    ],
+    [
+     1790609436692,
+     "placed",
+     "limit ticket 8972271"
+    ],
+    [
+     1790609730559,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790609436422,
+   "updated_ms": 1790609730559,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:flag_continuation:sell:1790607600000": {
+   "id": "XAUUSD.a:30m:flag_continuation:sell:1790607600000",
+   "tag": "DNX b222d416e3",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4125.2,
+    "sl": 4203.05,
+    "tp": 4031.75,
+    "expiration_ms": 1790638200000
+   },
+   "ticket": 8972285,
+   "position": 8972285,
+   "fill_price": 4125.23,
+   "close_price": 4117.75,
+   "outcome": "manual",
+   "r": 0.096,
+   "profit": 7.44,
+   "events": [
+    [
+     1790609488066,
+     "sending",
+     ""
+    ],
+    [
+     1790609488313,
+     "placed",
+     "limit ticket 8972285"
+    ],
+    [
+     1790609817766,
+     "filled",
+     "position 8972285"
+    ],
+    [
+     1790610477902,
+     "closed",
+     "manual at 4117.75"
+    ]
+   ],
+   "created_ms": 1790609488066,
+   "updated_ms": 1790610477902,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790610477090
+  },
+  "XAUUSD.a:5m:mtf_pullback:sell:1790609700000": {
+   "id": "XAUUSD.a:5m:mtf_pullback:sell:1790609700000",
+   "tag": "DNX 13182b91a1",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4122.37,
+    "sl": 4131.94,
+    "tp": 4103.23,
+    "expiration_ms": 1790615400000
+   },
+   "ticket": 8972399,
+   "position": 8972399,
+   "fill_price": 4122.45,
+   "close_price": 4132.89,
+   "outcome": "stop",
+   "r": -1.1,
+   "profit": -10.48,
+   "events": [
+    [
+     1790610345476,
+     "sending",
+     ""
+    ],
+    [
+     1790610345729,
+     "placed",
+     "limit ticket 8972399"
+    ],
+    [
+     1790611019243,
+     "filled",
+     "position 8972399"
+    ],
+    [
+     1790612483924,
+     "closed",
+     "stop at 4132.89"
+    ]
+   ],
+   "created_ms": 1790610345476,
+   "updated_ms": 1790612483924,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790612484068
+  },
+  "XAUUSD.a:15m:mtf_pullback:sell:1790610300000": {
+   "id": "XAUUSD.a:15m:mtf_pullback:sell:1790610300000",
+   "tag": "DNX 34cf94ea11",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4139.69,
+    "tp": 4092.92,
+    "expiration_ms": 0
+   },
+   "ticket": 8972618,
+   "position": 8972618,
+   "fill_price": 4124.21,
+   "close_price": 4140.91,
+   "outcome": "stop",
+   "r": -1.079,
+   "profit": -16.74,
+   "events": [
+    [
+     1790611284901,
+     "sending",
+     ""
+    ],
+    [
+     1790611285218,
+     "placed",
+     "market ticket 8972618"
+    ],
+    [
+     1790611287705,
+     "filled",
+     "position 8972618"
+    ],
+    [
+     1790612794965,
+     "closed",
+     "stop at 4140.91"
+    ]
+   ],
+   "created_ms": 1790611284901,
+   "updated_ms": 1790612794965,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790612794066
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790612400000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790612400000",
+   "tag": "DNX 6a7a9f2042",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4161.93,
+    "tp": 4080.09,
+    "expiration_ms": 0
+   },
+   "ticket": 8973022,
+   "position": 8973022,
+   "fill_price": 4134.86,
+   "close_price": 4144.94,
+   "outcome": "manual",
+   "r": -0.372,
+   "profit": -9.67,
+   "events": [
+    [
+     1790612704520,
+     "sending",
+     ""
+    ],
+    [
+     1790612704826,
+     "placed",
+     "market ticket 8973022"
+    ],
+    [
+     1790612707222,
+     "filled",
+     "position 8973022"
+    ],
+    [
+     1790662288573,
+     "closed",
+     "manual at 4144.94"
+    ]
+   ],
+   "created_ms": 1790612704520,
+   "updated_ms": 1790662288573,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790662289997
+  },
+  "XAUUSD.a:30m:mtf_pullback:sell:1790611200000": {
+   "id": "XAUUSD.a:30m:mtf_pullback:sell:1790611200000",
+   "tag": "DNX c954efbdda",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4143.13,
+    "sl": 4176.47,
+    "tp": 4076.45,
+    "expiration_ms": 1790645400000
+   },
+   "ticket": 8973364,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790613100788,
+     "sending",
+     ""
+    ],
+    [
+     1790613101050,
+     "placed",
+     "limit ticket 8973364"
+    ],
+    [
+     1790614906250,
+     "cancelled",
+     "invalidated on the closed bar - confidence 50 below the 55 floor after 2 warning(s)"
+    ]
+   ],
+   "created_ms": 1790613100788,
+   "updated_ms": 1790614906250,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1h:mtf_pullback:sell:1790611200000": {
+   "id": "XAUUSD.a:1h:mtf_pullback:sell:1790611200000",
+   "tag": "DNX 8ed0b076c2",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4178.1,
+    "tp": 4032.93,
+    "expiration_ms": 0
+   },
+   "ticket": 8974891,
+   "position": 8974891,
+   "fill_price": 4132.27,
+   "close_price": 4145.05,
+   "outcome": "manual",
+   "r": -0.279,
+   "profit": -12.37,
+   "events": [
+    [
+     1790622130499,
+     "sending",
+     ""
+    ],
+    [
+     1790622130814,
+     "placed",
+     "market ticket 8974891"
+    ],
+    [
+     1790622133393,
+     "filled",
+     "position 8974891"
+    ],
+    [
+     1790662288763,
+     "closed",
+     "manual at 4145.05"
+    ]
+   ],
+   "created_ms": 1790622130499,
+   "updated_ms": 1790662288763,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790662289611
+  },
+  "XAUUSD.a:30m:mtf_pullback:sell:1790614800000": {
+   "id": "XAUUSD.a:30m:mtf_pullback:sell:1790614800000",
+   "tag": "DNX 49de4c6678",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4159.18,
+    "tp": 4088.02,
+    "expiration_ms": 0
+   },
+   "ticket": 8975084,
+   "position": 8975084,
+   "fill_price": 4133.5,
+   "close_price": 4114.64,
+   "outcome": "trail",
+   "r": 0.734,
+   "profit": 18.82,
+   "events": [
+    [
+     1790623934198,
+     "sending",
+     ""
+    ],
+    [
+     1790623934469,
+     "placed",
+     "market ticket 8975084"
+    ],
+    [
+     1790623936844,
+     "filled",
+     "position 8975084"
+    ],
+    [
+     1790628497412,
+     "filled",
+     "stop -> 4114.24"
+    ],
+    [
+     1790628883564,
+     "closed",
+     "trail at 4114.64"
+    ]
+   ],
+   "created_ms": 1790623934198,
+   "updated_ms": 1790628883564,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790628881849
+  },
+  "XAUUSD.a:4h:pattern_break:sell:1790614800000": {
+   "id": "XAUUSD.a:4h:pattern_break:sell:1790614800000",
+   "tag": "DNX 102a1f8097",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4070.18,
+    "sl": 4442.23,
+    "tp": 3326.1,
+    "expiration_ms": 1790917200000
+   },
+   "ticket": 8977506,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790639007187,
+     "sending",
+     ""
+    ],
+    [
+     1790639007442,
+     "placed",
+     "stop ticket 8977506"
+    ],
+    [
+     1790647661607,
+     "cancelled",
+     "invalidated on the closed bar - confidence 49 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790639007187,
+   "updated_ms": 1790647661607,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:pattern_break:sell:1790656200000": {
+   "id": "XAUUSD.a:30m:pattern_break:sell:1790656200000",
+   "tag": "DNX 581a155848",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4114.4,
+    "sl": 4141.72,
+    "tp": 4059.78,
+    "expiration_ms": 1790694000000
+   },
+   "ticket": 8982659,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790658081866,
+     "sending",
+     ""
+    ],
+    [
+     1790658082133,
+     "placed",
+     "stop ticket 8982659"
+    ],
+    [
+     1790659878456,
+     "cancelled",
+     "invalidated on the closed bar - confidence 47 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790658081866,
+   "updated_ms": 1790659878456,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:4h:pattern_break:sell:1790629200000": {
+   "id": "XAUUSD.a:4h:pattern_break:sell:1790629200000",
+   "tag": "DNX cb34e1168d",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4070.18,
+    "sl": 4441.92,
+    "tp": 3326.71,
+    "expiration_ms": 1790931600000
+   },
+   "ticket": 8982660,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790658086513,
+     "sending",
+     ""
+    ],
+    [
+     1790658086776,
+     "placed",
+     "stop ticket 8982660"
+    ],
+    [
+     1790662291090,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1790658086513,
+   "updated_ms": 1790662291090,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1h:mtf_pullback:sell:1790661600000": {
+   "id": "XAUUSD.a:1h:mtf_pullback:sell:1790661600000",
+   "tag": "DNX 135ebbe7a1",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4176.74,
+    "tp": 4067.63,
+    "expiration_ms": 0
+   },
+   "ticket": 8985199,
+   "position": 8985199,
+   "fill_price": 4139.48,
+   "close_price": 4176.77,
+   "outcome": "stop",
+   "r": -1.001,
+   "profit": -37.33,
+   "events": [
+    [
+     1790665454177,
+     "sending",
+     ""
+    ],
+    [
+     1790665454446,
+     "placed",
+     "market ticket 8985199"
+    ],
+    [
+     1790665456716,
+     "filled",
+     "position 8985199"
+    ],
+    [
+     1790723335771,
+     "closed",
+     "stop at 4176.77"
+    ]
+   ],
+   "created_ms": 1790665454177,
+   "updated_ms": 1790723335771,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790711989056
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790663100000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790663100000",
+   "tag": "DNX 3ff07c2fb3",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4143.4,
+    "sl": 4150.72,
+    "tp": 4130.5,
+    "expiration_ms": 1790669400000
+   },
+   "ticket": 8985448,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790666431132,
+     "sending",
+     ""
+    ],
+    [
+     1790666431395,
+     "placed",
+     "stop ticket 8985448"
+    ],
+    [
+     1790667037414,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790666431132,
+   "updated_ms": 1790667037414,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790667300000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790667300000",
+   "tag": "DNX b37407de71",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4150.98,
+    "tp": 4129.54,
+    "expiration_ms": 0
+   },
+   "ticket": 8985966,
+   "position": 8985966,
+   "fill_price": 4142.15,
+   "close_price": 4151.16,
+   "outcome": "stop",
+   "r": -1.02,
+   "profit": -9.05,
+   "events": [
+    [
+     1790668245175,
+     "sending",
+     ""
+    ],
+    [
+     1790668245441,
+     "placed",
+     "market ticket 8985966"
+    ],
+    [
+     1790668247764,
+     "filled",
+     "position 8985966"
+    ],
+    [
+     1790677846858,
+     "closed",
+     "stop at 4151.16"
+    ]
+   ],
+   "created_ms": 1790668245175,
+   "updated_ms": 1790677846858,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790677847851
+  },
+  "XAUUSD.a:15m:breakout_retest:sell:1790667000000": {
+   "id": "XAUUSD.a:15m:breakout_retest:sell:1790667000000",
+   "tag": "DNX c362d4522a",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4142.52,
+    "sl": 4153.16,
+    "tp": 4121.24,
+    "expiration_ms": 1790681400000
+   },
+   "ticket": 8987632,
+   "position": 8987632,
+   "fill_price": 4142.43,
+   "close_price": 4153.19,
+   "outcome": "stop",
+   "r": -1.003,
+   "profit": -10.8,
+   "events": [
+    [
+     1790675102285,
+     "sending",
+     ""
+    ],
+    [
+     1790675102627,
+     "placed",
+     "stop ticket 8987632"
+    ],
+    [
+     1790675582792,
+     "filled",
+     "position 8987632"
+    ],
+    [
+     1790679440426,
+     "closed",
+     "stop at 4153.19"
+    ]
+   ],
+   "created_ms": 1790675102285,
+   "updated_ms": 1790679440426,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790679440848
+  },
+  "XAUUSD.a:5m:breakout_retest:sell:1790682600000": {
+   "id": "XAUUSD.a:5m:breakout_retest:sell:1790682600000",
+   "tag": "DNX 4e787ed335",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4162.32,
+    "tp": 4140.02,
+    "expiration_ms": 0
+   },
+   "ticket": 8989889,
+   "position": 8989889,
+   "fill_price": 4155.24,
+   "close_price": 4162.63,
+   "outcome": "stop",
+   "r": -1.044,
+   "profit": -7.43,
+   "events": [
+    [
+     1790682902441,
+     "sending",
+     ""
+    ],
+    [
+     1790682902702,
+     "placed",
+     "market ticket 8989889"
+    ],
+    [
+     1790682905172,
+     "filled",
+     "position 8989889"
+    ],
+    [
+     1790723336636,
+     "closed",
+     "stop at 4162.63"
+    ]
+   ],
+   "created_ms": 1790682902441,
+   "updated_ms": 1790723336636,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790689297674
+  },
+  "XAUUSD.a:15m:breakout_retest:sell:1790682300000": {
+   "id": "XAUUSD.a:15m:breakout_retest:sell:1790682300000",
+   "tag": "DNX 58a737c871",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4163.17,
+    "tp": 4134.36,
+    "expiration_ms": 0
+   },
+   "ticket": 8989960,
+   "position": 8989960,
+   "fill_price": 4154.1,
+   "close_price": 4163.17,
+   "outcome": "stop",
+   "r": -1.0,
+   "profit": -9.11,
+   "events": [
+    [
+     1790683202415,
+     "sending",
+     ""
+    ],
+    [
+     1790683202682,
+     "placed",
+     "market ticket 8989960"
+    ],
+    [
+     1790683204988,
+     "filled",
+     "position 8989960"
+    ],
+    [
+     1790723337093,
+     "closed",
+     "stop at 4163.17"
+    ]
+   ],
+   "created_ms": 1790683202415,
+   "updated_ms": 1790723337093,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790689321652
+  },
+  "XAUUSD.a:4h:mtf_pullback:sell:1790701200000": {
+   "id": "XAUUSD.a:4h:mtf_pullback:sell:1790701200000",
+   "tag": "DNX 4d8b29dc30",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4327.45,
+    "tp": 3891.82,
+    "expiration_ms": 0
+   },
+   "ticket": 8996979,
+   "position": 8996979,
+   "fill_price": 4180.84,
+   "close_price": 4143.76,
+   "outcome": "manual",
+   "r": 0.253,
+   "profit": 38.29,
+   "events": [
+    [
+     1790723352344,
+     "sending",
+     ""
+    ],
+    [
+     1790723352655,
+     "placed",
+     "market ticket 8996979"
+    ],
+    [
+     1790723355014,
+     "filled",
+     "position 8996979"
+    ],
+    [
+     1790816241953,
+     "closed",
+     "manual at 4143.76"
+    ]
+   ],
+   "created_ms": 1790723352344,
+   "updated_ms": 1790816241953,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790816241065
+  },
+  "XAUUSD.a:5m:pattern_break:buy:1790725500000": {
+   "id": "XAUUSD.a:5m:pattern_break:buy:1790725500000",
+   "tag": "DNX d4ff94a36b",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4184.86,
+    "sl": 4176.39,
+    "tp": 4201.8,
+    "expiration_ms": 1790731800000
+   },
+   "ticket": 8997523,
+   "position": 8997523,
+   "fill_price": 4184.96,
+   "close_price": 4176.34,
+   "outcome": "stop",
+   "r": -1.006,
+   "profit": -8.66,
+   "events": [
+    [
+     1790726738050,
+     "sending",
+     ""
+    ],
+    [
+     1790726738340,
+     "placed",
+     "stop ticket 8997523"
+    ],
+    [
+     1790726768732,
+     "filled",
+     "position 8997523"
+    ],
+    [
+     1790730000851,
+     "closed",
+     "stop at 4176.34"
+    ]
+   ],
+   "created_ms": 1790726738050,
+   "updated_ms": 1790730000851,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790730001871
+  },
+  "XAUUSD.a:15m:pattern_break:sell:1790728200000": {
+   "id": "XAUUSD.a:15m:pattern_break:sell:1790728200000",
+   "tag": "DNX 4f9ffbc883",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4178.92,
+    "sl": 4189.79,
+    "tp": 4164.35,
+    "expiration_ms": 1790747100000
+   },
+   "ticket": 8998516,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790730967546,
+     "sending",
+     ""
+    ],
+    [
+     1790730967886,
+     "placed",
+     "limit ticket 8998516"
+    ],
+    [
+     1790731870689,
+     "cancelled",
+     "invalidated on the closed bar - confidence 51 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790730967546,
+   "updated_ms": 1790731870689,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:pattern_break:sell:1790731800000": {
+   "id": "XAUUSD.a:15m:pattern_break:sell:1790731800000",
+   "tag": "DNX c777c3fe02",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4190.21,
+    "tp": 4128.01,
+    "expiration_ms": 0
+   },
+   "ticket": 8998917,
+   "position": 8998917,
+   "fill_price": 4170.18,
+   "close_price": 4190.34,
+   "outcome": "stop",
+   "r": -1.006,
+   "profit": -20.2,
+   "events": [
+    [
+     1790732976295,
+     "sending",
+     ""
+    ],
+    [
+     1790732976602,
+     "placed",
+     "market ticket 8998917"
+    ],
+    [
+     1790732979597,
+     "filled",
+     "position 8998917"
+    ],
+    [
+     1790751158767,
+     "closed",
+     "stop at 4190.34"
+    ]
+   ],
+   "created_ms": 1790732976295,
+   "updated_ms": 1790751158767,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790751160054
+  },
+  "XAUUSD.a:5m:mtf_pullback:sell:1790732400000": {
+   "id": "XAUUSD.a:5m:mtf_pullback:sell:1790732400000",
+   "tag": "DNX 075c24e835",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4169.48,
+    "sl": 4174.64,
+    "tp": 4159.15,
+    "expiration_ms": 1790738100000
+   },
+   "ticket": 8998962,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790733345020,
+     "sending",
+     ""
+    ],
+    [
+     1790733345290,
+     "placed",
+     "stop ticket 8998962"
+    ],
+    [
+     1790733648746,
+     "reversed",
+     "opposite FINAL XAUUSD.a:5m:breakout_retest:buy:1790733300000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1790733345020,
+   "updated_ms": 1790733648746,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:breakout_retest:buy:1790733300000": {
+   "id": "XAUUSD.a:5m:breakout_retest:buy:1790733300000",
+   "tag": "DNX d77d704195",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4172.35,
+    "sl": 4167.37,
+    "tp": 4182.31,
+    "expiration_ms": 1790738100000
+   },
+   "ticket": 8999960,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790737504481,
+     "sending",
+     ""
+    ],
+    [
+     1790737504801,
+     "placed",
+     "limit ticket 8999960"
+    ],
+    [
+     1790737807226,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790737504481,
+   "updated_ms": 1790737807226,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:mtf_pullback:sell:1790739000000": {
+   "id": "XAUUSD.a:30m:mtf_pullback:sell:1790739000000",
+   "tag": "DNX b0fcb9a721",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4187.55,
+    "tp": 4142.41,
+    "expiration_ms": 0
+   },
+   "ticket": 9000434,
+   "position": 9000434,
+   "fill_price": 4173.71,
+   "close_price": 4188.29,
+   "outcome": "stop",
+   "r": -1.053,
+   "profit": -14.62,
+   "events": [
+    [
+     1790740928500,
+     "sending",
+     ""
+    ],
+    [
+     1790740928829,
+     "placed",
+     "market ticket 9000434"
+    ],
+    [
+     1790740931236,
+     "filled",
+     "position 9000434"
+    ],
+    [
+     1790751114334,
+     "closed",
+     "stop at 4188.29"
+    ]
+   ],
+   "created_ms": 1790740928500,
+   "updated_ms": 1790751114334,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790751113876
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1790737200000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1790737200000",
+   "tag": "DNX 64338a3137",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4170.76,
+    "sl": 4192.27,
+    "tp": 4130.55,
+    "expiration_ms": 1790812800000
+   },
+   "ticket": 9002606,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790748030869,
+     "sending",
+     ""
+    ],
+    [
+     1790748031143,
+     "placed",
+     "stop ticket 9002606"
+    ],
+    [
+     1790751205022,
+     "cancelled",
+     "price went through the stop before the entry filled"
+    ]
+   ],
+   "created_ms": 1790748030869,
+   "updated_ms": 1790751205022,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1h:pattern_break:sell:1790748000000": {
+   "id": "XAUUSD.a:1h:pattern_break:sell:1790748000000",
+   "tag": "DNX b890db7acb",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4212.04,
+    "tp": 4148.56,
+    "expiration_ms": 0
+   },
+   "ticket": 9003819,
+   "position": 9003819,
+   "fill_price": 4191.01,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790751617545,
+     "sending",
+     ""
+    ],
+    [
+     1790751617810,
+     "placed",
+     "market ticket 9003819"
+    ],
+    [
+     1790751620214,
+     "filled",
+     "position 9003819"
+    ]
+   ],
+   "created_ms": 1790751617545,
+   "updated_ms": 1790751620214,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:mtf_pullback:buy:1790754900000": {
+   "id": "XAUUSD.a:5m:mtf_pullback:buy:1790754900000",
+   "tag": "DNX a582ceb174",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4193.67,
+    "sl": 4187.1,
+    "tp": 4206.8,
+    "expiration_ms": 1790760600000
+   },
+   "ticket": 9004821,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790755845745,
+     "sending",
+     ""
+    ],
+    [
+     1790755846031,
+     "placed",
+     "limit ticket 9004821"
+    ],
+    [
+     1790756147374,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790755845745,
+   "updated_ms": 1790756147374,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:breakout_retest:sell:1790757900000": {
+   "id": "XAUUSD.a:15m:breakout_retest:sell:1790757900000",
+   "tag": "DNX 6cb51ec96b",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4191.84,
+    "sl": 4203.15,
+    "tp": 4169.22,
+    "expiration_ms": 1790772300000
+   },
+   "ticket": 9006129,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790759760769,
+     "sending",
+     ""
+    ],
+    [
+     1790759761030,
+     "placed",
+     "limit ticket 9006129"
+    ],
+    [
+     1790760599703,
+     "cancelled",
+     "invalidated on the closed bar - confidence 33 below the 55 floor after 3 warning(s)"
+    ]
+   ],
+   "created_ms": 1790759760769,
+   "updated_ms": 1790760599703,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:pattern_break:sell:1790766900000": {
+   "id": "XAUUSD.a:15m:pattern_break:sell:1790766900000",
+   "tag": "DNX 87a533a511",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4205.34,
+    "tp": 4139.8,
+    "expiration_ms": 0
+   },
+   "ticket": 9008000,
+   "position": 9008000,
+   "fill_price": 4184.13,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790767800543,
+     "sending",
+     ""
+    ],
+    [
+     1790767800853,
+     "placed",
+     "market ticket 9008000"
+    ],
+    [
+     1790767803086,
+     "filled",
+     "position 9008000"
+    ]
+   ],
+   "created_ms": 1790767800543,
+   "updated_ms": 1790767803086,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790810400000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790810400000",
+   "tag": "DNX 05021824ce",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4157.17,
+    "tp": 4142.21,
+    "expiration_ms": 0
+   },
+   "ticket": 9018831,
+   "position": 9018831,
+   "fill_price": 4151.98,
+   "close_price": 4142.13,
+   "outcome": "target",
+   "r": 1.898,
+   "profit": 9.81,
+   "events": [
+    [
+     1790813458791,
+     "sending",
+     ""
+    ],
+    [
+     1790813459236,
+     "placed",
+     "market ticket 9018831"
+    ],
+    [
+     1790813461637,
+     "filled",
+     "position 9018831"
+    ],
+    [
+     1790813807462,
+     "filled",
+     "stop -> 4148.09"
+    ],
+    [
+     1790813941114,
+     "closed",
+     "target at 4142.13"
+    ]
+   ],
+   "created_ms": 1790813458791,
+   "updated_ms": 1790813941114,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790813941454
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790813700000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790813700000",
+   "tag": "DNX 5f3eb480c2",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4165.34,
+    "tp": 4094.88,
+    "expiration_ms": 0
+   },
+   "ticket": 9019073,
+   "position": 9019073,
+   "fill_price": 4141.61,
+   "close_price": 4143.76,
+   "outcome": "manual",
+   "r": -0.091,
+   "profit": -2.19,
+   "events": [
+    [
+     1790814003840,
+     "sending",
+     ""
+    ],
+    [
+     1790814004152,
+     "placed",
+     "market ticket 9019073"
+    ],
+    [
+     1790814006435,
+     "filled",
+     "position 9019073"
+    ],
+    [
+     1790816242159,
+     "closed",
+     "manual at 4143.76"
+    ]
+   ],
+   "created_ms": 1790814003840,
+   "updated_ms": 1790816242159,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790816241779
+  },
+  "XAUUSD.a:5m:mtf_pullback:sell:1790816100000": {
+   "id": "XAUUSD.a:5m:mtf_pullback:sell:1790816100000",
+   "tag": "DNX 457ac6b58d",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4157.98,
+    "tp": 4119.91,
+    "expiration_ms": 0
+   },
+   "ticket": 9019996,
+   "position": 9019996,
+   "fill_price": 4145.76,
+   "close_price": 4158.06,
+   "outcome": "stop",
+   "r": -1.007,
+   "profit": -12.34,
+   "events": [
+    [
+     1790816423538,
+     "sending",
+     ""
+    ],
+    [
+     1790816423821,
+     "placed",
+     "market ticket 9019996"
+    ],
+    [
+     1790816426046,
+     "filled",
+     "position 9019996"
+    ],
+    [
+     1790816838003,
+     "closed",
+     "stop at 4158.06"
+    ]
+   ],
+   "created_ms": 1790816423538,
+   "updated_ms": 1790816838003,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790816838849
+  },
+  "XAUUSD.a:4h:mtf_pullback:sell:1790816400000": {
+   "id": "XAUUSD.a:4h:mtf_pullback:sell:1790816400000",
+   "tag": "DNX 09c93a8716",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4179.95,
+    "sl": 4230.65,
+    "tp": 4110.9,
+    "expiration_ms": 1791090000000
+   },
+   "ticket": 9030694,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790843572771,
+     "sending",
+     ""
+    ],
+    [
+     1790843573056,
+     "placed",
+     "limit ticket 9030694"
+    ],
+    [
+     1790845238439,
+     "cancelled",
+     "invalidated on the closed bar - confidence 46 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790843572771,
+   "updated_ms": 1790845238439,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:breakout_retest:sell:1790844000000": {
+   "id": "XAUUSD.a:5m:breakout_retest:sell:1790844000000",
+   "tag": "DNX 4b9db37737",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4151.84,
+    "sl": 4165.67,
+    "tp": 4124.19,
+    "expiration_ms": 1790848800000
+   },
+   "ticket": 9030989,
+   "position": 9030989,
+   "fill_price": 4151.72,
+   "close_price": 4165.84,
+   "outcome": "stop",
+   "r": -1.012,
+   "profit": -14.16,
+   "events": [
+    [
+     1790844611193,
+     "sending",
+     ""
+    ],
+    [
+     1790844611478,
+     "placed",
+     "stop ticket 9030989"
+    ],
+    [
+     1790844783931,
+     "filled",
+     "position 9030989"
+    ],
+    [
+     1790850095242,
+     "closed",
+     "stop at 4165.84"
+    ]
+   ],
+   "created_ms": 1790844611193,
+   "updated_ms": 1790850095242,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "exit_ms": 1790850096486
+  },
+  "XAUUSD.a:2h:pattern_break:sell:1790838000000": {
+   "id": "XAUUSD.a:2h:pattern_break:sell:1790838000000",
+   "tag": "DNX 0724642568",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "2h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4126.3,
+    "sl": 4223.53,
+    "tp": 3931.83,
+    "expiration_ms": 1790989200000
+   },
+   "ticket": 9031495,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790845674082,
+     "sending",
+     ""
+    ],
+    [
+     1790845674349,
+     "placed",
+     "stop ticket 9031495"
+    ],
+    [
+     1790852463610,
+     "reversed",
+     "opposite FINAL XAUUSD.a:2h:pattern_break:buy:1790845200000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1790845674082,
+   "updated_ms": 1790852463610,
+   "symbol": "XAUUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:4h:flag_continuation:sell:1790830800000": {
+   "id": "XAUUSD.a:4h:flag_continuation:sell:1790830800000",
+   "tag": "DNX b85982a318",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4139.28,
+    "sl": 4225.96,
+    "tp": 3934.35,
+    "expiration_ms": 1791075600000
+   },
+   "ticket": 9032596,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790849597351,
+     "sending",
+     ""
+    ],
+    [
+     1790849597680,
+     "placed",
+     "stop ticket 9032596"
+    ],
+    [
+     1790859705415,
+     "cancelled",
+     "invalidated on the closed bar - confidence 40 below the 55 floor after 2 warning(s)"
+    ]
+   ],
+   "created_ms": 1790849597351,
+   "updated_ms": 1790859705415,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:pattern_break:sell:1790859600000": {
+   "id": "XAUUSD.a:30m:pattern_break:sell:1790859600000",
+   "tag": "DNX 3eb0014898",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4149.54,
+    "sl": 4182.74,
+    "tp": 4091.72,
+    "expiration_ms": 1790897400000
+   },
+   "ticket": 9036945,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790861646060,
+     "sending",
+     ""
+    ],
+    [
+     1790861646388,
+     "placed",
+     "stop ticket 9036945"
+    ],
+    [
+     1790863314343,
+     "cancelled",
+     "invalidated on the closed bar - confidence 43 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790861646060,
+   "updated_ms": 1790863314343,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:2h:pattern_break:sell:1790852400000": {
+   "id": "XAUUSD.a:2h:pattern_break:sell:1790852400000",
+   "tag": "DNX eab0862f22",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "2h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4149.49,
+    "sl": 4188.38,
+    "tp": 4091.66,
+    "expiration_ms": 1791003600000
+   },
+   "ticket": 9054016,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790913725217,
+     "sending",
+     ""
+    ],
+    [
+     1790913725576,
+     "placed",
+     "stop ticket 9054016"
+    ],
+    [
+     1790915075619,
+     "cancelled",
+     "price went through the stop before the entry filled"
+    ]
+   ],
+   "created_ms": 1790913725217,
+   "updated_ms": 1790915075619,
+   "symbol": "XAUUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:breakout_retest:sell:1790915700000": {
+   "id": "XAUUSD.a:5m:breakout_retest:sell:1790915700000",
+   "tag": "DNX 897b08c5b0",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4189.62,
+    "tp": 4167.01,
+    "expiration_ms": 0
+   },
+   "ticket": 9054837,
+   "position": 9054837,
+   "fill_price": 4182.73,
+   "close_price": 4189.62,
+   "outcome": "stop",
+   "r": -1.0,
+   "profit": -6.93,
+   "events": [
+    [
+     1790916329211,
+     "sending",
+     ""
+    ],
+    [
+     1790916329502,
+     "placed",
+     "market ticket 9054837"
+    ],
+    [
+     1790916331666,
+     "filled",
+     "position 9054837"
+    ],
+    [
+     1790917892967,
+     "closed",
+     "stop at 4189.62"
+    ]
+   ],
+   "created_ms": 1790916329211,
+   "updated_ms": 1790917892967,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790917893250
+  },
+  "XAUUSD.a:4h:pattern_break:sell:1790888400000": {
+   "id": "XAUUSD.a:4h:pattern_break:sell:1790888400000",
+   "tag": "DNX 0cee54e492",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4139.28,
+    "sl": 4225.84,
+    "tp": 3934.35,
+    "expiration_ms": 1791190800000
+   },
+   "ticket": 9055092,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790917343494,
+     "sending",
+     ""
+    ],
+    [
+     1790917343778,
+     "placed",
+     "stop ticket 9055092"
+    ],
+    [
+     1790922157995,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1790917343494,
+   "updated_ms": 1790922157995,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790919900000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790919900000",
+   "tag": "DNX 1feb99d67e",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4184.88,
+    "sl": 4193.86,
+    "tp": 4166.93,
+    "expiration_ms": 1790926200000
+   },
+   "ticket": 9055920,
+   "position": 9055920,
+   "fill_price": 4184.89,
+   "close_price": 4194.2,
+   "outcome": "stop",
+   "r": -1.038,
+   "profit": -9.35,
+   "events": [
+    [
+     1790920217205,
+     "sending",
+     ""
+    ],
+    [
+     1790920217985,
+     "placed",
+     "limit ticket 9055920"
+    ],
+    [
+     1790920307426,
+     "filled",
+     "position 9055920"
+    ],
+    [
+     1790921049137,
+     "closed",
+     "stop at 4194.2"
+    ]
+   ],
+   "created_ms": 1790920217205,
+   "updated_ms": 1790921049137,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "exit_ms": 1790921050055
+  },
+  "XAUUSD.a:4h:pattern_break:sell:1790902800000": {
+   "id": "XAUUSD.a:4h:pattern_break:sell:1790902800000",
+   "tag": "DNX 861477c3db",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4235.17,
+    "sl": 4415.08,
+    "tp": 3875.34,
+    "expiration_ms": 1791205200000
+   },
+   "ticket": 9057351,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790924651500,
+     "sending",
+     ""
+    ],
+    [
+     1790924651772,
+     "placed",
+     "limit ticket 9057351"
+    ],
+    [
+     1790931739073,
+     "cancelled",
+     "invalidated on the closed bar - confidence 51 below the 55 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1790924651500,
+   "updated_ms": 1790931739073,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:buy:1790932200000": {
+   "id": "XAUUSD.a:5m:pattern_break:buy:1790932200000",
+   "tag": "DNX fbf9385252",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4178.5,
+    "tp": 4202.3,
+    "expiration_ms": 0
+   },
+   "ticket": 9060065,
+   "position": 9060065,
+   "fill_price": 4186.72,
+   "close_price": 4178.5,
+   "outcome": "stop",
+   "r": -1.0,
+   "profit": -8.26,
+   "events": [
+    [
+     1790932525793,
+     "sending",
+     ""
+    ],
+    [
+     1790932526095,
+     "placed",
+     "market ticket 9060065"
+    ],
+    [
+     1790932528386,
+     "filled",
+     "position 9060065"
+    ],
+    [
+     1790935683727,
+     "closed",
+     "stop at 4178.5"
+    ]
+   ],
+   "created_ms": 1790932525793,
+   "updated_ms": 1790935683727,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01,
+   "exit_ms": 1790935685247
+  },
+  "XAUUSD.a:4h:pattern_break:sell:1790917200000": {
+   "id": "XAUUSD.a:4h:pattern_break:sell:1790917200000",
+   "tag": "DNX c3e9a8a7d5",
+   "state": "placed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4235.17,
+    "sl": 4414.6,
+    "tp": 3876.31,
+    "expiration_ms": 1791219600000
+   },
+   "ticket": 9063034,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790940519668,
+     "sending",
+     ""
+    ],
+    [
+     1790940519940,
+     "placed",
+     "limit ticket 9063034"
+    ]
+   ],
+   "created_ms": 1790940519668,
+   "updated_ms": 1790940519940,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790938800000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790938800000",
+   "tag": "DNX 9e6f04a567",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4184.42,
+    "sl": 4190.37,
+    "tp": 4170.7,
+    "expiration_ms": 1790945100000
+   },
+   "ticket": 9063173,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790940947388,
+     "sending",
+     ""
+    ],
+    [
+     1790940947658,
+     "placed",
+     "limit ticket 9063173"
+    ],
+    [
+     1790941249054,
+     "cancelled",
+     "invalidated on the closed bar - flip at 4182.76 (score 100) sits only 28% of the way to TP1"
+    ]
+   ],
+   "created_ms": 1790940947388,
+   "updated_ms": 1790941249054,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "USDJPY.a:15m:pattern_break:buy:1790939700000": {
+   "id": "USDJPY.a:15m:pattern_break:buy:1790939700000",
+   "tag": "DNX ce82eacf8f",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.05,
+    "price": 157.804,
+    "sl": 157.422,
+    "tp": 158.569,
+    "expiration_ms": 1790958600000
+   },
+   "ticket": 9063282,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790941474851,
+     "sending",
+     ""
+    ],
+    [
+     1790941475115,
+     "placed",
+     "stop ticket 9063282"
+    ],
+    [
+     1790942584137,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1790941474851,
+   "updated_ms": 1790942584137,
+   "symbol": "USDJPY.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.05
+  },
+  "XAUUSD.a:5m:pattern_break:sell:1790941200000": {
+   "id": "XAUUSD.a:5m:pattern_break:sell:1790941200000",
+   "tag": "DNX 2aaa92dfe4",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4190.4,
+    "tp": 4157.46,
+    "expiration_ms": 0
+   },
+   "ticket": 9063291,
+   "position": 9063291,
+   "fill_price": 4179.52,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790941506752,
+     "sending",
+     ""
+    ],
+    [
+     1790941507038,
+     "placed",
+     "market ticket 9063291"
+    ],
+    [
+     1790941509504,
+     "filled",
+     "position 9063291"
+    ]
+   ],
+   "created_ms": 1790941506752,
+   "updated_ms": 1790941509504,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "AUDUSD.a:30m:mtf_pullback:sell:1790938800000": {
+   "id": "AUDUSD.a:30m:mtf_pullback:sell:1790938800000",
+   "tag": "DNX 4dd0fe4192",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "AUDUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.05,
+    "price": 0.0,
+    "sl": 0.695,
+    "tp": 0.69,
+    "expiration_ms": 0
+   },
+   "ticket": 9063389,
+   "position": 9063389,
+   "fill_price": 0.69404,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790941927198,
+     "sending",
+     ""
+    ],
+    [
+     1790941927472,
+     "placed",
+     "market ticket 9063389"
+    ],
+    [
+     1790941930591,
+     "filled",
+     "position 9063389"
+    ]
+   ],
+   "created_ms": 1790941927198,
+   "updated_ms": 1790941930591,
+   "symbol": "AUDUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.05
+  },
+  "USDJPY.a:5m:pattern_break:buy:1790940900000": {
+   "id": "USDJPY.a:5m:pattern_break:buy:1790940900000",
+   "tag": "DNX 7b03ad148f",
+   "state": "placed",
+   "attempts": 1,
+   "request": {
+    "symbol": "USDJPY.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.05,
+    "price": 157.721,
+    "sl": 157.506,
+    "tp": 158.151,
+    "expiration_ms": 1790947200000
+   },
+   "ticket": 9063657,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1790942546357,
+     "sending",
+     ""
+    ],
+    [
+     1790942546612,
+     "placed",
+     "stop ticket 9063657"
+    ]
+   ],
+   "created_ms": 1790942546357,
+   "updated_ms": 1790942546612,
+   "symbol": "USDJPY.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.05
   }
  },
- "saved_ms": 1790382925882
+ "saved_ms": 1790942584137
 }

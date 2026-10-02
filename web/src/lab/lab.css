@@ -201,7 +201,19 @@
 .lab-table { font-size: 10px; }
 .lab-table tbody tr { cursor: pointer; }
 /* .lab-table tbody tr.sel: the shared selected-row yellow, styles/theme.css */
-.lab-table tfoot td { position: sticky; bottom: 0; background: var(--bg-panel); border-top: 1px solid var(--line); padding: 4px 6px; }
+/* The totals row: pinned to the bottom on its own raised, SOLID ground, so the
+   rows scrolling under it cannot show through, with a line above it. The line
+   is an inset shadow - a border on a sticky cell scrolls away with the table. */
+.lab-table tfoot td { position: sticky; bottom: 0; z-index: 1; background: var(--bg-raise);
+  box-shadow: inset 0 1px 0 var(--line-strong), 0 -4px 8px rgba(0, 0, 0, 0.25);
+  padding: 5px 6px; font-weight: 700; }
+/* The count in the body's ink; the R and P&L totals in green / red - stated
+   here because .tabular td's own colour outranks the bare .t-up / .t-down. */
+.lab-table tfoot td { color: var(--ink); }
+.lab-table tfoot td.t-up { color: var(--bull); }
+.lab-table tfoot td.t-down { color: var(--bear); }
+.lab-table tfoot .lab-tot-w { color: var(--bull); }
+.lab-table tfoot .lab-tot-l { color: var(--bear); }
 .lab-table .chip { font-size: 8px; padding: 0 4px; line-height: 1.5; }
 
 .lab-journal, .lab-sessions, .lab-snaps { display: flex; flex-direction: column; height: 100%; min-height: 0; }

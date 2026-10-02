@@ -25,6 +25,21 @@ export const dateUTC = (ms: number): string => {
   return `${String(d.getUTCDate()).padStart(2, '0')} ${d.toLocaleString('en', { month: 'short', timeZone: 'UTC' })} ${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`
 }
 
+/**
+ * A span of minutes in two units, for countdowns: 45m, 2h 30m, 1d 2h. The
+ * second unit is dropped when it is zero (2h, 1d). Rounded to the minute.
+ */
+export const span = (minutes: number): string => {
+  const m = Math.max(0, Math.round(Math.abs(minutes)))
+  if (m < 60) return `${m}m`
+  if (m < 1440) {
+    const h = Math.floor(m / 60), r = m % 60
+    return r ? `${h}h ${r}m` : `${h}h`
+  }
+  const d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60)
+  return h ? `${d}d ${h}h` : `${d}d`
+}
+
 export const ago = (ms: number): string => {
   const s = Math.max(0, Math.round((Date.now() - ms) / 1000))
   if (s < 60) return `${s}s`

@@ -83,7 +83,8 @@ def default_config() -> dict:
         'include_challenge': True,
         'watch': [],
         'destinations': [],
-        'news': {'enabled': False, 'lead_minutes': 10, 'impact': 'high'},
+        # refresh_minutes: how often the release calendar is fetched (news.py).
+        'news': {'enabled': False, 'lead_minutes': 10, 'impact': 'high', 'refresh_minutes': 15},
         # Chats outside a private DM that may run bot commands.
         #
         # Empty by default and opt-in per chat, because a command reply

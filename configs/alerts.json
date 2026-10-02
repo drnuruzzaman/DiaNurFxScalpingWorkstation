@@ -5,10 +5,10 @@
   "statuses": [
     "qualified"
   ],
-  "cooldown_minutes": 10,
+  "cooldown_minutes": 5,
   "quiet_hours_utc": {
     "enabled": false,
-    "from": 22,
+    "from": 20,
     "to": 6
   },
   "include_challenge": true,
@@ -64,13 +64,13 @@
     {
       "symbol": "USDJPY.a",
       "tf": "1h",
-      "enabled": true,
+      "enabled": false,
       "note": ""
     },
     {
       "symbol": "USDJPY.a",
       "tf": "4h",
-      "enabled": true,
+      "enabled": false,
       "note": ""
     },
     {
@@ -82,13 +82,43 @@
     {
       "symbol": "USDJPY.a",
       "tf": "2h",
-      "enabled": true,
+      "enabled": false,
       "note": ""
     },
     {
       "symbol": "USDJPY.a",
       "tf": "1d",
-      "enabled": true,
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "1m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "3m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "5m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "15m",
+      "enabled": false,
+      "note": ""
+    },
+    {
+      "symbol": "USDJPY.a",
+      "tf": "30m",
+      "enabled": false,
       "note": ""
     }
   ],
@@ -129,7 +159,8 @@
   "news": {
     "enabled": true,
     "lead_minutes": 10,
-    "impact": "low"
+    "impact": "low",
+    "refresh_minutes": 360
   },
   "command_chats": [
     "t.me/dianurfx"

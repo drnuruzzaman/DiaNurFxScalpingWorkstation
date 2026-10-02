@@ -118,7 +118,12 @@ function TradesTab(p: Parameters<typeof LabDock>[0]) {
       {label}{sort.k === k ? (sort.dir > 0 ? ' ▲' : ' ▼') : ''}
     </th>
   )
-  const tot = rows.reduce((a, t) => ({ r: a.r + t.r, p: a.p + t.profit, w: a.w + (t.profit > 0 ? 1 : 0) }), { r: 0, p: 0, w: 0 })
+  // Wins and losses by money (a scratch at exactly 0 is neither), with what each side made.
+  const tot = rows.reduce((a, t) => ({
+    r: a.r + t.r, p: a.p + t.profit,
+    w: a.w + (t.profit > 0 ? 1 : 0), l: a.l + (t.profit < 0 ? 1 : 0),
+    wp: a.wp + (t.profit > 0 ? t.profit : 0), lp: a.lp + (t.profit < 0 ? t.profit : 0),
+  }), { r: 0, p: 0, w: 0, l: 0, wp: 0, lp: 0 })
   return (
     <table className="tabular lab-table">
       <thead><tr>
@@ -149,7 +154,14 @@ function TradesTab(p: Parameters<typeof LabDock>[0]) {
         ))}
       </tbody>
       <tfoot><tr>
-        <td colSpan={9} className="t-dim">{rows.length} trades · {rows.length ? Math.round(tot.w / rows.length * 100) : 0}% won{!p.reveal && rows.length < p.trades.length ? ` · ${p.trades.length - rows.length} after this bar hidden` : ''}</td>
+        <td colSpan={9}>
+          {rows.length} trades
+          {' · '}<span className="lab-tot-w">{tot.w} won ({signed(tot.wp, 2)})</span>
+          {' · '}<span className="lab-tot-l">{tot.l} lost ({signed(tot.lp, 2)})</span>
+          {rows.length - tot.w - tot.l > 0 ? ` · ${rows.length - tot.w - tot.l} flat` : ''}
+          {' · '}{rows.length ? Math.round(tot.w / rows.length * 100) : 0}% won
+          {!p.reveal && rows.length < p.trades.length ? ` · ${p.trades.length - rows.length} after this bar hidden` : ''}
+        </td>
         <td className={`num ${tot.r >= 0 ? 't-up' : 't-down'}`}>{signed(tot.r, 2)}</td>
         <td className={`num ${tot.p >= 0 ? 't-up' : 't-down'}`}>{signed(tot.p, 2)}</td>
         <td colSpan={4} />

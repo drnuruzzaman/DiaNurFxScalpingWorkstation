@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { api } from '../lib/api'
-import { dateUTC, fmt } from '../lib/format'
+import { dateUTC, fmt, span } from '../lib/format'
 import { Empty } from './common'
 import { MarketData } from './MarketData'
+import { SymbolPicker } from './SymbolPicker'
+import { TrashConfirm, TrashIcon } from '../lab/DeleteSession'
 
 type Tab = 'alerts' | 'news' | 'destinations' | 'risk' | 'data' | 'log'
 export type SettingsTab = Tab
@@ -50,7 +52,7 @@ const BROKER_TP_HINT: Record<string, string> = {
 }
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: 'alerts', label: 'ALERTS' },
+  { key: 'alerts', label: 'SIGNAL ALERTS' },
   { key: 'news', label: 'NEWS' },
   { key: 'destinations', label: 'DESTINATIONS' },
   { key: 'risk', label: 'RISK & GATES' },
@@ -79,8 +81,10 @@ type AlertsPayload = {
  * usually noise on 1m. Row and column headers toggle whole lines so filling it
  * in does not take forty clicks.
  */
-export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
+export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, initialTab }: {
   onClose: () => void
+  /** Replace the watchlist - how Signal Alerts adds an instrument. */
+  onWatchlist?: (symbols: string[]) => void
   /** The tab to open on - Market data when opened from the footer's update. */
   initialTab?: Tab
   liveTf?: string
@@ -171,6 +175,22 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, draft])
 
+  const [fetchingNews, setFetchingNews] = useState(false)
+  // Signal Alerts > Search symbols: the picker, then a confirm before the add.
+  const [symPicker, setSymPicker] = useState(false)
+  const [pendingAdd, setPendingAdd] = useState<string | null>(null)
+  const [addNote, setAddNote] = useState<string | null>(null)
+  useEffect(() => {
+    if (!addNote) return
+    const t = window.setTimeout(() => setAddNote(null), 8000)
+    return () => window.clearTimeout(t)
+  }, [addNote])
+  const fetchNow = async () => {
+    setFetchingNews(true)
+    try { await api.newsRefresh() } catch { /* the read below still shows what is held */ }
+    await fetchNews()
+    setFetchingNews(false)
+  }
   const fetchNews = async () => {
     try { setNews(await api.news(draft?.news?.impact ?? 'high')) }
     catch (e: any) { flash(e.message) }
@@ -279,9 +299,25 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
     setDirty(true)
   }
 
-  const toggleRow = (symbol: string, on: boolean) => {
-    if (!data) return
-    for (const tf of data.timeframes) toggleCell(symbol, tf, on)
+  /**
+   * Remove an instrument card: its alert timeframes are switched off and saved
+   * at once (the watchlist change is immediate, so the alerts should not wait
+   * for Save), and it leaves the watchlist - which removes the card, stops its
+   * signals, and with them any auto trade on it. Open positions are untouched.
+   */
+  const removeInstrument = async (sym: string) => {
+    const on = data ? data.timeframes.filter((tf) => data.matrix[sym]?.[tf]) : []
+    for (const tf of on) await api.alertsWatch(sym, tf, false)
+    setData((d) => d && ({
+      ...d,
+      matrix: { ...d.matrix, [sym]: Object.fromEntries(d.timeframes.map((tf) => [tf, false])) },
+    }))
+    setDraft((d: any) => d && ({
+      ...d,
+      watch: (d.watch ?? []).map((c: any) => (c.symbol === sym ? { ...c, enabled: false } : c)),
+    }))
+    onWatchlist?.(watchlist.filter((x) => x !== sym))
+    setAddNote(`${sym} removed from the watchlist${on.length ? ' and its alerts switched off' : ''}`)
   }
 
   const saveAlerts = async () => {
@@ -394,18 +430,73 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
             per instrument every <b>{cfg.cooldown_minutes}</b> min.
           </div>
 
+          <div className="set-row">
+            <button className="tool-btn" disabled={!onWatchlist}
+              title="Add an instrument: it joins the watchlist, so the engine scans it and it gets a row here"
+              onClick={() => { setAddNote(null); setSymPicker(true) }}>🔍 Search symbols…</button>
+          </div>
+          {pendingAdd && (() => {
+            const ex = engine?.execution ?? {}
+            const gold = /XAU/i.test(pendingAdd)
+            const lots = gold ? (ex.lots_gold ?? 0.01) : (ex.lots_non_gold ?? 0.05)
+            const tfs: string[] = ex.auto_timeframes ?? []
+            return (
+              <div className="set-note add-confirm">
+                Add <b className="mono">{pendingAdd}</b> to the watchlist? The engine starts scanning it
+                for signals, and it gets a row below to switch alert timeframes on.
+                {ex.auto ? (
+                  <div className="t-warn" style={{ marginTop: 4 }}>
+                    AUTO trading is on: qualified signals on {pendingAdd}
+                    {tfs.length ? ` (${tfs.join(', ')})` : ''} will also be sent to MT5,
+                    at {lots} lots.
+                  </div>
+                ) : (
+                  <div className="t-dim" style={{ marginTop: 4 }}>
+                    AUTO trading is off, so nothing is sent to MT5 for it.
+                  </div>
+                )}
+                <div className="set-row" style={{ marginTop: 6, marginBottom: 0 }}>
+                  <button className="tool-btn primary" onClick={() => {
+                    onWatchlist?.([...watchlist, pendingAdd])
+                    setAddNote(`${pendingAdd} added - switch its timeframes on below`)
+                    setPendingAdd(null)
+                  }}>Add {pendingAdd}</button>
+                  <button className="tool-btn" onClick={() => setPendingAdd(null)}>Cancel</button>
+                </div>
+              </div>
+            )
+          })()}
+          {symPicker && (
+            <SymbolPicker current="" watchlist={watchlist}
+              onPick={(sym) => {
+                setSymPicker(false)
+                if (watchlist.includes(sym)) setAddNote(`${sym} is already here - see its row below`)
+                else setPendingAdd(sym)
+              }}
+              onClose={() => setSymPicker(false)}
+              hint="Pick an instrument to add to the watchlist and to these alerts." />
+          )}
+
           {shown.map((sym) => {
             const row = data.matrix[sym] ?? {}
             const on = data.timeframes.filter((tf) => row[tf]).length
             return (
               <div className="inst-card" key={sym}>
+                {/* Right edge, middle of the card - clear of the timeframe pills. */}
+                {onWatchlist && (
+                  <span className="inst-trash">
+                    {watchlist.length > 1 ? (
+                      <TrashConfirm compact
+                        title={`Remove ${sym}: off the watchlist (no more signals or auto trades on it) and its alerts switched off`}
+                        onConfirm={() => removeInstrument(sym)} />
+                    ) : (
+                      <button className="lab-link lab-del-x" disabled
+                        title="The watchlist needs at least one instrument"><TrashIcon /></button>
+                    )}
+                  </span>
+                )}
                 <div className="inst-head">
                   <span className="inst-name">{sym}</span>
-                  <span className="spacer" />
-                  {on > 0 && (
-                    <button className="inst-x" title={`Switch every timeframe off for ${sym}`}
-                      onClick={() => toggleRow(sym, false)}>&times;</button>
-                  )}
                 </div>
                 <div className="pill-row">
                   {data.timeframes.map((tf) => (
@@ -470,6 +561,14 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
           <div className="set-note">
             Recommended. An alert that only argues one side trains you to stop
             thinking, and arguing both is the point of this system.
+          </div>
+
+          <div className="set-head">Scanner</div>
+          <div className="set-note">
+            There is no separate scheduler to register. The service scans every
+            watched timeframe continuously while it is running — each one on a
+            cadence matched to its own bar — and alerts fire from that scan. If
+            the service is up, alerting is live.
           </div>
         </>
       )
@@ -606,7 +705,7 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
             they never were.
           </div>
 
-          <div className="set-grid">
+          <div className="set-grid news-grid">
             <Field label="Alert lead (minutes)" hint="how long before a release to message">
               <input type="number" min={0} max={120}
                 value={n.lead_minutes ?? 10}
@@ -620,11 +719,39 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
                 <option value="low">low and above</option>
               </select>
             </Field>
+            <Field label="Fetch the calendar every (minutes)"
+              hint="15 min to 24 h - alerts on or off">
+              <div className="news-fetch">
+                <div className="news-fetch-ctl">
+                  <input type="number" min={15} max={1440} step={5}
+                    value={n.refresh_minutes ?? 15}
+                    onChange={(e) => patch({ news: { ...n, refresh_minutes: +e.target.value } })} />
+                  <button className="tool-btn" disabled={fetchingNews}
+                    title="Ask every provider now, whatever the interval"
+                    onClick={fetchNow}>{fetchingNews ? 'Fetching…' : 'Fetch now'}</button>
+                </div>
+                {news?.last_refresh_ms != null && (() => {
+                  const counts = Object.entries(news.last_counts ?? {}).map(([k, v]) => `${k} ${v}`).join(', ')
+                  const l1 = `Last fetched ${new Date(news.last_refresh_ms).toLocaleTimeString()} `
+                    + `(${span((Date.now() - news.last_refresh_ms) / 60_000)} ago)`
+                    + (news.next_refresh_ms ? ` · next ${new Date(news.next_refresh_ms).toLocaleTimeString()}` : '')
+                  const l2 = `every ${span(news.refresh_minutes)}` + (counts ? ` · ${counts}` : '')
+                  // Two fixed lines, so the row is as tall as the box beside it and the
+                  // three fields stay level; the full text is in the tooltip.
+                  return (
+                    <div className="news-fetch-status t-dim" title={`${l1}\n${l2}`}>
+                      <div>{l1}</div><div>{l2}</div>
+                    </div>
+                  )
+                })()}
+              </div>
+            </Field>
           </div>
 
           <div className="set-head">
             Upcoming
             <button className="tool-btn" style={{ marginLeft: 10 }}
+              title="Re-read the calendar the API already holds"
               onClick={fetchNews}>Refresh</button>
           </div>
 
@@ -634,7 +761,7 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
                 {news.next
                   ? <>Next: <b>{news.next.currency} {news.next.title}</b> in{' '}
                     <b className={news.minutes_to_next < 30 ? 't-warn' : ''}>
-                      {news.minutes_to_next} min
+                      {span(news.minutes_to_next)}
                     </b></>
                   : <>Nothing at this impact level in the next 24 hours.</>}
                 {' '}<span className="t-dim">
@@ -665,11 +792,7 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
                     {news.events.slice(0, 14).map((e: any, i: number) => (
                       <tr key={i}>
                         <td className={e.minutes_away < 0 ? 't-dim' : 't-hi'}>
-                          {e.minutes_away < 0
-                            ? 'passed'
-                            : e.minutes_away < 90
-                              ? `${Math.round(e.minutes_away)} min`
-                              : `${(e.minutes_away / 60).toFixed(1)} h`}
+                          {e.minutes_away < 0 ? 'passed' : span(e.minutes_away)}
                         </td>
                         <td className="t-mid">{e.currency}</td>
                         <td className={
@@ -687,13 +810,6 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
             </>
           )}
 
-          <div className="set-head">Scanner</div>
-          <div className="set-note">
-            There is no separate scheduler to register. The service scans every
-            watched timeframe continuously while it is running — each one on a
-            cadence matched to its own bar — and alerts fire from that scan. If
-            the service is up, alerting is live.
-          </div>
         </>
       )
     }
@@ -1170,6 +1286,9 @@ export function Settings({ onClose, liveTf, watchlist = [], mt5, initialTab }: {
         <div className="modal-body">{body()}</div>
         {toast && <div className="modal-toast">{toast}</div>}
         <div className="modal-foot">
+          {/* What the last add / remove of an instrument did - bottom left, where it
+              does not push the cards about, and gone again after a few seconds. */}
+          {addNote && <span className="t-info foot-note">{addNote}</span>}
           {anyDirty && <span className="t-warn" style={{ fontSize: 10.5 }}>
             unsaved changes in {[dirty && 'alerts', engineDirty && 'risk & gates']
               .filter(Boolean).join(' and ')}

@@ -287,6 +287,8 @@ export const api = {
   alertsTest: (target?: string, bot?: string) =>
     jpost<any>('/api/alerts/test', { target: target ?? null, bot: bot ?? null }),
   news: (impact = 'high') => jget<any>(`/api/news?impact=${impact}`),
+  /** Fetch the release calendar from every provider now, whatever the interval. */
+  newsRefresh: () => jpost<any>('/api/news/refresh', {}),
   alertsResolve: (target: string, bot?: string) =>
     jpost<any>('/api/alerts/resolve', { target, bot: bot ?? null }),
   alertsLog: (limit = 60) => jget<{ entries: any[] }>(`/api/alerts/log?limit=${limit}`),

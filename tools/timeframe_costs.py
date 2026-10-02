@@ -58,9 +58,44 @@ def load(tf: str, prefix: str = None) -> list:
         f = (SRC / f'win_{prefix}-{y}_{tf}.json') if prefix else (SRC / f'lab_{SYMBOL}_{tf}_{y}.json')
         if f.exists():
             doc = json.loads(f.read_text(encoding='utf-8'))
-            rows += [x for x in doc['journal'] if x.get('outcome') != 'manual'
+            rows += [x for x in tag_pp(doc['journal'], _spec()) if x.get('outcome') != 'manual'
                      and x.get('fill_ms') and x.get('profit') is not None]
     return rows
+
+
+_SPEC: dict = {}
+
+
+def _spec() -> dict:
+    if not _SPEC:
+        from server.lab.data import spec as lab_spec
+        _SPEC.update(lab_spec(SYMBOL))
+    return _SPEC
+
+
+def file_pp(journal: list, comm_side: float) -> float | None:
+    """
+    Account money per 1.0 of price per lot that a run's P&L was priced with -
+    read back from its own trades: (profit + round-trip commission) / (price
+    R x risk x lots). tick_value is in the ACCOUNT's currency, and the MT5
+    account behind data/<symbol>/spec.json can change (AUD 1.4232 until
+    2026-09-27, USD 1.0 after), so a run is converted with ITS pricing, never
+    with today's spec.
+    """
+    pp = []
+    for x in journal:
+        r, lots = x.get('r_multiple'), float(x.get('lots') or 0)
+        risk = abs(float(x.get('fill_price') or 0) - float(x.get('stop') or 0))
+        if x.get('profit') is None or not r or abs(r) < 0.3 or not lots or not risk:
+            continue
+        pp.append((float(x['profit']) + 2 * comm_side * lots) / (float(r) * risk * lots))
+    return float(np.median(pp)) if len(pp) >= 3 else None
+
+
+def tag_pp(journal: list, spec: dict) -> list:
+    """Each trade of one run file, carrying the run's own pricing as '_pp'."""
+    pp = file_pp(journal, float(spec.get('commission_per_lot_side') or 0.0))
+    return [dict(x, _pp=pp) if pp else x for x in journal]
 
 
 def enrich(rows: list, m1, spec) -> list:
@@ -79,7 +114,7 @@ def enrich(rows: list, m1, spec) -> list:
         spread = float(sp[j]) * point if sp is not None and j >= 0 else 20 * point
         slips = (x.get('kind') in ('market', 'stop')) + (x.get('outcome') in ('stop', 'trail'))
         cost = 2 * comm / (risk * per_price) + spread / risk + slips * SLIP_POINTS * point / risk
-        net = float(x['profit']) / (risk * per_price * lots)
+        net = float(x['profit']) / (risk * float(x.get('_pp') or per_price) * lots)
         out.append({'year': datetime.fromtimestamp(int(x['fill_ms']) / 1000, timezone.utc).year,
                     'day': int(x['fill_ms']) // 86_400_000, 'playbook': x['playbook'],
                     'net': net, 'cost': cost, 'gross': net + cost,
@@ -134,7 +169,7 @@ def window_report(tag: str) -> int:
         if not files:
             continue
         docs = [json.loads(f.read_text(encoding='utf-8')) for f in files]
-        rows = [x for d in docs for x in d['journal']
+        rows = [x for d in docs for x in tag_pp(d['journal'], spec)
                 if x.get('outcome') != 'manual' and x.get('fill_ms') and x.get('profit') is not None]
         data[tf] = enrich(rows, m1, spec)
         meta[tf] = {'start': min(d['start'] for d in docs), 'end': max(d['end'] for d in docs),

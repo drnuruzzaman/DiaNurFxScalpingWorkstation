@@ -48,7 +48,33 @@ _LOCK = threading.Lock()
 _STORE: dict = {}
 _LOADED = False
 _LAST_REFRESH = 0.0
+_LAST_COUNTS: dict = {}
+# How often the providers are actually asked. Configurable (Settings > News,
+# alerts.json news.refresh_minutes); never below 15 minutes - the bridge keeps
+# ForexFactory's weekly file for 15 minutes anyway, so asking faster would not
+# bring a fresher ForexFactory, only more calls to the other providers.
+REFRESH_MIN_MINUTES, REFRESH_MAX_MINUTES = 15, 1440
 REFRESH_EVERY_S = 900.0
+
+
+def set_refresh_minutes(minutes) -> float:
+    """Set the fetch interval (clamped to 15 min - 24 h). Returns the minutes in force."""
+    global REFRESH_EVERY_S
+    try:
+        m = float(minutes)
+    except (TypeError, ValueError):
+        m = REFRESH_EVERY_S / 60
+    m = max(REFRESH_MIN_MINUTES, min(REFRESH_MAX_MINUTES, m))
+    REFRESH_EVERY_S = m * 60.0
+    return m
+
+
+def refresh_status() -> dict:
+    """When the providers were last asked, when they will be next, and what came back."""
+    last = int(_LAST_REFRESH * 1000) if _LAST_REFRESH else None
+    return {'last_refresh_ms': last,
+            'next_refresh_ms': int((_LAST_REFRESH + REFRESH_EVERY_S) * 1000) if last else None,
+            'refresh_minutes': REFRESH_EVERY_S / 60, 'last_counts': dict(_LAST_COUNTS)}
 
 # FRED lists every release it carries, including things like "Coinbase
 # Cryptocurrencies". These are the ones that actually move gold; anything else
@@ -393,6 +419,8 @@ def refresh(bridge_payload: dict = None, force: bool = False) -> dict:
         ):
             counts[name] = len(rows)
             _absorb(rows)
+        _LAST_COUNTS.clear()
+        _LAST_COUNTS.update(counts)
         try:
             _flush()
         except OSError:

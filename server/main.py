@@ -380,8 +380,12 @@ async def news_alert_worker() -> None:
         try:
             cfg = alerts_mod.load()
             news_cfg = cfg.get('news') or {}
+            # The calendar's own schedule (Settings > News > fetch every N min),
+            # alerts or not: refresh() asks the providers only once the interval
+            # has passed, so a 30 s tick here costs nothing in between.
+            news_mod.set_refresh_minutes(news_cfg.get('refresh_minutes', 15))
+            news_mod.refresh(BRIDGE.calendar())
             if news_cfg.get('enabled'):
-                news_mod.refresh(BRIDGE.calendar())
                 lead_ms = float(news_cfg.get('lead_minutes', 10)) * 60_000
                 now_ms = int(time.time() * 1000)
                 # Look a little either side of the window: the loop ticks every
@@ -800,6 +804,7 @@ def alerts_save(body: dict):
         if key in body:
             cfg[key] = body[key]
     cfg = alerts_mod.save(cfg)
+    news_mod.set_refresh_minutes((cfg.get('news') or {}).get('refresh_minutes', 15))
     return {'ok': True, 'config': cfg, 'status': alerts_mod.status(cfg)}
 
 
@@ -886,6 +891,8 @@ def news(impact: str = 'high', within_hours: int = 24):
         'next': ahead[0] if ahead else None,
         'minutes_to_next': ahead[0]['minutes_away'] if ahead else None,
         'fetched_ms': now_ms,
+        # When the providers were last actually asked (not this read of the archive).
+        **news_mod.refresh_status(),
     }
 
 
@@ -1210,9 +1217,16 @@ def news_headlines(limit: int = Query(30, ge=1, le=100)):
 
 @app.get('/api/news/sources')
 def news_sources():
-    """Which providers are configured, and how big the archive is."""
+    """Which providers are configured, how big the archive is, and when it was last fetched."""
     st = news_mod.refresh(BRIDGE.calendar())
-    return {'sources': news_mod.sources_status(), **st}
+    return {'sources': news_mod.sources_status(), **st, **news_mod.refresh_status()}
+
+
+@app.post('/api/news/refresh')
+def news_refresh():
+    """Fetch the release calendar now, whatever the interval says."""
+    st = news_mod.refresh(BRIDGE.calendar(), force=True)
+    return {'sources': news_mod.sources_status(), **st, **news_mod.refresh_status()}
 
 
 @app.post('/api/news/test')

@@ -251,7 +251,11 @@ export default function App() {
     () => loadPref('dianur.panels', { left: true, right: true, bottom: true }))
   // The bottom panel's open tab. Owned here, not in the panel, because when
   // the panel is hidden its tabs are drawn in the footer instead.
-  const [dockTab, setDockTab] = useState<DockTab>(() => loadPref('dianur.dockTab', 'signals'))
+  // A saved tab that no longer exists (a removed panel) falls back to the board.
+  const [dockTab, setDockTab] = useState<DockTab>(() => {
+    const t = loadPref<DockTab>('dianur.dockTab', 'signals')
+    return DOCK_TABS.some((x) => x.key === t) ? t : 'signals'
+  })
   const pickDockTab = (t: DockTab) => { setDockTab(t); savePref('dianur.dockTab', t) }
   // Hover preview of a footer tab while the bottom panel is hidden. Opens
   // after a short pause - so sweeping the mouse along the footer does not
@@ -1312,7 +1316,7 @@ export default function App() {
       )}
 
       {showSettings && <Settings onClose={() => setShowSettings(false)} liveTf={tf}
-        watchlist={watchlistShown} mt5={mt5} initialTab={settingsTab} />}
+        watchlist={watchlistShown} onWatchlist={setWatchlist} mt5={mt5} initialTab={settingsTab} />}
 
       {toast && (
         <div className="panel" style={{

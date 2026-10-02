@@ -1980,3 +1980,25 @@
   padding: 0; cursor: pointer; }
 .md-link:hover { text-decoration: underline; }
 .md-details { font-size: 10px; margin-top: 2px; }
+
+/* Settings > News: three short fields, not three full-width bars, and the
+   fetch-now button beside the interval it overrides. */
+.set-grid.news-grid { grid-template-columns: minmax(140px, 210px) minmax(140px, 210px) minmax(0, 1fr); }
+/* Top-aligned so the box sits level with the other two fields; the box and
+   its button are centred on each other, and the status is held to two lines
+   no taller than the box, so the hint below stays level with theirs too. */
+.news-fetch { display: flex; align-items: flex-start; gap: 10px; }
+.news-fetch-ctl { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.news-fetch-ctl input { width: 90px; flex: 0 0 auto; }
+.news-fetch-ctl .tool-btn { white-space: nowrap; }
+.news-fetch-status { font-size: 9.5px; line-height: 14px; min-width: 0; flex: 1 1 auto; }
+.news-fetch-status > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Signal Alerts > Search symbols: the confirm before an instrument joins the watchlist. */
+.add-confirm { border: 1px solid var(--line-soft); border-radius: 4px; padding: 8px 10px;
+  background: var(--bg-raise); }
+
+/* Signal Alerts: the remove button sits at the card's right edge, mid-height. */
+.inst-card { position: relative; padding-right: 44px; }
+.inst-trash { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); }
+.modal-foot .foot-note { font-size: 10.5px; margin-right: 12px; }

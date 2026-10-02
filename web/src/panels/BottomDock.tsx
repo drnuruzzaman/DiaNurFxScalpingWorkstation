@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type { Signal, Snapshot } from '../chart/types'
 import { api, type Board, type CalEvent, type DealsPayload } from '../lib/api'
-import { ago, clockUTC, dateUTC, dirClass, fmt, signed, stageChip } from '../lib/format'
+import { ago, clockUTC, dateUTC, dirClass, fmt, signed, span, stageChip } from '../lib/format'
 import { Empty } from './common'
 import { scheduleSave } from '../lib/workspace'
 
@@ -455,9 +455,8 @@ export function BottomDock({
                 <tr className={past ? 't-dim' : ''}>
                   <td className={imminent ? 't-warn' : 't-mid'}>
                     {e.time_known === false ? <span className="t-dim">—</span>
-                      : past ? `${ago(e.ts)} ago`
-                        : e.minutes < 60 ? `in ${e.minutes}m`
-                          : `in ${Math.round(e.minutes / 60)}h`}
+                      : past ? `${span((Date.now() - e.ts) / 60_000)} ago`
+                        : `in ${span(e.minutes)}`}
                   </td>
                   {/* A date-only row has no time of day. Printing 00:00
                       would invent one, and this table sits next to rows whose
