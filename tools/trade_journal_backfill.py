@@ -199,12 +199,20 @@ def lab(year: int, symbol: str, tf: str) -> int:
 
 
 def window(start: str, end: str, symbol: str, tf: str, tag: str, ff: str | None,
-           all_playbooks: bool = False) -> int:
+           all_playbooks: bool = False, settings_file: str = None, fidelity: int = None,
+           spread_floor: float = None, spec_file: str = None) -> int:
     """
     A headless lab run over [start, end) - live settings, auto mode, the lab's
     forecast filter `ff` (None = off), no news blackout - cut into sessions of
     CHUNK_MONTHS where the timeframe needs it. `all_playbooks` switches on the
     playbooks live has disabled (a lab override - live is untouched).
+
+    `settings_file` freezes the settings: a JSON of every group (as
+    tools/market_batch.py writes once per batch) passed as the full override,
+    so an edit to configs/settings.json while a long batch runs cannot reach
+    the later sessions. `spec_file` pins the contract facts the same way (the
+    saved spec follows whichever account the bridge is attached to). `fidelity` and `spread_floor` go to the session as is
+    (server/lab/session.py); None means the session's own default.
 
     Besides the trades, every signal's FIRST verdict is kept (its gates on the
     bar it was made - SignalStore.first_verdict), with whether it went on to an
@@ -227,13 +235,20 @@ def window(start: str, end: str, symbol: str, tf: str, tag: str, ff: str | None,
         cur = nxt
     # The filter reads the forecast store; a timeframe without one is unfiltered.
     has_store = fstore.load(symbol, tf, allow_stale=True) is not None
-    overrides = {'gates': {'disabled_playbooks': []}} if all_playbooks else {}
+    overrides = {}
+    if settings_file:
+        overrides = json.loads(Path(settings_file).read_text(encoding='utf-8'))['settings']
+    if all_playbooks:
+        overrides.setdefault('gates', {})['disabled_playbooks'] = []
+    spec_ov = json.loads(Path(spec_file).read_text(encoding='utf-8'))['pinned'] if spec_file else {}
     t0, ran, journal, eff, vetoes, verdicts = time.time(), 0, [], None, 0, []
     for p0, p1 in parts:
         s = ReplaySession({'symbol': symbol, 'tf': tf, 'start': p0.strftime('%Y-%m-%dT%H:%M'),
                            'end': p1.strftime('%Y-%m-%dT%H:%M'), 'mode': 'auto',
                            'forecast_filter': ff, 'news_gate': False, 'overrides': overrides,
-                           'name': f'timeframe window {tag} {tf}'})
+                           'fidelity': fidelity, 'spread_floor_points': spread_floor,
+                           'spec_overrides': spec_ov,
+                           'record': False, 'name': f'timeframe window {tag} {tf}'})
         while True:
             n = s.advance(2000)
             ran += n
@@ -260,11 +275,16 @@ def window(start: str, end: str, symbol: str, tf: str, tag: str, ff: str | None,
         'symbol': symbol, 'tf': tf, 'start': start, 'end': end, 'bars': ran,
         'forecast_filter': ff, 'filter_active': bool(ff and has_store),
         'filter_notes': vetoes, 'news_gate': False, 'all_playbooks': all_playbooks,
+        'fidelity': s.cfg.get('fidelity'), 'spread_floor_points': s.spec.get('spread_floor_points'),
+        'settings_file': settings_file, 'spec_file': spec_file,
         'verdicts': verdicts,
         'settings': lab_settings.jsonable(eff),
         # the contract facts the P&L was priced with (tick_value is in the account's currency)
         'spec': {k: s.spec.get(k) for k in ('tick_value', 'tick_size', 'contract_size',
-                                            'commission_per_lot_side', 'source')},
+                                            'commission_per_lot_side', 'source',
+                                            'swap_mode', 'swap_long_points',
+                                            'swap_short_points')},
+        'swap_charged': s.broker.swap is not None,
         'made': datetime.now(timezone.utc).isoformat(timespec='seconds'),
         'journal': journal}, default=str), encoding='utf-8')
     print(f'{tf}: {len(journal)} trades -> {out.relative_to(ROOT)} ({time.time() - t0:.0f}s)')
@@ -288,9 +308,17 @@ def main() -> int:
     w.add_argument('--filter', default=None, help='the lab forecast filter, e.g. no_transition')
     w.add_argument('--all-playbooks', action='store_true',
                    help='switch on the playbooks live has disabled (lab override only)')
+    w.add_argument('--settings', default=None,
+                   help='frozen settings JSON (tools/market_batch.py writes it)')
+    w.add_argument('--fidelity', type=int, default=None, help='lab fidelity (default: current)')
+    w.add_argument('--spec', default=None,
+                   help='pinned contract facts JSON (tools/market_batch.py writes it)')
+    w.add_argument('--spread-floor', type=float, default=None,
+                   help='minimum spread in points (default: the symbol floor)')
     a = ap.parse_args()
     if a.cmd == 'window':
-        return window(a.start, a.end, a.symbol, a.tf, a.tag, a.filter, a.all_playbooks)
+        return window(a.start, a.end, a.symbol, a.tf, a.tag, a.filter, a.all_playbooks,
+                      a.settings, a.fidelity, a.spread_floor, a.spec)
     return live() if a.cmd == 'live' else lab(a.year, a.symbol, a.tf)
 
 

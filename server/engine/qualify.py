@@ -33,6 +33,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from ..config import CONFIG, session_quality
+from .precision import rp, using
 
 
 def _gate(name: str, verdict: str, detail: str, penalty: int = 0) -> dict:
@@ -109,7 +110,7 @@ def size_position(entry: float, stop: float, spec: dict, risk: dict,
         'budget': round(budget, 2),
         'value_per_lot': round(value_per_lot, 2),
         'commission_round_trip': round(cost_per_lot * lots, 2),
-        'stop_distance': round(distance, 3),
+        'stop_distance': rp(distance),
         'stop_points': round(distance / point, 1),
         'equity': equity,
         'oversized': bool(oversized),
@@ -151,6 +152,15 @@ def _net_rr(entry: float, stop: float, target: float, spec: dict,
 # the gates                                                                   #
 # --------------------------------------------------------------------------- #
 def qualify(sig, snap: dict, spec: dict, context: dict = None):
+    """_qualify() under the instrument's price precision (engine/precision.py)."""
+    digits = (spec or {}).get('digits')
+    if digits is None:
+        digits = (snap or {}).get('digits')
+    with using(digits):
+        return _qualify(sig, snap, spec, context)
+
+
+def _qualify(sig, snap: dict, spec: dict, context: dict = None):
     """
     Run every gate against a detected signal and stamp the verdict onto it.
 

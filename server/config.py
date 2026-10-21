@@ -273,6 +273,12 @@ class ExecutionSettings:
     # Timeframes auto mode may send from. The Place button ignores this - it
     # limits automation, not what you can do by hand.
     auto_timeframes: tuple = ('1m', '3m', '5m', '15m', '30m', '1h', '4h', '1d')
+    # Symbols auto mode may send for. A symbol on the watchlist is scanned,
+    # drawn and alerted on, but auto-trades only if it is listed here as well:
+    # putting a market on the board must never be the same act as arming it
+    # (EURUSD was added 2026-10-20 for research and shadow only). The Place
+    # button ignores this, like auto_timeframes.
+    auto_symbols: tuple = ('XAUUSD.a',)
     # One live order or position per symbol AND timeframe.
     # How many live orders one symbol+timeframe may hold at once. 0 = no cap.
     # Was a bool named one_per_symbol_tf; _load_saved_settings() migrates it.

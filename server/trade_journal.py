@@ -82,8 +82,11 @@ def record(rec: dict, row: dict | None, *, source: str, session: str = None,
         'exit_price': rec.get('close_price'),
         'stop': sig.get('stop'), 'tp1': sig.get('tp1'), 'tp2': sig.get('tp2'),
         'atr': sig.get('atr_at_signal'), 'lots': rec.get('lots'),
+        # r_multiple is price R: spread and slippage in, commission and swap
+        # NOT (they are charged as money). r_net is after every cost, from
+        # 2026-10-20; older lines do not have it.
         'outcome': rec.get('outcome'), 'r_multiple': rec.get('r'),
-        'profit': row.get('profit'),
+        'r_net': rec.get('r_net'), 'profit': row.get('profit'),
         'trail_armed': bool((rec.get('trail') or {}).get('armed')),
         'confidence': sig.get('confidence'),
         'confidence_at_send': sent.get('confidence'),

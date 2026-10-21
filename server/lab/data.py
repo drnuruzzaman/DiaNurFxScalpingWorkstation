@@ -62,6 +62,18 @@ def _signature(symbol: str) -> tuple:
     return tuple(out)
 
 
+# The 1m files carry each minute's MINIMUM spread (MT5's bar spread). On gold
+# that minimum is a fair cost - its median is 9-13 points. On a raw-spread
+# EURUSD it touches 0 in 92-95% of minutes (measured 2020-2026), which would
+# let the lab trade it free; the old 20-point fallback for a zero spread was a
+# gold number, 2 pips on EURUSD, about ten times a raw account's spread. A
+# symbol listed here is charged at least this many points at fidelity 2. The
+# value is an assumption (published raw averages are 0.1-0.2 pip in liquid
+# hours), not a measurement - a session can override it to stress it, and a
+# tick capture would replace it.
+SPREAD_FLOOR_POINTS = {'EURUSD.a': 2.0}
+
+
 def spec(symbol: str) -> dict:
     """
     Contract facts for P&L: data/<symbol>/spec.json when the live app has
@@ -78,13 +90,15 @@ def spec(symbol: str) -> dict:
         'stops_level_points': base.stops_level_points,
         'commission_per_lot_side': base.commission_per_lot_side,
         'swap_free': base.swap_free, 'source': 'defaults',
+        'spread_floor_points': SPREAD_FLOOR_POINTS.get(symbol, 0.0),
     }
     path = DATA_DIR / symbol / 'spec.json'
     try:
         saved = json.loads(path.read_text(encoding='utf-8'))
         for k in ('digits', 'point', 'tick_size', 'tick_value', 'contract_size',
                   'volume_min', 'volume_max', 'volume_step', 'stops_level_points',
-                  'commission_per_lot_side'):
+                  'commission_per_lot_side', 'swap_mode', 'swap_long_points',
+                  'swap_short_points', 'swap_rollover_3days_weekday', 'currency_profit'):
             if saved.get(k) is not None:
                 out[k] = saved[k]
         out['source'] = 'mt5 (saved ' + str(saved.get('saved_at', '')) + ')'

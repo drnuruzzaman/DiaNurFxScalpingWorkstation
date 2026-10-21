@@ -28,6 +28,7 @@ from . import regime as rg
 from . import structure as st
 from . import trendlines as tl
 from . import zones as zn
+from .precision import price_dp, ra, rp, using
 from .indicators import (atr, candle_stats, ema, last_valid, macd, rolling_percentile,
                          roc, rsi, volume_profile)
 
@@ -148,13 +149,34 @@ def _participation(v: np.ndarray, tail: int = 20) -> float:
 
 
 def analyse(series: Series, mtf_reads: dict = None,
-            spec: dict = None, quote: dict = None) -> dict:
+            spec: dict = None, quote: dict = None, bar_utc_ms: int = None) -> dict:
+    """
+    The full snapshot, at the instrument's price precision (engine/precision.py):
+    every derived price keeps max(3, spec digits) decimals. The snapshot carries
+    `digits`, so generate() on it keeps the same precision.
+    """
+    digits = (spec or {}).get('digits')
+    with using(digits):
+        snap = _analyse(series, mtf_reads, spec, quote, bar_utc_ms)
+    if isinstance(snap, dict):
+        snap['digits'] = digits
+    return snap
+
+
+def _analyse(series: Series, mtf_reads: dict = None,
+             spec: dict = None, quote: dict = None, bar_utc_ms: int = None) -> dict:
     """
     The full snapshot for one symbol on one timeframe.
 
     `mtf_reads` is an optional {tf: trend_dict} from higher timeframes; when
     omitted the MTF block reports "not evaluated" rather than silently claiming
     alignment, because a false alignment claim is worse than none.
+
+    `bar_utc_ms` is the last bar's open time in UTC, for callers whose bars are
+    NOT stamped in UTC. Live bars come from the bridge in UTC, so live leaves it
+    out. Disk history is in broker server time (New York + 7h), and reading the
+    session off it put NY-afternoon bars in "sydney" - the lab passes the
+    converted time so its session gate sees what live would.
     """
     t0 = time.perf_counter()
     cfg = CONFIG.engine
@@ -258,7 +280,8 @@ def analyse(series: Series, mtf_reads: dict = None,
                'agreement': 0.0, 'rows': [], 'base_tf': series.tf}
 
     # --- session ----------------------------------------------------------- #
-    bar_time = datetime.fromtimestamp(float(t[-1]) / 1000.0, tz=timezone.utc)
+    bar_time = datetime.fromtimestamp(
+        float(t[-1] if bar_utc_ms is None else bar_utc_ms) / 1000.0, tz=timezone.utc)
     primary, quality = session_quality(bar_time.hour)
     participation = _participation(v)
 
@@ -274,17 +297,17 @@ def analyse(series: Series, mtf_reads: dict = None,
         'source': series.source,
         'generated_ms': int(time.time() * 1000),
         'bar_time_ms': int(t[-1]),
-        'price': round(price, 3),
+        'price': rp(price),
         # The recorded spread for this bar, when the source carries one. Passing
         # a guessed spread into the cost gates made the same market look
         # tradeable in one year and not in another purely because of the
         # assumption, so the measured value is preferred wherever it exists.
         'spread_points': (round(float(series.spread[-1]), 1)
                           if series.spread is not None and series.spread.size else None),
-        'atr': round(atr_now, 4),
+        'atr': ra(atr_now),
         'atr_points': round(atr_now / (spec or {}).get('point', 0.01), 1),
-        'ema_fast': round(last_valid(ema_f, price), 3),
-        'ema_slow': round(last_valid(ema_s, price), 3),
+        'ema_fast': rp(last_valid(ema_f, price)),
+        'ema_slow': rp(last_valid(ema_s, price)),
 
         'trend': trend,
         'swings': [s.to_dict() for s in swings],

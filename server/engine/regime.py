@@ -23,6 +23,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from .precision import ra
+
 from .indicators import (adx, atr, bb_width, efficiency_ratio, last_valid,
                          linreg_slope, rolling_percentile)
 
@@ -61,7 +63,7 @@ def volatility_regime(h, l, c, atr_arr, lookback: int = 500) -> dict:
     return {
         'state': state,
         'label': label,
-        'atr': round(float(atr_now), 4),
+        'atr': ra(atr_now),
         'atr_points': round(float(atr_now) / 0.01, 1),
         'atr_percentile': round(float(pct), 1),
         'bb_width': round(float(bbw_now), 3),

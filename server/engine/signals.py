@@ -35,6 +35,7 @@ from dataclasses import dataclass, field, asdict
 import numpy as np
 
 from ..config import CONFIG
+from .precision import ra, rp, using
 
 
 PLAYBOOK_LABELS = {
@@ -146,7 +147,7 @@ def _finish(sig: Signal) -> Signal:
     """Compute derived risk numbers and a stable id."""
     sig = _widen_to_noise_floor(sig)
     risk = abs(sig.entry - sig.stop)
-    sig.risk_points = round(risk, 4)
+    sig.risk_points = ra(risk)
     sig.rr1 = round(abs(sig.tp1 - sig.entry) / risk, 2) if risk > 1e-9 else 0.0
     sig.rr2 = round(abs(sig.tp2 - sig.entry) / risk, 2) if risk > 1e-9 else 0.0
     sig.created_ms = int(time.time() * 1000)
@@ -159,7 +160,7 @@ def _finish(sig: Signal) -> Signal:
                      {'mode': 'partial', 'partial_at': 'tp1', 'fraction': 0.5,
                       'then': 'breakeven', 'final': 'tp2'})
     for f in ('entry', 'stop', 'tp1', 'tp2', 'trigger'):
-        setattr(sig, f, round(float(getattr(sig, f)), 3))
+        setattr(sig, f, rp(getattr(sig, f)))       # max(3, digits): engine/precision.py
     return sig
 
 
@@ -788,6 +789,13 @@ PLAYBOOKS = {
 
 def generate(snap: dict, series, only: list = None,
              respect_regime: bool = True) -> list:
+    """_generate() under the snapshot's price precision (engine/precision.py)."""
+    with using((snap or {}).get('digits')):
+        return _generate(snap, series, only, respect_regime)
+
+
+def _generate(snap: dict, series, only: list = None,
+              respect_regime: bool = True) -> list:
     """
     Run every playbook the current regime permits and return detected signals.
 

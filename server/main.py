@@ -1907,6 +1907,11 @@ def _check_setting(group: str, key: str, v):
         unknown = [x for x in v if x not in BOARD_TFS]
         if unknown:
             return f'unknown timeframe(s): {", ".join(unknown)}'
+    if (group, key) == ('execution', 'auto_symbols'):
+        # Checked after the cast to tuple, which turns a bare string into its
+        # characters - hence the length test, not just the type.
+        if isinstance(v, str) or not all(isinstance(x, str) and len(x.strip()) >= 3 for x in v):
+            return 'execution.auto_symbols must be a list of symbol names'
     if (group, key) == ('gates', 'disabled_playbooks'):
         unknown = [x for x in v if x not in _playbook_names()]
         if unknown:
@@ -2136,6 +2141,7 @@ EXECUTOR = Executor(
     STORE, LEDGER, BRIDGE, FEED, CONFIG,
     requalify=_requalify,
     auto=lambda: bool(CONFIG.execution.auto),
+    auto_symbol=lambda symbol: symbol in tuple(CONFIG.execution.auto_symbols or ()),
     trading_enabled=lambda: _trading_enabled(),
     on_sent=_on_sent,
     on_closed=_on_closed,

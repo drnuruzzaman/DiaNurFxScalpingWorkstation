@@ -31,6 +31,8 @@ from itertools import combinations
 
 import numpy as np
 
+from .precision import rp
+
 
 @dataclass
 class Trendline:
@@ -164,7 +166,7 @@ def find_trendlines(h, l, c, t, swings: list, atr_val: float,
                 t1=int(t[a.idx]), t2=int(t[b.idx]), slope=float(slope),
                 touches=len(touch_idx),
                 score=int(max(0, min(100, round(score)))),
-                broken=broken, price_now=round(here, 3),
+                broken=broken, price_now=rp(here),
                 distance_atr=round((here - float(c[-1])) / atr_val, 2),
                 touch_idx=sorted(set(touch_idx)), age_bars=int(age),
             ))
@@ -276,7 +278,7 @@ def find_channels(h, l, c, t, trendlines: list, atr_val: float,
             slope=float(tl.slope),
             containment=round(containment, 3),
             touches_upper=touches_u, touches_lower=touches_l,
-            width=round(width, 3), width_atr=round(width / atr_val, 2),
+            width=rp(width), width_atr=round(width / atr_val, 2),
             score=score, position=round(max(-0.2, min(1.2, position)), 3),
             t1=int(t[xs[0]]), t2=int(t[xs[-1]]),
         ))

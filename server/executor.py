@@ -62,11 +62,15 @@ def _now() -> int:
 
 class Executor:
     def __init__(self, store, ledger, bridge, feed, config, *, requalify, auto,
-                 trading_enabled, on_sent=None, on_closed=None, tf_ms=None, log=print):
+                 trading_enabled, on_sent=None, on_closed=None, tf_ms=None, log=print,
+                 auto_symbol=None):
         self.store, self.ledger, self.bridge, self.feed = store, ledger, bridge, feed
         self.cfg = config
         self.requalify = requalify              # rec -> Signal (fresh verdict) or None
         self.auto = auto                        # () -> bool
+        # symbol -> bool: may auto mode send for it? Live passes the
+        # execution.auto_symbols list; the lab trades whatever it replays.
+        self.auto_symbol = auto_symbol or (lambda symbol: True)
         self.trading_enabled = trading_enabled  # () -> bool (bridge armed)
         self.on_sent = on_sent or (lambda rec: None)
         # Called with the signal id once a position is CLOSED - the trade
@@ -131,6 +135,9 @@ class Executor:
             return
         if not manual and rec['tf'] not in tuple(self.cfg.execution.auto_timeframes):
             self._wait(fid, f'waiting: {rec["tf"]} is not enabled for auto trading')
+            return
+        if not manual and not self.auto_symbol(rec['symbol']):
+            self._wait(fid, f'waiting: {rec["symbol"]} is not enabled for auto trading')
             return
         if manual:
             rec = dict(rec, retry_after_ms=0)
@@ -404,17 +411,48 @@ class Executor:
                    ('trail' if rec.get('trail', {}).get('armed') else 'stop') if reason == 4
                    else 'manual')
         r = round(sign * (close - fill) / risk, 3)
+        # The entry deal carries its own commission (charged per side). Summing
+        # the exit deals alone - as this did until 2026-10-20 - left one side
+        # of commission out of every trade's profit. A deal history that no
+        # longer reaches back to the entry (bridge.deals covers 3 days) still
+        # misses it; that is said, not guessed.
+        ins = [x for x in deals if x.get('position_id') == pid and x.get('entry') == 0]
         profit = round(sum(float(x.get('profit') or 0) + float(x.get('commission') or 0)
-                           + float(x.get('swap') or 0) for x in out), 2)
+                           + float(x.get('swap') or 0) for x in out)
+                       + sum(float(x.get('commission') or 0) for x in ins), 2)
+        r_net = self._r_net(rec, profit, risk)
         exit_ms = int(d.get('time_ms') or 0) or None      # the closing deal's own time
         self.ledger.mark(fid, 'closed', f'{outcome} at {close}', close_price=close,
-                         outcome=outcome, r=r, profit=profit, exit_ms=exit_ms)
+                         outcome=outcome, r=r, r_net=r_net, profit=profit, exit_ms=exit_ms)
         self.store.move(fid, CLOSED, f'{outcome} at {close} ({r:+.2f}R)',
-                        close_price=close, outcome=outcome, r=r, exit_ms=exit_ms)
+                        close_price=close, outcome=outcome, r=r, r_net=r_net,
+                        exit_ms=exit_ms)
         try:
             self.on_closed(fid)
         except Exception:                                      # noqa: BLE001
             pass
+
+    def _r_net(self, rec, profit: float, risk: float):
+        """
+        The result in R after EVERY cost: the money result (profit, commission
+        and swap, as the deals book them) over the money risked at the fill.
+
+        `r` stays what it always was - the price move from fill to exit over
+        the fill-to-stop distance - so it compares with every report written
+        before this. It already contains the spread and slippage (both are in
+        the prices) but not commission or swap, which the account charges as
+        money; on gold that left r about 0.03R high on 3m/5m and 0.01R on 1h.
+        None when the contract value or the lots are unknown.
+        """
+        try:
+            spec = self.feed.spec(rec['symbol']) or {}
+            vpu = float(spec.get('tick_value') or 0) / float(spec.get('tick_size') or 0)
+            lots = float(rec.get('lots') or (self.ledger.get(rec['id']) or {}).get('lots') or 0)
+            if vpu > 0 and lots > 0 and risk > 0:
+                return round(float(profit) / (risk * vpu * lots), 3)
+        except (TypeError, ValueError, ZeroDivisionError):
+            pass
+        return None
 
     def _trail(self, rec, pos) -> None:
         fid, sig = rec['id'], rec['signal']

@@ -440,11 +440,20 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
             const gold = /XAU/i.test(pendingAdd)
             const lots = gold ? (ex.lots_gold ?? 0.01) : (ex.lots_non_gold ?? 0.05)
             const tfs: string[] = ex.auto_timeframes ?? []
+            // A server that knows execution.auto_symbols only auto-trades the
+            // symbols listed there; an older one trades everything watched.
+            const symGate = Array.isArray(ex.auto_symbols)
+            const autoHere = ex.auto && (!symGate || ex.auto_symbols.includes(pendingAdd))
             return (
               <div className="set-note add-confirm">
                 Add <b className="mono">{pendingAdd}</b> to the watchlist? The engine starts scanning it
                 for signals, and it gets a row below to switch alert timeframes on.
-                {ex.auto ? (
+                {ex.auto && symGate && !autoHere ? (
+                  <div className="t-dim" style={{ marginTop: 4 }}>
+                    It is not on the auto-trading symbol list, so nothing is sent to MT5 for it
+                    until you switch it on under Engine › Auto-trading symbols.
+                  </div>
+                ) : autoHere ? (
                   <div className="t-warn" style={{ marginTop: 4 }}>
                     AUTO trading is on: qualified signals on {pendingAdd}
                     {tfs.length ? ` (${tfs.join(', ')})` : ''} will also be sent to MT5,
@@ -1193,6 +1202,32 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
                 alert and can be sent with the Place button - this limits automation only.
               </div>
             </div>
+            {Array.isArray(x.auto_symbols) && (
+              <div className="set-field" style={{ marginTop: 12 }}>
+                <label>Auto-trading symbols</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
+                  {[...new Set([...(watchlist ?? []), ...(x.auto_symbols as string[])])].map((sym) => {
+                    const allowed: string[] = x.auto_symbols ?? []
+                    const on = allowed.includes(sym)
+                    return (
+                      <button key={sym} className={`pill ${on ? 'on' : ''}`}
+                        onClick={() => saveExec({
+                          auto_symbols: on ? allowed.filter((s) => s !== sym) : [...allowed, sym],
+                        })}
+                        title={on ? 'Auto mode sends FINAL signals for this symbol'
+                          : 'Watched only: signals and alerts, no automatic orders'}>
+                        {sym}
+                      </button>
+                    )
+                  })}
+                </div>
+                <div className="set-hint">
+                  Which watched symbols AUTO trading may send for. A symbol on the watchlist is
+                  scanned, drawn and alerted on either way - adding a market to the board is not
+                  the same act as arming it. The Place button ignores this.
+                </div>
+              </div>
+            )}
             <div className="set-note">
               Changing a gate re-evaluates every signal immediately. These are the
               same numbers the qualification ledger quotes, so a change here shows

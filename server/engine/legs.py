@@ -29,6 +29,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..config import CONFIG, TF_SECONDS
+from .precision import rp
 
 LEG_ATR = 1.5            # a leg ends on a reversal of this many ATR (Phase 0)
 LEG_ATR_PERIOD = 14      # the ATR Phase 0 measured with
@@ -116,8 +117,8 @@ def leg_state(h, l, c, a, t=None, k: float = LEG_ATR) -> dict | None:
         'ext_atr': run / atr_j,                              # how far it has run
         'pull_atr': abs(z['ext'] - float(c[-1])) / atr_j,    # back off the extreme
         'depth': (run / prev_run if prev_run and prev_run == prev_run else None),
-        'start': round(z['piv'], 3),
-        'extreme': round(z['ext'], 3),
+        'start': rp(z['piv']),
+        'extreme': rp(z['ext']),
         'close': float(c[-1]),
         'atr': atr_j,
         'k_atr': k,
