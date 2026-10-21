@@ -19,8 +19,8 @@ const TF_MS: Record<string, number> = {
 }
 const YEARS = [1, 2, 3, 5, 10, 20, 30]
 const STEP_LABEL: Record<string, string> = {
-  download: 'Download from MT5', releases: 'Release history', forecast: 'Rebuild forecast tables',
-  rescore: 'Rescore the gates',
+  download: 'Download from MT5', releases: 'Release history', forward: 'Forward records (paper)',
+  forecast: 'Rebuild forecast tables', rescore: 'Rescore the gates',
 }
 
 type UpdateBody = {
@@ -97,8 +97,8 @@ export function UpdateProgress({ job, compact = false, aside }: {
 
 /** The footer's words for each step - the settings' own are too long for it. */
 const FOOT_LABEL: Record<string, string> = {
-  download: 'Downloading', releases: 'Release history', forecast: 'Building forecast',
-  rescore: 'Rescoring gates',
+  download: 'Downloading', releases: 'Release history', forward: 'Forward records',
+  forecast: 'Building forecast', rescore: 'Rescoring gates',
 }
 /** How long a finished update stays on the footer. */
 const FOOT_KEEP_MS = 5 * 60_000
