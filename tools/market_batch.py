@@ -85,11 +85,11 @@ def freeze_spec(tag: str, symbol: str) -> Path:
     return path
 
 
-def jobs(tag: str, symbol: str, start: str, end: str | None) -> list:
+def jobs(tag: str, symbol: str, start: str, end: str | None, tfs: tuple = TFS) -> list:
     a = datetime.fromisoformat(start)
     b = datetime.fromisoformat(end) if end else datetime.now() - timedelta(days=1)
     out = []
-    for tf in TFS:
+    for tf in tfs:
         y = a.year
         while datetime(y, 1, 1) < b:
             p0 = max(a, datetime(y, 1, 1))
@@ -105,13 +105,16 @@ def out_path(job: dict) -> Path:
     return JOURNAL / f"win_{job['tag']}_{job['tf']}.json"
 
 
-def run(job: dict, symbol: str, settings: Path, spec: Path, fidelity, spread_floor) -> tuple:
+def run(job: dict, symbol: str, settings: Path, spec: Path, fidelity, spread_floor,
+        ff: str | None = None) -> tuple:
     cmd = [sys.executable, '-u', str(ROOT / 'tools' / 'trade_journal_backfill.py'), 'window',
            '--start', job['start'], '--end', job['end'], '--symbol', symbol,
            '--tf', job['tf'], '--tag', job['tag'], '--all-playbooks',
            '--settings', str(settings), '--spec', str(spec)]
     if fidelity:
         cmd += ['--fidelity', str(fidelity)]
+    if ff:
+        cmd += ['--filter', ff]
     if spread_floor is not None:
         cmd += ['--spread-floor', str(spread_floor)]
     log = JOURNAL / f"win_{job['tag']}_{job['tf']}.log"
@@ -130,6 +133,9 @@ def main() -> int:
     ap.add_argument('--workers', type=int, default=5)
     ap.add_argument('--fidelity', type=int, default=None)
     ap.add_argument('--spread-floor', type=float, default=None)
+    ap.add_argument('--filter', default=None,
+                    help='the lab forecast filter for every job, e.g. no_transition (default off)')
+    ap.add_argument('--tfs', default=None, help='comma-separated timeframes (default: all seven)')
     ap.add_argument('--status', action='store_true', help='report progress and exit')
     a = ap.parse_args()
 
@@ -148,12 +154,14 @@ def main() -> int:
 
     settings = freeze(a.tag, a.symbol, a.fidelity, a.spread_floor)
     spec = freeze_spec(a.tag, a.symbol)
-    work = jobs(a.tag, a.symbol, a.start, a.end)
+    tfs = tuple(x.strip() for x in a.tfs.split(',')) if a.tfs else TFS
+    work = jobs(a.tag, a.symbol, a.start, a.end, tfs)
     man = {'tag': a.tag, 'symbol': a.symbol, 'start': a.start, 'end': a.end,
            'settings': str(settings.relative_to(ROOT)),
            'spec': str(spec.relative_to(ROOT)),
            'pinned_spec': json.loads(spec.read_text(encoding='utf-8'))['pinned'],
            'settings_sha': json.loads(settings.read_text(encoding='utf-8'))['sha'],
+           'forecast_filter': a.filter, 'tfs': list(tfs),
            'jobs': work}
     man_path.write_text(json.dumps(man, indent=1), encoding='utf-8')
     todo = [j for j in work if not out_path(j).exists()]
@@ -162,7 +170,8 @@ def main() -> int:
     failed = 0
     with ThreadPoolExecutor(max_workers=a.workers) as pool:
         for job, code, secs in pool.map(
-                lambda j: run(j, a.symbol, settings, spec, a.fidelity, a.spread_floor), todo):
+                lambda j: run(j, a.symbol, settings, spec, a.fidelity, a.spread_floor, a.filter),
+                todo):
             ok = code == 0 and out_path(job).exists()
             failed += not ok
             print(f"{'ok  ' if ok else 'FAIL'} {job['tf']:>4} {job['year']}  {secs:6.0f}s",
