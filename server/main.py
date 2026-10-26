@@ -2150,13 +2150,13 @@ EXECUTOR = Executor(
 
 
 def _profit_now():
-    """(today, month, currency) - the footer's realised figures, or None offline."""
+    """(realised_pnl, currency) - the footer's realised figures, or None offline."""
     raw = BRIDGE.deals(35)
     acct = BRIDGE.account()
     if not isinstance(raw, dict) or not isinstance(acct, dict):
         return None
     p = realised_pnl(raw.get('deals') or [], BRIDGE.health())
-    return (float(p['today']), float(p['month']), str(acct.get('currency') or ''))
+    return (p, str(acct.get('currency') or ''))
 
 
 TELEGRAM_COMMANDS = TelegramCommands(

@@ -120,6 +120,12 @@
       "tf": "30m",
       "enabled": false,
       "note": ""
+    },
+    {
+      "symbol": "EURUSD.a",
+      "tf": "5m",
+      "enabled": false,
+      "note": ""
     }
   ],
   "destinations": [

@@ -1,16 +1,16 @@
 {
- "generated_ms": 1790393658910,
+ "generated_ms": 1792548164511,
  "start": "2017-01-01",
  "status": {
   "fred": {
-   "NFP": 118,
-   "CPI": 123,
-   "PPI": 123,
-   "GDP": 127,
-   "PCE": 115,
-   "RETAIL": 123,
-   "CLAIMS": 505,
-   "JOLTS": 116
+   "NFP": 119,
+   "CPI": 124,
+   "PPI": 124,
+   "GDP": 128,
+   "PCE": 116,
+   "RETAIL": 125,
+   "CLAIMS": 508,
+   "JOLTS": 117
   },
   "fomc": {
    "main_page_years": [
@@ -15721,6 +15721,127 @@
    "currency": "USD",
    "kind": "CLAIMS",
    "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1790598600000,
+   "currency": "USD",
+   "kind": "RETAIL",
+   "title": "Advance Monthly Sales for Retail and Food Services",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1790690400000,
+   "currency": "USD",
+   "kind": "JOLTS",
+   "title": "Job Openings and Labor Turnover Survey",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1790771400000,
+   "currency": "USD",
+   "kind": "GDP",
+   "title": "Gross Domestic Product",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1790771400000,
+   "currency": "USD",
+   "kind": "PCE",
+   "title": "Personal Income and Outlays",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1790857800000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1790944200000,
+   "currency": "USD",
+   "kind": "NFP",
+   "title": "Employment Situation",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1791462600000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1791981000000,
+   "currency": "USD",
+   "kind": "CPI",
+   "title": "Consumer Price Index",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1792067400000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1792067400000,
+   "currency": "USD",
+   "kind": "PPI",
+   "title": "Producer Price Index",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1792067400000,
+   "currency": "USD",
+   "kind": "RETAIL",
+   "title": "Advance Monthly Sales for Retail and Food Services",
    "impact": "high",
    "source": "fred",
    "time_known": true,

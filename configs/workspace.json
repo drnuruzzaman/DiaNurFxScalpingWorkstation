@@ -4,7 +4,7 @@
    {
     "id": "tmugjg7gh",
     "symbol": "XAUUSD.a",
-    "tf": "3m"
+    "tf": "15m"
    }
   ],
   "dianur.activeTab": "tmugjg7gh",
@@ -34,12 +34,13 @@
    "grid": false,
    "newsMarks": false,
    "positions": false,
-   "legRead": true
+   "legRead": false
   },
   "dianur.mtfSources": null,
   "dianur.hideFigures": 1,
   "dianur.watchlist": [
-   "XAUUSD.a"
+   "XAUUSD.a",
+   "EURUSD.a"
   ],
   "dianur.theme": "glossy",
   "dianur.snapPanels.v2": [
@@ -52,7 +53,7 @@
   "dianur.panels": {
    "left": true,
    "right": true,
-   "bottom": false
+   "bottom": true
   },
   "dianur.dockTab": "calendar",
   "dianur.boardSort": {
@@ -142,8 +143,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 150,
-    "saved_ms": 1790432646933
+    "span": 263,
+    "saved_ms": 1793007210351
    },
    "XAUUSD.a|4h": {
     "overlays": {
@@ -253,5 +254,5 @@
   "dianur.lab.dockH": 254,
   "dianur.lab.cone": false
  },
- "saved_ms": 1790947677978
+ "saved_ms": 1793014406883
 }

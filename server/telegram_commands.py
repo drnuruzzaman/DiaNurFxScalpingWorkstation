@@ -1,17 +1,24 @@
 """
 Telegram commands: the bot answers, as well as posts.
 
-    /profit   Profit today: +35.68 AUD
-              This month:   +1,040.79 AUD
+    /profit   DiaNurFx | Profit Report 📊
+              ✅ Today · 3 trades
+
+              💰 Profit: +35.68 AUD
+
+              📅 This week: +210.00 AUD · 12 trades
+              🗓 This month: +1,040.79 AUD · 41 trades
 
 The same realised figures as the footer's PROFIT TODAY / THIS MONTH - one
-calculation, so the phone and the screen can never disagree.
+calculation (realised_pnl in server/main.py), so the phone and the screen can
+never disagree.
 
 Only authorised chats get an answer. The bot's username is discoverable, and
 account P&L is not something to hand to whoever messages it. A chat is
 authorised if it is an enabled PRIVATE destination in configs/alerts.json (a
 numeric chat id - channels and @handles do not count), or listed in
-TELEGRAM_COMMAND_CHATS (comma-separated ids) in .env. Anyone else is ignored
+TELEGRAM_COMMAND_CHATS in .env - comma-separated ids, or for a public group
+t.me/name or @name. Anyone else is ignored
 and the attempt is logged.
 
 Transport is getUpdates long polling on a daemon thread: no webhook, no open
@@ -35,21 +42,38 @@ STALE_S = 120            # a command this old is not answered
 
 
 def money(v: float, ccy: str) -> str:
-    """+1,040.79 AUD - sign always shown, thousands separated."""
-    return f'{v:+,.2f} {ccy}'.strip()
+    """+1,040.79 AUD - sign always shown, thousands separated; 0.00 when flat."""
+    return f"{f'{v:+,.2f}' if round(v, 2) else '0.00'} {ccy}".strip()
 
 
-def profit_text(today: float, month: float, ccy: str) -> str:
-    # Aligned in a <pre> block, so the two figures line up on any phone.
-    return (f'Profit today: {money(today, ccy)}\n'
-            f'This month:   {money(month, ccy)}')
+def trades(n: int) -> str:
+    return f'{n} trade' if n == 1 else f'{n} trades'
+
+
+def profit_text(pnl: dict, ccy: str) -> str:
+    """
+    The /profit reply, in Telegram HTML, styled like a signals-channel post:
+    an emoji per line, the figure that matters in bold, nothing to scroll.
+    """
+    today = float(pnl.get('today') or 0.0)
+    mark = '✅' if today > 0 else '❌' if today < 0 else '➖'
+    bag, word = ('🔻', 'Loss') if today < 0 else ('💰', 'Profit')
+    week = float(pnl.get('week') or 0.0)
+    month = float(pnl.get('month') or 0.0)
+    return (f'<b>DiaNurFx | Profit Report 📊</b>\n'
+            f'{mark} Today · {trades(int(pnl.get("today_trades") or 0))}\n\n'
+            f'{bag} <b>{word}: {money(today, ccy)}</b>\n\n'
+            f'📅 This week: <b>{money(week, ccy)}</b> · '
+            f'{trades(int(pnl.get("week_trades") or 0))}\n'
+            f'🗓 This month: <b>{money(month, ccy)}</b> · '
+            f'{trades(int(pnl.get("month_trades") or 0))}')
 
 
 class TelegramCommands:
     def __init__(self, token_fn, allowed_fn, profit_fn, state_path: Path, log=print):
         self.token_fn = token_fn            # () -> bot token or ''
         self.allowed_fn = allowed_fn        # () -> set of chat ids (str)
-        self.profit_fn = profit_fn          # () -> (today, month, ccy) or None
+        self.profit_fn = profit_fn          # () -> (realised_pnl dict, ccy) or None
         self.state_path = Path(state_path)
         self.log = log
         self.offset = self._load_offset()
@@ -75,7 +99,8 @@ class TelegramCommands:
 
     def reply(self, token: str, chat_id, text: str) -> None:
         self._call(token, 'sendMessage',
-                   {'chat_id': chat_id, 'text': f'<pre>{text}</pre>', 'parse_mode': 'HTML'},
+                   {'chat_id': chat_id, 'text': text, 'parse_mode': 'HTML',
+                    'disable_web_page_preview': 'true'},
                    timeout=10)
 
     # --------------------------------------------------------------- logic
@@ -92,15 +117,19 @@ class TelegramCommands:
             return
         if time.time() - float(msg.get('date') or 0) > STALE_S:
             return                           # old news; figures have moved
-        if chat_id not in self.allowed_fn():
+        allowed = self.allowed_fn()
+        # A public group or channel can be named by its handle as well as its id.
+        handle = '@' + str(chat.get('username') or '').lower()
+        if chat_id not in allowed and handle not in allowed:
             self.log(f'! telegram: {command} from unauthorised chat {chat_id} ignored')
             return
         if command == '/profit':
             got = self.profit_fn()
             text_out = (profit_text(*got) if got else
-                        'Profit is unavailable - MetaTrader is not connected.')
+                        '⚠️ <b>Profit unavailable</b>\n<i>MetaTrader is not connected.</i>')
         else:
-            text_out = '/profit - realised profit today and this month'
+            text_out = ('<b>DiaNurFx commands</b>\n\n'
+                        '/profit · realised P&amp;L today, this week and this month')
         self.reply(token, chat_id, text_out)
 
     def poll_once(self, timeout: int = 25) -> None:
@@ -156,8 +185,22 @@ def private_destinations(cfg: dict) -> set:
         if d.get('enabled') and t.isdigit():
             out.add(t)
     extra = os.environ.get('TELEGRAM_COMMAND_CHATS') or ''
-    out.update(x.strip() for x in extra.split(',') if x.strip())
+    out.update(chat_key(x) for x in extra.split(',') if x.strip())
     return out
+
+
+def chat_key(entry: str) -> str:
+    """
+    A TELEGRAM_COMMAND_CHATS entry as handle() compares it: ids stay as they
+    are; t.me/name, https://t.me/name, @name and a bare name all become @name.
+    """
+    e = entry.strip()
+    if e.lstrip('-').isdigit():
+        return e
+    e = e.split('://')[-1]
+    if e.lower().startswith(('t.me/', 'telegram.me/')):
+        e = e.split('/', 1)[1]
+    return '@' + e.strip('/').lstrip('@').lower()
 
 
 __all__ = ['TelegramCommands', 'profit_text', 'private_destinations']

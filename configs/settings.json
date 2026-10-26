@@ -21,24 +21,24 @@
    "2h",
    "4h"
   ],
-  "auto": true,
+  "auto": false,
   "max_per_symbol_tf": 5,
   "broker_tp": "tp2",
   "lots_gold": 0.01,
-  "lots_non_gold": 0.05
+  "lots_non_gold": 0.05,
+  "auto_symbols": [
+   "XAUUSD.a",
+   "EURUSD.a"
+  ]
  },
  "gates": {
-  "min_confidence": 55,
+  "min_confidence": 52,
   "max_spread_points": 45.0,
   "min_atr_cost_multiple": 4.0,
   "max_atr_percentile": 97.0,
   "min_mtf_score": 25,
   "cooldown_bars": 2,
-  "disabled_playbooks": [
-   "sweep_reversal",
-   "range_fade",
-   "false_break_fade"
-  ],
+  "disabled_playbooks": [],
   "news_blocks": false,
   "news_blackout_min": 10,
   "avoid_fades": true
