@@ -1,8 +1,8 @@
 {
   "clock": {
-    "offset_ms": 10800000,
-    "offset_hours": 3.0,
-    "measured_at_ms": 1793013657376
+    "offset_ms": 7200000,
+    "offset_hours": 2.0,
+    "measured_at_ms": 1793873405882
   },
   "coverage": {
     "audio": {},

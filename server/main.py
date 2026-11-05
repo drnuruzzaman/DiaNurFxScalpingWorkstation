@@ -256,6 +256,43 @@ def _closed_leg(series, snap: dict):
                          snap.get('mtf') or {}, series.tf)
 
 
+def _showing_context(ctx: dict):
+    """
+    The context live signals are SHOWN under: the daily loss limit lifted.
+    Returns (context, today's real P&L % when the limit was lifted, else None).
+
+    The limit is about sending money, not about what the market is doing, and
+    as a BLOCK in the signal gates it emptied LIVE SIGNALS (and Telegram) for
+    the rest of the day. Sending still honours it in full: the executor
+    re-judges every signal against the real context at send time
+    (_requalify), so the limit still stops orders and still pulls pending ones.
+
+    Done here, not in engine/qualify.py: that file is fingerprinted by the
+    forward books, and the lab's backtests rely on the gate as it stands.
+    """
+    pct = float(ctx.get('daily_pnl_pct') or 0.0)
+    if pct > -CONFIG.risk.max_daily_loss_pct:
+        return ctx, None
+    return dict(ctx, daily_pnl_pct=0.0), pct
+
+
+def _note_daily_loss(sigs: list, pct: float) -> None:
+    """
+    Put the real figure back on signals judged under _showing_context, as a
+    WARN with no penalty - how the exposure gate words a cap that applies to
+    orders, not signals - so no signal claims a day that is not happening.
+    """
+    for s in sigs:
+        for g in getattr(s, 'gates', None) or []:
+            if g.get('name') == 'daily' and g.get('verdict') == 'PASS':
+                g.update(verdict='WARN', penalty=0,
+                         detail=f'down {abs(pct):.2f}% today - daily loss limit reached '
+                                f'(it stops orders, not signals)')
+                if getattr(s, 'status', None) == 'qualified':
+                    n = sum(1 for x in s.gates if x.get('verdict') == 'WARN')
+                    s.reason = f'{n} warning(s), cleared'
+
+
 def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
                 context: dict = None):
     """
@@ -328,8 +365,13 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
             snap['leg_gate'] = _closed_leg(series, snap)
     else:
         snap['leg_gate'] = snap.get('leg')
-    sigs = qualify_all(detected, snap, spec,
-                       context if context is not None else STATE.context())
+    ctx = context if context is not None else STATE.context()
+    lifted = None
+    if live:
+        ctx, lifted = _showing_context(ctx)
+    sigs = qualify_all(detected, snap, spec, ctx)
+    if lifted is not None:
+        _note_daily_loss(sigs, lifted)
     STATE.snapshots[(symbol, tf)] = snap
     STATE.signals[(symbol, tf)] = sigs
     if live:

@@ -3258,3 +3258,1720 @@ Error: connect ECONNREFUSED 127.0.0.1:8770
 [2m9:30:14 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
 Error: connect ECONNREFUSED 127.0.0.1:8770
     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:33 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:35 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:37 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:39 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:41 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:43 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:45 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:45 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:47 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:49 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:51 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:53 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:55 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:57 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:38:59 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:01 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:01 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:03 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:15 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:17 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:18 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:19 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:23 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:25 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:27 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:29 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:31 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:32 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:33 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:35 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:37 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:39 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:41 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:43 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:45 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:47 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:47 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:49 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:51 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:53 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:55 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:57 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:39:59 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:01 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:02 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:03 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:05 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:07 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:09 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:11 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:13 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:15 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:17 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:17 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:19 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:21 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:23 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:25 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:27 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:29 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:31 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:32 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:33 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:35 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:37 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:39 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:41 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:43 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:45 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:47 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:47 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:49 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:51 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:53 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:55 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m9:40:57 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+
+===== 2026-10-26 21:41:11 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m419[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-10-27 11:36:37 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1252[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-10-28 16:02:11 started by launcher =====
+'npm' is not recognized as an internal or external command,
+operable program or batch file.
+
+===== 2026-10-28 16:03:14 started by launcher =====
+'npm' is not recognized as an internal or external command,
+operable program or batch file.
+
+===== 2026-10-28 16:09:00 started by launcher =====
+'npm' is not recognized as an internal or external command,
+operable program or batch file.
+
+===== 2026-10-28 16:09:19 started by launcher =====
+'npm' is not recognized as an internal or external command,
+operable program or batch file.
+
+===== 2026-10-30 13:45:40 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1735[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-10-30 17:40:32 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1721[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-11-04 10:07:24 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m892[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:43 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:07:59 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:00 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:02 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:06 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:12 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:13 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:16 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:08:18 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+
+===== 2026-11-04 10:09:44 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m403[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:50 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:51 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:55 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:57 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:09:59 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:03 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:13 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:17 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:21 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:25 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:27 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:29 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:43 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:45 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:47 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:51 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:55 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:57 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:10:59 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:03 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:13 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:17 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:21 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:25 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:27 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:29 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:43 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:45 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:47 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:51 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:55 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:57 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:11:59 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:03 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:13 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:17 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:21 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:25 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:27 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:29 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+
+===== 2026-11-04 10:12:48 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m408[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:12:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:56 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:12:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:00 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:02 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:06 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:12 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:16 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:18 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:20 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:22 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:24 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:24 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:26 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:28 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:30 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:32 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:36 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:40 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:42 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:13:44 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+
+===== 2026-11-04 10:14:25 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m453[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:32 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:43 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:45 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:46 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:47 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:51 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:55 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:57 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:14:59 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:03 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:13 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:16 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:17 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:21 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:25 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:27 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:29 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:43 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:45 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:46 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:47 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:51 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:55 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:57 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:15:59 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:01 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:03 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:05 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:07 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:09 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:11 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:13 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:15 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:16 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:17 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:19 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:21 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:25 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:27 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:29 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:31 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:33 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:35 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:37 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:41 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:43 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:45 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:46 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:47 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:49 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:51 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:55 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:16:57 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+
+===== 2026-11-04 10:17:31 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m615[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/narrative?symbol=XAUUSD.a&tf=15m[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=168&ahead_hours=168&time_known_only=false[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/calendar?back_hours=336&ahead_hours=72&time_known_only=true[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/signals/board?symbol=XAUUSD.a&refresh=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/symbols?q=[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/bars?symbol=XAUUSD.a&tf=15m&count=600&live=1[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/watchlist[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:39 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/workspace[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:40 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:42 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:44 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:46 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:48 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:50 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:52 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:56 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:17:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:00 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:02 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:06 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:12 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:16 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:18 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:20 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:22 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:24 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:26 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:28 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:30 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:32 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:34 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:36 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:38 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:40 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:42 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:44 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:46 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:48 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:50 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:52 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:53 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:54 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:56 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:18:58 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:00 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:02 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:04 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:06 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:08 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:10 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:12 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:14 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:16 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:18 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:20 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:22 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:23 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:24 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:26 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+[2m10:19:28 am[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16)
+
+===== 2026-11-04 10:25:52 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m823[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-11-04 16:40:38 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m866[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+^C^CTerminate batch job (Y/N)? 
+
+===== 2026-11-05 09:00:46 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m852[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-11-05 19:40:28 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m1346[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m8:07:29 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+[2m8:07:30 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+[2m8:07:32 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a%2CEURUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+
+===== 2026-11-05 20:10:06 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.3[39m  [2mready in [0m[1m968[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m

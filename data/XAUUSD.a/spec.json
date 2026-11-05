@@ -2,7 +2,7 @@
  "digits": 2,
  "point": 0.01,
  "tick_size": 0.01,
- "tick_value": 1.4225358123390757,
+ "tick_value": 1.4262690228630923,
  "contract_size": 100.0,
  "volume_min": 0.01,
  "volume_max": 100.0,
@@ -10,9 +10,9 @@
  "stops_level_points": 0,
  "commission_per_lot_side": 3.0,
  "swap_mode": 1,
- "swap_long_points": -53.312,
- "swap_short_points": 36.608,
+ "swap_long_points": -54.285,
+ "swap_short_points": 37.263,
  "swap_rollover_3days_weekday": 3,
  "currency_profit": "USD",
- "saved_at": "2026-10-26 11:30"
+ "saved_at": "2026-11-05 10:07"
 }

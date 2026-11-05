@@ -45,6 +45,76 @@ _exe = Path(sys.executable)
 PYTHON = str(_exe.with_name('python.exe')) if _exe.name.lower() == 'pythonw.exe' else str(_exe)
 NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
 
+# What the bridge and the API import, as {import name: pip requirement}. Pinned
+# to the versions the workstation runs on: on 2026-11-04 the Python these used
+# disappeared, the launcher fell back to another 3.12 with none of them, and the
+# API died on "No module named 'fastapi'" while the bridge ran unconnected.
+# Start all now checks these first and installs whatever is missing.
+REQUIREMENTS = {
+    'MetaTrader5': 'MetaTrader5==5.0.6090',
+    'numpy': 'numpy==2.3.5',
+    'pandas': 'pandas==2.3.3',
+    'pytz': 'pytz',
+    'tzdata': 'tzdata',
+    'fastapi': 'fastapi==0.115.6',
+    'uvicorn': 'uvicorn==0.34.0',
+    'pydantic': 'pydantic==2.10.5',
+    'websockets': 'websockets==17.0.1',   # uvicorn's websocket support: the live feed
+    'anthropic': 'anthropic==1.8.0',
+}
+
+
+def missing_packages() -> list:
+    """
+    Requirements PYTHON cannot import. Asked of PYTHON itself, in a child, so
+    the answer is about the interpreter the services run under and is never a
+    stale cache from before an install.
+    """
+    probe = ('import importlib.util, sys; '
+             'print(",".join(m for m in sys.argv[1:] if importlib.util.find_spec(m) is None))')
+    try:
+        out = subprocess.run([PYTHON, '-c', probe, *REQUIREMENTS], capture_output=True,
+                             text=True, timeout=60, creationflags=NO_WINDOW).stdout.strip()
+    except Exception:                                         # noqa: BLE001
+        return list(REQUIREMENTS)
+    return [m for m in out.split(',') if m]
+
+
+def ensure_packages(say) -> bool:
+    """Install whatever is missing; False if anything still is. pip's output goes to pip.log."""
+    if sys.version_info[:2] != (3, 12):
+        # Not worth trying: MetaTrader5 is built for particular versions, and
+        # on a new one pip finds "no matching distribution" and nothing starts.
+        say(f'This launcher is running on Python {sys.version.split()[0]} ({sys.executable}).\n'
+            'The workstation needs Python 3.12 - start it with start_dianurfx.cmd, '
+            'which picks 3.12. Nothing was started.')
+        return False
+    missing = missing_packages()
+    if not missing:
+        return True
+    say('Installing missing Python packages: ' + ', '.join(missing) + '\n(first run only - '
+        'this can take a minute or two)')
+    # --user: a Python under Program Files cannot be written without admin. Not
+    # inside a virtualenv, where pip refuses it and the env is writable anyway.
+    user = [] if sys.prefix != sys.base_prefix else ['--user']
+    LOGS.mkdir(parents=True, exist_ok=True)
+    with open(LOGS / 'pip.log', 'a', encoding='utf-8') as log:
+        log.write(f'\n===== {time.strftime("%Y-%m-%d %H:%M:%S")} installing {missing} =====\n')
+        log.flush()
+        try:
+            subprocess.run([PYTHON, '-m', 'pip', 'install', *user, '--disable-pip-version-check',
+                            '--no-warn-script-location', *(REQUIREMENTS[m] for m in missing)],
+                           stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                           timeout=900, creationflags=NO_WINDOW)
+        except Exception as exc:                              # noqa: BLE001
+            log.write(f'! pip failed to run: {type(exc).__name__}: {exc}\n')
+    still = missing_packages()
+    if still:
+        say(f'Could not install: {", ".join(still)}. Nothing was started.\n'
+            f'See {LOGS / "pip.log"}')
+        return False
+    return True
+
 
 def http_body(url: str, limit: int = 4096) -> str:
     """The first few KB of a response, or '' if it did not answer."""
@@ -207,7 +277,12 @@ def bridge_cmd(o):
     cmd = [PYTHON, '-u', 'bridge/mt5_bridge.py', '--port', '8765', '--attach-only',
            '--max-lots', str(o.get('max_lots', BRIDGE_MAX_LOTS))]
     if o.get('arm'):
-        cmd.append('--enable-trading')
+        # Armed means armed on whatever account MetaTrader is logged into -
+        # LIVE (real money) as well as demo. The bridge's demo guard used to
+        # stay on here, and on a live login it refused every order. Every
+        # other guard is unchanged: confirm=1, a stop loss, the lot ceiling,
+        # the terminal's own Algo Trading switch.
+        cmd += ['--enable-trading', '--allow-live']
     return cmd
 
 
@@ -277,8 +352,9 @@ def main() -> int:
     max_lots = tk.StringVar(value=str(prefs.get('max_lots', BRIDGE_MAX_LOTS)))
     tk.Entry(lots_row, textvariable=max_lots, width=6, bg=PANEL, fg=FG,
              insertbackground=FG, relief='flat').pack(side='left', padx=6)
-    tk.Label(opts, text='Demo accounts only - the demo guard stays on. Auto mode, lots, exits '
-                        'and timeframes are set in the web UI.', fg=DIM, bg=BG, wraplength=360,
+    tk.Label(opts, text='Armed trades whichever account MetaTrader is logged into - LIVE '
+                        '(real money) included. Auto mode, lots, exits and timeframes are '
+                        'set in the web UI.', fg=DIM, bg=BG, wraplength=360,
              justify='left', font=('Segoe UI', 8)).pack(anchor='w', pady=(4, 0))
 
     msg = tk.StringVar(value='')
@@ -301,11 +377,16 @@ def main() -> int:
         save_prefs({'max_lots': o['max_lots']})
         if o['arm'] and not messagebox.askyesno(
                 'Arm trading?',
-                'Start the bridge ARMED?\n\nWith auto mode on in the workstation, FINAL '
-                'qualified signals will be sent to MT5 (demo accounts only).'):
+                'Start the bridge ARMED?\n\nIt will trade whichever account MetaTrader '
+                'is logged into - a LIVE account means REAL MONEY. With auto mode on in '
+                'the workstation, FINAL qualified signals will be sent to MT5.'):
             return
 
         def go():
+            # Before anything starts: a bridge or API without its packages
+            # dies on import, or worse, runs unconnected looking half-fine.
+            if not ensure_packages(msg.set):
+                return
             out = []
             for svc in SERVICES:
                 out.append(svc.start(o))

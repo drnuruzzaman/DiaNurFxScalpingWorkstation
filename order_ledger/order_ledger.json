@@ -48550,7 +48550,153 @@
    "side": "sell",
    "kind": "stop",
    "lots": 0.01
+  },
+  "EURUSD.a:2h:sweep_reversal:sell:1793800800000": {
+   "id": "EURUSD.a:2h:sweep_reversal:sell:1793800800000",
+   "tag": "DNX 38d3bad688",
+   "state": "filled",
+   "attempts": 6,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "2h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.05,
+    "price": 0.0,
+    "sl": 1.12722,
+    "tp": 1.11748,
+    "expiration_ms": 0
+   },
+   "ticket": 9997801,
+   "position": 9997801,
+   "fill_price": 1.12314,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793873590617,
+     "sending",
+     ""
+    ],
+    [
+     1793873590649,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793873621937,
+     "sending",
+     ""
+    ],
+    [
+     1793873621976,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793873652091,
+     "sending",
+     ""
+    ],
+    [
+     1793873652123,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793873682805,
+     "sending",
+     ""
+    ],
+    [
+     1793873682845,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793873713835,
+     "sending",
+     ""
+    ],
+    [
+     1793873713876,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793873744210,
+     "sending",
+     ""
+    ],
+    [
+     1793873744514,
+     "placed",
+     "market ticket 9997801"
+    ],
+    [
+     1793873746988,
+     "filled",
+     "position 9997801"
+    ]
+   ],
+   "created_ms": 1793873590617,
+   "updated_ms": 1793873746988,
+   "symbol": "EURUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.05
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793874240000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793874240000",
+   "tag": "DNX acd7612e1e",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4122.54,
+    "tp": 4128.49,
+    "expiration_ms": 0
+   },
+   "ticket": 9997874,
+   "position": 9997874,
+   "fill_price": 4124.35,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793874372741,
+     "sending",
+     ""
+    ],
+    [
+     1793874373014,
+     "placed",
+     "market ticket 9997874"
+    ],
+    [
+     1793874375282,
+     "filled",
+     "position 9997874"
+    ]
+   ],
+   "created_ms": 1793874372741,
+   "updated_ms": 1793874375282,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01
   }
  },
- "saved_ms": 1792481379758
+ "saved_ms": 1793874375282
 }
