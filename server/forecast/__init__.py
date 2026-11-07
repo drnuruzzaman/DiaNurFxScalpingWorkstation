@@ -97,7 +97,7 @@ def year_of(ms: float) -> int:
 # Engine source files whose code decides a read. Any edit to them changes the
 # hash, and the reads cache rebuilds instead of serving a stale computation.
 _ENGINE_FILES = ('indicators.py', 'structure.py', 'trendlines.py', 'regime.py',
-                 'legs.py', 'analysis.py')
+                 'legs.py', 'analysis.py', 'geometry.py')
 
 
 def live_engine_settings() -> dict:

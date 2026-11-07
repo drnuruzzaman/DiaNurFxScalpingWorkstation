@@ -222,5 +222,7 @@
    ]
   }
  ],
- "forecast_symbols": []
+ "forecast_symbols": [
+  "XAUUSD.a"
+ ]
 }

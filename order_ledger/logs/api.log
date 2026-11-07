@@ -56221,3 +56221,2071 @@ Traceback (most recent call last):
   File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
     self._sock.shutdown(socket.SHUT_RDWR)
 ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 08:19:06 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+
+===== 2026-11-06 08:57:14 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:15m:sweep_reversal:sell:1793912400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:pattern_break:buy:1793920440000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:15m:sweep_reversal:sell:1793912400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:1m:pattern_break:buy:1793920440000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:1m:false_break_fade:sell:1793920860000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:false_break_fade:sell:1793920860000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:pattern_break:buy:1793920920000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [Errno 13] Permission denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp'
+! executor EURUSD.a:1m:pattern_break:buy:1793920920000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:15m:sweep_reversal:sell:1793912400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:15m:sweep_reversal:sell:1793912400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 5] Access is denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:30m:sweep_reversal:sell:1793912400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\order_ledger.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\order_ledger.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [Errno 13] Permission denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793921880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793921880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793921880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793921880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:5m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793921880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:5m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:sweep_reversal:buy:1793920680000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:15m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793921880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:false_break_fade:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: PermissionError: [Errno 13] Permission denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793921220000: FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:1m:false_break_fade:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:5m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:sell:1793922480000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:sweep_reversal:sell:1793922600000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:3m:sweep_reversal:sell:1793922480000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor XAUUSD.a:3m:sweep_reversal:sell:1793922480000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:breakout_retest:buy:1793922660000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:pattern_break:buy:1793922960000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:sell:1793922480000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:3m:breakout_retest:buy:1793922660000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:sell:1793922480000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:5m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:5m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793923200000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:pattern_break:buy:1793922960000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793923200000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793923200000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793923200000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:breakout_retest:buy:1793922660000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:3m:breakout_retest:buy:1793922660000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:3m:breakout_retest:buy:1793922660000: PermissionError: [Errno 13] Permission denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor XAUUSD.a:30m:pattern_break:buy:1793907000000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:5m:sweep_reversal:buy:1793919900000: FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:30m:pattern_break:buy:1793907000000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:30m:pattern_break:buy:1793907000000: PermissionError: [Errno 13] Permission denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:1m:false_break_fade:sell:1793923800000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:sweep_reversal:sell:1793924100000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:30m:pattern_break:buy:1793907000000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:3m:sweep_reversal:buy:1793923200000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:3m:pattern_break:sell:1793923920000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:15m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:1m:sweep_reversal:sell:1793924640000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:sweep_reversal:sell:1793924640000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:30m:sweep_reversal:buy:1793921400000: FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\order_ledger.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\order_ledger.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:1m:breakout_retest:sell:1793925360000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:5m:sweep_reversal:sell:1793924700000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:sell:1793924700000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:breakout_retest:buy:1793925540000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:1m:mtf_pullback:sell:1793925600000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:30m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:sell:1793924700000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:pattern_break:sell:1793923920000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:sell:1793924700000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:mtf_pullback:sell:1793925600000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:1m:pattern_break:sell:1793924880000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\order_ledger.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\order_ledger.json'
+! executor EURUSD.a:5m:sweep_reversal:sell:1793924700000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:1m:mtf_pullback:sell:1793925600000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:5m:sweep_reversal:buy:1793925900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:1m:mtf_pullback:sell:1793925600000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:5m:sweep_reversal:buy:1793925900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [Errno 13] Permission denied: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:30m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor XAUUSD.a:1m:pattern_break:sell:1793926080000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:15m:sweep_reversal:buy:1793922300000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:30m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:30m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:30m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:15m:sweep_reversal:buy:1793921400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:1m:breakout_retest:sell:1793927040000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:3m:pattern_break:sell:1793923920000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:3m:pattern_break:sell:1793927520000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! executor EURUSD.a:3m:pattern_break:sell:1793927520000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+! executor EURUSD.a:15m:sweep_reversal:sell:1793925900000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor EURUSD.a:5m:sweep_reversal:buy:1793927700000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+! executor XAUUSD.a:5m:sweep_reversal:sell:1793912400000: PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json.tmp' -> 'C:\\workspace-ml-ausloans\\Forex\\DiaNurFxScalpingWorkstation\\order_ledger\\signal_store.json'
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+! telegram: getUpdates conflict (409) - another program or a webhook is using this bot; /profit is off until it stops
+
+===== 2026-11-06 13:42:34 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 14:51:16 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 16:31:42 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 17:07:06 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 17:11:47 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 17:15:49 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+
+===== 2026-11-06 17:21:57 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 20:26:48 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-06 20:48:18 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1025: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+===== 2026-11-07 08:09:41 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1343: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host

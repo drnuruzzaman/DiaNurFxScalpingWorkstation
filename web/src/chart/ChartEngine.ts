@@ -1014,21 +1014,19 @@ export class ChartEngine {
     // Areas sit UNDER everything structural. They are the widest marks on
     // the chart, and a band drawn over a trendline hides the line.
     if (this.overlays.zones) this.drawAreas(this.snap?.zones, false)
+    if (this.overlays.orderBlocks) this.drawOrderBlocks()
     if (this.overlays.fvg) this.drawAreas(this.snap?.fvg, true)
-    if (this.overlays.fib) this.drawFib()
     if (this.overlays.patterns) this.drawPatterns()
     if (this.overlays.levels) this.drawLevels()
     if (this.overlays.liquidity) this.drawLiquidity()
     if (this.overlays.mtfTrendlines) this.drawMtfTrendlines()
     if (this.overlays.trendlines) this.drawTrendlines()
-    if (this.overlays.zigzag) this.drawZigZag()
     if (this.layoutOpts.legRead) this.drawLegUnder()
 
     this.drawCandles()
 
     if (this.overlays.swings) this.drawSwings()
     if (this.overlays.structure) this.drawStructureBreaks()
-    if (this.overlays.events) this.drawEvents()
     if (this.overlays.signal) this.drawSignal()
     if (this.layoutOpts.legRead) this.drawLegOver()
     if (this.tradeMarks.length) this.drawTradeMarks()
@@ -1433,7 +1431,10 @@ export class ChartEngine {
   // --- levels --------------------------------------------------------- //
   private drawLevels() {
     const s = this.snap
-    if (!s?.levels) return
+    // The live chart's own levels (server/chart_levels.py, 2026-11-06); the
+    // backtest chart has only the engine's.
+    const levels = s?.chart_levels ?? s?.levels
+    if (!levels) return
     const ctx = this.bctx
 
     // Draw the strongest levels only, and label fewer still.
@@ -1443,7 +1444,7 @@ export class ChartEngine {
     // edge that buried the price action it was meant to annotate. The chart
     // shows the eight that matter and labels those whose label would not
     // collide with one already placed.
-    const shown = [...s.levels]
+    const shown = [...levels]
       .filter((lv) => lv.score >= 50)
       .sort((a, b) => b.score - a.score)
       .slice(0, 8)
@@ -1502,6 +1503,9 @@ export class ChartEngine {
   }
 
   private drawLiquidity() {
+    // The live and lab charts carry the smart-money pools (server/smc_overlay.py);
+    // anything else falls back to the engine's swing pools.
+    if (this.snap?.smc?.pools) return this.drawSmcPools()
     const s = this.snap
     if (!s?.liquidity) return
     const ctx = this.bctx
@@ -1523,6 +1527,92 @@ export class ChartEngine {
       ctx.textAlign = 'right'
       ctx.textBaseline = 'middle'
       ctx.fillText(`≋ ${p.label}`, this.pane.w - 4, y - 5)
+    }
+    ctx.restore()
+  }
+
+  /**
+   * Liquidity pools, each from when it was known until it was swept, run or
+   * expired - ported from ScalpingWorkstation. Resting: dotted, green above
+   * highs and red below lows. Swept (closed back inside): solid amber, tagged
+   * with a cross. Run (closed beyond): faint.
+   */
+  private drawSmcPools() {
+    const pools = this.snap?.smc?.pools
+    if (!pools?.length) return
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    ctx.font = `700 8.5px ${UI_FONT}`
+    ctx.textBaseline = 'middle'
+    const placed: number[] = []
+    for (const p of pools) {
+      const y = this.yOf(p.price)
+      if (y < -4 || y > this.pane.h + 4) continue
+      const a = this.xOfTime(p.known_t)
+      const b = Math.min(this.pane.w, this.xOfTime(p.consumed_t ?? p.end_t))
+      if (b < 0 || b - Math.max(0, a) < 2) continue
+      const swept = p.consumed_by === 'sweep', run = p.consumed_by === 'run'
+      const col = swept ? this.theme.warn : p.side === 1 ? this.theme.up : this.theme.down
+      ctx.globalAlpha = run ? 0.3 : swept ? 0.95 : 0.65
+      ctx.strokeStyle = col
+      ctx.lineWidth = swept ? 1.4 : 1
+      ctx.setLineDash(p.consumed_by ? [] : [1, 3])
+      ctx.beginPath(); ctx.moveTo(Math.max(0, a), y); ctx.lineTo(b, y); ctx.stroke()
+      ctx.setLineDash([])
+      const tag = `≋ ${p.kind.replace('_', ' ')}${swept ? ' ✕' : run ? ' run' : ''}`
+      const tw = ctx.measureText(tag).width
+      if (b - Math.max(0, a) < tw + 10 || placed.some((q) => Math.abs(q - y) < 10)) continue
+      placed.push(y)
+      ctx.globalAlpha = run ? 0.45 : 1
+      ctx.fillStyle = `rgba(${this.theme.plateRgb},0.72)`
+      ctx.fillRect(b - tw - 8, y - 6, tw + 6, 12)
+      ctx.fillStyle = col
+      ctx.textAlign = 'left'
+      ctx.fillText(tag, b - tw - 5, y)
+    }
+    ctx.restore()
+  }
+
+  /**
+   * Order blocks: the ENGINE's (snapshot.order_blocks, server/engine/zones.py) -
+   * the same blocks that score the signals and drive the zone gate. A box from
+   * the OB candle to the right edge; the engine drops a block once price closes
+   * through it, so every one drawn is alive. Labelled BULL OB / BEAR OB, with
+   * "· mit." once price has traded back into it.
+   */
+  private drawOrderBlocks() {
+    const obs = this.snap?.order_blocks
+    if (!obs?.length) return
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    ctx.font = `700 8.5px ${UI_FONT}`
+    ctx.textBaseline = 'middle'
+    for (const ob of obs) {
+      const yHi = this.yOf(ob.high), yLo = this.yOf(ob.low)
+      if (yLo < -40 || yHi > this.pane.h + 40) continue
+      const x0 = Math.max(0, this.xOfTime(ob.t))
+      const x1 = this.pane.w
+      if (x1 - x0 < 2) continue
+      const bull = ob.side === 'bullish'
+      const col = bull ? this.theme.up : this.theme.down
+      const mit = (ob.filled ?? 0) > 0
+      const h = Math.max(1, yLo - yHi)
+      ctx.globalAlpha = mit ? 0.1 : 0.16
+      ctx.fillStyle = col
+      ctx.fillRect(x0, yHi, x1 - x0, h)
+      ctx.globalAlpha = 0.75
+      ctx.strokeStyle = col
+      ctx.lineWidth = 1
+      ctx.strokeRect(Math.round(x0) + 0.5, Math.round(yHi) + 0.5, Math.round(x1 - x0) - 1, Math.round(h))
+      const tag = `${bull ? 'BULL' : 'BEAR'} OB${mit ? ' · mit.' : ''}`
+      if (h >= 9 && x1 - x0 > ctx.measureText(tag).width + 8) {
+        ctx.globalAlpha = 0.95
+        ctx.fillStyle = col
+        ctx.textAlign = 'left'
+        ctx.fillText(tag, x0 + 4, yHi + h / 2)
+      }
     }
     ctx.restore()
   }
@@ -1606,62 +1696,6 @@ export class ChartEngine {
   }
 
   /**
-   * Retracement of the current impulse leg.
-   *
-   * The engine already measures this - it is what the pullback playbook
-   * reasons over - so the chart draws the SAME numbers rather than fitting
-   * its own. A Fibonacci overlay that disagreed with the signal that cites
-   * it would be worse than none.
-   *
-   * The 0.618-0.786 band is shaded because that is the one the playbook calls
-   * the pocket; the rest are hairlines. Drawing seven equally weighted lines
-   * would bury the only two that carry a rule.
-   */
-  private drawFib() {
-    const f = this.snap?.fib
-    if (!f?.valid || !f.levels) return
-    const ctx = this.bctx
-    const x0 = Math.max(0, this.xOfTime(f.from_t))
-    const x1 = this.pane.w
-    if (x1 - x0 <= 0) return
-
-    const up = f.direction === 'up'
-    const col = up ? this.theme.up : this.theme.down
-    ctx.save()
-    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
-
-    const y618 = this.yOf(f.levels['0.618'])
-    const y786 = this.yOf(f.levels['0.786'])
-    if (Number.isFinite(y618) && Number.isFinite(y786)) {
-      ctx.globalAlpha = f.in_pocket ? 0.16 : 0.08
-      ctx.fillStyle = this.theme.warn
-      ctx.fillRect(x0, Math.min(y618, y786), x1 - x0, Math.abs(y786 - y618))
-    }
-
-    ctx.font = '9px ui-sans-serif, system-ui'
-    ctx.textAlign = 'left'
-    ctx.textBaseline = 'middle'
-    for (const [k, v] of Object.entries(f.levels as Record<string, number>)) {
-      const y = this.yOf(v)
-      if (y < 0 || y > this.pane.h) continue
-      // 0 and 1 are the leg itself; the pocket edges carry the rule. The
-      // rest are context and are drawn as such.
-      const strong = k === '0.618' || k === '0.786' || k === '0.5'
-      ctx.globalAlpha = strong ? 0.75 : 0.35
-      ctx.strokeStyle = strong ? this.theme.warn : col
-      ctx.lineWidth = 1
-      ctx.setLineDash(strong ? [] : [2, 4])
-      const py = Math.round(y) + 0.5
-      ctx.beginPath(); ctx.moveTo(x0, py); ctx.lineTo(x1, py); ctx.stroke()
-      ctx.setLineDash([])
-      ctx.globalAlpha = strong ? 0.95 : 0.5
-      ctx.fillStyle = strong ? this.theme.warn : col
-      ctx.fillText(k, x0 + 4, y - 6)
-    }
-    ctx.restore()
-  }
-
-  /**
    * Higher-timeframe trendlines, drawn in TIME rather than bar index.
    *
    * Everything else on this chart is positioned by bar index, which is the
@@ -1726,7 +1760,56 @@ export class ChartEngine {
   }
 
   // --- trendlines and channels ---------------------------------------- //
+  /**
+   * The trendlines a trader draws (server/engine/geometry.py, 2026-11-07): for the
+   * last two big legs, a resistance line through the swing highs and a support
+   * line through the swing lows - solid, in the side's colour - ending where
+   * their leg ended (the current leg's run to the right edge); and thin
+   * horizontals at the pauses before the leg's breaks, plus the range price is
+   * in now. Placed by TIME, so the live chart and the lab's agree.
+   */
+  private drawChartTrendlines() {
+    const tl = this.snap?.chart_trendlines
+    if (!tl || !this.bars.length) return
+    const ctx = this.bctx
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    const edgeIdx = this.view.start + this.view.span
+    for (const lv of tl.levels) {
+      const y = Math.round(this.yOf(lv.price)) + 0.5
+      if (y < -4 || y > this.pane.h + 4) continue
+      const x0 = this.xOfTime(lv.from_t)
+      const x1 = lv.to_t != null ? this.xOfTime(lv.to_t) : this.pane.w
+      if (x1 < 0 || x0 > this.pane.w) continue
+      ctx.globalAlpha = lv.to_t != null ? 0.7 : 0.9
+      ctx.strokeStyle = lv.kind === 'resistance' ? this.theme.down : this.theme.up
+      ctx.lineWidth = 1
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke()
+    }
+    for (const ln of tl.lines) {
+      const x0 = this.xOfTime(ln.t1), y0 = this.yOf(ln.y1)
+      let x1 = this.xOfTime(ln.t2), y1 = this.yOf(ln.y2)
+      if (ln.live) {
+        // On to the right edge, at the line's own slope per bar.
+        const i2 = this.barIndexAt(ln.t2)
+        if (i2 >= 0) {
+          x1 = this.xOf(edgeIdx)
+          y1 = this.yOf(ln.y2 + ln.slope_bar * (edgeIdx - i2))
+        }
+      }
+      if (x1 < 0 || x0 > this.pane.w) continue
+      ctx.globalAlpha = 0.9
+      ctx.strokeStyle = ln.kind === 'resistance' ? this.theme.down : this.theme.up
+      ctx.lineWidth = 1.6
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke()
+    }
+    ctx.restore()
+  }
+
   private drawTrendlines() {
+    // The live and lab charts carry the per-leg set; anything else (an old
+    // saved snapshot) falls back to the engine's five longest lines.
+    if (this.snap?.chart_trendlines) return this.drawChartTrendlines()
     const s = this.snap
     if (!s?.trendlines) return
     const ctx = this.bctx
@@ -1768,11 +1851,15 @@ export class ChartEngine {
 
   private drawChannels() {
     const s = this.snap
-    if (!s?.channels) return
+    // The live chart draws chart_channels: the engine's channels and the ones
+    // fitted across the whole default view, best ONE of each kind (server
+    // one_per_kind, 2026-11-06). The backtest chart has only the engine's.
+    const all = s?.chart_channels ?? s?.channels ?? []
+    if (!all.length) return
     const ctx = this.bctx
     ctx.save()
     ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
-    for (const ch of s.channels) {
+    for (const ch of all) {
       const col = ch.kind === 'ascending' ? this.theme.up
         : ch.kind === 'descending' ? this.theme.down
         : this.theme.info
@@ -1798,11 +1885,26 @@ export class ChartEngine {
       ctx.font = `700 9px ui-sans-serif, system-ui`
       ctx.fillStyle = col
       ctx.textAlign = 'left'
-      ctx.textBaseline = 'top'
-      ctx.fillText(
-        `${ch.kind.toUpperCase()} CHANNEL  ${Math.round(ch.containment * 100)}%`,
-        ux1 + 6, Math.min(uy1, uy2) + 4,
-      )
+      // OUTSIDE the channel: just above the upper edge, rotated to run along
+      // it, from the channel's start (or the pane's left edge if that is off
+      // screen) - and pulled back left when it would run off the right edge.
+      // (2026-11-07: it sat inside, at a height taken from the wrong end of
+      // the edge, so a rising channel's label floated far from the channel.)
+      const text = `${ch.kind.toUpperCase()} CHANNEL  ${Math.round(ch.containment * 100)}%`
+      const dx = ux2 - ux1
+      const ang = dx >= 1 ? Math.atan2(uy2 - uy1, dx) : 0
+      const tw = ctx.measureText(text).width
+      let sx = Math.max(ux1, 0) + 6
+      if (sx + tw * Math.cos(ang) > this.pane.w - 4) {
+        sx = Math.max(0, this.pane.w - 4 - tw * Math.cos(ang))
+      }
+      const sy = dx >= 1 ? uy1 + (uy2 - uy1) * (sx - ux1) / dx : uy1
+      ctx.save()
+      ctx.translate(sx, sy)
+      ctx.rotate(ang)
+      ctx.textBaseline = 'bottom'
+      ctx.fillText(text, 0, -3)
+      ctx.restore()
     }
     ctx.restore()
   }
@@ -1928,9 +2030,19 @@ export class ChartEngine {
     // percentile lands at ~2.7 ATR on 5m, 15m and 1h alike (measured).
     const legs = s.swings.map((w) => w.strength ?? 0).sort((a, b) => a - b)
     const cut = legs.length ? legs[Math.floor(legs.length * 0.7)] : Infinity
+    // The reversal that confirms a major turn, in price: the top-30% leg size
+    // times the ATR AT THE SWINGS (each swing's leg / its strength, median),
+    // not the last bar's. A quiet last bar - a weekend on 5m - shrank the
+    // threshold and made 37 of 60 swings "major".
+    const local = s.swings
+      .map((w, i) => (i > 0 && (w.strength ?? 0) > 0
+        ? Math.abs(w.price - s.swings[i - 1].price) / (w.strength as number) : 0))
+      .filter((x) => x > 0).sort((a, b) => a - b)
+    const swingAtr = local.length ? local[Math.floor(local.length / 2)] : (s.atr || 0)
+    const major = this.majorSwings(s.swings, (Number.isFinite(cut) && cut > 0 ? cut : 3) * swingAtr)
 
     ctx.save()
-    for (const sw of s.swings) {
+    for (const [i, sw] of s.swings.entries()) {
       const x = this.snapX(sw.idx)
       if (x < -20 || x > this.pane.w + 20) continue
       const high = sw.kind === 'high'
@@ -1938,12 +2050,10 @@ export class ChartEngine {
       const col = sw.label === 'HH' || sw.label === 'HL' ? this.theme.up
         : sw.label === 'LH' || sw.label === 'LL' ? this.theme.down
         : this.theme.textDim
-      const major = (sw.strength ?? 0) >= cut
-
       // A swept swing is history: dimmed, still visible.
       ctx.globalAlpha = sw.swept ? 0.45 : 1
       ctx.strokeStyle = col
-      if (major) {
+      if (major.has(i)) {
         ctx.lineWidth = 1.5
         ctx.beginPath(); ctx.arc(x, y, 4.5, 0, Math.PI * 2); ctx.stroke()
         ctx.fillStyle = col
@@ -1957,58 +2067,95 @@ export class ChartEngine {
     ctx.restore()
   }
 
+  /**
+   * Which swings are MAJOR: a zigzag over the engine's swings. A high or low
+   * is confirmed once price has reversed away from it by `reverse` (one
+   * significant leg - the top-30% leg size, in price), and until then the most
+   * extreme swing of the move is the candidate.
+   *
+   * It used to be "this swing's own leg is in the top 30%", measured from the
+   * swing just before it. That let a small pullback inside a move demote the
+   * move's real extreme: on 15m (2026-11-07) the 4146.90 top was minor because
+   * a 1.4 ATR dip preceded it, while the lower 4138.00 peak was major. Turns
+   * smaller than a full leg (a 2 ATR range inside a rally) stay minor rings.
+   * The current move's extreme is marked once it is a full leg from the last
+   * confirmed one. Display only - signals do not read it.
+   */
+  private majorSwings(sw: { kind: string; price: number }[], reverse: number): Set<number> {
+    const out = new Set<number>()
+    if (!sw.length || !(reverse > 0)) return out
+    let trend = 0                 // +1 seeking a high, -1 seeking a low
+    let ext = -1                  // the running extreme of the current move
+    let hi = -1, lo = -1          // before a direction exists
+    for (let i = 0; i < sw.length; i++) {
+      const w = sw[i]
+      if (trend === 0) {
+        if (w.kind === 'high' && (hi < 0 || w.price > sw[hi].price)) hi = i
+        if (w.kind === 'low' && (lo < 0 || w.price < sw[lo].price)) lo = i
+        if (hi >= 0 && lo >= 0 && sw[hi].price - sw[lo].price >= reverse) {
+          if (lo < hi) { out.add(lo); trend = 1; ext = hi } else { out.add(hi); trend = -1; ext = lo }
+        }
+      } else if (trend === 1) {
+        if (w.kind === 'high' && w.price >= sw[ext].price) ext = i
+        else if (w.kind === 'low' && sw[ext].price - w.price >= reverse) {
+          out.add(ext); trend = -1; ext = i
+        }
+      } else {
+        if (w.kind === 'low' && w.price <= sw[ext].price) ext = i
+        else if (w.kind === 'high' && w.price - sw[ext].price >= reverse) {
+          out.add(ext); trend = 1; ext = i
+        }
+      }
+    }
+    // The move still running: its extreme counts once it is a full leg away
+    // from the last confirmed turn.
+    const last = [...out].pop()
+    if (ext >= 0 && last !== undefined && Math.abs(sw[ext].price - sw[last].price) >= reverse) out.add(ext)
+    return out
+  }
+
+  /**
+   * BOS / CHoCH (engine/structure.structure_breaks: close-based, CHoCH only
+   * through the protected level) as SMC charts draw them: a dashed line along
+   * the level that was closed through, from the swing that made it to the bar
+   * that broke it, labelled at its middle on a plate - above the line for a
+   * break up, below for a break down. BOS in the break's colour, CHoCH amber.
+   * (Until 2026-11-07 a 6-bar stub ended at the break, nowhere near the swing.)
+   */
   private drawStructureBreaks() {
     const s = this.snap
     if (!s?.breaks) return
     const ctx = this.bctx
     ctx.save()
-    ctx.font = `700 8.5px ui-sans-serif, system-ui`
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    ctx.font = `700 8.5px ${UI_FONT}`
+    ctx.textAlign = 'center'
     for (const b of s.breaks) {
-      const x = this.snapX(b.idx)
-      if (x < -30 || x > this.pane.w + 30) continue
+      const x1 = this.snapX(b.idx)
+      const x0 = b.from_swing != null && b.from_swing >= 0 ? this.snapX(b.from_swing) : x1 - this.barW() * 6
+      if (x1 < -30 || x0 > this.pane.w + 30) continue
       const y = this.yOf(b.price)
-      const col = b.kind === 'CHoCH' ? this.theme.warn
-        : b.direction === 'up' ? this.theme.up : this.theme.down
+      if (y < -10 || y > this.pane.h + 10) continue
+      const up = b.direction === 'up'
+      const col = b.kind === 'CHoCH' ? this.theme.warn : up ? this.theme.up : this.theme.down
+      const yy = Math.round(y) + 0.5
       ctx.globalAlpha = 0.85
       ctx.strokeStyle = col
       ctx.lineWidth = 1
-      ctx.setLineDash([2, 2])
-      ctx.beginPath(); ctx.moveTo(x - this.barW() * 6, y); ctx.lineTo(x, y); ctx.stroke()
+      ctx.setLineDash([3, 3])
+      ctx.beginPath(); ctx.moveTo(x0, yy); ctx.lineTo(x1, yy); ctx.stroke()
       ctx.setLineDash([])
       // Full strength on a plate: these sit ON the candles, and a label drawn
-      // at 85% straight over wicks was where "blurry" was worst.
+      // straight over wicks was where "blurry" was worst.
       ctx.globalAlpha = 1
       const bw = ctx.measureText(b.kind).width
+      const mx = (x0 + x1) / 2
+      const ty = up ? y - 13 : y + 1
       ctx.fillStyle = `rgba(${this.theme.plateRgb},0.78)`
-      ctx.fillRect(x + 1, y - 7, bw + 5, 14)
+      ctx.fillRect(mx - bw / 2 - 2.5, ty, bw + 5, 12)
       ctx.fillStyle = col
-      ctx.textAlign = 'left'; ctx.textBaseline = 'middle'
-      ctx.fillText(b.kind, x + 3.5, y)
-    }
-    ctx.restore()
-  }
-
-  private drawEvents() {
-    const s = this.snap
-    if (!s?.events) return
-    const ctx = this.bctx
-    ctx.save()
-    const glyph: Record<string, string> = {
-      sweep: '↯', rejection: '✕', breakout: '▲', retest: '◎', false_break: '⊘',
-    }
-    for (const e of s.events) {
-      if (e.bars_since > 90) continue
-      const x = this.snapX(e.idx)
-      if (x < -10 || x > this.pane.w + 10) continue
-      const y = this.yOf(e.extreme)
-      const col = e.bias === 'bullish' ? this.theme.up : this.theme.down
-      const up = e.direction === 'up'
-      ctx.globalAlpha = Math.max(0.35, e.strength / 100)
-      ctx.fillStyle = col
-      ctx.font = `500 11px ${UI_FONT}`
-      ctx.textAlign = 'center'
-      ctx.textBaseline = up ? 'bottom' : 'top'
-      ctx.fillText(glyph[e.kind] ?? '•', x, y + (up ? -3 : 3))
+      ctx.textBaseline = 'middle'
+      ctx.fillText(b.kind, mx, ty + 6)
     }
     ctx.restore()
   }
@@ -2333,12 +2480,6 @@ export class ChartEngine {
     ctx.restore()
   }
 
-  /**
-   * ZigZag: the swing skeleton, joined up.
-   *
-   * Same swings the structure labels already use, so the line cannot tell a
-   * different story from the HH/HL markers sitting on it.
-   */
   // --- backtest furniture ------------------------------------------------ //
   private drawWatermark() {
     if (this.watermarkStyle === 'brand') return this.drawBrandMark()
@@ -2773,30 +2914,6 @@ export class ChartEngine {
     ctx.restore()
   }
 
-  private drawZigZag() {
-    const sw = this.snap?.swings
-    if (!sw?.length) return
-    const ctx = this.bctx
-    ctx.save()
-    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
-    ctx.globalAlpha = 0.65
-    ctx.strokeStyle = this.theme.accent
-    ctx.lineWidth = 1.1
-    ctx.setLineDash([])
-    ctx.beginPath()
-    let started = false
-    for (const p of sw) {
-      const x = this.snapX(p.idx), y = this.yOf(p.price)
-      if (!started) { ctx.moveTo(x, y); started = true } else ctx.lineTo(x, y)
-    }
-    // Carry the last leg to the live price so the skeleton does not stop
-    // short of the candle everyone is actually looking at.
-    const last = this.bars[this.bars.length - 1]
-    if (started && last) ctx.lineTo(this.xOf(this.bars.length - 1), this.yOf(last.c))
-    ctx.stroke()
-    ctx.restore()
-  }
-
   private drawRsi(top: number, h: number) {
     const ctx = this.bctx
     const n = this.bars.length
@@ -2953,7 +3070,7 @@ export class ChartEngine {
     if (this.overlays.levels) {
       // The same set drawLevels renders, in the same order and the same
       // colours - so a chip can never appear for a line that is not there.
-      const shown = [...(this.snap?.levels ?? [])]
+      const shown = [...(this.snap?.chart_levels ?? this.snap?.levels ?? [])]
         .filter((lv: any) => lv.score >= 50)
         .sort((a: any, b: any) => b.score - a.score)
         .slice(0, 8)

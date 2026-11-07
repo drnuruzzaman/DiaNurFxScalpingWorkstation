@@ -191,7 +191,7 @@ def classify(h, l, c, t, swings, trend, channels, atr_arr,
 
     # What the regime IMPLIES for playbook selection.
     if state == 'trend':
-        playbooks = ['mtf_pullback', 'breakout_retest', 'flag_continuation']
+        playbooks = ['mtf_pullback', 'breakout_retest', 'flag_continuation', 'trendline_bounce']
         guidance = f'Trade with the {direction}trend. Fade nothing.'
     elif state == 'range':
         playbooks = ['range_fade', 'sweep_reversal', 'false_break_fade']

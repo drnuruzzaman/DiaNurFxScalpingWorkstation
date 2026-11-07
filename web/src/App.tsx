@@ -337,7 +337,10 @@ export default function App() {
   const revertWorkspace = () => {
     if (!preset) return
     applyPreset(preset)
-    chartEngine.current?.setPreferredSpan?.(preset.span ?? null, true)
+    // Zoom is NOT restored from the workspace: every timeframe opens on the
+    // default view (ChartEngine DEFAULT_SPAN), as decided 2026-11-06 to match
+    // ScalpingWorkstation. The span is still saved with the workspace.
+    chartEngine.current?.setPreferredSpan?.(null, true)
     flash(`Back to the saved workspace for ${symbol} ${tf.toUpperCase()}`)
   }
   const forgetWorkspace = () => {
@@ -602,7 +605,8 @@ export default function App() {
       const live = toBars(p.bars)
       const forming = live.length ? live[live.length - 1].t : Infinity
       setBars((prev) => {
-        const next = own(key, barcache.onGrid(barcache.notAfter(mergeBars(prev, live), forming), step))
+        const next = own(key, barcache.onGrid(
+          barcache.liveSpan(barcache.notAfter(mergeBars(prev, live), forming), live), step))
         barcache.put(symbol, tf, next)
         return next
       })
@@ -1111,7 +1115,7 @@ export default function App() {
               onNeedHistory={loadOlderBars} status={chartStatus}
               watermark="DIANURFX" watermarkStyle="brand"
               onEngine={(e) => { chartEngine.current = e }}
-              chartKey={presetKey} preferredSpan={preset?.span ?? null}
+              chartKey={presetKey} preferredSpan={null}
               workspace={{
                 label: `${symbol} · ${tf.toUpperCase()}`, saved: !!preset, dirty: presetDirty,
                 savedAt: preset?.saved_ms, onSave: saveWorkspace,

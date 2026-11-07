@@ -21,6 +21,7 @@ import numpy as np
 from ..config import CONFIG, MTF_LADDER, TF_SECONDS, session_quality, sessions_at
 from ..datafeed import Series
 from . import events as ev
+from . import geometry as geo
 from . import legs as lg
 from . import levels as lv
 from . import patterns as pat
@@ -232,6 +233,7 @@ def _analyse(series: Series, mtf_reads: dict = None,
     # moves left from. See zones.py for why each is size-tested against ATR.
     fvgs = zn.fair_value_gaps(o, h, l, c, t, atr_arr)
     sd_zones = zn.supply_demand(o, h, l, c, t, atr_arr)
+    obs = zn.order_blocks(o, h, l, c, t, atr_arr, breaks)
 
     # --- geometry ---------------------------------------------------------- #
     # Geometry gets a STRUCTURAL window, not the whole buffer. The price arrays
@@ -243,8 +245,19 @@ def _analyse(series: Series, mtf_reads: dict = None,
         cfg.tl_lookback_min_bars, cfg.tl_lookback_max_bars)
     lines = tl.find_trendlines(h, l, c, t, geo_swings, atr_now, cfg.tl_min_touches,
                                cfg.tl_max_violation_atr, cfg.tl_max)
-    channels = tl.find_channels(h, l, c, t, lines, atr_now,
-                                cfg.channel_min_containment)
+    structural = tl.find_channels(h, l, c, t, lines, atr_now,
+                                  cfg.channel_min_containment)
+    # The channel set the chart draws - per big leg, across the view, one per
+    # kind - is the set the regime and the playbooks read (2026-11-07); the
+    # structural-window channels above only fill kinds no leg covers. The
+    # trendlines per leg are what the trendline playbook trades.
+    all_swings = st.find_swings(h, l, c, t, cfg.swing_fractal_k, cfg.swing_atr_mult,
+                                atr_arr, 400)
+    channel_set = geo.channels(t, h, l, c, all_swings, atr_now,
+                               [x.to_dict() for x in structural], cfg)
+    channels = [geo.as_channel(d) for d in channel_set]
+    leg_lines = geo.trendlines(t, h, l, c, all_swings,
+                               st.structure_breaks(all_swings, h, l, c, t), atr_now)
     reg_channel = tl.regression_channel(c, t, cfg.regime_lookback, atr_now)
 
     # --- patterns ---------------------------------------------------------- #
@@ -311,7 +324,7 @@ def _analyse(series: Series, mtf_reads: dict = None,
 
         'trend': trend,
         'swings': [s.to_dict() for s in swings],
-        'breaks': [b.to_dict() for b in breaks[-12:]],
+        'breaks': [b.to_dict() for b in breaks[-30:]],
         'fib': fib,
         'pullback': pullback,
         'leg': lg.annotate(leg, mtf, series.tf),
@@ -325,11 +338,13 @@ def _analyse(series: Series, mtf_reads: dict = None,
         'liquidity': pools,
         'fvg': fvgs,
         'zones': sd_zones,
+        'order_blocks': obs,
         'equal_highs': eq_highs[:5],
         'equal_lows': eq_lows[:5],
 
         'trendlines': [x.to_dict() for x in lines],
-        'channels': [x.to_dict() for x in channels],
+        'channels': channel_set,
+        'chart_trendlines': leg_lines,
         'regression_channel': reg_channel,
 
         'patterns': [p.to_dict() for p in found],

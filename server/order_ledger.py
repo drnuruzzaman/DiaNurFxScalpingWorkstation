@@ -45,6 +45,7 @@ COMMENT_MAX = 31
 PLAYBOOK_SHORT = {
     'trend_continuation': 'TRENDCONT',
     'flag_continuation': 'FLAGCONT',
+    'trendline_bounce': 'TLBOUNCE',
     'breakout_retest': 'BRKRETEST',
     'sweep_reversal': 'SWEEPREV',
     'false_break_fade': 'FBFADE',

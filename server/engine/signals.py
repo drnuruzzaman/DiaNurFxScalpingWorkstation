@@ -11,7 +11,7 @@ trade; qualify.py does that, and keeping the two apart is deliberate:
     learning is
   * the backtester can measure detection quality and filter quality separately
 
-Seven playbooks, each mapped to the regimes where it has an edge:
+Eight playbooks, each mapped to the regimes where it has an edge:
 
     mtf_pullback        trend      buy the dip with the higher timeframe
     sweep_reversal      range/transition  stops taken, no follow-through
@@ -20,6 +20,7 @@ Seven playbooks, each mapped to the regimes where it has an edge:
     pattern_break       any        a classical pattern reaching its trigger
     range_fade          range      sell the top, buy the bottom of a box
     flag_continuation   trend      the pause inside a move
+    trendline_bounce    trend      a rejection off the leg's trend line (2026-11-07)
 
 EVERY stop is placed beyond a STRUCTURAL price - a swing, a level, a sweep
 extreme - and then padded by an ATR fraction. Stops at round R multiples with
@@ -46,6 +47,7 @@ PLAYBOOK_LABELS = {
     'pattern_break': 'PATTERN BREAK',
     'range_fade': 'RANGE FADE',
     'flag_continuation': 'FLAG CONTINUATION',
+    'trendline_bounce': 'TRENDLINE BOUNCE',
 }
 
 
@@ -776,6 +778,84 @@ def pb_flag_continuation(snap: dict, series) -> list:
     return [_finish(sig)]
 
 
+# --------------------------------------------------------------------------- #
+# playbook 8: trendline bounce (2026-11-07 - added for the forward books and  #
+# the lab; OFF in live settings until a backtest says it earns its place)     #
+# --------------------------------------------------------------------------- #
+TL_MIN_TOUCHES = 3          # a line price has respected at least this often
+TL_TAG_ATR = 0.3            # the bar reached the line within this, or pierced it by no more
+TL_STOP_ATR = 0.5           # stop beyond the line
+
+
+def pb_trendline_bounce(snap: dict, series) -> list:
+    """
+    A rejection off the CURRENT leg's trend line, traded with the leg: in a
+    rally, the bar tags the rising support line and closes back above it, up;
+    in a decline, it tags the falling resistance and closes back below, down.
+    The lines are engine/geometry.trendlines - the ones the chart draws.
+    """
+    lines = [x for x in ((snap.get('chart_trendlines') or {}).get('lines') or []) if x.get('live')]
+    if not lines:
+        return []
+    atr_v = snap['atr']
+    sup = next((x for x in lines if x['kind'] == 'support'), None)
+    res = next((x for x in lines if x['kind'] == 'resistance'), None)
+    trend_line = None
+    if sup and sup['slope_bar'] > 0 and (res is None or res['slope_bar'] > 0):
+        side, trend_line, other = 'buy', sup, res
+    elif res and res['slope_bar'] < 0 and (sup is None or sup['slope_bar'] < 0):
+        side, trend_line, other = 'sell', res, sup
+    if trend_line is None or int(trend_line.get('touches') or 0) < TL_MIN_TOUCHES:
+        return []
+
+    line = float(trend_line['y2'])                # its value at the last bar
+    o, h, l, c = (float(series.o[-1]), float(series.h[-1]),
+                  float(series.l[-1]), float(series.c[-1]))
+    if side == 'buy':
+        tagged = abs(l - line) <= TL_TAG_ATR * atr_v
+        held = c > line and c > o
+    else:
+        tagged = abs(h - line) <= TL_TAG_ATR * atr_v
+        held = c < line and c < o
+    if not (tagged and held):
+        return []
+
+    ev_list = [
+        _ev(f"{'rising support' if side == 'buy' else 'falling resistance'} held "
+            f"({trend_line['touches']} touches)", 22, 'structure'),
+        _ev(f"bar closed back {'above' if side == 'buy' else 'below'} the line, "
+            f"{'up' if side == 'buy' else 'down'}", 10, 'event'),
+    ]
+    against = []
+    mtf = snap.get('mtf') or {}
+    if mtf.get('direction') == ('up' if side == 'buy' else 'down'):
+        ev_list.append(_ev(f"higher timeframes agree ({mtf.get('score'):+d})", 12, 'mtf'))
+    elif mtf.get('direction'):
+        against.append(f"higher timeframes lean the other way ({mtf.get('score'):+d})")
+        ev_list.append(_ev('against the higher-timeframe lean', -10, 'mtf'))
+    mom = snap.get('momentum') or {}
+    if (side == 'buy' and mom.get('total', 0) > 10) or (side == 'sell' and mom.get('total', 0) < -10):
+        ev_list.append(_ev(f"momentum agrees ({mom.get('total'):+d})", 6, 'momentum'))
+
+    price = snap['price']
+    stop = line - TL_STOP_ATR * atr_v if side == 'buy' else line + TL_STOP_ATR * atr_v
+    if (side == 'buy' and stop >= price) or (side == 'sell' and stop <= price):
+        return []
+    structural = float(other['y2']) if other else None   # the leg's other line, now
+    tp1, tp2 = _targets(price, stop, side, structural)
+
+    sig = Signal(
+        playbook='trendline_bounce', label='', side=side,
+        symbol=snap['symbol'], tf=snap['tf'],
+        entry=price, stop=stop, tp1=tp1, tp2=tp2, entry_type='market',
+        confidence=_score(ev_list, 30), evidence=ev_list, against=against,
+        atr_at_signal=atr_v,
+        invalidation=f"a close {'below' if side == 'buy' else 'above'} {line:.2f} breaks the line",
+        expiry_bars=12, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
+    )
+    return [_finish(sig)]
+
+
 PLAYBOOKS = {
     'mtf_pullback': pb_mtf_pullback,
     'sweep_reversal': pb_sweep_reversal,
@@ -784,6 +864,7 @@ PLAYBOOKS = {
     'pattern_break': pb_pattern_break,
     'range_fade': pb_range_fade,
     'flag_continuation': pb_flag_continuation,
+    'trendline_bounce': pb_trendline_bounce,
 }
 
 
@@ -824,7 +905,74 @@ def _generate(snap: dict, series, only: list = None,
             # One broken playbook must not silence the other six.
             continue
 
+    if CONFIG.quality.zone_confluence:
+        for sig in out:
+            _zone_confluence(sig, snap, series)
     return resolve(out)
+
+
+# --------------------------------------------------------------------------- #
+# zone confluence (2026-11-07) - order blocks, supply/demand, FVGs             #
+# --------------------------------------------------------------------------- #
+# Read on EVERY playbook's signal, after the playbook has scored it. FOR: price
+# came back into a band on the trade's own side and the entry sits on it - a
+# buy off a bullish order block, a demand zone or a bullish gap. AGAINST: an
+# opposing band waits between the entry and TP1. A band counts while price has
+# not closed through it (zones.py drops the dead ones); one used three times or
+# more is known to everyone and is not counted for.
+ZONE_FOR = {'ob': 8, 'zone': 6, 'fvg': 4}         # confidence, per kind
+ZONE_AGAINST = {'ob': 8, 'zone': 6, 'fvg': 4}
+ZONE_CAP = 12                                     # most a side's bands may add or take
+ZONE_TAP_BARS = 3                                 # price touched the band this recently
+ZONE_NAMES = {'ob': 'order block', 'zone': 'zone', 'fvg': 'fair value gap'}
+
+
+def _zone_name(z: dict) -> str:
+    side = {'demand': 'demand', 'supply': 'supply'}.get(z['side'], z['side'])
+    return (f"{side} zone" if z['kind'] == 'zone' else f"{side} {ZONE_NAMES[z['kind']]}")         + f" {z['low']:g}-{z['high']:g}"
+
+
+def _zone_confluence(sig: Signal, snap: dict, series) -> None:
+    from .zones import BUY_SIDES, SELL_SIDES, all_zones
+    bands = all_zones(snap)
+    if not bands:
+        return
+    atr_v = float(snap.get('atr') or 0.0)
+    buy = sig.side == 'buy'
+    own, opp = (BUY_SIDES, SELL_SIDES) if buy else (SELL_SIDES, BUY_SIDES)
+    k = min(ZONE_TAP_BARS, len(series.c))
+    reach = float(min(series.l[-k:])) if buy else float(max(series.h[-k:]))
+    pad = 0.1 * atr_v
+
+    plus, minus, seen_for, seen_against = 0, 0, set(), set()
+    for z in bands:
+        lo, hi, kind = float(z['low']), float(z['high']), z['kind']
+        if z['side'] in own and kind not in seen_for and int(z.get('touches') or 0) <= 2:
+            # Tapped from the trade's side, entry not beyond its far edge.
+            tapped = (lo - pad <= reach <= hi + pad) if buy else (lo - pad <= reach <= hi + pad)
+            held = sig.entry >= lo if buy else sig.entry <= hi
+            if tapped and held:
+                seen_for.add(kind)
+                w = min(ZONE_FOR[kind], ZONE_CAP - plus)
+                if w > 0:
+                    plus += w
+                    sig.evidence.append(_ev(f'entry off a {_zone_name(z)}', w, 'zone'))
+        elif z['side'] in opp and kind not in seen_against:
+            near = lo if buy else hi
+            ahead = (sig.entry < near < sig.tp1) if buy else (sig.tp1 < near < sig.entry)
+            if ahead:
+                seen_against.add(kind)
+                w = min(ZONE_AGAINST[kind], ZONE_CAP - minus)
+                if w > 0:
+                    minus += w
+                    sig.evidence.append(_ev(f'{_zone_name(z)} before TP1', -w, 'zone'))
+                    sig.against.append(f'{_zone_name(z)} sits between entry and TP1')
+    if plus or minus:
+        # The playbook's score, back to its raw sum (_score's curve inverted),
+        # moved by the zones and calibrated again.
+        conf = sig.confidence
+        raw = conf if conf <= 55 else 55 + (conf - 55) / 0.45
+        sig.confidence = _score([], int(round(raw + plus - minus)))
 
 
 def resolve(out: list) -> list:

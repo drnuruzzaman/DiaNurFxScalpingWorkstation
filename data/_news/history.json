@@ -1,16 +1,16 @@
 {
- "generated_ms": 1792548164511,
+ "generated_ms": 1793972202033,
  "start": "2017-01-01",
  "status": {
   "fred": {
    "NFP": 119,
    "CPI": 124,
    "PPI": 124,
-   "GDP": 128,
-   "PCE": 116,
+   "GDP": 129,
+   "PCE": 117,
    "RETAIL": 125,
-   "CLAIMS": 508,
-   "JOLTS": 117
+   "CLAIMS": 511,
+   "JOLTS": 118
   },
   "fomc": {
    "main_page_years": [
@@ -15842,6 +15842,83 @@
    "currency": "USD",
    "kind": "RETAIL",
    "title": "Advance Monthly Sales for Retail and Food Services",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1792672200000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793210400000,
+   "currency": "USD",
+   "kind": "FOMC",
+   "title": "FOMC statement",
+   "impact": "high",
+   "source": "federalreserve",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793277000000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793277000000,
+   "currency": "USD",
+   "kind": "GDP",
+   "title": "Gross Domestic Product",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793277000000,
+   "currency": "USD",
+   "kind": "PCE",
+   "title": "Personal Income and Outlays",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793718000000,
+   "currency": "USD",
+   "kind": "JOLTS",
+   "title": "Job Openings and Labor Turnover Survey",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793885400000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
    "impact": "high",
    "source": "fred",
    "time_known": true,

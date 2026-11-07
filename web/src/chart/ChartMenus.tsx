@@ -28,10 +28,8 @@ export const OVERLAY_GROUPS: { title: string; rows: OverlayRow[] }[] = [
       { key: 'patterns', label: 'Patterns', hint: 'wedges, tops, H&S' },
       { key: 'swings', label: 'Swing points', hint: 'HH / HL / LH / LL' },
       { key: 'structure', label: 'BOS / CHoCH', hint: 'structure breaks' },
-      { key: 'liquidity', label: 'Liquidity', hint: 'resting stops' },
-      { key: 'events', label: 'Events', hint: 'macro releases' },
+      { key: 'liquidity', label: 'Liquidity pools', hint: 'PDH/PDL, Asia, London, EQ' },
       { key: 'signal', label: 'Signal levels', hint: 'entry / stop / targets' },
-      { key: 'zigzag', label: 'ZigZag line', hint: 'swing skeleton' },
       { key: 'regimeBands', label: 'Regime ribbon', hint: 'trending / ranging runs' },
     ],
   },
@@ -42,8 +40,8 @@ export const OVERLAY_GROUPS: { title: string; rows: OverlayRow[] }[] = [
     title: 'Areas',
     rows: [
       { key: 'zones', label: 'Supply / demand', hint: 'bases strong moves left' },
+      { key: 'orderBlocks', label: 'Order blocks', hint: 'bull / bear OB, breaker' },
       { key: 'fvg', label: 'Fair value gaps', hint: 'unfilled imbalances' },
-      { key: 'fib', label: 'Fibonacci', hint: 'retracement of the last leg' },
     ],
   },
   {

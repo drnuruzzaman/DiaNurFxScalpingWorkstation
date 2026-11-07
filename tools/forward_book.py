@@ -71,7 +71,7 @@ FINGERPRINTED = (
     'server/engine/legs.py', 'server/engine/levels.py', 'server/engine/patterns.py',
     'server/engine/precision.py', 'server/engine/qualify.py', 'server/engine/regime.py',
     'server/engine/signals.py', 'server/engine/structure.py', 'server/engine/trendlines.py',
-    'server/engine/zones.py', 'server/executor.py', 'server/signal_store.py',
+    'server/engine/zones.py', 'server/engine/geometry.py', 'server/executor.py', 'server/signal_store.py',
     'server/order_ledger.py', 'server/daily.py', 'server/trade_journal.py',
     'server/lab/broker.py', 'server/lab/session.py', 'server/lab/data.py',
     'server/lab/settings.py', 'server/forecast/timebase.py',

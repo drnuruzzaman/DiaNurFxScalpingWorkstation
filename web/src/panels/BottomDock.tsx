@@ -206,6 +206,45 @@ function Impact({ impact, muted }: { impact: string; muted?: boolean }) {
   )
 }
 
+// --- the CALENDAR tab's filter (2026-11-07, after ScalpingWorkstation) ---- //
+// The tab already holds a week either side of now, so the filter is applied
+// here in the browser: no extra fetch, and switching is instant.
+type CalImpact = 'high' | 'medium' | 'all'
+type CalPast = 'today' | '7d'
+type CalFilter = { impact: CalImpact; allCcy: boolean; past: CalPast }
+const CAL_FILTER_KEY = 'dianur.calendarFilter'
+const CAL_DEFAULT: CalFilter = { impact: 'medium', allCcy: false, past: 'today' }
+const CAL_IMPACTS: [CalImpact, string][] = [['high', 'HIGH'], ['medium', 'MEDIUM+'], ['all', 'ALL']]
+const CAL_PASTS: [CalPast, string][] = [['today', 'TODAY'], ['7d', '7 DAYS']]
+const IMPACT_RANK: Record<string, number> = { high: 3, medium: 2, low: 1, holiday: 0 }
+const MIN_IMPACT: Record<CalImpact, number> = { high: 3, medium: 2, all: 0 }
+const CAL_SOURCE_NAMES: Record<string, string> = {
+  forexfactory: 'ForexFactory', quantgist: 'QuantGist', fred: 'FRED', finnhub: 'Finnhub',
+}
+// Currencies that publish a calendar. Metals have none: gold moves on USD.
+const CAL_CCYS = new Set(['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'NZD', 'CAD', 'CHF', 'CNY'])
+
+function loadCalFilter(): CalFilter {
+  try {
+    const v = JSON.parse(localStorage.getItem(CAL_FILTER_KEY) || 'null')
+    if (v && typeof v === 'object') {
+      return {
+        impact: CAL_IMPACTS.some(([k]) => k === v.impact) ? v.impact : CAL_DEFAULT.impact,
+        allCcy: v.allCcy === true,
+        past: CAL_PASTS.some(([k]) => k === v.past) ? v.past : CAL_DEFAULT.past,
+      }
+    }
+  } catch { /* private mode or bad JSON */ }
+  return CAL_DEFAULT
+}
+
+/** The currencies whose releases move a symbol: EURUSD.a -> EUR, USD; XAUUSD.a -> USD. */
+function calCurrencies(symbol?: string): string[] {
+  const s = (symbol ?? '').toUpperCase().replace(/[^A-Z]/g, '')
+  const out = [s.slice(0, 3), s.slice(3, 6)].filter((c) => CAL_CCYS.has(c))
+  return out.length ? out : ['USD']
+}
+
 export function BottomDock({
   snap, signals, board, positions, orders, height, onHeight, activeTf, onTf,
   activeSymbol, onOpen, onToggle, tab: tabProp, onTab, peek = false,
@@ -269,6 +308,15 @@ export function BottomDock({
   const [days, setDays] = useState(7)
   const [hist, setHist] = useState<DealsPayload | null>(null)
   const [cal, setCal] = useState<CalEvent[] | null>(null)
+  const [calSources, setCalSources] = useState<Record<string, boolean> | null>(null)
+  const [calFilter, setCalFilterRaw] = useState<CalFilter>(loadCalFilter)
+  const setCalFilter = (p: Partial<CalFilter>) => setCalFilterRaw((cur) => {
+    const next = { ...cur, ...p }
+    try { localStorage.setItem(CAL_FILTER_KEY, JSON.stringify(next)) } catch { /* private mode */ }
+    scheduleSave()
+    return next
+  })
+  const calCcys = calCurrencies(activeSymbol)
   const [loading, setLoading] = useState(false)
   const [loadErr, setLoadErr] = useState<string | null>(null)
 
@@ -294,7 +342,7 @@ export function BottomDock({
       box.scrollTop = Math.max(0, row.offsetTop - box.clientHeight * 0.25)
     })
     return () => cancelAnimationFrame(id)
-  }, [tab, cal])
+  }, [tab, cal, calFilter])
 
   /**
    * The live count for a panel, or 0 when it has nothing to say.
@@ -328,7 +376,11 @@ export function BottomDock({
         // A full week back and a full week forward. ForexFactory publishes a
         // week at a time, and a 6-hour rear window hid most of it - by Friday
         // the tab was showing a handful of rows out of seventy-five.
-        else setCal((await api.calendar(168, 168)).events)
+        else {
+          const r = await api.calendar(168, 168)
+          setCal(r.events)
+          setCalSources(r.sources ?? null)
+        }
         if (!stop) setLoadErr(null)
       } catch (e: any) {
         if (!stop) setLoadErr(e?.message ?? 'could not load')
@@ -422,15 +474,73 @@ export function BottomDock({
     if (tab === 'calendar') {
       if (loadErr) return <Empty>Could not load the calendar — {loadErr}</Empty>
       if (!cal) return <Empty>Reading the calendar…</Empty>
-      if (!cal.length) return <Empty>Nothing scheduled in this window.</Empty>
+      // TODAY reaches back to midnight UTC - the clock this tab shows times in.
+      const nowMs = Date.now()
+      const from = calFilter.past === '7d'
+        ? nowMs - 7 * 86_400_000 : Math.floor(nowMs / 86_400_000) * 86_400_000
+      const rows = cal.filter((e) =>
+        (IMPACT_RANK[e.impact] ?? 1) >= MIN_IMPACT[calFilter.impact]
+        && (calFilter.allCcy || calCcys.includes(e.currency))
+        && e.ts >= from)
+      const upcoming = rows.filter((e) => e.minutes >= 0).length
+      const perSource: Record<string, number> = {}
+      for (const e of cal) perSource[e.source ?? 'forexfactory'] = (perSource[e.source ?? 'forexfactory'] ?? 0) + 1
+      const strip = (
+        <div className="dock-strip">
+          <span>IMPACT</span>
+          <div className="win-group">
+            {CAL_IMPACTS.map(([k, label]) => (
+              <button key={k} className={`win-btn ${calFilter.impact === k ? 'on' : ''}`}
+                onClick={() => setCalFilter({ impact: k })}>{label}</button>
+            ))}
+          </div>
+          <span className="sep" />
+          <span>CCY</span>
+          <div className="win-group">
+            <button className={`win-btn ${!calFilter.allCcy ? 'on' : ''}`}
+              title="the charted symbol's currencies"
+              onClick={() => setCalFilter({ allCcy: false })}>{calCcys.join(' ')}</button>
+            <button className={`win-btn ${calFilter.allCcy ? 'on' : ''}`}
+              onClick={() => setCalFilter({ allCcy: true })}>ALL</button>
+          </div>
+          <span className="sep" />
+          <span>PAST</span>
+          <div className="win-group">
+            {CAL_PASTS.map(([k, label]) => (
+              <button key={k} className={`win-btn ${calFilter.past === k ? 'on' : ''}`}
+                onClick={() => setCalFilter({ past: k })}>{label}</button>
+            ))}
+          </div>
+          <span className="sep" />
+          <span>UPCOMING <b>{upcoming}</b></span>
+          {calSources && (
+            <span style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
+              <span className="t-dim">SOURCES</span>
+              {Object.entries(calSources).map(([k, on]) => (
+                <span key={k} title={on ? 'configured' : 'not configured (no API key)'}>
+                  <span style={{ color: on ? 'var(--bull)' : 'var(--ink-dim)' }}>●</span>{' '}
+                  <b>{CAL_SOURCE_NAMES[k] ?? k}</b>{' '}
+                  {on ? <span className="t-up">ok</span> : <span className="t-dim">off</span>}
+                  {on && <span className="t-dim"> {perSource[k] ?? 0}</span>}
+                </span>
+              ))}
+            </span>
+          )}
+        </div>
+      )
+      if (!rows.length) {
+        return <>{strip}<Empty>No releases match this filter.</Empty></>
+      }
       return (
+        <>
+        {strip}
         <table className="tabular">
           <thead><tr>
             <th>When</th><th>Time</th><th>Ccy</th><th>Impact</th>
             <th>Event</th><th className="num">Forecast</th><th className="num">Previous</th>
           </tr></thead>
           <tbody>
-            {cal.map((e, i) => {
+            {rows.map((e, i) => {
               // A release that has already landed is history; the one you are
               // about to be run over by is the reason this tab exists, so the
               // next few are the ones that get the highlight.
@@ -440,7 +550,7 @@ export function BottomDock({
               // either side of today opens on row one - three or four days
               // of releases that already landed - and the next one, which is
               // the only reason the tab is open, is somewhere below the fold.
-              const first = !past && (i === 0 || cal[i - 1].minutes < 0)
+              const first = !past && (i === 0 || rows[i - 1].minutes < 0)
               return (
                 <React.Fragment key={`${e.ts}-${i}`}>
                 {first && (
@@ -477,6 +587,7 @@ export function BottomDock({
             })}
           </tbody>
         </table>
+        </>
       )
     }
 
@@ -824,7 +935,10 @@ export function BottomDock({
     }
 
     if (tab === 'levels') {
-      if (!snap?.levels?.length) return <Empty>No levels.</Empty>
+      // The levels the chart draws (server/chart_levels.py), so the table and
+      // the lines agree; the engine's own when the chart has none.
+      const levels = snap?.chart_levels ?? snap?.levels
+      if (!levels?.length) return <Empty>No levels.</Empty>
       return (
         <table className="tabular">
           <thead><tr>
@@ -833,7 +947,7 @@ export function BottomDock({
             <th>Broken</th><th>Built from</th>
           </tr></thead>
           <tbody>
-            {snap.levels.map((l, i) => (
+            {levels.map((l, i) => (
               <tr key={i}>
                 <td className="num t-hi">{fmt(l.price)}</td>
                 <td className={l.kind === 'support' ? 't-up' : l.kind === 'resistance' ? 't-down' : 't-warn'}>

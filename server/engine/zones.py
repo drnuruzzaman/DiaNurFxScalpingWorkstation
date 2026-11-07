@@ -8,6 +8,8 @@ module finds the two things a trader reads as a band rather than a line:
                     left a range no trade happened in.
   SUPPLY / DEMAND   the base a strong move departed from - the candles sitting
                     where a large order is presumed to have been worked.
+  ORDER BLOCKS      (2026-11-07) the last opposite-colour candle at the origin
+                    of the leg that broke structure (structure.structure_breaks).
 
 Both are drawn as rectangles, both are consumed the same way (price returns,
 reacts or does not), and both go stale once price has traded back through
@@ -280,3 +282,80 @@ def supply_demand(o: np.ndarray, h: np.ndarray, l: np.ndarray,
         # overlapping zones.
         i = j - 1
     return out
+
+
+# --------------------------------------------------------------------------- #
+# order blocks (2026-11-07)                                                    #
+# --------------------------------------------------------------------------- #
+OB_LOOKBACK = 5             # bars back from the leg's origin to find the opposite candle
+OB_MAX_ATR = 2.0            # a wider candle is a range, not a block
+OB_MAX_AGE = 400            # bars after its break; older blocks are history
+
+
+def order_blocks(o: np.ndarray, h: np.ndarray, l: np.ndarray, c: np.ndarray,
+                 t: np.ndarray, atr: np.ndarray, breaks: list,
+                 lookback: int = 300, limit: int = 8) -> list:
+    """
+    The order blocks still alive: for each BOS/CHoCH, the last DOWN candle at
+    the low the breaking rally started from (a bullish block), or the last UP
+    candle at the high the breaking decline started from (bearish).
+
+    `breaks` are structure.StructureBreak - the engine's own protected-level
+    breaks, so the blocks agree with the BOS/CHoCH the chart labels. A block
+    dies once a bar CLOSES through its far side (it has become a breaker), or
+    OB_MAX_AGE bars after its break. Newest first, one per area of price.
+    """
+    n = len(c)
+    out = []
+    for br in sorted(breaks, key=lambda b: b.idx, reverse=True):
+        if br.idx < n - lookback or br.idx >= n:
+            continue
+        a, b = int(br.from_swing), int(br.idx)
+        if not (0 <= a < b):
+            continue
+        up = br.direction == 'up'
+        m = a + int(np.argmin(l[a:b + 1]) if up else np.argmax(h[a:b + 1]))
+        ob_i = None
+        for x in range(m, max(-1, m - OB_LOOKBACK), -1):
+            if (up and c[x] < o[x]) or (not up and c[x] > o[x]):
+                ob_i = x
+                break
+        if ob_i is None:
+            continue
+        lo, hi = float(l[ob_i]), float(h[ob_i])
+        ref = float(atr[b]) if b < len(atr) and atr[b] > 0 else 0.0
+        if ref <= 0 or hi - lo > OB_MAX_ATR * ref:
+            continue
+        after = slice(b + 1, n)
+        dead = (c[after] < lo).any() if up else (c[after] > hi).any()
+        if dead or n - 1 - b > OB_MAX_AGE:
+            continue
+        if any(lo < z['high'] and hi > z['low'] for z in out):
+            continue
+        out.append({
+            'kind': 'ob',
+            'side': 'bullish' if up else 'bearish',
+            'low': round(lo, 5),
+            'high': round(hi, 5),
+            'mid': round((lo + hi) / 2, 5),
+            'idx': int(ob_i),
+            'break_idx': b,
+            't': int(t[ob_i]),
+            'break_kind': br.kind,
+            'touches': _touches(lo, hi, l, h, b + 1),
+            'filled': round(_mitigation(lo, hi, l, h, b + 1), 2),
+        })
+        if len(out) >= limit:
+            break
+    return out
+
+
+# Which side of the market each band is on.
+BUY_SIDES = ('bullish', 'demand')
+SELL_SIDES = ('bearish', 'supply')
+
+
+def all_zones(snap: dict) -> list:
+    """Every band on a snapshot - order blocks, supply/demand and FVGs."""
+    return (list(snap.get('order_blocks') or []) + list(snap.get('zones') or [])
+            + list(snap.get('fvg') or []))

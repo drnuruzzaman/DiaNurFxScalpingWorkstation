@@ -61,6 +61,8 @@ from .order_ledger import OrderLedger
 from .signal_store import SignalStore, FINAL
 from .daily import DailyLimits, day_start_ms, judging_context
 from .telegram_commands import TelegramCommands, private_destinations
+from .chart_levels import chart_levels
+from . import smc_overlay
 
 VERSION = '1.0.0'
 
@@ -372,6 +374,20 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
     sigs = qualify_all(detected, snap, spec, ctx)
     if lifted is not None:
         _note_daily_loss(sigs, lifted)
+    if live:
+        # After generate/qualify, so no signal can see it. Chart only. (The
+        # channels and trendlines come from the engine itself since 2026-11-07:
+        # snapshot['channels'] and ['chart_trendlines'], server/engine/geometry.py.)
+        try:
+            snap['chart_levels'] = _chart_levels_cached(symbol, tf, series, snap)
+        except Exception:                                 # noqa: BLE001
+            pass                          # the chart falls back to the engine's levels
+        try:
+            smc = smc_for_chart(symbol, tf, series)
+            if smc is not None:
+                snap['smc'] = smc
+        except Exception:                                 # noqa: BLE001
+            pass                          # no pools / order blocks this tick, nothing else
     STATE.snapshots[(symbol, tf)] = snap
     STATE.signals[(symbol, tf)] = sigs
     if live:
@@ -612,6 +628,60 @@ def mtf_trendlines_route(symbol: str = None, tf: str = '5m'):
         'ladder': [x for x in MTF_LADDER.get(tf, []) if _tf_rank(x) > _tf_rank(tf)],
         'server_ms': int(time.time() * 1000),
     }
+
+
+# --------------------------------------------------------------------------- #
+# chart-only overlays: levels, liquidity pools, order blocks                   #
+# --------------------------------------------------------------------------- #
+# The chart's channels and trendlines moved into the engine on 2026-11-07
+# (server/engine/geometry.py) so the regime and the playbooks read what the
+# chart draws.
+WIDE_CHANNEL_BARS = 300     # the chart's default view (ChartEngine DEFAULT_SPAN)
+_WIDE_LOCK = threading.Lock()
+_LEVELS_CACHE: dict = {}    # (symbol, tf) -> (last closed bar ms, n, levels)
+_SMC_POOLS: dict = {}       # symbol -> (5m bucket, pools, pip)
+
+
+def smc_for_chart(symbol: str, tf: str, series) -> dict | None:
+    """
+    Liquidity pools for the live chart (server/smc_overlay.py), from the
+    1d/1w/15m/1h/5m bars, rebuilt once per 5m close per symbol. Display only -
+    nothing downstream reads snapshot['smc']. Order blocks are the engine's
+    (snapshot['order_blocks']).
+    """
+    now = int(time.time() * 1000)
+    tf_ms = TF_SECONDS[tf] * 1000
+    t, o, h, l, c = smc_overlay.closed(series, tf_ms, now, 600)
+    if len(t) < 60:
+        return None
+    last = float(series.c[-1])
+    t_start = int(t[max(0, len(t) - WIDE_CHANNEL_BARS)])
+    bucket = now // 300_000
+    with _WIDE_LOCK:
+        pools = _SMC_POOLS.get(symbol)
+    if pools is None or pools[0] != bucket:
+        pip = 10 * float(FEED.spec(symbol).get('point') or 0.01)
+        built = smc_overlay.build_pools(
+            lambda name: FEED.bars(symbol, name, smc_overlay.POOL_BARS[name] + 5, live=True),
+            now, smc_overlay.fx_from_utc, pip)
+        pools = (bucket, built, pip)
+        with _WIDE_LOCK:
+            _SMC_POOLS[symbol] = pools
+    return {'pools': smc_overlay.pick_pools(pools[1], now, t_start, last, pools[2])}
+
+
+def _chart_levels_cached(symbol: str, tf: str, series, snap: dict) -> list:
+    """server/chart_levels.py's levels, recomputed once per bar close."""
+    n = len(series) - 1
+    last_ms = int(series.t[n - 1]) if n > 0 else 0
+    with _WIDE_LOCK:
+        hit = _LEVELS_CACHE.get((symbol, tf))
+    if hit and hit[0] == last_ms and hit[1] == n:
+        return hit[2]
+    out = chart_levels(series, tf, snap.get('digits'))
+    with _WIDE_LOCK:
+        _LEVELS_CACHE[(symbol, tf)] = (last_ms, n, out)
+    return out
 
 
 def board_rows(symbol: str) -> list:
@@ -1902,7 +1972,15 @@ def _lab_start_locked(subprocess, sys):
 # settings                                                                    #
 # --------------------------------------------------------------------------- #
 SETTINGS_FILE = Path(__file__).resolve().parent.parent / 'configs' / 'settings.json'
-SETTING_GROUPS = ('risk', 'gates', 'engine', 'instrument', 'execution')
+SETTING_GROUPS = ('risk', 'gates', 'engine', 'instrument', 'execution', 'quality')
+# The quality rules are research switches (config.QualitySettings), not live
+# settings - except the ones listed here, switched on for live trading after
+# they held up out of sample. C1 (2026-11-06): pattern_break only on H&S and
+# double/triple tops and bottoms, quality >= 65 - the one rule that improved
+# both the 2018-23 and 2024-26 reads (tools/playbook_quality.py). The lab and
+# every research tool read settings through server/lab/settings.GROUPS, which
+# leaves 'quality' out, so this reaches the live engine only.
+LIVE_QUALITY_KEYS = ('pattern_classic_only', 'zone_confluence', 'zone_gate')
 
 
 def _playbook_names() -> list:
@@ -1941,6 +2019,8 @@ def _check_setting(group: str, key: str, v):
         return f'{group}.{key} must be between {lo_hi[0]} and {lo_hi[1]}'
     if (group, key) == ('risk', 'exit_mode') and v not in ('trail', 'partial'):
         return 'risk.exit_mode must be trail or partial'
+    if (group, key) == ('quality', 'zone_gate') and v not in ('off', 'warn', 'block'):
+        return 'quality.zone_gate must be off, warn or block'
     if (group, key) == ('execution', 'broker_tp') and v not in ('none', 'tp1', 'tp2', 'cap'):
         return 'execution.broker_tp must be none, tp1, tp2 or cap'
     if (group, key) == ('execution', 'broker_tp_r') and not (1.5 <= v <= 10.0):
@@ -1978,6 +2058,9 @@ def apply_settings(patch: dict, persist: bool = True) -> tuple:
         if target is None or group not in (patch or {}):
             continue
         for key, value in (patch[group] or {}).items():
+            if group == 'quality' and key not in LIVE_QUALITY_KEYS:
+                errors.append(f'quality.{key} is a research switch, not a live setting')
+                continue
             if not hasattr(target, key):
                 errors.append(f'unknown setting {group}.{key}')
                 continue
@@ -2083,6 +2166,7 @@ def get_settings():
         'instrument': CONFIG.instrument.__dict__,
         'execution': {k: (list(v) if isinstance(v, tuple) else v)
                       for k, v in CONFIG.execution.__dict__.items()},
+        'quality': {k: getattr(CONFIG.quality, k) for k in LIVE_QUALITY_KEYS},
         'playbooks': _playbook_names(),
         'timeframes': list(BOARD_TFS),
         'trading_enabled': _trading_enabled(),

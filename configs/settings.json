@@ -19,11 +19,9 @@
    "30m",
    "1h",
    "2h",
-   "4h",
-   "1m",
-   "3m"
+   "4h"
   ],
-  "auto": true,
+  "auto": false,
   "max_per_symbol_tf": 5,
   "broker_tp": "tp2",
   "lots_gold": 0.01,
@@ -40,9 +38,19 @@
   "max_atr_percentile": 97.0,
   "min_mtf_score": 25,
   "cooldown_bars": 2,
-  "disabled_playbooks": [],
+  "disabled_playbooks": [
+   "sweep_reversal",
+   "breakout_retest",
+   "range_fade",
+   "trendline_bounce"
+  ],
   "news_blocks": false,
   "news_blackout_min": 10,
   "avoid_fades": true
+ },
+ "quality": {
+  "pattern_classic_only": true,
+  "zone_confluence": false,
+  "zone_gate": "off"
  }
 }

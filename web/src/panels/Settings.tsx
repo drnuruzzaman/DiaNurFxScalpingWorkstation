@@ -18,6 +18,10 @@ export type SettingsTab = Tab
  * known. See RiskSettings.exit_mode in server/config.py.
  */
 const EXIT_HINT: Record<string, string> = {
+  tp1:
+    'the whole position closes at TP1 (MT5 holds TP1 as the take-profit); '
+    + 'the slot is then free for the next signal. Same as trail + broker '
+    + 'TP1 - the trailing stop never acts',
   trail:
     'at TP1 the stop locks in, then follows price by the trail distance on '
     + 'closed bars. Whole position, no fixed target — TP2 becomes an '
@@ -35,6 +39,10 @@ const EXIT_HINT: Record<string, string> = {
  * option here is a different answer to "what happens if this is not running
  * while the trade is".
  */
+/** The Exit dropdown's choice: trail with broker TP1 reads as "all out at TP1". */
+const exitChoice = (r: any, x: any): string =>
+  r.exit_mode === 'trail' && x.broker_tp === 'tp1' ? 'tp1' : r.exit_mode
+
 const BROKER_TP_HINT: Record<string, string> = {
   tp1:
     'all out at 1R, so the trailing stop never gets to act — MT5 closes '
@@ -995,9 +1003,23 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
                   hint that only names the field leaves you to work out how
                   they interact. Each now explains the option actually
                   selected, so the text changes as the choice does. */}
-              <Field label="Exit" hint={EXIT_HINT[r.exit_mode] ?? ''}>
-                <select defaultValue={r.exit_mode}
-                  onChange={(e) => saveRisk({ exit_mode: e.target.value })}>
+              {/* "all out at TP1" is not a third exit mode: it is trail with
+                  MT5 holding TP1 as the take-profit, which closes the whole
+                  position the moment TP1 prints (executor._broker_tp). Offered
+                  here because that is where the question gets asked. */}
+              <Field label="Exit" hint={EXIT_HINT[exitChoice(r, x)] ?? ''}>
+                <select value={exitChoice(r, x)}
+                  onChange={(e) => {
+                    const v = e.target.value
+                    if (v === 'tp1') {
+                      saveRisk({ exit_mode: 'trail' }); saveExec({ broker_tp: 'tp1' })
+                    } else {
+                      saveRisk({ exit_mode: v })
+                      // Leaving "all out at TP1" for trail: TP2 is the default target.
+                      if (v === 'trail' && x.broker_tp === 'tp1') saveExec({ broker_tp: 'tp2' })
+                    }
+                  }}>
+                  <option value="tp1">all out at TP1</option>
                   <option value="trail">trail after TP1</option>
                   <option value="partial">50% at TP1, rest to TP2</option>
                 </select>
@@ -1009,7 +1031,7 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
                   // nothing is worse than one that is missing.
                   ? 'not used while Exit is "50% at TP1" — that plan always sends TP2 as the order target'
                   : BROKER_TP_HINT[x.broker_tp ?? 'tp2'] ?? ''}>
-                <select defaultValue={x.broker_tp ?? 'tp2'}
+                <select value={x.broker_tp ?? 'tp2'}
                   onChange={(e) => saveExec({ broker_tp: e.target.value })}>
                   <option value="tp1">TP1 (all out at 1R - trailing never acts)</option>
                   <option value="tp2">TP2 (caps winners at TP2)</option>

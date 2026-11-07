@@ -277,7 +277,7 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
                            f"{mtf.get('verdict')} ({mtf_score:+d})"))
     elif opposed:
         if g.require_mtf_agreement and sig.playbook in (
-                'mtf_pullback', 'breakout_retest', 'flag_continuation'):
+                'mtf_pullback', 'breakout_retest', 'flag_continuation', 'trendline_bounce'):
             # Continuation playbooks have no reason to exist against the HTF.
             gates.append(_gate('mtf', 'BLOCK',
                                f'continuation setup against higher timeframes '
@@ -323,6 +323,36 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
         else:
             gates.append(_gate('leg', 'PASS',
                                f"{where}, trading {'with' if with_leg else 'against'} it"))
+
+    # --- 4c. opposing zone (2026-11-07) -------------------------------------- #
+    # An order block, supply/demand zone or unfilled gap on the OTHER side,
+    # right where the trade starts: the entry inside it, or its near edge
+    # within half the risk. CONFIG.quality.zone_gate - off in live until a
+    # backtest supports it; the lab and the forward books run it.
+    zg = CONFIG.quality.zone_gate
+    if zg in ('warn', 'block'):
+        from .zones import BUY_SIDES, SELL_SIDES, all_zones
+        risk = abs(sig.entry - sig.stop)
+        opp = SELL_SIDES if sig.side == 'buy' else BUY_SIDES
+        hit = None
+        for z in all_zones(snap):
+            if z['side'] not in opp or (z['kind'] == 'fvg' and float(z.get('filled') or 0) >= 0.5):
+                continue
+            lo, hi = float(z['low']), float(z['high'])
+            if sig.side == 'buy':
+                close = lo <= sig.entry <= hi or 0 < lo - sig.entry <= 0.5 * risk
+            else:
+                close = lo <= sig.entry <= hi or 0 < sig.entry - hi <= 0.5 * risk
+            if close:
+                hit = z
+                break
+        if hit is None:
+            gates.append(_gate('zone', 'PASS', 'no opposing zone at the entry'))
+        else:
+            what = {'ob': 'order block', 'zone': 'zone', 'fvg': 'fair value gap'}[hit['kind']]
+            text = f"entry into a {hit['side']} {what} {hit['low']:g}-{hit['high']:g}"
+            gates.append(_gate('zone', 'BLOCK', text) if zg == 'block'
+                         else _gate('zone', 'WARN', text, 8))
 
     # --- 5. sizing ----------------------------------------------------------- #
     risk_cfg = {'equity': ctx.get('equity', r.equity),

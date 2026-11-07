@@ -48554,7 +48554,7 @@
   "EURUSD.a:2h:sweep_reversal:sell:1793800800000": {
    "id": "EURUSD.a:2h:sweep_reversal:sell:1793800800000",
    "tag": "DNX 38d3bad688",
-   "state": "filled",
+   "state": "closed",
    "attempts": 6,
    "request": {
     "symbol": "EURUSD.a",
@@ -48570,10 +48570,10 @@
    "ticket": 9997801,
    "position": 9997801,
    "fill_price": 1.12314,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 1.11983,
+   "outcome": "manual",
+   "r": 0.811,
+   "profit": 16.26,
    "events": [
     [
      1793873590617,
@@ -48639,20 +48639,32 @@
      1793873746988,
      "filled",
      "position 9997801"
+    ],
+    [
+     1793938031937,
+     "filled",
+     "stop -> 1.12008"
+    ],
+    [
+     1793946706629,
+     "closed",
+     "manual at 1.11983"
     ]
    ],
    "created_ms": 1793873590617,
-   "updated_ms": 1793873746988,
+   "updated_ms": 1793946706629,
    "symbol": "EURUSD.a",
    "tf": "2h",
    "side": "sell",
    "kind": "market",
-   "lots": 0.05
+   "lots": 0.05,
+   "r_net": 0.797,
+   "exit_ms": 1793945269894
   },
   "XAUUSD.a:1m:sweep_reversal:buy:1793874240000": {
    "id": "XAUUSD.a:1m:sweep_reversal:buy:1793874240000",
    "tag": "DNX acd7612e1e",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -48668,10 +48680,10 @@
    "ticket": 9997874,
    "position": 9997874,
    "fill_price": 4124.35,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 4122.48,
+   "outcome": "stop",
+   "r": -1.033,
+   "profit": -1.95,
    "events": [
     [
      1793874372741,
@@ -48687,16 +48699,5220 @@
      1793874375282,
      "filled",
      "position 9997874"
+    ],
+    [
+     1793874480325,
+     "closed",
+     "stop at 4122.48"
     ]
    ],
    "created_ms": 1793874372741,
-   "updated_ms": 1793874375282,
+   "updated_ms": 1793874480325,
    "symbol": "XAUUSD.a",
    "tf": "1m",
    "side": "buy",
    "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.077,
+   "exit_ms": 1793874478050
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793874540000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793874540000",
+   "tag": "DNX 7319bc2865",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4122.77,
+    "sl": 4120.55,
+    "tp": 4125.54,
+    "expiration_ms": 1793875320000
+   },
+   "ticket": 9997931,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793874609765,
+     "sending",
+     ""
+    ],
+    [
+     1793874610035,
+     "placed",
+     "limit ticket 9997931"
+    ],
+    [
+     1793874913833,
+     "reversed",
+     "opposite FINAL XAUUSD.a:1m:sweep_reversal:sell:1793874840000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793874609765,
+   "updated_ms": 1793874913833,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
    "lots": 0.01
+  },
+  "XAUUSD.a:15m:sweep_reversal:buy:1793870100000": {
+   "id": "XAUUSD.a:15m:sweep_reversal:buy:1793870100000",
+   "tag": "DNX 73109285d8",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4129.99,
+    "sl": 4116.91,
+    "tp": 4146.9,
+    "expiration_ms": 1793881800000
+   },
+   "ticket": 9997957,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793874760322,
+     "sending",
+     ""
+    ],
+    [
+     1793874760611,
+     "placed",
+     "stop ticket 9997957"
+    ],
+    [
+     1793875525525,
+     "cancelled",
+     "invalidated on the closed bar - confidence 51 below the 52 floor after 1 warning(s)"
+    ]
+   ],
+   "created_ms": 1793874760322,
+   "updated_ms": 1793875525525,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:flag_continuation:buy:1793872800000": {
+   "id": "XAUUSD.a:30m:flag_continuation:buy:1793872800000",
+   "tag": "DNX 5ef89b15e6",
+   "state": "cancelled",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4134.31,
+    "sl": 4106.57,
+    "tp": 4223.41,
+    "expiration_ms": 1793903400000
+   },
+   "ticket": 9997961,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793874761211,
+     "sending",
+     ""
+    ],
+    [
+     1793874761258,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1793874792609,
+     "sending",
+     ""
+    ],
+    [
+     1793874792925,
+     "placed",
+     "stop ticket 9997961"
+    ],
+    [
+     1793875526251,
+     "cancelled",
+     "invalidated on the closed bar - continuation setup against higher timeframes (-82)"
+    ]
+   ],
+   "created_ms": 1793874761211,
+   "updated_ms": 1793875526251,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1793874420000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1793874420000",
+   "tag": "DNX 8be83fff0b",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4122.77,
+    "sl": 4127.36,
+    "tp": 4113.6,
+    "expiration_ms": 1793876760000
+   },
+   "ticket": 9997962,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793874812176,
+     "sending",
+     ""
+    ],
+    [
+     1793874812457,
+     "placed",
+     "stop ticket 9997962"
+    ],
+    [
+     1793874998494,
+     "reversed",
+     "opposite FINAL XAUUSD.a:3m:sweep_reversal:buy:1793874780000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793874812176,
+   "updated_ms": 1793874998494,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793874960000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793874960000",
+   "tag": "DNX 0615a8c41d",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4125.52,
+    "sl": 4122.83,
+    "tp": 4130.9,
+    "expiration_ms": 1793875740000
+   },
+   "ticket": 9997985,
+   "position": 9997985,
+   "fill_price": 4125.55,
+   "close_price": 4127.24,
+   "outcome": "trail",
+   "r": 0.621,
+   "profit": 1.61,
+   "events": [
+    [
+     1793875027134,
+     "sending",
+     ""
+    ],
+    [
+     1793875027494,
+     "placed",
+     "stop ticket 9997985"
+    ],
+    [
+     1793875058475,
+     "filled",
+     "position 9997985"
+    ],
+    [
+     1793875526983,
+     "filled",
+     "stop -> 4127.25"
+    ],
+    [
+     1793875530655,
+     "closed",
+     "trail at 4127.24"
+    ]
+   ],
+   "created_ms": 1793875027134,
+   "updated_ms": 1793875530655,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01,
+   "r_net": 0.592,
+   "exit_ms": 1793875527048
+  },
+  "XAUUSD.a:5m:sweep_reversal:buy:1793874900000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:buy:1793874900000",
+   "tag": "DNX 4dd577b271",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4127.12,
+    "sl": 4121.29,
+    "tp": 4138.78,
+    "expiration_ms": 1793878800000
+   },
+   "ticket": 9998041,
+   "position": 9998041,
+   "fill_price": 4127.11,
+   "close_price": 4133.99,
+   "outcome": "trail",
+   "r": 1.182,
+   "profit": 6.8,
+   "events": [
+    [
+     1793875245933,
+     "sending",
+     ""
+    ],
+    [
+     1793875246206,
+     "placed",
+     "limit ticket 9998041"
+    ],
+    [
+     1793875277411,
+     "filled",
+     "position 9998041"
+    ],
+    [
+     1793877317005,
+     "filled",
+     "stop -> 4131.47"
+    ],
+    [
+     1793877601227,
+     "filled",
+     "stop -> 4133.13"
+    ],
+    [
+     1793877901725,
+     "filled",
+     "stop -> 4134.11"
+    ],
+    [
+     1793910149359,
+     "closed",
+     "trail at 4133.99"
+    ]
+   ],
+   "created_ms": 1793875245933,
+   "updated_ms": 1793910149359,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01,
+   "r_net": 1.168,
+   "exit_ms": 1793877993850
+  },
+  "XAUUSD.a:3m:sweep_reversal:buy:1793874780000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:buy:1793874780000",
+   "tag": "DNX e065551df0",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4124.78,
+    "sl": 4120.8,
+    "tp": 4131.15,
+    "expiration_ms": 1793877120000
+   },
+   "ticket": 9998048,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793875325501,
+     "sending",
+     ""
+    ],
+    [
+     1793875325815,
+     "placed",
+     "limit ticket 9998048"
+    ],
+    [
+     1793875864411,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1793875325501,
+   "updated_ms": 1793875864411,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:buy:1793875680000": {
+   "id": "XAUUSD.a:1m:pattern_break:buy:1793875680000",
+   "tag": "DNX aa72d53ffd",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4126.17,
+    "sl": 4121.77,
+    "tp": 4134.96,
+    "expiration_ms": 1793876940000
+   },
+   "ticket": 9998157,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793875984535,
+     "sending",
+     ""
+    ],
+    [
+     1793875984808,
+     "placed",
+     "limit ticket 9998157"
+    ],
+    [
+     1793876473517,
+     "reversed",
+     "opposite FINAL XAUUSD.a:1m:breakout_retest:sell:1793876400000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793875984535,
+   "updated_ms": 1793876473517,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:flag_continuation:buy:1793874600000": {
+   "id": "XAUUSD.a:30m:flag_continuation:buy:1793874600000",
+   "tag": "DNX c815e84983",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4134.31,
+    "sl": 4106.62,
+    "tp": 4223.41,
+    "expiration_ms": 1793905200000
+   },
+   "ticket": 9998317,
+   "position": 9998317,
+   "fill_price": 4134.31,
+   "close_price": 4106.57,
+   "outcome": "stop",
+   "r": -1.002,
+   "profit": -27.82,
+   "events": [
+    [
+     1793876442329,
+     "sending",
+     ""
+    ],
+    [
+     1793876442663,
+     "placed",
+     "stop ticket 9998317"
+    ],
+    [
+     1793877360044,
+     "filled",
+     "position 9998317"
+    ],
+    [
+     1793910149647,
+     "closed",
+     "stop at 4106.57"
+    ]
+   ],
+   "created_ms": 1793876442329,
+   "updated_ms": 1793910149647,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01,
+   "r_net": -1.005,
+   "exit_ms": 1793889754856
+  },
+  "EURUSD.a:30m:sweep_reversal:sell:1793869200000": {
+   "id": "EURUSD.a:30m:sweep_reversal:sell:1793869200000",
+   "tag": "DNX d563977c5b",
+   "state": "expired",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.12416,
+    "sl": 1.12693,
+    "tp": 1.11862,
+    "expiration_ms": 1793892600000
+   },
+   "ticket": 9998359,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793876545850,
+     "sending",
+     ""
+    ],
+    [
+     1793876546122,
+     "placed",
+     "limit ticket 9998359"
+    ],
+    [
+     1793910148844,
+     "expired",
+     "no longer at the broker (expired)"
+    ]
+   ],
+   "created_ms": 1793876545850,
+   "updated_ms": 1793910148844,
+   "symbol": "EURUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
+  },
+  "XAUUSD.a:3m:sweep_reversal:buy:1793875860000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:buy:1793875860000",
+   "tag": "DNX 741b4e1741",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4125.0,
+    "tp": 4137.88,
+    "expiration_ms": 0
+   },
+   "ticket": 9998368,
+   "position": 9998368,
+   "fill_price": 4129.36,
+   "close_price": 4137.91,
+   "outcome": "target",
+   "r": 1.961,
+   "profit": 8.47,
+   "events": [
+    [
+     1793876593903,
+     "sending",
+     ""
+    ],
+    [
+     1793876594226,
+     "placed",
+     "market ticket 9998368"
+    ],
+    [
+     1793876596777,
+     "filled",
+     "position 9998368"
+    ],
+    [
+     1793877353952,
+     "filled",
+     "stop -> 4132.63"
+    ],
+    [
+     1793877483086,
+     "filled",
+     "stop -> 4134.22"
+    ],
+    [
+     1793877662270,
+     "filled",
+     "stop -> 4135.19"
+    ],
+    [
+     1793877842596,
+     "filled",
+     "stop -> 4135.2"
+    ],
+    [
+     1793877907706,
+     "closed",
+     "target at 4137.91"
+    ]
+   ],
+   "created_ms": 1793876593903,
+   "updated_ms": 1793877907706,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": 1.943,
+   "exit_ms": 1793877905654
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793877060000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793877060000",
+   "tag": "DNX c1d0ac5f2b",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4130.01,
+    "sl": 4126.71,
+    "tp": 4136.62,
+    "expiration_ms": 1793877840000
+   },
+   "ticket": 9998487,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793877122262,
+     "sending",
+     ""
+    ],
+    [
+     1793877122532,
+     "placed",
+     "limit ticket 9998487"
+    ],
+    [
+     1793877184853,
+     "cancelled",
+     "invalidated on the closed bar - flip at 4130.92 (score 83) sits only 28% of the way to TP1"
+    ]
+   ],
+   "created_ms": 1793877122262,
+   "updated_ms": 1793877184853,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793877180000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793877180000",
+   "tag": "DNX 81835c761f",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4130.53,
+    "sl": 4126.77,
+    "tp": 4138.05,
+    "expiration_ms": 1793877960000
+   },
+   "ticket": 9998524,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793877308933,
+     "sending",
+     ""
+    ],
+    [
+     1793877309219,
+     "placed",
+     "limit ticket 9998524"
+    ],
+    [
+     1793877611130,
+     "reversed",
+     "opposite FINAL XAUUSD.a:1m:breakout_retest:sell:1793877540000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793877308933,
+   "updated_ms": 1793877611130,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:breakout_retest:buy:1793877780000": {
+   "id": "XAUUSD.a:1m:breakout_retest:buy:1793877780000",
+   "tag": "DNX 5fd4009204",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4135.36,
+    "tp": 4141.35,
+    "expiration_ms": 0
+   },
+   "ticket": 9998711,
+   "position": 9998711,
+   "fill_price": 4137.64,
+   "close_price": 4135.04,
+   "outcome": "stop",
+   "r": -1.14,
+   "profit": -2.68,
+   "events": [
+    [
+     1793877851643,
+     "sending",
+     ""
+    ],
+    [
+     1793877851924,
+     "placed",
+     "market ticket 9998711"
+    ],
+    [
+     1793877854807,
+     "filled",
+     "position 9998711"
+    ],
+    [
+     1793910150000,
+     "closed",
+     "stop at 4135.04"
+    ]
+   ],
+   "created_ms": 1793877851643,
+   "updated_ms": 1793910150000,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.175,
+   "exit_ms": 1793877966251
+  },
+  "XAUUSD.a:4h:false_break_fade:sell:1793887200000": {
+   "id": "XAUUSD.a:4h:false_break_fade:sell:1793887200000",
+   "tag": "DNX be7fc67bc7",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "4h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4163.14,
+    "tp": 3870.22,
+    "expiration_ms": 0
+   },
+   "ticket": 10043246,
+   "position": 10043246,
+   "fill_price": 4105.62,
+   "close_price": 4047.35,
+   "outcome": "manual",
+   "r": 1.013,
+   "profit": 58.57,
+   "events": [
+    [
+     1793910155747,
+     "sending",
+     ""
+    ],
+    [
+     1793910156043,
+     "placed",
+     "market ticket 10043246"
+    ],
+    [
+     1793910158340,
+     "filled",
+     "position 10043246"
+    ],
+    [
+     1793937476598,
+     "filled",
+     "stop -> 4062.48"
+    ],
+    [
+     1793946706964,
+     "closed",
+     "manual at 4047.35"
+    ]
+   ],
+   "created_ms": 1793910155747,
+   "updated_ms": 1793946706964,
+   "symbol": "XAUUSD.a",
+   "tf": "4h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": 1.018,
+   "exit_ms": 1793945270510
+  },
+  "XAUUSD.a:3m:pattern_break:buy:1793909880000": {
+   "id": "XAUUSD.a:3m:pattern_break:buy:1793909880000",
+   "tag": "DNX 7b2e726545",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4107.64,
+    "sl": 4096.31,
+    "tp": 4130.3,
+    "expiration_ms": 1793913660000
+   },
+   "ticket": 10043267,
+   "position": 10043267,
+   "fill_price": 4107.67,
+   "close_price": 4095.96,
+   "outcome": "stop",
+   "r": -1.031,
+   "profit": -11.79,
+   "events": [
+    [
+     1793910270129,
+     "sending",
+     ""
+    ],
+    [
+     1793910270402,
+     "placed",
+     "stop ticket 10043267"
+    ],
+    [
+     1793910448270,
+     "filled",
+     "position 10043267"
+    ],
+    [
+     1793912311843,
+     "closed",
+     "stop at 4095.96"
+    ]
+   ],
+   "created_ms": 1793910270129,
+   "updated_ms": 1793912311843,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01,
+   "r_net": -1.038,
+   "exit_ms": 1793912311454
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793910780000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793910780000",
+   "tag": "DNX 689e014f8b",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4104.86,
+    "sl": 4097.99,
+    "tp": 4118.6,
+    "expiration_ms": 1793911560000
+   },
+   "ticket": 10043535,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793910910499,
+     "sending",
+     ""
+    ],
+    [
+     1793910910799,
+     "placed",
+     "stop ticket 10043535"
+    ],
+    [
+     1793910971785,
+     "cancelled",
+     "invalidated on the closed bar - resistance at 4105.97 (score 88) sits only 16% of the way to TP1"
+    ]
+   ],
+   "created_ms": 1793910910499,
+   "updated_ms": 1793910971785,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1793910780000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1793910780000",
+   "tag": "DNX fe486ae853",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4108.81,
+    "tp": 4085.66,
+    "expiration_ms": 0
+   },
+   "ticket": 10043559,
+   "position": 10043559,
+   "fill_price": 4100.87,
+   "close_price": 4085.66,
+   "outcome": "target",
+   "r": 1.916,
+   "profit": 15.13,
+   "events": [
+    [
+     1793910966302,
+     "sending",
+     ""
+    ],
+    [
+     1793910966573,
+     "placed",
+     "market ticket 10043559"
+    ],
+    [
+     1793910968962,
+     "filled",
+     "position 10043559"
+    ],
+    [
+     1793912493978,
+     "filled",
+     "stop -> 4094.91"
+    ],
+    [
+     1793912722055,
+     "closed",
+     "target at 4085.66"
+    ]
+   ],
+   "created_ms": 1793910966302,
+   "updated_ms": 1793912722055,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": 1.906,
+   "exit_ms": 1793912720453
+  },
+  "XAUUSD.a:5m:pattern_break:buy:1793909700000": {
+   "id": "XAUUSD.a:5m:pattern_break:buy:1793909700000",
+   "tag": "DNX 015d172a38",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4107.26,
+    "sl": 4095.84,
+    "tp": 4130.11,
+    "expiration_ms": 1793916000000
+   },
+   "ticket": 10043658,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793911252425,
+     "sending",
+     ""
+    ],
+    [
+     1793911252726,
+     "placed",
+     "stop ticket 10043658"
+    ],
+    [
+     1793911859791,
+     "reversed",
+     "opposite FINAL XAUUSD.a:5m:sweep_reversal:sell:1793911500000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793911252425,
+   "updated_ms": 1793911859791,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793911200000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793911200000",
+   "tag": "DNX bea96e626c",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4104.8,
+    "sl": 4099.86,
+    "tp": 4114.67,
+    "expiration_ms": 1793911980000
+   },
+   "ticket": 10043697,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793911325704,
+     "sending",
+     ""
+    ],
+    [
+     1793911326014,
+     "placed",
+     "stop ticket 10043697"
+    ],
+    [
+     1793911386945,
+     "cancelled",
+     "invalidated on the closed bar - fades the down leg 0.7 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1793911325704,
+   "updated_ms": 1793911386945,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793911380000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793911380000",
+   "tag": "DNX 55a8e49c10",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4102.37,
+    "sl": 4098.94,
+    "tp": 4109.23,
+    "expiration_ms": 1793912160000
+   },
+   "ticket": 10043765,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793911510595,
+     "sending",
+     ""
+    ],
+    [
+     1793911510883,
+     "placed",
+     "stop ticket 10043765"
+    ],
+    [
+     1793911561288,
+     "reversed",
+     "opposite FINAL XAUUSD.a:1m:pattern_break:sell:1793911500000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793911510595,
+   "updated_ms": 1793911561288,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "EURUSD.a:30m:sweep_reversal:sell:1793907000000": {
+   "id": "EURUSD.a:30m:sweep_reversal:sell:1793907000000",
+   "tag": "DNX dee35f9248",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.12249,
+    "sl": 1.12409,
+    "tp": 1.11798,
+    "expiration_ms": 1793930400000
+   },
+   "ticket": 10044410,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793912683884,
+     "sending",
+     ""
+    ],
+    [
+     1793912684188,
+     "placed",
+     "limit ticket 10044410"
+    ],
+    [
+     1793913276578,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793912683884,
+   "updated_ms": 1793913276578,
+   "symbol": "EURUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
+  },
+  "EURUSD.a:15m:sweep_reversal:sell:1793908800000": {
+   "id": "EURUSD.a:15m:sweep_reversal:sell:1793908800000",
+   "tag": "DNX 52318aa9df",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.12245,
+    "sl": 1.12349,
+    "tp": 1.12036,
+    "expiration_ms": 1793920500000
+   },
+   "ticket": 10044412,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793912686960,
+     "sending",
+     ""
+    ],
+    [
+     1793912687227,
+     "placed",
+     "limit ticket 10044412"
+    ],
+    [
+     1793913276433,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793912686960,
+   "updated_ms": 1793913276433,
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
+  },
+  "XAUUSD.a:5m:sweep_reversal:sell:1793912400000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:sell:1793912400000",
+   "tag": "DNX b4a537a855",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4107.56,
+    "tp": 4049.87,
+    "expiration_ms": 0
+   },
+   "ticket": 10044433,
+   "position": 10044433,
+   "fill_price": 4087.84,
+   "close_price": 4049.82,
+   "outcome": "target",
+   "r": 1.928,
+   "profit": 38.32,
+   "events": [
+    [
+     1793912706146,
+     "sending",
+     ""
+    ],
+    [
+     1793912706476,
+     "placed",
+     "market ticket 10044433"
+    ],
+    [
+     1793912709537,
+     "filled",
+     "position 10044433"
+    ],
+    [
+     1793936560187,
+     "closed",
+     "target at 4049.82"
+    ]
+   ],
+   "created_ms": 1793912706146,
+   "updated_ms": 1793936560187,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": 1.943,
+   "exit_ms": 1793934673048
+  },
+  "EURUSD.a:1h:pattern_break:sell:1793912400000": {
+   "id": "EURUSD.a:1h:pattern_break:sell:1793912400000",
+   "tag": "DNX e4fa9d7340",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.05,
+    "price": 0.0,
+    "sl": 1.12793,
+    "tp": 1.10807,
+    "expiration_ms": 0
+   },
+   "ticket": 10045488,
+   "position": 10045488,
+   "fill_price": 1.1214,
+   "close_price": 1.1198,
+   "outcome": "manual",
+   "r": 0.245,
+   "profit": 7.64,
+   "events": [
+    [
+     1793919602198,
+     "sending",
+     ""
+    ],
+    [
+     1793919602490,
+     "placed",
+     "market ticket 10045488"
+    ],
+    [
+     1793919605300,
+     "filled",
+     "position 10045488"
+    ],
+    [
+     1793946707147,
+     "closed",
+     "manual at 1.1198"
+    ]
+   ],
+   "created_ms": 1793919602198,
+   "updated_ms": 1793946707147,
+   "symbol": "EURUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.05,
+   "r_net": 0.234,
+   "exit_ms": 1793945267500
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1793919660000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1793919660000",
+   "tag": "DNX 3d22bd532f",
+   "state": "refused",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4086.39,
+    "sl": 4092.7,
+    "tp": 4073.77,
+    "expiration_ms": 1793920920000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793919785052,
+     "sending",
+     ""
+    ],
+    [
+     1793919785084,
+     "refused",
+     "signal XAUUSD.a:1m:pattern_break:sell:1793919660000 was already sent in the last minute. Nothing was sent."
+    ],
+    [
+     1793919816572,
+     "sending",
+     ""
+    ],
+    [
+     1793919816588,
+     "refused",
+     "signal XAUUSD.a:1m:pattern_break:sell:1793919660000 was already sent in the last minute. Nothing was sent."
+    ]
+   ],
+   "created_ms": 1793919785052,
+   "updated_ms": 1793919816588,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1793919900000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1793919900000",
+   "tag": "DNX d6ae9a81d3",
+   "state": "cancelled",
+   "attempts": 3,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4086.39,
+    "sl": 4092.72,
+    "tp": 4073.72,
+    "expiration_ms": 1793921160000
+   },
+   "ticket": 10045818,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793919974484,
+     "sending",
+     ""
+    ],
+    [
+     1793919974516,
+     "refused",
+     "signal XAUUSD.a:1m:pattern_break:sell:1793919900000 was already sent in the last minute. Nothing was sent."
+    ],
+    [
+     1793920004925,
+     "sending",
+     ""
+    ],
+    [
+     1793920004941,
+     "refused",
+     "signal XAUUSD.a:1m:pattern_break:sell:1793919900000 was already sent in the last minute. Nothing was sent."
+    ],
+    [
+     1793920035025,
+     "sending",
+     ""
+    ],
+    [
+     1793920035295,
+     "placed",
+     "stop ticket 10045818"
+    ],
+    [
+     1793920087080,
+     "cancelled",
+     "invalidated on the closed bar - fades the up leg 0.5 ATR off its extreme - a spot that lost in all three years tested"
+    ]
+   ],
+   "created_ms": 1793919974484,
+   "updated_ms": 1793920087080,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "EURUSD.a:30m:sweep_reversal:sell:1793912400000": {
+   "id": "EURUSD.a:30m:sweep_reversal:sell:1793912400000",
+   "tag": "DNX fdccbbd8e0",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.05,
+    "price": 1.12166,
+    "sl": 1.12343,
+    "tp": 1.11798,
+    "expiration_ms": 1793935800000
+   },
+   "ticket": 10046924,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793921497350,
+     "sending",
+     ""
+    ],
+    [
+     1793921497640,
+     "placed",
+     "stop ticket 10046924"
+    ],
+    [
+     1793922214610,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793921497350,
+   "updated_ms": 1793922214610,
+   "symbol": "EURUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.05
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793921220000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793921220000",
+   "tag": "DNX 1d1fb2bf72",
+   "state": "closed",
+   "attempts": 3,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4095.41,
+    "sl": 4082.94,
+    "tp": 4120.35,
+    "expiration_ms": 1793922000000
+   },
+   "ticket": 10046989,
+   "position": 10046978,
+   "fill_price": 4095.46,
+   "close_price": 4082.76,
+   "outcome": "stop",
+   "r": -1.014,
+   "profit": -12.78,
+   "events": [
+    [
+     1793921498049,
+     "sending",
+     ""
+    ],
+    [
+     1793921498128,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1793921584564,
+     "sending",
+     ""
+    ],
+    [
+     1793921584633,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1793921616005,
+     "sending",
+     ""
+    ],
+    [
+     1793921616294,
+     "placed",
+     "stop ticket 10046989"
+    ],
+    [
+     1793921648900,
+     "filled",
+     "position 10046978"
+    ],
+    [
+     1793928065980,
+     "closed",
+     "stop at 4082.76"
+    ]
+   ],
+   "created_ms": 1793921498049,
+   "updated_ms": 1793928065980,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01,
+   "r_net": -1.021,
+   "exit_ms": 1793928065251
+  },
+  "EURUSD.a:15m:sweep_reversal:buy:1793920500000": {
+   "id": "EURUSD.a:15m:sweep_reversal:buy:1793920500000",
+   "tag": "DNX da3802b71c",
+   "state": "cancelled",
+   "attempts": 2,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.05,
+    "price": 1.12302,
+    "sl": 1.12128,
+    "tp": 1.12661,
+    "expiration_ms": 1793932200000
+   },
+   "ticket": 10046990,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793921596446,
+     "sending",
+     ""
+    ],
+    [
+     1793921596494,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ],
+    [
+     1793921632679,
+     "sending",
+     ""
+    ],
+    [
+     1793921632965,
+     "placed",
+     "stop ticket 10046990"
+    ],
+    [
+     1793922215408,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793921596446,
+   "updated_ms": 1793922215408,
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.05
+  },
+  "XAUUSD.a:1m:sweep_reversal:sell:1793921880000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:sell:1793921880000",
+   "tag": "DNX 9e30ef646f",
+   "state": "refused",
+   "attempts": 3,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4096.22,
+    "tp": 4078.13,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793922390181,
+     "sending",
+     ""
+    ],
+    [
+     1793922390219,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793922421321,
+     "sending",
+     ""
+    ],
+    [
+     1793922421355,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793922453802,
+     "sending",
+     ""
+    ],
+    [
+     1793922453980,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793922390181,
+   "updated_ms": 1793922453980,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "EURUSD.a:15m:sweep_reversal:buy:1793921400000": {
+   "id": "EURUSD.a:15m:sweep_reversal:buy:1793921400000",
+   "tag": "DNX 263487f527",
+   "state": "refused",
+   "attempts": 18,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.05,
+    "price": 0.0,
+    "sl": 1.12122,
+    "tp": 1.12661,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793924317481,
+     "sending",
+     ""
+    ],
+    [
+     1793924317521,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924347851,
+     "sending",
+     ""
+    ],
+    [
+     1793924347894,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924408842,
+     "sending",
+     ""
+    ],
+    [
+     1793924408869,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924439469,
+     "sending",
+     ""
+    ],
+    [
+     1793924439512,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924470542,
+     "sending",
+     ""
+    ],
+    [
+     1793924470591,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924500809,
+     "sending",
+     ""
+    ],
+    [
+     1793924500874,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924533025,
+     "sending",
+     ""
+    ],
+    [
+     1793924533073,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924565037,
+     "sending",
+     ""
+    ],
+    [
+     1793924565074,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924595951,
+     "sending",
+     ""
+    ],
+    [
+     1793924596013,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924626797,
+     "sending",
+     ""
+    ],
+    [
+     1793924626845,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924659467,
+     "sending",
+     ""
+    ],
+    [
+     1793924659527,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924693077,
+     "sending",
+     ""
+    ],
+    [
+     1793924693156,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924819088,
+     "sending",
+     ""
+    ],
+    [
+     1793924819134,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924851925,
+     "sending",
+     ""
+    ],
+    [
+     1793924851978,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924882799,
+     "sending",
+     ""
+    ],
+    [
+     1793924882847,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924913737,
+     "sending",
+     ""
+    ],
+    [
+     1793924913789,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924960686,
+     "sending",
+     ""
+    ],
+    [
+     1793924960770,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924993496,
+     "sending",
+     ""
+    ],
+    [
+     1793924993545,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793924317481,
+   "updated_ms": 1793924993545,
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.05
+  },
+  "XAUUSD.a:3m:sweep_reversal:buy:1793923200000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:buy:1793923200000",
+   "tag": "DNX 140172c759",
+   "state": "refused",
+   "attempts": 29,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4092.21,
+    "sl": 4082.56,
+    "tp": 4108.36,
+    "expiration_ms": 1793925540000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793924317875,
+     "sending",
+     ""
+    ],
+    [
+     1793924317913,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924348167,
+     "sending",
+     ""
+    ],
+    [
+     1793924348237,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924380502,
+     "sending",
+     ""
+    ],
+    [
+     1793924380538,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924412123,
+     "sending",
+     ""
+    ],
+    [
+     1793924412184,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924442815,
+     "sending",
+     ""
+    ],
+    [
+     1793924442866,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924473849,
+     "sending",
+     ""
+    ],
+    [
+     1793924473885,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924506177,
+     "sending",
+     ""
+    ],
+    [
+     1793924506226,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924538274,
+     "sending",
+     ""
+    ],
+    [
+     1793924538299,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924570596,
+     "sending",
+     ""
+    ],
+    [
+     1793924570625,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924601378,
+     "sending",
+     ""
+    ],
+    [
+     1793924601436,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924632197,
+     "sending",
+     ""
+    ],
+    [
+     1793924632238,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924662311,
+     "sending",
+     ""
+    ],
+    [
+     1793924662348,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924693399,
+     "sending",
+     ""
+    ],
+    [
+     1793924693439,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924725097,
+     "sending",
+     ""
+    ],
+    [
+     1793924725137,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924755330,
+     "sending",
+     ""
+    ],
+    [
+     1793924755379,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924787842,
+     "sending",
+     ""
+    ],
+    [
+     1793924787891,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924819523,
+     "sending",
+     ""
+    ],
+    [
+     1793924819562,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924852225,
+     "sending",
+     ""
+    ],
+    [
+     1793924852270,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924883199,
+     "sending",
+     ""
+    ],
+    [
+     1793924883277,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924913977,
+     "sending",
+     ""
+    ],
+    [
+     1793924914010,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924945436,
+     "sending",
+     ""
+    ],
+    [
+     1793924945484,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924975816,
+     "sending",
+     ""
+    ],
+    [
+     1793924975848,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925008282,
+     "sending",
+     ""
+    ],
+    [
+     1793925008313,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925040050,
+     "sending",
+     ""
+    ],
+    [
+     1793925040118,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925071218,
+     "sending",
+     ""
+    ],
+    [
+     1793925071265,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925103574,
+     "sending",
+     ""
+    ],
+    [
+     1793925103625,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925133892,
+     "sending",
+     ""
+    ],
+    [
+     1793925133941,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925166330,
+     "sending",
+     ""
+    ],
+    [
+     1793925166377,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925209274,
+     "sending",
+     ""
+    ],
+    [
+     1793925209487,
+     "refused",
+     "the terminal has trading disabled for this account"
+    ]
+   ],
+   "created_ms": 1793924317875,
+   "updated_ms": 1793925209487,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:sweep_reversal:buy:1793921400000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:buy:1793921400000",
+   "tag": "DNX 9ede9716ec",
+   "state": "refused",
+   "attempts": 20,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4093.05,
+    "sl": 4069.13,
+    "tp": 4140.89,
+    "expiration_ms": 1793925300000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793924458667,
+     "sending",
+     ""
+    ],
+    [
+     1793924458704,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924489901,
+     "sending",
+     ""
+    ],
+    [
+     1793924489940,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924521873,
+     "sending",
+     ""
+    ],
+    [
+     1793924521926,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924554432,
+     "sending",
+     ""
+    ],
+    [
+     1793924554490,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924584584,
+     "sending",
+     ""
+    ],
+    [
+     1793924584630,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924616431,
+     "sending",
+     ""
+    ],
+    [
+     1793924616465,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924647721,
+     "sending",
+     ""
+    ],
+    [
+     1793924647757,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924680172,
+     "sending",
+     ""
+    ],
+    [
+     1793924680203,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924712882,
+     "sending",
+     ""
+    ],
+    [
+     1793924712929,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793924744533,
+     "sending",
+     ""
+    ],
+    [
+     1793924744613,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925001976,
+     "sending",
+     ""
+    ],
+    [
+     1793925002017,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925033556,
+     "sending",
+     ""
+    ],
+    [
+     1793925033637,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925064972,
+     "sending",
+     ""
+    ],
+    [
+     1793925065018,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925095065,
+     "sending",
+     ""
+    ],
+    [
+     1793925095098,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925127481,
+     "sending",
+     ""
+    ],
+    [
+     1793925127530,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925159933,
+     "sending",
+     ""
+    ],
+    [
+     1793925159971,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925192715,
+     "sending",
+     ""
+    ],
+    [
+     1793925192763,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925224002,
+     "sending",
+     ""
+    ],
+    [
+     1793925224093,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925254993,
+     "sending",
+     ""
+    ],
+    [
+     1793925255045,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925286382,
+     "sending",
+     ""
+    ],
+    [
+     1793925286426,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793924458667,
+   "updated_ms": 1793925286426,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "EURUSD.a:30m:sweep_reversal:buy:1793921400000": {
+   "id": "EURUSD.a:30m:sweep_reversal:buy:1793921400000",
+   "tag": "DNX d628fcfd32",
+   "state": "refused",
+   "attempts": 46,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "30m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.05,
+    "price": 1.12279,
+    "sl": 1.1206,
+    "tp": 1.12675,
+    "expiration_ms": 1793944800000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793925042903,
+     "sending",
+     ""
+    ],
+    [
+     1793925042969,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925074050,
+     "sending",
+     ""
+    ],
+    [
+     1793925074097,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925106300,
+     "sending",
+     ""
+    ],
+    [
+     1793925106348,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925137211,
+     "sending",
+     ""
+    ],
+    [
+     1793925137269,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925169618,
+     "sending",
+     ""
+    ],
+    [
+     1793925169651,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925208505,
+     "sending",
+     ""
+    ],
+    [
+     1793925208602,
+     "refused",
+     "the terminal has trading disabled for this account"
+    ],
+    [
+     1793925238932,
+     "sending",
+     ""
+    ],
+    [
+     1793925238972,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925269089,
+     "sending",
+     ""
+    ],
+    [
+     1793925269638,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925299971,
+     "sending",
+     ""
+    ],
+    [
+     1793925300007,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925330979,
+     "sending",
+     ""
+    ],
+    [
+     1793925331026,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925362289,
+     "sending",
+     ""
+    ],
+    [
+     1793925362348,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925393427,
+     "sending",
+     ""
+    ],
+    [
+     1793925393468,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925423435,
+     "sending",
+     ""
+    ],
+    [
+     1793925423471,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925455315,
+     "sending",
+     ""
+    ],
+    [
+     1793925455353,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925487394,
+     "sending",
+     ""
+    ],
+    [
+     1793925487442,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925519018,
+     "sending",
+     ""
+    ],
+    [
+     1793925519040,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925550596,
+     "sending",
+     ""
+    ],
+    [
+     1793925550630,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925581090,
+     "sending",
+     ""
+    ],
+    [
+     1793925581138,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925613437,
+     "sending",
+     ""
+    ],
+    [
+     1793925613486,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925645197,
+     "sending",
+     ""
+    ],
+    [
+     1793925645281,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925677391,
+     "sending",
+     ""
+    ],
+    [
+     1793925677437,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925709626,
+     "sending",
+     ""
+    ],
+    [
+     1793925709677,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925741852,
+     "sending",
+     ""
+    ],
+    [
+     1793925741883,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925771959,
+     "sending",
+     ""
+    ],
+    [
+     1793925772000,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925803413,
+     "sending",
+     ""
+    ],
+    [
+     1793925803455,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925835617,
+     "sending",
+     ""
+    ],
+    [
+     1793925835665,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925867733,
+     "sending",
+     ""
+    ],
+    [
+     1793925867766,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925898757,
+     "sending",
+     ""
+    ],
+    [
+     1793925898818,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925929244,
+     "sending",
+     ""
+    ],
+    [
+     1793925929274,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925960503,
+     "sending",
+     ""
+    ],
+    [
+     1793925960540,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925992461,
+     "sending",
+     ""
+    ],
+    [
+     1793925992502,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926045652,
+     "sending",
+     ""
+    ],
+    [
+     1793926045707,
+     "refused",
+     "the terminal has trading disabled for this account"
+    ],
+    [
+     1793926075745,
+     "sending",
+     ""
+    ],
+    [
+     1793926075792,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926106363,
+     "sending",
+     ""
+    ],
+    [
+     1793926106393,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926137135,
+     "sending",
+     ""
+    ],
+    [
+     1793926137177,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926168948,
+     "sending",
+     ""
+    ],
+    [
+     1793926169040,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926199672,
+     "sending",
+     ""
+    ],
+    [
+     1793926199724,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926236156,
+     "sending",
+     ""
+    ],
+    [
+     1793926236189,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926267553,
+     "sending",
+     ""
+    ],
+    [
+     1793926267591,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926300143,
+     "sending",
+     ""
+    ],
+    [
+     1793926300205,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926331858,
+     "sending",
+     ""
+    ],
+    [
+     1793926331905,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926362704,
+     "sending",
+     ""
+    ],
+    [
+     1793926362737,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926394465,
+     "sending",
+     ""
+    ],
+    [
+     1793926394496,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926424938,
+     "sending",
+     ""
+    ],
+    [
+     1793926425004,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926458238,
+     "sending",
+     ""
+    ],
+    [
+     1793926458300,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927122526,
+     "sending",
+     ""
+    ],
+    [
+     1793927122585,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793925042903,
+   "updated_ms": 1793927122585,
+   "symbol": "EURUSD.a",
+   "tf": "30m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.05
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1793925000000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1793925000000",
+   "tag": "DNX f2451ff0ce",
+   "state": "refused",
+   "attempts": 42,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4104.8,
+    "sl": 4113.14,
+    "tp": 4083.84,
+    "expiration_ms": 1793927340000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793925212901,
+     "sending",
+     ""
+    ],
+    [
+     1793925212975,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925243131,
+     "sending",
+     ""
+    ],
+    [
+     1793925243177,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925276416,
+     "sending",
+     ""
+    ],
+    [
+     1793925276454,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925308258,
+     "sending",
+     ""
+    ],
+    [
+     1793925308297,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925339231,
+     "sending",
+     ""
+    ],
+    [
+     1793925339271,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925371153,
+     "sending",
+     ""
+    ],
+    [
+     1793925371201,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925578197,
+     "sending",
+     ""
+    ],
+    [
+     1793925578241,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925610342,
+     "sending",
+     ""
+    ],
+    [
+     1793925610385,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925642351,
+     "sending",
+     ""
+    ],
+    [
+     1793925642386,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925674711,
+     "sending",
+     ""
+    ],
+    [
+     1793925674764,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925706646,
+     "sending",
+     ""
+    ],
+    [
+     1793925706704,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925736702,
+     "sending",
+     ""
+    ],
+    [
+     1793925736763,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925769359,
+     "sending",
+     ""
+    ],
+    [
+     1793925769419,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925800691,
+     "sending",
+     ""
+    ],
+    [
+     1793925800769,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925832840,
+     "sending",
+     ""
+    ],
+    [
+     1793925832881,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925864935,
+     "sending",
+     ""
+    ],
+    [
+     1793925864984,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925896130,
+     "sending",
+     ""
+    ],
+    [
+     1793925896176,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925926549,
+     "sending",
+     ""
+    ],
+    [
+     1793925926592,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925957807,
+     "sending",
+     ""
+    ],
+    [
+     1793925957859,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793925989769,
+     "sending",
+     ""
+    ],
+    [
+     1793925989808,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926046406,
+     "sending",
+     ""
+    ],
+    [
+     1793926046437,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926079188,
+     "sending",
+     ""
+    ],
+    [
+     1793926079235,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926110060,
+     "sending",
+     ""
+    ],
+    [
+     1793926110099,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926140927,
+     "sending",
+     ""
+    ],
+    [
+     1793926140983,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926172067,
+     "sending",
+     ""
+    ],
+    [
+     1793926172132,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926202722,
+     "sending",
+     ""
+    ],
+    [
+     1793926202755,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926233184,
+     "sending",
+     ""
+    ],
+    [
+     1793926233218,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926265018,
+     "sending",
+     ""
+    ],
+    [
+     1793926265050,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926297388,
+     "sending",
+     ""
+    ],
+    [
+     1793926297420,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926328810,
+     "sending",
+     ""
+    ],
+    [
+     1793926328885,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926360001,
+     "sending",
+     ""
+    ],
+    [
+     1793926360049,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926391794,
+     "sending",
+     ""
+    ],
+    [
+     1793926391854,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926422098,
+     "sending",
+     ""
+    ],
+    [
+     1793926422154,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926454312,
+     "sending",
+     ""
+    ],
+    [
+     1793926454896,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926486840,
+     "sending",
+     ""
+    ],
+    [
+     1793926486902,
+     "refused",
+     "the terminal has trading disabled for this account"
+    ],
+    [
+     1793927122979,
+     "sending",
+     ""
+    ],
+    [
+     1793927123090,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927169458,
+     "sending",
+     ""
+    ],
+    [
+     1793927169503,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927201284,
+     "sending",
+     ""
+    ],
+    [
+     1793927201326,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927233190,
+     "sending",
+     ""
+    ],
+    [
+     1793927233223,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927264237,
+     "sending",
+     ""
+    ],
+    [
+     1793927264277,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927296057,
+     "sending",
+     ""
+    ],
+    [
+     1793927296124,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927327995,
+     "sending",
+     ""
+    ],
+    [
+     1793927328053,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793925212901,
+   "updated_ms": 1793927328053,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1793924880000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1793924880000",
+   "tag": "DNX 332eaa5c4b",
+   "state": "refused",
+   "attempts": 3,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4102.44,
+    "sl": 4107.92,
+    "tp": 4091.48,
+    "expiration_ms": 1793926140000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793926046151,
+     "sending",
+     ""
+    ],
+    [
+     1793926046205,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926078978,
+     "sending",
+     ""
+    ],
+    [
+     1793926079010,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926109806,
+     "sending",
+     ""
+    ],
+    [
+     1793926109898,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793926046151,
+   "updated_ms": 1793926109898,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1793926080000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1793926080000",
+   "tag": "DNX 654908a078",
+   "state": "refused",
+   "attempts": 4,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4094.47,
+    "sl": 4108.05,
+    "tp": 4067.31,
+    "expiration_ms": 1793927340000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793926144314,
+     "sending",
+     ""
+    ],
+    [
+     1793926144375,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926174728,
+     "sending",
+     ""
+    ],
+    [
+     1793926174769,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926267837,
+     "sending",
+     ""
+    ],
+    [
+     1793926267871,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793926300477,
+     "sending",
+     ""
+    ],
+    [
+     1793926300509,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793926144314,
+   "updated_ms": 1793926300509,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:false_break_fade:sell:1793927280000": {
+   "id": "XAUUSD.a:1m:false_break_fade:sell:1793927280000",
+   "tag": "DNX 83b164f6ed",
+   "state": "refused",
+   "attempts": 12,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4088.91,
+    "sl": 4097.17,
+    "tp": 4071.13,
+    "expiration_ms": 1793928060000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793927470906,
+     "sending",
+     ""
+    ],
+    [
+     1793927470944,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927502995,
+     "sending",
+     ""
+    ],
+    [
+     1793927503035,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927583026,
+     "sending",
+     ""
+    ],
+    [
+     1793927583123,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927615139,
+     "sending",
+     ""
+    ],
+    [
+     1793927615201,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927647653,
+     "sending",
+     ""
+    ],
+    [
+     1793927647701,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927679513,
+     "sending",
+     ""
+    ],
+    [
+     1793927679545,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927770178,
+     "sending",
+     ""
+    ],
+    [
+     1793927770234,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927802127,
+     "sending",
+     ""
+    ],
+    [
+     1793927802160,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927833268,
+     "sending",
+     ""
+    ],
+    [
+     1793927833311,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927864718,
+     "sending",
+     ""
+    ],
+    [
+     1793927864755,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927895765,
+     "sending",
+     ""
+    ],
+    [
+     1793927895799,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793927926219,
+     "sending",
+     ""
+    ],
+    [
+     1793927926278,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793927470906,
+   "updated_ms": 1793927926278,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:false_break_fade:sell:1793928000000": {
+   "id": "XAUUSD.a:1m:false_break_fade:sell:1793928000000",
+   "tag": "DNX 4da738f35d",
+   "state": "refused",
+   "attempts": 12,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4083.34,
+    "sl": 4090.59,
+    "tp": 4068.83,
+    "expiration_ms": 1793928780000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793928072731,
+     "sending",
+     ""
+    ],
+    [
+     1793928072776,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928103133,
+     "sending",
+     ""
+    ],
+    [
+     1793928103168,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928135078,
+     "sending",
+     ""
+    ],
+    [
+     1793928135125,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928167102,
+     "sending",
+     ""
+    ],
+    [
+     1793928167150,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928197298,
+     "sending",
+     ""
+    ],
+    [
+     1793928197331,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928227506,
+     "sending",
+     ""
+    ],
+    [
+     1793928227538,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928259065,
+     "sending",
+     ""
+    ],
+    [
+     1793928259125,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928291434,
+     "sending",
+     ""
+    ],
+    [
+     1793928291484,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928322400,
+     "sending",
+     ""
+    ],
+    [
+     1793928322458,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928353226,
+     "sending",
+     ""
+    ],
+    [
+     1793928353272,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928420150,
+     "sending",
+     ""
+    ],
+    [
+     1793928420215,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793928452265,
+     "sending",
+     ""
+    ],
+    [
+     1793928452362,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793928072731,
+   "updated_ms": 1793928452362,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "EURUSD.a:15m:sweep_reversal:sell:1793925900000": {
+   "id": "EURUSD.a:15m:sweep_reversal:sell:1793925900000",
+   "tag": "DNX 8638d898e5",
+   "state": "expired",
+   "attempts": 20,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.12191,
+    "sl": 1.12331,
+    "tp": 1.11912,
+    "expiration_ms": 1793937600000
+   },
+   "ticket": 10054824,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793928763248,
+     "sending",
+     ""
+    ],
+    [
+     1793928763301,
+     "refused",
+     "the terminal has trading disabled for this account"
+    ],
+    [
+     1793936568636,
+     "sending",
+     ""
+    ],
+    [
+     1793936568695,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936644814,
+     "sending",
+     ""
+    ],
+    [
+     1793936644846,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936835422,
+     "sending",
+     ""
+    ],
+    [
+     1793936835462,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936866029,
+     "sending",
+     ""
+    ],
+    [
+     1793936866082,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936942968,
+     "sending",
+     ""
+    ],
+    [
+     1793936943001,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937057859,
+     "sending",
+     ""
+    ],
+    [
+     1793937057913,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937088798,
+     "sending",
+     ""
+    ],
+    [
+     1793937088841,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937118991,
+     "sending",
+     ""
+    ],
+    [
+     1793937119039,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937150871,
+     "sending",
+     ""
+    ],
+    [
+     1793937150919,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937183157,
+     "sending",
+     ""
+    ],
+    [
+     1793937183200,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937214495,
+     "sending",
+     ""
+    ],
+    [
+     1793937214562,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937244990,
+     "sending",
+     ""
+    ],
+    [
+     1793937245041,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937274991,
+     "sending",
+     ""
+    ],
+    [
+     1793937275023,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937305507,
+     "sending",
+     ""
+    ],
+    [
+     1793937305540,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937358910,
+     "sending",
+     ""
+    ],
+    [
+     1793937358968,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937390737,
+     "sending",
+     ""
+    ],
+    [
+     1793937390783,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937425556,
+     "sending",
+     ""
+    ],
+    [
+     1793937425592,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937456546,
+     "sending",
+     ""
+    ],
+    [
+     1793937456579,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937488767,
+     "sending",
+     ""
+    ],
+    [
+     1793937489039,
+     "placed",
+     "limit ticket 10054824"
+    ],
+    [
+     1793937600331,
+     "expired",
+     "expired unfilled - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1793928763248,
+   "updated_ms": 1793937600331,
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1793936520000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1793936520000",
+   "tag": "DNX a000c44491",
+   "state": "refused",
+   "attempts": 12,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4043.1,
+    "sl": 4055.07,
+    "tp": 4028.51,
+    "expiration_ms": 1793937780000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793936591878,
+     "sending",
+     ""
+    ],
+    [
+     1793936591917,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936622076,
+     "sending",
+     ""
+    ],
+    [
+     1793936622113,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936704244,
+     "sending",
+     ""
+    ],
+    [
+     1793936704276,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936735509,
+     "sending",
+     ""
+    ],
+    [
+     1793936735563,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936767831,
+     "sending",
+     ""
+    ],
+    [
+     1793936767886,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936799594,
+     "sending",
+     ""
+    ],
+    [
+     1793936799627,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936891122,
+     "sending",
+     ""
+    ],
+    [
+     1793936891161,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793936922474,
+     "sending",
+     ""
+    ],
+    [
+     1793936922576,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937190812,
+     "sending",
+     ""
+    ],
+    [
+     1793937190859,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937222100,
+     "sending",
+     ""
+    ],
+    [
+     1793937222151,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937252983,
+     "sending",
+     ""
+    ],
+    [
+     1793937253016,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937283146,
+     "sending",
+     ""
+    ],
+    [
+     1793937283183,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793936591878,
+   "updated_ms": 1793937283183,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:mtf_pullback:sell:1793937300000": {
+   "id": "XAUUSD.a:1m:mtf_pullback:sell:1793937300000",
+   "tag": "DNX b193c7c010",
+   "state": "refused",
+   "attempts": 5,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 4045.44,
+    "sl": 4049.25,
+    "tp": 4040.32,
+    "expiration_ms": 1793938440000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793937367638,
+     "sending",
+     ""
+    ],
+    [
+     1793937367702,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937398464,
+     "sending",
+     ""
+    ],
+    [
+     1793937398507,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937428524,
+     "sending",
+     ""
+    ],
+    [
+     1793937428561,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937459169,
+     "sending",
+     ""
+    ],
+    [
+     1793937459219,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793937489369,
+     "sending",
+     ""
+    ],
+    [
+     1793937489406,
+     "refused",
+     "an order was sent moments ago - throttled. Nothing was sent."
+    ]
+   ],
+   "created_ms": 1793937367638,
+   "updated_ms": 1793937489406,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:sweep_reversal:buy:1793937420000": {
+   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793937420000",
+   "tag": "DNX 1331e75d68",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4040.54,
+    "tp": 4051.26,
+    "expiration_ms": 0
+   },
+   "ticket": 10054916,
+   "position": 10054916,
+   "fill_price": 4044.03,
+   "close_price": 4040.52,
+   "outcome": "stop",
+   "r": -1.006,
+   "profit": -3.59,
+   "events": [
+    [
+     1793937605864,
+     "sending",
+     ""
+    ],
+    [
+     1793937606187,
+     "placed",
+     "market ticket 10054916"
+    ],
+    [
+     1793937608865,
+     "filled",
+     "position 10054916"
+    ],
+    [
+     1793937842807,
+     "closed",
+     "stop at 4040.52"
+    ]
+   ],
+   "created_ms": 1793937605864,
+   "updated_ms": 1793937842807,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.029,
+   "exit_ms": 1793937842072
+  },
+  "EURUSD.a:30m:sweep_reversal:sell:1793926800000": {
+   "id": "EURUSD.a:30m:sweep_reversal:sell:1793926800000",
+   "tag": "DNX 3ca7345380",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.12181,
+    "sl": 1.12374,
+    "tp": 1.11794,
+    "expiration_ms": 1793950200000
+   },
+   "ticket": 10054929,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793937622006,
+     "sending",
+     ""
+    ],
+    [
+     1793937622390,
+     "placed",
+     "limit ticket 10054929"
+    ],
+    [
+     1793940681075,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793937622006,
+   "updated_ms": 1793940681075,
+   "symbol": "EURUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1793937660000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1793937660000",
+   "tag": "DNX e06ce4ed46",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4047.71,
+    "tp": 4031.32,
+    "expiration_ms": 0
+   },
+   "ticket": 10054950,
+   "position": 10054950,
+   "fill_price": 4042.55,
+   "close_price": 4047.79,
+   "outcome": "stop",
+   "r": -1.016,
+   "profit": -5.32,
+   "events": [
+    [
+     1793937730696,
+     "sending",
+     ""
+    ],
+    [
+     1793937730987,
+     "placed",
+     "market ticket 10054950"
+    ],
+    [
+     1793937733771,
+     "filled",
+     "position 10054950"
+    ],
+    [
+     1793940748099,
+     "closed",
+     "stop at 4047.79"
+    ]
+   ],
+   "created_ms": 1793937730696,
+   "updated_ms": 1793940748099,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": -0.711,
+   "exit_ms": 1793939799856
+  },
+  "EURUSD.a:15m:pattern_break:sell:1793936700000": {
+   "id": "EURUSD.a:15m:pattern_break:sell:1793936700000",
+   "tag": "DNX 0ffd766f31",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.11988,
+    "sl": 1.1245,
+    "tp": 1.11064,
+    "expiration_ms": 1793955600000
+   },
+   "ticket": 10055427,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793938538264,
+     "sending",
+     ""
+    ],
+    [
+     1793938538536,
+     "placed",
+     "limit ticket 10055427"
+    ],
+    [
+     1793940681800,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793938538264,
+   "updated_ms": 1793940681800,
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
+  },
+  "XAUUSD.a:3m:flag_continuation:sell:1793938500000": {
+   "id": "XAUUSD.a:3m:flag_continuation:sell:1793938500000",
+   "tag": "DNX 52177401f1",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4037.45,
+    "sl": 4047.02,
+    "tp": 4011.67,
+    "expiration_ms": 1793941560000
+   },
+   "ticket": 10055614,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793938686281,
+     "sending",
+     ""
+    ],
+    [
+     1793938686583,
+     "placed",
+     "stop ticket 10055614"
+    ],
+    [
+     1793940682541,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793938686281,
+   "updated_ms": 1793940682541,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1793940480000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1793940480000",
+   "tag": "DNX e8e0312d62",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 4045.55,
+    "sl": 4050.92,
+    "tp": 4034.81,
+    "expiration_ms": 1793942820000
+   },
+   "ticket": 3067790729,
+   "position": 3067790729,
+   "fill_price": 4045.53,
+   "close_price": 4045.55,
+   "outcome": "manual",
+   "r": -0.004,
+   "profit": -0.13,
+   "events": [
+    [
+     1793940686402,
+     "sending",
+     ""
+    ],
+    [
+     1793940686983,
+     "placed",
+     "stop ticket 3067790729"
+    ],
+    [
+     1793940697352,
+     "filled",
+     "position 3067790729"
+    ],
+    [
+     1793940739552,
+     "closed",
+     "manual at 4045.55"
+    ]
+   ],
+   "created_ms": 1793940686402,
+   "updated_ms": 1793940739552,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01,
+   "r_net": -0.017,
+   "exit_ms": 1793940738576
+  },
+  "EURUSD.a:15m:breakout_retest:sell:1793939400000": {
+   "id": "EURUSD.a:15m:breakout_retest:sell:1793939400000",
+   "tag": "DNX 3cf22060b6",
+   "state": "refused",
+   "attempts": 10,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.05,
+    "price": 0.0,
+    "sl": 1.12052,
+    "tp": 1.11817,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793940744845,
+     "sending",
+     ""
+    ],
+    [
+     1793940744950,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793940776314,
+     "sending",
+     ""
+    ],
+    [
+     1793940776347,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793940808400,
+     "sending",
+     ""
+    ],
+    [
+     1793940808442,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793941080101,
+     "sending",
+     ""
+    ],
+    [
+     1793941080148,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793941112238,
+     "sending",
+     ""
+    ],
+    [
+     1793941112281,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793941146716,
+     "sending",
+     ""
+    ],
+    [
+     1793941146779,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793941193670,
+     "sending",
+     ""
+    ],
+    [
+     1793941193716,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793941892710,
+     "sending",
+     ""
+    ],
+    [
+     1793941892752,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942120977,
+     "sending",
+     ""
+    ],
+    [
+     1793942121024,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942157161,
+     "sending",
+     ""
+    ],
+    [
+     1793942157209,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793940744845,
+   "updated_ms": 1793942157209,
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.05
+  },
+  "XAUUSD.a:3m:sweep_reversal:sell:1793940660000": {
+   "id": "XAUUSD.a:3m:sweep_reversal:sell:1793940660000",
+   "tag": "DNX a1d94d3e33",
+   "state": "refused",
+   "attempts": 6,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4049.91,
+    "tp": 4034.17,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793940871590,
+     "sending",
+     ""
+    ],
+    [
+     1793940871650,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793940901677,
+     "sending",
+     ""
+    ],
+    [
+     1793940901717,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793940933778,
+     "sending",
+     ""
+    ],
+    [
+     1793940933819,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793940966161,
+     "sending",
+     ""
+    ],
+    [
+     1793940966209,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793940996298,
+     "sending",
+     ""
+    ],
+    [
+     1793940996345,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793941028243,
+     "sending",
+     ""
+    ],
+    [
+     1793941028308,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793940871590,
+   "updated_ms": 1793941028308,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:sweep_reversal:sell:1793942400000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:sell:1793942400000",
+   "tag": "DNX 44b58ecbad",
+   "state": "refused",
+   "attempts": 20,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4054.4,
+    "tp": 4010.63,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793942752261,
+     "sending",
+     ""
+    ],
+    [
+     1793942752328,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942784853,
+     "sending",
+     ""
+    ],
+    [
+     1793942784917,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942815428,
+     "sending",
+     ""
+    ],
+    [
+     1793942815492,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942846747,
+     "sending",
+     ""
+    ],
+    [
+     1793942846811,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942878649,
+     "sending",
+     ""
+    ],
+    [
+     1793942878684,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942909656,
+     "sending",
+     ""
+    ],
+    [
+     1793942909733,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942940850,
+     "sending",
+     ""
+    ],
+    [
+     1793942940915,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793942972929,
+     "sending",
+     ""
+    ],
+    [
+     1793942972967,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943004560,
+     "sending",
+     ""
+    ],
+    [
+     1793943004639,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943035841,
+     "sending",
+     ""
+    ],
+    [
+     1793943035906,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943066964,
+     "sending",
+     ""
+    ],
+    [
+     1793943067009,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943097581,
+     "sending",
+     ""
+    ],
+    [
+     1793943097619,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943128822,
+     "sending",
+     ""
+    ],
+    [
+     1793943128868,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943159653,
+     "sending",
+     ""
+    ],
+    [
+     1793943159719,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943190488,
+     "sending",
+     ""
+    ],
+    [
+     1793943190549,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943222825,
+     "sending",
+     ""
+    ],
+    [
+     1793943222902,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943254698,
+     "sending",
+     ""
+    ],
+    [
+     1793943254740,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943285735,
+     "sending",
+     ""
+    ],
+    [
+     1793943285776,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943317931,
+     "sending",
+     ""
+    ],
+    [
+     1793943317966,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ],
+    [
+     1793943348939,
+     "sending",
+     ""
+    ],
+    [
+     1793943348995,
+     "refused",
+     "Algo Trading is switched OFF in the MetaTrader terminal. Turn it on there first - this is the terminal's own safety switch and the bridge will not override it."
+    ]
+   ],
+   "created_ms": 1793942752261,
+   "updated_ms": 1793943348995,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:sweep_reversal:sell:1793944500000": {
+   "id": "XAUUSD.a:5m:sweep_reversal:sell:1793944500000",
+   "tag": "DNX fe40a21e98",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 4050.71,
+    "tp": 4023.91,
+    "expiration_ms": 0
+   },
+   "ticket": 3067792465,
+   "position": 3067792465,
+   "fill_price": 4043.15,
+   "close_price": 4050.78,
+   "outcome": "stop",
+   "r": -1.009,
+   "profit": -11.18,
+   "events": [
+    [
+     1793944805769,
+     "sending",
+     ""
+    ],
+    [
+     1793944806052,
+     "placed",
+     "market ticket 3067792465"
+    ],
+    [
+     1793944808370,
+     "filled",
+     "position 3067792465"
+    ],
+    [
+     1793949351851,
+     "closed",
+     "stop at 4050.78"
+    ]
+   ],
+   "created_ms": 1793944805769,
+   "updated_ms": 1793949351851,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.016,
+   "exit_ms": 1793946290899
+  },
+  "EURUSD.a:1h:sweep_reversal:sell:1793941200000": {
+   "id": "EURUSD.a:1h:sweep_reversal:sell:1793941200000",
+   "tag": "DNX 3815dda629",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "EURUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.05,
+    "price": 1.11963,
+    "sl": 1.12149,
+    "tp": 1.11592,
+    "expiration_ms": 1793988000000
+   },
+   "ticket": 10059579,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1793946714101,
+     "sending",
+     ""
+    ],
+    [
+     1793946714384,
+     "placed",
+     "limit ticket 10059579"
+    ],
+    [
+     1793946746880,
+     "cancelled",
+     "no longer at the broker"
+    ]
+   ],
+   "created_ms": 1793946714101,
+   "updated_ms": 1793946746880,
+   "symbol": "EURUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.05
   }
  },
- "saved_ms": 1793874375282
+ "saved_ms": 1793949351851
 }

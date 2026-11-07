@@ -366,10 +366,20 @@ def run(symbol: str, tf: str, start_ms: int = None, end_ms: int = None,
         if len(s) >= 60:
             htf[name] = s
 
+    # Each higher timeframe's bar CLOSE times. A decision on the bar that opened
+    # at `ts` is taken at its close, and may only read higher-timeframe bars
+    # that had closed by then. Selecting by OPEN time (as this did until
+    # 2026-11-06) handed every decision the still-forming 1h/4h bar - its
+    # final high, low and close - which is look-ahead: measured on gold 5m
+    # 2024-26 it lifted net R from +0.010 to +0.029 per trade. The lab and live
+    # already read closed bars only (lab session.htf, build_mtf(closed=True)).
+    htf_close = {name: s.t + TF_SECONDS.get(name, 300) * 1000 for name, s in htf.items()}
+    base_ms = TF_SECONDS.get(tf, 300) * 1000
+
     def mtf_at(ts: float) -> dict:
         out = {}
         for name, s in htf.items():
-            i = int(np.searchsorted(s.t, ts, 'right'))
+            i = int(np.searchsorted(htf_close[name], ts + base_ms, 'right'))
             w = s.slice(max(0, i - 300), i)
             if len(w) >= 60:
                 out[name] = quick_trend(w)

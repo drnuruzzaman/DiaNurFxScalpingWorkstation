@@ -218,6 +218,21 @@ export type Snapshot = {
   equal_lows: any[]
   trendlines: Trendline[]
   channels: Channel[]
+  /** Order blocks still alive (server/engine/zones.order_blocks) - what scores the signals. */
+  order_blocks?: OrderBlock[]
+  /** Liquidity pools (server/smc_overlay.py) - live and lab charts. */
+  smc?: { pools: SmcPool[] }
+  /** Trendlines for the chart (server/engine/geometry.py), live and lab: per big leg, a
+   *  resistance and a support line, and the pauses before its breaks. */
+  chart_trendlines?: {
+    lines: { kind: 'resistance' | 'support'; t1: number; y1: number; t2: number; y2: number
+      slope_bar: number; live: boolean; touches: number }[]
+    levels: { kind: 'resistance' | 'support'; price: number; from_t: number; to_t: number | null }[]
+  }
+  /** Live chart only: the S/R levels to draw (server/chart_levels.py, ScalpingWorkstation's method). */
+  chart_levels?: Level[]
+  /** Live chart only: what to draw - engine + full-window channels, one per kind (server one_per_kind). */
+  chart_channels?: Channel[]
   regression_channel: any
   patterns: Pattern[]
   events: MarketEvent[]
@@ -229,6 +244,40 @@ export type Snapshot = {
   session: any
   gauge: any
   compute_ms: number
+}
+
+/**
+ * A liquidity pool - resting stops above a high (side +1) or below a low (-1):
+ * PDH/PDL, PWH/PWL, ASIA_H/L, LON_H/L, EQH/EQL, SWING_H/L. Drawn from when it was
+ * known until 5m price swept it (closed back inside) or ran it (closed beyond).
+ * Times are on the chart's own clock.
+ */
+export type SmcPool = {
+  kind: string
+  side: 1 | -1
+  price: number
+  from_t: number
+  known_t: number
+  end_t: number
+  consumed_t: number | null
+  consumed_by: 'sweep' | 'run' | null
+}
+
+/** The last opposite candle at the origin of a BOS/CHoCH leg, while price has
+ *  not closed through it (server/engine/zones.order_blocks). */
+export type OrderBlock = {
+  kind: 'ob'
+  side: 'bullish' | 'bearish'
+  low: number
+  high: number
+  mid: number
+  idx: number
+  break_idx: number
+  t: number
+  break_kind: 'BOS' | 'CHoCH'
+  touches: number
+  /** How far price has traded back into it since the break, 0..1. */
+  filled: number
 }
 
 /** What the chart is allowed to draw. Toggled from the INDICATORS menu. */
@@ -386,7 +435,6 @@ export type MoneyModel = {
 
 export type Overlays = {
   mtfTrendlines: boolean
-  zigzag: boolean
   macd: boolean
   levels: boolean
   trendlines: boolean
@@ -394,14 +442,13 @@ export type Overlays = {
   patterns: boolean
   swings: boolean
   structure: boolean
-  events: boolean
   liquidity: boolean
   /** Three-bar imbalances price has not yet filled. */
   fvg: boolean
   /** Supply and demand bases - where strong moves departed from. */
   zones: boolean
-  /** Retracement levels of the current impulse leg. */
-  fib: boolean
+  /** Order blocks: the engine's, the last opposite candle before a structure break. */
+  orderBlocks: boolean
   signal: boolean
   volumeProfile: boolean
   regimeBands: boolean
@@ -409,29 +456,31 @@ export type Overlays = {
   volume: boolean
 }
 
+// The trader's chosen set (2026-11-06): what a chart loads with and what the
+// Indicators menu's Reset returns to.
 export const DEFAULT_OVERLAYS: Overlays = {
-  mtfTrendlines: true,
-  zigzag: false,
+  mtfTrendlines: false,
   macd: false,
   levels: true,
-  trendlines: true,
+  trendlines: false,
   channels: true,
   patterns: true,
-  // Off by default, all three. Each draws a BAND rather than a line, and
-  // three sets of bands on top of the levels and channels already there is
-  // an unreadable chart. They are switched on to answer a question.
+  // FVG stays off: it draws a BAND rather than a line, and more bands on
+  // top of the levels, zones and channels is an unreadable chart. It is
+  // switched on to answer a question. (ZigZag and Fibonacci were removed
+  // from the chart 2026-11-06.)
   fvg: false,
-  zones: false,
-  fib: false,
+  zones: true,
+  // Added 2026-11-06 with the liquidity pools, on by default as asked for.
+  orderBlocks: true,
   swings: true,
   structure: true,
-  events: true,
-  liquidity: true,
+  liquidity: false,
   signal: true,
   volumeProfile: false,
   regimeBands: true,
   rsi: true,
-  volume: true,
+  volume: false,
 }
 
 export type Viewport = {
