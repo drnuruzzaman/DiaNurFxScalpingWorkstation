@@ -385,6 +385,37 @@ function TradeTab(p: Parameters<typeof LabSide>[0]) {
 }
 
 // ---------------------------------------------------------------- strategy
+/**
+ * Short forms of the wording Settings uses for the same choices
+ * (panels/Settings.tsx), so a lab dropdown reads like the live one and fits
+ * the narrow panel. Kept here rather than in the server's
+ * SCHEMA because server/lab/settings.py is fingerprinted by the forward books.
+ */
+const OPTION_LABELS: Record<string, Record<string, string>> = {
+  'risk.exit_mode': {
+    tp1: 'all out at TP1',
+    trail: 'trail after TP1',
+    partial: '50% at TP1, rest TP2',
+  },
+  'execution.broker_tp': {
+    tp1: 'TP1 (all out at 1R)',
+    tp2: 'TP2 (cap winners)',
+    cap: 'Safety cap',
+    none: 'None (stop only)',
+  },
+}
+// Settings' order: the likely choice first.
+const OPTION_ORDER: Record<string, string[]> = {
+  // 'tp1' is not an exit mode on the server: it is trail + broker TP1, which
+  // closes the whole position at TP1 (see exitValue / setExit below).
+  'risk.exit_mode': ['tp1', 'trail', 'partial'],
+  'execution.broker_tp': ['tp1', 'tp2', 'cap', 'none'],
+}
+
+/** The Exit dropdown's choice: trail with broker TP1 reads as "all out at TP1". */
+const exitValue = (d: Record<string, Record<string, any>>): string =>
+  d.risk?.exit_mode === 'trail' && d.execution?.broker_tp === 'tp1' ? 'tp1' : d.risk?.exit_mode
+
 function StrategyTab(p: Parameters<typeof LabSide>[0]) {
   const s = p.session!
   const [draft, setDraft] = useState<Record<string, Record<string, any>>>(() => JSON.parse(JSON.stringify(s.settings)))
@@ -398,6 +429,14 @@ function StrategyTab(p: Parameters<typeof LabSide>[0]) {
   }, [s.meta.id, s.meta.run_no])
 
   const set = (g: string, k: string, v: any) => setDraft((d) => ({ ...d, [g]: { ...d[g], [k]: v } }))
+  // "all out at TP1" = trail + broker TP1; leaving it for trail restores TP2.
+  const setExit = (v: string) => setDraft((d) => {
+    const risk = { ...d.risk, exit_mode: v === 'tp1' ? 'trail' : v }
+    const tp = d.execution?.broker_tp
+    const execution = { ...d.execution,
+      broker_tp: v === 'tp1' ? 'tp1' : v === 'trail' && tp === 'tp1' ? 'tp2' : tp }
+    return { ...d, risk, execution }
+  })
   const overrides = useMemo(() => {
     const out: Record<string, Record<string, any>> = {}
     for (const row of p.schema) {
@@ -458,13 +497,17 @@ function StrategyTab(p: Parameters<typeof LabSide>[0]) {
             )
           }
           return (
-            <div key={row.key} className={`lab-field ${diff ? 'diff' : ''}`} title={row.hint}>
+            <div key={row.key} className={`lab-field ${diff ? 'diff' : ''} ${row.type === 'enum' ? 'wide' : ''}`} title={row.hint}>
               <span className="lab-field-l">{row.label}</span>
               {row.type === 'bool' ? (
                 <input type="checkbox" checked={!!v} onChange={(e) => set(row.group, row.key, e.target.checked)} />
               ) : row.type === 'enum' ? (
-                <select value={v} onChange={(e) => set(row.group, row.key, e.target.value)}>
-                  {(row.options ?? []).map((o) => <option key={o} value={o}>{o}</option>)}
+                <select value={row.key === 'exit_mode' ? exitValue(draft) : v}
+                  onChange={(e) => (row.key === 'exit_mode' ? setExit(e.target.value)
+                    : set(row.group, row.key, e.target.value))}>
+                  {(OPTION_ORDER[`${row.group}.${row.key}`] ?? row.options ?? []).map((o) => (
+                    <option key={o} value={o}>{OPTION_LABELS[`${row.group}.${row.key}`]?.[o] ?? o}</option>
+                  ))}
                 </select>
               ) : (
                 <input type="number" value={v ?? ''} step={row.type === 'int' ? 1 : 0.01}

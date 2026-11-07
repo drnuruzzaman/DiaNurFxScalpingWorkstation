@@ -113,7 +113,7 @@ def signal(side='buy', entry=4000.0, stop=3990.0, playbook='pattern_break', atr=
                   confidence=70, expiry_bars=12, atr_at_signal=atr, id='x')
 
 
-def rig(auto=True, armed=True, verdict='qualified', lots=0.02):
+def rig(auto=True, armed=True, verdict='qualified', lots=0.02, auto_symbol=None):
     tmp = Path(tempfile.mkdtemp())
     store = SignalStore(tmp / 'store.json')
     ledger = OrderLedger(tmp / 'ledger.json')
@@ -135,7 +135,7 @@ def rig(auto=True, armed=True, verdict='qualified', lots=0.02):
 
     ex = Executor(store, ledger, bridge, feed, CONFIG, requalify=requalify,
                   auto=lambda: state['auto'], trading_enabled=lambda: state['armed'],
-                  tf_ms=lambda tf: TF_MS, log=lambda *a: None)
+                  tf_ms=lambda tf: TF_MS, log=lambda *a: None, auto_symbol=auto_symbol)
     return SimpleNamespace(tmp=tmp, store=store, ledger=ledger, bridge=bridge, feed=feed,
                            ex=ex, state=state)
 
@@ -237,6 +237,22 @@ def run(check) -> None:
               len([c for c in ra.bridge.calls if c[0] == '/order/send']) == 1)
     finally:
         CONFIG.execution.auto_timeframes = saved
+
+    # auto only for the symbols switched on for it (execution.auto_symbols):
+    # a market added to the watchlist is shown, not traded. Place still works.
+    rs = rig(auto_symbol=lambda s: s in ('EURUSD.a',))
+    fs = rs.store.finalize('XAUUSD.a', TF, [signal()], SPEC, bar, TF_MS)[0]
+    rs.bridge.quote = {'bid': 4000.5, 'ask': 4000.8}
+    rs.ex.step()
+    check('auto skips a symbol that is not enabled for it', rs.bridge.calls == [],
+          (rs.store.get(fs) or {}).get('note', ''))
+    rs.ex.send_now(fs)
+    check('...but the Place button still sends it',
+          len([c for c in rs.bridge.calls if c[0] == '/order/send']) == 1)
+    check('auto trades gold only until a symbol is added to execution.auto_symbols',
+          tuple(CONFIG.execution.auto_symbols) == ('XAUUSD.a',)
+          or 'XAUUSD.a' in tuple(CONFIG.execution.auto_symbols),
+          str(CONFIG.execution.auto_symbols))
 
     # the take-profit MT5 holds follows the setting
     saved_tp = CONFIG.execution.broker_tp

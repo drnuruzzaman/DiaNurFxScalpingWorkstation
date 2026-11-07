@@ -30,6 +30,7 @@ from ..datafeed import available_years, load_disk
 from ..engine import legs as lg
 from ..engine import regime as rg
 from ..engine import structure as st
+from ..engine import geometry as gm
 from ..engine import trendlines as tl
 from ..engine.analysis import quick_trend
 from ..engine.indicators import atr, ema, last_valid
@@ -81,7 +82,10 @@ def regime_read(h, l, c, t) -> tuple:
                                 cfg.tl_lookback_min_bars, cfg.tl_lookback_max_bars)
     lines = tl.find_trendlines(h, l, c, t, geo, atr_now, cfg.tl_min_touches,
                                cfg.tl_max_violation_atr, cfg.tl_max)
-    channels = tl.find_channels(h, l, c, t, lines, atr_now, cfg.channel_min_containment)
+    structural = tl.find_channels(h, l, c, t, lines, atr_now, cfg.channel_min_containment)
+    all_swings = st.find_swings(h, l, c, t, cfg.swing_fractal_k, cfg.swing_atr_mult, a, 400)
+    channels = [gm.as_channel(d) for d in gm.channels(
+        t, h, l, c, all_swings, atr_now, [x.to_dict() for x in structural], cfg)]
     regime = rg.classify(h, l, c, t, swings, trend, channels, a, cfg.regime_lookback)
     atr_leg = a if cfg.atr_period == lg.LEG_ATR_PERIOD else atr(h, l, c, lg.LEG_ATR_PERIOD)
     leg = lg.leg_state(h, l, c, atr_leg, t)

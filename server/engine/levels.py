@@ -26,6 +26,7 @@ from dataclasses import dataclass, asdict, field
 import numpy as np
 
 from .indicators import volume_profile
+from .precision import round_steps, rp
 
 
 @dataclass
@@ -54,7 +55,7 @@ def _round_number_pull(price: float) -> float:
     Whole dollars matter, halves matter less, and the big figures (x00) matter
     most - that is where option strikes and resting orders cluster.
     """
-    for step, weight in ((100.0, 1.0), (50.0, 0.85), (10.0, 0.6), (5.0, 0.4), (1.0, 0.2)):
+    for step, weight in round_steps():          # gold dollars, or FX figures (precision.py)
         if abs(price - round(price / step) * step) < step * 0.02:
             return weight
     return 0.0
@@ -182,8 +183,8 @@ def find_levels(h, l, c, t, swings: list, atr_arr: np.ndarray,
             sources.append('flipped polarity')
 
         out.append(Level(
-            price=round(price, 3), kind=kind, touches=touches, score=score,
-            width=round(tol, 3), first_t=min(member_t), last_t=max(member_t),
+            price=rp(price), kind=kind, touches=touches, score=score,
+            width=rp(tol), first_t=min(member_t), last_t=max(member_t),
             reaction_atr=round(reaction, 2),
             is_round=round_pull >= 0.4, broken=broken,
             distance_atr=round((price - price_now) / atr_now, 2),
@@ -293,7 +294,7 @@ def liquidity_pools(swings: list, equal_highs: list, equal_lows: list,
         # at arm's length.
         pull = base * max(0.0, 1.0 - dist / 12.0) * (0.25 if swept else 1.0)
         pools.append({
-            'price': round(float(price_lvl), 3),
+            'price': rp(price_lvl),
             'side': side,                    # 'buyside' above, 'sellside' below
             'count': int(count),
             'swept': bool(swept),

@@ -22,6 +22,13 @@ the way down can be stopped on the way back up within that minute.
     slippage, or at the open when price gaps through them.
   - Commission is charged per side, per lot, as the account pays it.
   - Pending orders expire at their expiration time, as MT5 expires them.
+  - Swap (when the session gives the broker a swap spec) accrues on each open
+    position at every rollover the session reports, triple on the broker's
+    triple-swap weekday, and is booked into the closing deal as MT5 books it.
+  - While the session marks the market closed (a bar closing into the daily or
+    weekend break), sends are refused with "market closed", as MT5 refuses
+    them. Without this a market order placed at the close filled at the last
+    pre-break quote, a price nobody could trade.
 
 What it cannot know: the order of ticks inside a minute beyond that path, and
 spread spikes shorter than a minute. Both are second-order for a strategy
@@ -33,9 +40,40 @@ REASON_CLIENT, REASON_EXPERT, REASON_SL, REASON_TP = 0, 3, 4, 5
 MAGIC = 778899
 
 
+DAY_MS = 86_400_000
+# MT5 SYMBOL_SWAP_MODE values the simulator can price. The others (base or
+# margin currency) need an FX conversion the lab does not have, so they are
+# reported as unpriced rather than guessed.
+SWAP_POINTS, SWAP_DEPOSIT_CCY, SWAP_INTEREST_CURRENT, SWAP_INTEREST_OPEN = 1, 4, 5, 6
+
+
+def swap_terms(spec: dict, swap_free: bool) -> dict | None:
+    """
+    The swap a broker spec describes, or None when nothing is charged: a
+    swap-free (Islamic) account, swap disabled (mode 0), or no swap fields in
+    the spec (one saved before they were kept). `priced` is False for a mode
+    the simulator cannot convert, so a caller can say so instead of showing 0.
+    """
+    if swap_free:
+        return None
+    mode = int(spec.get('swap_mode') or 0)
+    if mode == 0 or spec.get('swap_long_points') is None:
+        return None
+    mt5_wd = spec.get('swap_rollover_3days_weekday')
+    return {
+        'mode': mode,
+        'long': float(spec.get('swap_long_points') or 0.0),
+        'short': float(spec.get('swap_short_points') or 0.0),
+        # MT5 counts 0 = Sunday; Python's weekday() counts 0 = Monday.
+        'triple_weekday': None if mt5_wd is None else (int(mt5_wd) - 1) % 7,
+        'priced': mode in (SWAP_POINTS, SWAP_DEPOSIT_CCY, SWAP_INTEREST_CURRENT,
+                           SWAP_INTEREST_OPEN),
+    }
+
+
 class SimBroker:
     def __init__(self, symbol: str, spec: dict, balance: float, slippage_points: float = 3.0,
-                 clock=None):
+                 clock=None, swap: dict | None = None):
         self.symbol = symbol
         self.spec = dict(spec)
         self.point = float(spec.get('point') or 0.01)
@@ -55,6 +93,8 @@ class SimBroker:
         self.now = clock or (lambda: 0)
         self.on_close = None            # (position, exit deal) -> None
         self.on_event = None            # (kind, text, data) -> None, manual trades only
+        self.swap = swap                # swap_terms(...) or None: no swap
+        self.closed = False             # market shut: sends are refused
 
     # ------------------------------------------------------------- helpers
     def _next(self) -> int:
@@ -83,7 +123,36 @@ class SimBroker:
 
     def floating(self) -> float:
         return round(sum(self._pl(p, self.bid if p['side'] == 'buy' else self.ask)
-                         for p in self._pos), 2)
+                         + float(p.get('swap') or 0.0) for p in self._pos), 2)
+
+    def _swap_per_lot(self, p: dict) -> float:
+        """One night's swap for one lot of position `p`, in account currency."""
+        s = self.swap
+        v = s['long'] if p['side'] == 'buy' else s['short']
+        if s['mode'] == SWAP_POINTS:
+            return v * self.point * self.vpu
+        if s['mode'] == SWAP_DEPOSIT_CCY:
+            return v
+        if s['mode'] in (SWAP_INTEREST_CURRENT, SWAP_INTEREST_OPEN):
+            px = self.bid if s['mode'] == SWAP_INTEREST_CURRENT else p['price_open']
+            return px * self.vpu * v / 100.0 / 360.0
+        return 0.0
+
+    def rollover(self, left_day_ms: int) -> None:
+        """
+        The broker day that started at `left_day_ms` (broker time) has rolled
+        over: every open position accrues one night's swap, three on the
+        triple-swap weekday. Called once per day change the replay crosses, so
+        a weekend costs one rollover here and is paid for by the triple day,
+        as MT5 charges it.
+        """
+        if not self.swap or not self.swap.get('priced') or not self._pos:
+            return
+        wd = int(((left_day_ms // DAY_MS) + 3) % 7)       # 1970-01-01 was a Thursday
+        nights = 3 if wd == self.swap.get('triple_weekday') else 1
+        for p in self._pos:
+            p['swap'] = round(float(p.get('swap') or 0.0)
+                              + self._swap_per_lot(p) * p['volume'] * nights, 2)
 
     def equity(self) -> float:
         return round(self.balance + self.floating(), 2)
@@ -95,7 +164,7 @@ class SimBroker:
             cur = self.bid if p['side'] == 'buy' else self.ask
             q = dict(p)
             q['price_current'] = self._r(cur)
-            q['profit'] = self._pl(p, cur)
+            q['profit'] = self._pl(p, cur)        # MT5 reports swap separately
             out.append(q)
         return out
 
@@ -157,6 +226,8 @@ class SimBroker:
             return 200, {'ok': False, 'error': 'invalid request'}
         if not (self.bid and self.ask):
             return 200, {'ok': False, 'error': 'no price'}
+        if self.closed:
+            return 200, {'ok': False, 'error': 'market closed'}
         t = self._next()
         if kind == 'market':
             px = self.ask + self.slip if buy else self.bid - self.slip
@@ -210,11 +281,12 @@ class SimBroker:
     def _close(self, pos: dict, price: float, reason: int) -> None:
         pl = self._pl(pos, price)
         comm = round(self.comm_side * pos['volume'], 2)
-        self.balance += pl - comm
+        swap = round(float(pos.get('swap') or 0.0), 2)
+        self.balance += pl - comm + swap
         deal = {
             'ticket': self._next(), 'order': 0, 'position_id': pos['ticket'], 'entry': 1,
             'price': self._r(price), 'volume': pos['volume'], 'profit': pl,
-            'commission': -comm, 'swap': 0.0, 'reason': reason, 'time_ms': int(self.now()),
+            'commission': -comm, 'swap': swap, 'reason': reason, 'time_ms': int(self.now()),
             'symbol': self.symbol, 'side': pos['side'], 'comment': pos['comment'],
         }
         self._deals.append(deal)
@@ -267,6 +339,7 @@ class SimBroker:
     def run_minute(self, t0: int, o: float, h: float, l: float, c: float,
                    spread_pts: float) -> None:
         """Walk one M1 bar: expiries, then every fill and exit in path order."""
+        self.closed = False                 # a minute with prices is a market that trades
         sp = float(spread_pts or 0.0) * self.point
         for od in [x for x in self._ord if x['expiration_ms'] and x['expiration_ms'] <= t0]:
             self._ord.remove(od)
@@ -333,4 +406,4 @@ class SimFeed:
         return self.s.bars_now(count)
 
 
-__all__ = ['SimBroker', 'SimFeed']
+__all__ = ['SimBroker', 'SimFeed', 'swap_terms']

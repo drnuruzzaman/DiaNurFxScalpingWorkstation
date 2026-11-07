@@ -273,6 +273,12 @@ class ExecutionSettings:
     # Timeframes auto mode may send from. The Place button ignores this - it
     # limits automation, not what you can do by hand.
     auto_timeframes: tuple = ('1m', '3m', '5m', '15m', '30m', '1h', '4h', '1d')
+    # Symbols auto mode may send for. A symbol on the watchlist is scanned,
+    # drawn and alerted on, but auto-trades only if it is listed here as well:
+    # putting a market on the board must never be the same act as arming it
+    # (EURUSD was added 2026-10-20 for research and shadow only). The Place
+    # button ignores this, like auto_timeframes.
+    auto_symbols: tuple = ('XAUUSD.a',)
     # One live order or position per symbol AND timeframe.
     # How many live orders one symbol+timeframe may hold at once. 0 = no cap.
     # Was a bool named one_per_symbol_tf; _load_saved_settings() migrates it.
@@ -299,12 +305,16 @@ class ExecutionSettings:
 @dataclass
 class QualitySettings:
     """
-    Playbook quality rules UNDER TEST - research only, every one OFF.
+    Playbook quality rules UNDER TEST - research only, OFF by default except
+    the zone rules (Z), which are ON in code - so the lab, the forward books and
+    every research tool run them - and OFF in live (configs/settings.json)
+    until a backtest supports them (the user's call, 2026-11-07).
 
-    Set only inside tools/playbook_quality.py's own process. Not a lab or live
-    settings group (server/lab/settings.GROUPS leaves it out), so nothing the
-    UI saves can switch one on. With everything off, signals and gates are
-    exactly what they were before these rules existed.
+    Set inside tools/playbook_quality.py's own process. Not a lab settings
+    group (server/lab/settings.GROUPS leaves it out). The live app accepts only
+    the keys in server/main.LIVE_QUALITY_KEYS (C1, since 2026-11-06); every
+    other rule stays a research switch. With everything off, signals and gates
+    are exactly what they were before these rules existed.
     """
     # A. mtf_pullback
     pb_require_reclaim: bool = False      # A1 rejection/sweep or CHoCH within reclaim_bars
@@ -324,6 +334,9 @@ class QualitySettings:
     # Filters on every playbook (qualify.py)
     htf_block: bool = False               # F1 opposed HTF blocks; pullback/flag need it aligned
     leg_fight_atr: float = 0.0            # F4 against a leg this long -> -10 (0 = off)
+    # Z. order blocks, supply/demand and fair value gaps (engine/zones.py)
+    zone_confluence: bool = True          # Z1 own-side zone at the entry +, opposing before TP1 -
+    zone_gate: str = 'block'              # Z2 opposing zone right at the entry: off | warn | block
 
 
 @dataclass

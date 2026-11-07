@@ -219,7 +219,9 @@ Five independent conditions must hold before an order reaches MT5:
 1. the bridge was started with `--enable-trading`
 2. the execution module is armed (only that flag does it)
 3. the request carries `confirm=true`
-4. the account passes the demo guard (`--allow-live` to lift it)
+4. the account passes the demo guard (`--allow-live` to lift it). The launcher
+   (`start_dianurfx.cmd`) passes `--allow-live` whenever "Arm trading" is
+   ticked, so an armed bridge trades LIVE accounts too
 5. the order passes sanity checks — known symbol, sane lots, a stop that exists
    and sits on the correct side
 

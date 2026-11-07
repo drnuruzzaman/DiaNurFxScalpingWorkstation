@@ -26,8 +26,13 @@ import type { Bar } from '../chart/types'
 // v5: series cached on 2026-10-02 held copies of real bars stamped 2.5 hours
 // in the future. Merged, never replaced, they stayed the newest bar of every
 // timeframe, and each candle timer counted down to a bar that had not opened.
-const KEY = 'dianur.bars.v5'
-const OLD_KEYS = ['dianur.bars.v1', 'dianur.bars.v2', 'dianur.bars.v3', 'dianur.bars.v4']
+// v6: series cached across the broker's clock change (UTC+3 -> UTC+2, late
+// October) held history converted an hour early - a 23:00 candle again at
+// 22:00 - inside gold's daily break, where the live feed has none. The extra
+// bars shifted every overlay drawn by bar index 6 bars right on 15m (2026-11-07).
+const KEY = 'dianur.bars.v6'
+const OLD_KEYS = ['dianur.bars.v1', 'dianur.bars.v2', 'dianur.bars.v3', 'dianur.bars.v4',
+  'dianur.bars.v5']
 
 /**
  * How far past this machine's clock a bar may open and still be believed: room
@@ -98,6 +103,23 @@ export function onGrid(bars: Bar[], stepMs: number): Bar[] {
 export function notAfter(bars: Bar[], t: number): Bar[] {
   if (!bars.length || bars[bars.length - 1].t <= t) return bars
   return bars.filter((b) => b.t <= t)
+}
+
+/**
+ * The live tail is the truth for its own span: inside [first, last] of `live`,
+ * keep only the bars `live` has. Older history outside it is left alone.
+ *
+ * The analysis that every overlay is drawn from runs on exactly that tail, and
+ * overlays are placed by bar INDEX within it. A held bar the feed does not have
+ * - one converted on a stale broker offset, a bar from a session break - put the
+ * chart's count out of step and slid every swing, break and pattern sideways.
+ */
+export function liveSpan(bars: Bar[], live: Bar[]): Bar[] {
+  if (!live.length) return bars
+  const a = live[0].t, b = live[live.length - 1].t
+  const ok = new Set(live.map((x) => x.t))
+  const kept = bars.filter((x) => x.t < a || x.t > b || ok.has(x.t))
+  return kept.length === bars.length ? bars : kept
 }
 
 /** Only the bars that have opened by now, by this machine's clock. */

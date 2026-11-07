@@ -556,11 +556,20 @@ class Feed:
                     out[k] = live[k]
             out['spread_points_now'] = live.get('spread_points_now')
             out['margin_per_lot'] = live.get('margin_per_lot')
+            # Carry, for the lab to price holds across the rollover. The bridge
+            # has served these since its spec grew them; older bridges do not.
+            for k in SWAP_KEYS:
+                if live.get(k) is not None:
+                    out[k] = live[k]
             out['source'] = 'mt5'
         return out
 
 
 _SPEC_SAVED: dict = {}          # symbol -> wall time of the last write
+# The swap terms of the ACCOUNT the bridge is attached to (a swap-free account
+# reports mode 0 or zeros), kept with the spec so the lab can charge them.
+SWAP_KEYS = ('swap_mode', 'swap_long_points', 'swap_short_points',
+             'swap_rollover_3days_weekday', 'currency_profit')
 
 
 def _save_spec(symbol: str, spec: dict) -> None:
@@ -579,7 +588,7 @@ def _save_spec(symbol: str, spec: dict) -> None:
     keep = {k: spec.get(k) for k in ('digits', 'point', 'tick_size', 'tick_value',
                                      'contract_size', 'volume_min', 'volume_max',
                                      'volume_step', 'stops_level_points',
-                                     'commission_per_lot_side')}
+                                     'commission_per_lot_side') + SWAP_KEYS}
     keep['saved_at'] = time.strftime('%Y-%m-%d %H:%M', time.gmtime())
     try:
         tmp = folder / 'spec.json.tmp'

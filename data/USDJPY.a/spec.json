@@ -2,12 +2,17 @@
  "digits": 3,
  "point": 0.001,
  "tick_size": 0.001,
- "tick_value": 0.6352069821951483,
+ "tick_value": 0.9187714188587022,
  "contract_size": 100000.0,
  "volume_min": 0.01,
  "volume_max": 200.0,
  "volume_step": 0.01,
  "stops_level_points": 0,
  "commission_per_lot_side": 3.0,
- "saved_at": "2026-10-02 13:25"
+ "swap_mode": 1,
+ "swap_long_points": 8.172,
+ "swap_short_points": -16.929,
+ "swap_rollover_3days_weekday": 3,
+ "currency_profit": "JPY",
+ "saved_at": "2026-11-06 13:36"
 }

@@ -383,6 +383,10 @@
 .lab-field { display: grid; grid-template-columns: 1fr 86px; gap: 6px; align-items: center; font-size: 10px; color: var(--ink-mid); padding: 1px 0; position: relative; }
 .lab-field input[type=number], .lab-field select { height: 22px; padding: 1px 4px; font-size: 10px; width: 86px; }
 .lab-field.diff .lab-field-l { color: var(--warn); }
+/* A choice with a worded label (Exit, Broker TP): on its name's row, one width
+   for both (the longest short label fits), right-aligned with the other inputs. */
+.lab-field.wide { grid-template-columns: 1fr auto; }
+.lab-field.wide select { width: 124px; }
 .lab-live { grid-column: 1 / -1; font-size: 8.5px; color: var(--ink-low); text-align: right; margin-top: -2px; }
 .lab-pbs { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 3px; }
 .lab-pb { font-size: 9px; padding: 2px 6px; border-radius: var(--r-sm); border: 1px solid var(--line); color: var(--ink-low); text-decoration: line-through; }

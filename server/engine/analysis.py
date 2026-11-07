@@ -21,6 +21,7 @@ import numpy as np
 from ..config import CONFIG, MTF_LADDER, TF_SECONDS, session_quality, sessions_at
 from ..datafeed import Series
 from . import events as ev
+from . import geometry as geo
 from . import legs as lg
 from . import levels as lv
 from . import patterns as pat
@@ -28,6 +29,7 @@ from . import regime as rg
 from . import structure as st
 from . import trendlines as tl
 from . import zones as zn
+from .precision import price_dp, ra, rp, using
 from .indicators import (atr, candle_stats, ema, last_valid, macd, rolling_percentile,
                          roc, rsi, volume_profile)
 
@@ -148,13 +150,34 @@ def _participation(v: np.ndarray, tail: int = 20) -> float:
 
 
 def analyse(series: Series, mtf_reads: dict = None,
-            spec: dict = None, quote: dict = None) -> dict:
+            spec: dict = None, quote: dict = None, bar_utc_ms: int = None) -> dict:
+    """
+    The full snapshot, at the instrument's price precision (engine/precision.py):
+    every derived price keeps max(3, spec digits) decimals. The snapshot carries
+    `digits`, so generate() on it keeps the same precision.
+    """
+    digits = (spec or {}).get('digits')
+    with using(digits):
+        snap = _analyse(series, mtf_reads, spec, quote, bar_utc_ms)
+    if isinstance(snap, dict):
+        snap['digits'] = digits
+    return snap
+
+
+def _analyse(series: Series, mtf_reads: dict = None,
+             spec: dict = None, quote: dict = None, bar_utc_ms: int = None) -> dict:
     """
     The full snapshot for one symbol on one timeframe.
 
     `mtf_reads` is an optional {tf: trend_dict} from higher timeframes; when
     omitted the MTF block reports "not evaluated" rather than silently claiming
     alignment, because a false alignment claim is worse than none.
+
+    `bar_utc_ms` is the last bar's open time in UTC, for callers whose bars are
+    NOT stamped in UTC. Live bars come from the bridge in UTC, so live leaves it
+    out. Disk history is in broker server time (New York + 7h), and reading the
+    session off it put NY-afternoon bars in "sydney" - the lab passes the
+    converted time so its session gate sees what live would.
     """
     t0 = time.perf_counter()
     cfg = CONFIG.engine
@@ -210,6 +233,7 @@ def analyse(series: Series, mtf_reads: dict = None,
     # moves left from. See zones.py for why each is size-tested against ATR.
     fvgs = zn.fair_value_gaps(o, h, l, c, t, atr_arr)
     sd_zones = zn.supply_demand(o, h, l, c, t, atr_arr)
+    obs = zn.order_blocks(o, h, l, c, t, atr_arr, breaks)
 
     # --- geometry ---------------------------------------------------------- #
     # Geometry gets a STRUCTURAL window, not the whole buffer. The price arrays
@@ -221,8 +245,19 @@ def analyse(series: Series, mtf_reads: dict = None,
         cfg.tl_lookback_min_bars, cfg.tl_lookback_max_bars)
     lines = tl.find_trendlines(h, l, c, t, geo_swings, atr_now, cfg.tl_min_touches,
                                cfg.tl_max_violation_atr, cfg.tl_max)
-    channels = tl.find_channels(h, l, c, t, lines, atr_now,
-                                cfg.channel_min_containment)
+    structural = tl.find_channels(h, l, c, t, lines, atr_now,
+                                  cfg.channel_min_containment)
+    # The channel set the chart draws - per big leg, across the view, one per
+    # kind - is the set the regime and the playbooks read (2026-11-07); the
+    # structural-window channels above only fill kinds no leg covers. The
+    # trendlines per leg are what the trendline playbook trades.
+    all_swings = st.find_swings(h, l, c, t, cfg.swing_fractal_k, cfg.swing_atr_mult,
+                                atr_arr, 400)
+    channel_set = geo.channels(t, h, l, c, all_swings, atr_now,
+                               [x.to_dict() for x in structural], cfg)
+    channels = [geo.as_channel(d) for d in channel_set]
+    leg_lines = geo.trendlines(t, h, l, c, all_swings,
+                               st.structure_breaks(all_swings, h, l, c, t), atr_now)
     reg_channel = tl.regression_channel(c, t, cfg.regime_lookback, atr_now)
 
     # --- patterns ---------------------------------------------------------- #
@@ -258,7 +293,8 @@ def analyse(series: Series, mtf_reads: dict = None,
                'agreement': 0.0, 'rows': [], 'base_tf': series.tf}
 
     # --- session ----------------------------------------------------------- #
-    bar_time = datetime.fromtimestamp(float(t[-1]) / 1000.0, tz=timezone.utc)
+    bar_time = datetime.fromtimestamp(
+        float(t[-1] if bar_utc_ms is None else bar_utc_ms) / 1000.0, tz=timezone.utc)
     primary, quality = session_quality(bar_time.hour)
     participation = _participation(v)
 
@@ -274,21 +310,21 @@ def analyse(series: Series, mtf_reads: dict = None,
         'source': series.source,
         'generated_ms': int(time.time() * 1000),
         'bar_time_ms': int(t[-1]),
-        'price': round(price, 3),
+        'price': rp(price),
         # The recorded spread for this bar, when the source carries one. Passing
         # a guessed spread into the cost gates made the same market look
         # tradeable in one year and not in another purely because of the
         # assumption, so the measured value is preferred wherever it exists.
         'spread_points': (round(float(series.spread[-1]), 1)
                           if series.spread is not None and series.spread.size else None),
-        'atr': round(atr_now, 4),
+        'atr': ra(atr_now),
         'atr_points': round(atr_now / (spec or {}).get('point', 0.01), 1),
-        'ema_fast': round(last_valid(ema_f, price), 3),
-        'ema_slow': round(last_valid(ema_s, price), 3),
+        'ema_fast': rp(last_valid(ema_f, price)),
+        'ema_slow': rp(last_valid(ema_s, price)),
 
         'trend': trend,
         'swings': [s.to_dict() for s in swings],
-        'breaks': [b.to_dict() for b in breaks[-12:]],
+        'breaks': [b.to_dict() for b in breaks[-30:]],
         'fib': fib,
         'pullback': pullback,
         'leg': lg.annotate(leg, mtf, series.tf),
@@ -302,11 +338,13 @@ def analyse(series: Series, mtf_reads: dict = None,
         'liquidity': pools,
         'fvg': fvgs,
         'zones': sd_zones,
+        'order_blocks': obs,
         'equal_highs': eq_highs[:5],
         'equal_lows': eq_lows[:5],
 
         'trendlines': [x.to_dict() for x in lines],
-        'channels': [x.to_dict() for x in channels],
+        'channels': channel_set,
+        'chart_trendlines': leg_lines,
         'regression_channel': reg_channel,
 
         'patterns': [p.to_dict() for p in found],

@@ -1,6 +1,6 @@
 {
  "auto": true,
- "last_ok_ms": 1790398522845,
+ "last_ok_ms": 1792548205592,
  "history": [
   {
    "at_ms": 1790380458556,
@@ -81,10 +81,148 @@
     "USDJPY.a",
     "XAUUSD.a"
    ]
+  },
+  {
+   "at_ms": 1792470719640,
+   "reason": "selected",
+   "ok": false,
+   "error": "download of EURUSD.a failed on the bridge: PermissionError: [WinError 5] Access is denied: 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\EURUSD.a\\\\1m\\\\2021.csv.gz.tmp' -> 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\EURUSD.a\\\\1m\\\\2021.csv.gz'",
+   "symbols": [
+    "EURUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1792471110438,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471136455,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471261188,
+   "reason": "selected",
+   "ok": false,
+   "error": "download of EURUSD.a failed on the bridge: PermissionError: [WinError 5] Access is denied: 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\EURUSD.a\\\\1m\\\\2021.csv.gz.tmp' -> 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\EURUSD.a\\\\1m\\\\2021.csv.gz'",
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471301504,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471328202,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471352314,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471430892,
+   "reason": "selected",
+   "ok": false,
+   "error": "download of EURUSD.a failed on the bridge: PermissionError: [WinError 5] Access is denied: 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\EURUSD.a\\\\1m\\\\2024.csv.gz.tmp' -> 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\EURUSD.a\\\\1m\\\\2024.csv.gz'",
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471504577,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471720883,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a"
+   ]
+  },
+  {
+   "at_ms": 1792471866864,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1792471940416,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1792548077201,
+   "reason": "manual",
+   "ok": false,
+   "error": "download of USDJPY.a failed on the bridge: PermissionError: [WinError 5] Access is denied: 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\USDJPY.a\\\\1m\\\\2026.csv.gz.tmp' -> 'C:\\\\workspace-ml-ausloans\\\\Forex\\\\DiaNurFxScalpingWorkstation\\\\data\\\\USDJPY.a\\\\1m\\\\2026.csv.gz'",
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a",
+    "XAUUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1792548205592,
+   "reason": "manual",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "EURUSD.a",
+    "USDJPY.a",
+    "XAUUSD.a"
+   ]
   }
  ],
  "forecast_symbols": [
-  "XAUUSD.a",
-  "USDJPY.a"
+  "XAUUSD.a"
  ]
 }

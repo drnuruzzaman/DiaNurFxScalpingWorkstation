@@ -22,6 +22,10 @@ own, so they quietly stopped at the last manual download. This runs the update:
                 (below normal priority; two workers on a trading day, four at
                 the weekend). A symbol's first build reads every bar since the
                 training start - an hour or more; later ones only the new bars.
+  5. FORWARD    after a download (non-fatal): tools/forward_book.py --symbol S
+                for each updated symbol with a forward paper book, and for gold
+                the MTF-LS v4 forward test (tools/forward_mtf_ls.py) - both
+                replay their frozen rules on the bars just written.
   4. RESCORE    optional: tools/forecast_batch.py --symbol S - the promotion
                 gates on the longer history. Off by default: a gate can change
                 what the lab shows, and that should be a decision, not a side
@@ -59,6 +63,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data'
 STATE_FILE = ROOT / 'configs' / 'marketdata.json'
 LOG_DIR = ROOT / 'runs' / 'marketdata'
+FORWARD = ROOT / 'runs' / 'forward'
 DUE_DAYS = 28
 DAY_MS = 86_400_000
 MAX_YEARS = 30                  # history for a new timeframe - the bridge's own limit
@@ -339,7 +344,7 @@ def _progress(name: str, frac: float, detail: str = '') -> None:
 # real update (2026-09-26): download 8 s, releases 5 s, forecast rebuild 13.5 min,
 # rescore 70 s. A new symbol's first download is longer; its forecast step is
 # skipped, so the download then carries the bar. Skipped steps drop out.
-WEIGHTS = {'download': 10, 'releases': 3, 'forecast': 80, 'rescore': 7}
+WEIGHTS = {'download': 10, 'releases': 3, 'forward': 8, 'forecast': 80, 'rescore': 7}
 
 
 def _eta(steps: list, pct: float, now: float | None = None) -> float | None:
@@ -455,10 +460,13 @@ def start(bridge, rebuild: bool = True, rescore: bool = False, force: bool = Fal
         reason = ('forecast only' if not download else 'add symbol' if new
                   else 'manual' if full else 'selected')
     build = rebuild and bool(fc or enable)
+    fwd = bool(download and _forward_runs(symbols))
     steps = [{'name': 'download', 'state': 'waiting' if download else 'skipped', 'note': '',
               'frac': 0.0},
              {'name': 'releases', 'state': 'waiting' if download else 'skipped', 'note': '',
               'frac': 0.0},
+             {'name': 'forward', 'state': 'waiting' if fwd else 'skipped',
+              'note': '' if fwd else 'no forward record for these symbols', 'frac': 0.0},
              {'name': 'forecast', 'state': 'waiting' if build else 'skipped',
               'note': '' if build or not rebuild else 'forecast engine off', 'frac': 0.0},
              {'name': 'rescore', 'state': 'waiting' if (rescore and build) else 'skipped',
@@ -719,6 +727,9 @@ def _run(bridge, plan: list, years: int, rebuild: bool, rescore: bool, spec=None
             if not _subprocess('releases', ['tools/news_backfill.py']):
                 _log('releases: not updated (see above) - the news gate keeps the history it has')
                 _progress('releases', 1.0)
+            # ---- 2b. forward records on the bars just written (non-fatal)
+            if not _cancelled():
+                _forward_records([s for s, _tfs in plan])
         # ---- 3. forecast caches and stores, per symbol whose engine is on
         fc, notes = list(fc), []
         if enable and not _cancelled():
@@ -769,6 +780,35 @@ def _run(bridge, plan: list, years: int, rebuild: bool, rescore: bool, spec=None
             doc['history'] = doc['history'][-24:]
             _save(doc)
             _JOB.update(running=False, finished_ms=now, phase='failed' if err else 'done')
+
+
+def _forward_runs(symbols: list) -> list:
+    """The forward-record tools to run after `symbols` were updated."""
+    runs = [['tools/forward_book.py', '--symbol', s] for s in symbols
+            if (FORWARD / f'book_{s}' / 'manifest.json').exists()]
+    if 'XAUUSD.a' in symbols and (FORWARD / 'mtf_ls_v4' / 'manifest.json').exists():
+        runs.append(['tools/forward_mtf_ls.py'])
+    return runs
+
+
+def _forward_records(symbols: list) -> None:
+    """
+    Replay the forward paper books (and gold's MTF-LS v4 forward test) on the
+    new bars. Never fatal: a forward record that fails to update is logged and
+    the update carries on - it can be run by hand at any time.
+    """
+    runs = _forward_runs(symbols)
+    if not runs:
+        return
+    ok = True
+    for i, argv in enumerate(runs):
+        if _cancelled():
+            return
+        _progress('forward', i / len(runs), ' '.join(argv[-2:]) if len(argv) > 2 else argv[0])
+        ok = _subprocess('forward', argv, final=False) and ok
+    _step('forward', 'done' if ok else 'failed', '' if ok else 'see the log - not fatal')
+    if not ok:
+        _log('forward: a forward record did not update (see above) - the update carries on')
 
 
 def _refresh_readers() -> None:

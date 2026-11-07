@@ -7,7 +7,7 @@
   "trail_lock_r": 0.75,
   "exit_mode": "trail",
   "risk_per_trade_pct": 2.0,
-  "max_daily_loss_pct": 5.0,
+  "max_daily_loss_pct": 10.0,
   "max_daily_trades": 100,
   "min_rr": 0.5
  },
@@ -21,14 +21,18 @@
    "2h",
    "4h"
   ],
-  "auto": true,
+  "auto": false,
   "max_per_symbol_tf": 5,
   "broker_tp": "tp2",
   "lots_gold": 0.01,
-  "lots_non_gold": 0.05
+  "lots_non_gold": 0.05,
+  "auto_symbols": [
+   "XAUUSD.a",
+   "EURUSD.a"
+  ]
  },
  "gates": {
-  "min_confidence": 55,
+  "min_confidence": 52,
   "max_spread_points": 45.0,
   "min_atr_cost_multiple": 4.0,
   "max_atr_percentile": 97.0,
@@ -36,11 +40,17 @@
   "cooldown_bars": 2,
   "disabled_playbooks": [
    "sweep_reversal",
+   "breakout_retest",
    "range_fade",
-   "false_break_fade"
+   "trendline_bounce"
   ],
   "news_blocks": false,
   "news_blackout_min": 10,
   "avoid_fades": true
+ },
+ "quality": {
+  "pattern_classic_only": true,
+  "zone_confluence": false,
+  "zone_gate": "off"
  }
 }

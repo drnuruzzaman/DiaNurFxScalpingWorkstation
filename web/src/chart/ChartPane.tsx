@@ -297,7 +297,7 @@ export function ChartPane({
         )}
         {snapshot?.ok && (
           <div className="t-dim" style={{ fontSize: 9.5 }}>
-            ATR {fmt(snapshot.atr_points, 0)}pts · {snapshot.levels.length} levels ·{' '}
+            ATR {fmt(snapshot.atr_points, 0)}pts · {(snapshot.chart_levels ?? snapshot.levels).length} levels ·{' '}
             {snapshot.trendlines.length} TL · {snapshot.channels.length} channels ·{' '}
             {snapshot.patterns.length} patterns · {snapshot.compute_ms}ms
           </div>

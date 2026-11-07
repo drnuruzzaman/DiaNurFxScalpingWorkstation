@@ -240,6 +240,154 @@ def main() -> int:
     check('beyond live\'s 6-hour look-ahead there is no release to count',
           far is None or far <= 360, str(far))
 
+    # ------------------------------------------------------------------ 7 --- #
+    section('7. fidelity 2: market hours, swap, cost-inclusive R, the UTC session')
+    import datetime as dt
+    import json
+    import numpy as np
+    from server.lab.broker import swap_terms
+    from server.lab.session import CLOSED_GAP_MS, LAB_FIDELITY, RUNS
+    from server.forecast.timebase import broker_to_utc
+
+    b = broker(spread=0.0)
+    b.closed = True
+    res = b.trade('/order/send', side='buy', lots=1.0, kind='market', sl=95.0, tp=0,
+                  comment='t', confirm=1)
+    check('a closed market refuses an order, as MT5 does',
+          res[1].get('ok') is False and res[1].get('error') == 'market closed', str(res[1]))
+    b.run_minute(0, 100.0, 100.1, 99.9, 100.0, 0.0)
+    res = b.trade('/order/send', side='buy', lots=1.0, kind='market', sl=95.0, tp=0,
+                  comment='t', confirm=1)
+    check('...and the first traded minute opens it again', bool(res[1].get('ok')), str(res[1]))
+
+    terms = swap_terms({'swap_mode': 1, 'swap_long_points': -50.0, 'swap_short_points': 10.0,
+                        'swap_rollover_3days_weekday': 3}, swap_free=False)
+    check('a swap-free account charges no swap',
+          swap_terms({'swap_mode': 1, 'swap_long_points': -50.0}, swap_free=True) is None)
+    check('...nor does swap mode 0, or a spec saved without swap fields',
+          swap_terms({'swap_mode': 0, 'swap_long_points': -50.0}, False) is None
+          and swap_terms({'point': 0.01}, False) is None)
+    from server.lab.broker import SimBroker
+    sb = SimBroker('XAUUSD.a', SPEC, 10_000.0, slippage_points=0.0, clock=lambda: 0, swap=terms)
+    sb.set_quote(100.0, 0.0)
+    sb.trade('/order/send', side='buy', lots=1.0, kind='market', sl=90.0, tp=0,
+             comment='t', confirm=1)
+    day = 86_400_000
+    monday = int(dt.datetime(2026, 10, 19, tzinfo=dt.timezone.utc).timestamp() * 1000)
+    sb.rollover(monday)                      # Mon -> Tue: one night
+    one = sb._pos[0]['swap']
+    sb.rollover(monday + 2 * day)            # Wed -> Thu: the triple night (MT5 weekday 3)
+    check('one night of -50 points on 1 lot costs 50.00 (point x tick value x lots)',
+          abs(one + 50.0) < 1e-9, f'{one:+.2f}')
+    check('...and the triple-swap weekday costs three nights',
+          abs(sb._pos[0]['swap'] + 200.0) < 1e-9, f"{sb._pos[0]['swap']:+.2f}")
+    bal0 = sb.balance
+    closed = []
+    sb.on_close = lambda p, d: closed.append(d)
+    sb.run_minute(day, 100.0, 100.0, 89.0, 89.5, 0.0)   # through the stop at 90
+    check('accrued swap is booked into the closing deal and the balance',
+          closed and abs(closed[0]['swap'] + 200.0) < 1e-9
+          and abs(sb.balance - (bal0 - 1000.0 - 3.0 - 200.0)) < 1e-6,
+          f"swap {closed[0]['swap'] if closed else None}, balance {sb.balance - bal0:+.2f}")
+
+    s7 = ReplaySession({'symbol': 'XAUUSD.a', 'tf': '5m', 'start': '2026-06-01T00:00',
+                        'end': '2026-06-26T00:00', 'record': False})
+    check('a new session runs at the current fidelity', s7.cfg['fidelity'] == LAB_FIDELITY,
+          str(s7.cfg['fidelity']))
+    s7.advance(s7.last - s7.k)
+    m1t = np.asarray(s7.m1.t, dtype=np.int64)
+    stale = [t for t in s7.trades
+             if not np.any((m1t >= t['entry_t'] - 60_000) & (m1t <= t['entry_t']))]
+    check('every fill happens in a minute the market traded (none inside a break)',
+          not stale, f'{len(s7.trades)} trades, {len(stale)} outside trading')
+    costs = [t for t in s7.trades if t.get('r_net') is not None and t['stop0']]
+    ok_cost = all(abs((t['r'] - t['r_net'])
+                      - 0.06 / abs(t['entry'] - t['stop0'])) < 0.006 for t in costs)
+    check('net R = price R minus commission over the money risked (no swap: swap-free)',
+          bool(costs) and ok_cost, f'{len(costs)} trades')
+    jr = [j for j in s7.journal if j.get('r_net') is not None]
+    check('...and the journal line carries r_net beside r_multiple',
+          len(jr) == len(s7.journal) and len(jr) > 0, f'{len(jr)} of {len(s7.journal)}')
+    by_id = {t['id']: t for t in s7.trades}
+    pairs = [(j, by_id[j['signal_id']]) for j in s7.journal if j['signal_id'] in by_id]
+    check('the executor\'s profit counts commission on BOTH sides, as the broker charged it',
+          bool(pairs) and all(abs(float(j['profit']) - float(t['profit'])) < 0.011
+                              and abs(float(j['r_net']) - float(t['r_net'])) < 0.002
+                              for j, t in pairs), f'{len(pairs)} trades')
+    k = next(i for i in range(s7.i0, s7.k) if int(s7.series.t[i]) % day == 23 * 3_600_000)
+    snap = s7.snapshot_at(k)
+    utc_h = int(broker_to_utc(int(s7.series.t[k]))) % day // 3_600_000
+    check('the session gate reads the UTC hour, not the broker clock\'s',
+          snap['session']['utc_hour'] == utc_h == 20,
+          f"broker 23:00 -> utc {snap['session']['utc_hour']}:00, {snap['session']['primary']}")
+
+    # A session saved before fidelity existed reopens at fidelity 1, so its
+    # recorded trades still reproduce.
+    old = ReplaySession({'symbol': 'XAUUSD.a', 'tf': '15m', 'start': '2026-06-01T00:00',
+                         'end': '2026-06-05T00:00', 'name': 'test_lab_fidelity'})
+    old.save()
+    path = RUNS / old.sid / 'session.json'
+    doc = json.loads(path.read_text(encoding='utf-8'))
+    doc['cfg'].pop('fidelity', None)
+    path.write_text(json.dumps(doc), encoding='utf-8')
+    again = ReplaySession.open(old.sid)
+    check('a session saved without the key reopens at fidelity 1 (as recorded)',
+          again.cfg['fidelity'] == 1 and again.broker.swap is None)
+    delete_session(old.sid)
+    check('the closed-market threshold sits between a quiet minute and the daily break',
+          60_000 < CLOSED_GAP_MS < 60 * 60_000)
+
+    from server.lab import data as lab_data
+    check('EURUSD gets a spread floor (its recorded minimum is 0 most minutes); gold none',
+          lab_data.spec('EURUSD.a').get('spread_floor_points') == 2.0
+          and not lab_data.spec('XAUUSD.a').get('spread_floor_points'))
+    if 'EURUSD.a' in lab_data.symbols():
+        eu = ReplaySession({'symbol': 'EURUSD.a', 'tf': '15m', 'start': '2024-03-04T00:00',
+                            'end': '2024-03-08T00:00', 'record': False})
+        seen = []
+        orig = eu.broker.run_minute
+        eu.broker.run_minute = lambda *a: (seen.append(a[-1]), orig(*a))
+        eu.advance(40)
+        check('...and a EURUSD replay never charges less than the floor',
+              bool(seen) and min(seen) >= 2.0, f'{len(seen)} minutes, min {min(seen or [0])}')
+        hi = ReplaySession({'symbol': 'EURUSD.a', 'tf': '15m', 'start': '2024-03-04T00:00',
+                            'end': '2024-03-08T00:00', 'record': False,
+                            'spread_floor_points': 6.0})
+        check('...a session can raise the floor to stress costs',
+              hi.spec['spread_floor_points'] == 6.0 and hi._spread(hi.k) >= 6.0)
+        legacy = ReplaySession({'symbol': 'EURUSD.a', 'tf': '15m', 'start': '2024-03-04T00:00',
+                                'end': '2024-03-08T00:00', 'record': False, 'fidelity': 1})
+        check('...and fidelity 1 keeps the old rule (a zero spread falls back to 20)',
+              legacy._floored(0.0) == 0.0)
+
+        # Price precision (server/engine/precision.py): the engine rounded every
+        # derived price to 3 decimals - a 10-pip grid on EURUSD.
+        from server.engine import precision as pr
+        with pr.using(2):
+            gold_ok = pr.rp(4123.45678) == round(4123.45678, 3) and pr.ra(1.234567) == round(1.234567, 4)
+        with pr.using(5):
+            fx_ok = pr.rp(1.123456) == 1.12346 and pr.ra(0.000431234) == 0.0004312
+        check('gold (and anything quoted to <= 3 digits) keeps the old 3 / 4 decimals',
+              gold_ok and pr.rp(1.123456) == 1.123 and pr.price_dp() == 3)
+        check('a 5-digit pair keeps 5 decimals for prices and 7 for ATR', fx_ok)
+        snap = eu.snapshot_at(eu.k)
+        atr = snap['atr']
+        check('a EURUSD snapshot: ATR is not cut to 4 decimals, the price keeps 5',
+              snap.get('digits') == 5 and round(atr, 4) != atr and len(str(snap['price']).split('.')[-1]) >= 4,
+              f"atr {atr}, price {snap['price']}")
+        lv = [x['price'] for x in snap['levels']]
+        off_grid = [p for p in lv if abs(p * 1000 - round(p * 1000)) > 1e-6]
+        check('...and its levels are not snapped to a 0.001 (10-pip) grid',
+              len(lv) > 0 and len(off_grid) > 0, f'{len(off_grid)} of {len(lv)} off the grid')
+        from server.engine.signals import generate
+        window = eu.series.slice(eu.k + 1 - 600, eu.k + 1)
+        sigs = [x for k in range(eu.k - 30, eu.k + 1)
+                for x in generate(eu.snapshot_at(k), eu.series.slice(k + 1 - 600, k + 1))]
+        grid = [s for s in sigs if all(abs(getattr(s, f) * 1000 - round(getattr(s, f) * 1000)) < 1e-6
+                                       for f in ('entry', 'stop'))]
+        check('...and its signals\' entry and stop are not all on the 10-pip grid',
+              not sigs or len(grid) < len(sigs), f'{len(sigs)} signals, {len(grid)} on the grid')
+
     print(f'\n{"=" * 52}\n  {PASS} passed, {FAIL} failed\n{"=" * 52}')
     return 0 if FAIL == 0 else 1
 

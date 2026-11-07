@@ -54,7 +54,7 @@ from ..engine.qualify import fixed_lots, qualify, qualify_all
 from ..engine.signals import Signal, generate
 from ..executor import Executor
 from ..forecast import news as release_history
-from ..forecast.timebase import utc_to_broker
+from ..forecast.timebase import broker_to_utc, utc_to_broker
 from ..order_ledger import OrderLedger, tag_for
 from .. import trade_journal
 from ..signal_store import (ACTIVE, CANCELLED, CLOSED, EXPIRED, FILLED, REVERSED, SENT,
@@ -62,7 +62,7 @@ from ..signal_store import (ACTIVE, CANCELLED, CLOSED, EXPIRED, FILLED, REVERSED
 from . import data as lab_data
 from . import settings as lab_settings
 from . import stats as lab_stats
-from .broker import REASON_SL, REASON_TP, SimBroker, SimFeed
+from .broker import REASON_SL, REASON_TP, SimBroker, SimFeed, swap_terms
 from .filters import FILTERS
 from .filters import verdict as filter_verdict
 from .forecast import SessionForecast
@@ -74,6 +74,22 @@ WARM = 720              # history loaded before the first decision bar
 MAX_BARS = 60_000       # longer than this is a batch job, not a replay
 SNAP_CACHE = 240        # analyses kept for instant back-stepping
 ENGINE_REV = 'unknown'  # set by app.py from git at start-up
+# How faithfully a replay copies the live account. A session records the level
+# it ran at, and one saved without the key is level 1, so it replays exactly as
+# it did when it was recorded.
+#   1  as built: session gate read off broker-time bars, market orders fill at
+#      the last pre-break quote when a bar closes into the daily or weekend
+#      break, no swap.
+#   2  (2026-10-20) session gate on the UTC clock, as live; a market that is
+#      closed refuses orders, as MT5 does ("Market closed"); swap is charged at
+#      each rollover from the broker's spec unless the account is swap-free.
+LAB_FIDELITY = 2
+# A gap to the next minute longer than this at a bar close is the market being
+# shut (daily break ~65 min, weekend ~48 h), not a quiet minute.
+CLOSED_GAP_MS = 5 * 60_000
+# Spec keys a session may pin (cfg 'spec_overrides').
+SPEC_OVERRIDABLE = ('tick_value', 'commission_per_lot_side', 'swap_mode', 'swap_long_points',
+                    'swap_short_points', 'swap_rollover_3days_weekday', 'spread_floor_points')
 NEWS_LOOKAHEAD_MS = 6 * 3_600_000   # live asks the calendar 6 hours ahead (main.py)
 
 _SID = re.compile(r'^[0-9]{8}-[0-9]{6}-[0-9a-f]{4}$')
@@ -280,17 +296,36 @@ class ReplaySession:
         if news_gate and not release_history.events()['n']:
             raise ValueError('the news gate needs data/_news/history.json '
                              '(python tools/news_backfill.py)')
+        fidelity = int(cfg.get('fidelity') or LAB_FIDELITY)
+        if fidelity not in (1, 2):
+            raise ValueError(f'unknown lab fidelity {fidelity}')
+        floor = cfg.get('spread_floor_points')
+        if floor is not None and not 0.0 <= float(floor) <= 500.0:
+            raise ValueError('spread_floor_points must be between 0 and 500')
+        # Contract facts pinned for a batch: data/<symbol>/spec.json is rewritten
+        # from whichever account the bridge is attached to (tick_value is in
+        # THAT account's currency), so a long batch would otherwise price some
+        # jobs in USD and later ones in AUD.
+        spec_ov = {k: v for k, v in (cfg.get('spec_overrides') or {}).items()
+                   if k in SPEC_OVERRIDABLE}
         return {'symbol': symbol, 'tf': tf, 'start': int(start), 'end': int(end),
                 'mode': mode, 'name': name[:80], 'record': bool(cfg.get('record', True)),
                 'overrides': copy.deepcopy(cfg.get('overrides') or {}),
                 'notes': str(cfg.get('notes') or ''), 'tags': list(cfg.get('tags') or []),
-                'forecast_filter': ff, 'news_gate': news_gate}
+                'forecast_filter': ff, 'news_gate': news_gate, 'fidelity': fidelity,
+                'spread_floor_points': None if floor is None else float(floor),
+                'spec_overrides': spec_ov}
 
     def _load_data(self) -> None:
         c = self.cfg
         sym, tf = c['symbol'], c['tf']
         self.tf_ms = TF_SECONDS[tf] * 1000
         self.spec = lab_data.spec(sym)
+        if c.get('spec_overrides'):
+            self.spec.update(c['spec_overrides'])
+            self.spec['source'] = f"{self.spec.get('source')} + pinned {sorted(c['spec_overrides'])}"
+        if c.get('spread_floor_points') is not None:      # a stress or a measured value
+            self.spec['spread_floor_points'] = c['spread_floor_points']
         self.series, self.i0 = lab_data.load(sym, tf, c['start'], c['end'], WARM)
         n = len(self.series)
         if n - self.i0 < 2:
@@ -338,9 +373,14 @@ class ReplaySession:
             self.cancel = False
             self.now_ms = int(self.series.t[self.k]) + self.tf_ms
             self.balance0 = float(self.eff['risk']['equity'])
+            # Swap from the broker's saved spec, unless the account is swap-free
+            # (instrument.swap_free - IC Markets Raw Spread Islamic by default)
+            # or the session replays at fidelity 1, which had no swap.
+            swap = (swap_terms(self.spec, bool(self.eff['instrument'].get('swap_free', True)))
+                    if self.cfg.get('fidelity', 1) >= 2 else None)
             self.broker = SimBroker(self.cfg['symbol'], self.spec, self.balance0,
                                     self.eff['instrument'].get('default_slippage_points', 3.0),
-                                    clock=lambda: self.now_ms)
+                                    clock=lambda: self.now_ms, swap=swap)
             self.broker.on_close = self._on_close
             self.broker.on_event = self._on_broker_event
             self.broker.set_quote(float(self.series.c[self.k]), self._spread(self.k))
@@ -456,7 +496,11 @@ class ReplaySession:
                 fav, adv = ((hi - entry), (entry - lo)) if buy else ((entry - lo), (hi - entry))
                 mfe, mae = round(max(0.0, fav) / risk, 2), round(max(0.0, adv) / risk, 2)
         profit = round(float(deal['profit']) + float(deal['commission'])
-                       + float(pos.get('commission') or 0), 2)
+                       + float(pos.get('commission') or 0) + float(deal.get('swap') or 0), 2)
+        # After every cost (commission, swap), as the executor's r_net; `r`
+        # stays price R so older sessions and reports compare.
+        money_risk = risk * self.broker.vpu * float(pos['volume'])
+        r_net = round(profit / money_risk, 3) if money_risk > 0 else None
         tid = rec['id'] if rec else f"manual-{pos['ticket']}"
         entry_t, exit_t = int(pos['time_ms']), int(deal['time_ms'])
         t = {
@@ -467,7 +511,8 @@ class ReplaySession:
             'exit_i': int(np.searchsorted(self.series.t, exit_t, 'right') - 1),
             'entry': entry, 'exit': exit_px, 'stop0': stop0, 'sl_final': pos.get('sl'),
             'tp1': sig.get('tp1'), 'tp2': sig.get('tp2'), 'tp': pos.get('tp'),
-            'outcome': outcome, 'r': r, 'profit': profit,
+            'outcome': outcome, 'r': r, 'r_net': r_net, 'profit': profit,
+            'swap': round(float(deal.get('swap') or 0), 2),
             'bars': round((exit_t - entry_t) / self.tf_ms, 1), 'mfe_r': mfe, 'mae_r': mae,
             'confidence': sig.get('confidence'),
             'kind': (self.ledger.get(rec['id']) or {}).get('kind') if rec else 'market',
@@ -478,11 +523,18 @@ class ReplaySession:
                            f"({r:+.2f}R, {profit:+.2f})", id=tid, r=r, profit=profit)
 
     # --------------------------------------------------------- the engine
+    def _floored(self, raw: float) -> float:
+        """A recorded (minimum) spread, raised to the symbol's floor at fidelity 2."""
+        floor = float(self.spec.get('spread_floor_points') or 0.0)
+        if floor > 0 and self.cfg.get('fidelity', 1) >= 2:
+            return max(float(raw or 0.0), floor)
+        return float(raw or 0.0)
+
     def _spread(self, i: int) -> float:
         sp = self.series.spread
         if sp is None or i >= len(sp):
-            return 20.0
-        return float(sp[i]) or 20.0
+            return self._floored(0.0) or 20.0
+        return self._floored(float(sp[i])) or 20.0
 
     def _mtf_at(self, close_ms: int, k: int, memo: bool = True) -> dict:
         """
@@ -512,7 +564,9 @@ class ReplaySession:
     def _analyse(self, k: int, memo: bool = True) -> dict:
         window = self.series.slice(k + 1 - WINDOW, k + 1)
         close = int(self.series.t[k]) + self.tf_ms
-        snap = analyse(window, self._mtf_at(close, k, memo), self.spec)
+        utc = (int(broker_to_utc(int(self.series.t[k])))
+               if self.cfg.get('fidelity', 1) >= 2 else None)
+        snap = analyse(window, self._mtf_at(close, k, memo), self.spec, bar_utc_ms=utc)
         if snap.get('ok'):
             snap['leg_gate'] = snap.get('leg')      # closed bars: the gate's own read
         return snap
@@ -599,6 +653,8 @@ class ReplaySession:
         # midnight - the same moment live's clock-plus-offset does.
         d = day_start_ms(self.now_ms, 0)
         if d != self._day:
+            if self._day is not None and d > self._day:
+                self.broker.rollover(self._day)     # the night just crossed
             self._day = d
             self._day_sends = 0
             self._day_start = self.broker.balance
@@ -635,7 +691,7 @@ class ReplaySession:
             mt = int(m1.t[j])
             self.now_ms = mt
             self._day_check()
-            sp = float(sp_series[j]) if sp_series is not None else self._spread(k1)
+            sp = self._floored(float(sp_series[j])) if sp_series is not None                 else self._spread(k1)
             self.broker.run_minute(mt, float(m1.o[j]), float(m1.h[j]), float(m1.l[j]),
                                    float(m1.c[j]), sp or self._spread(k1))
             self.now_ms = mt + 60_000
@@ -658,6 +714,10 @@ class ReplaySession:
         nxt_bid = float(m1.o[b]) if b < len(m1) and int(m1.t[b]) < t_close + self.tf_ms \
             else float(self.series.c[k1])
         self.broker.set_quote(nxt_bid, self._spread(k1))
+        # A bar that closes into the daily or weekend break: the market is shut
+        # until its next minute, so anything sent now is refused, as live.
+        if self.cfg.get('fidelity', 1) >= 2 and b < len(m1):
+            self.broker.closed = int(m1.t[b]) - t_close > CLOSED_GAP_MS
         # The journal reads in cause-and-effect order: each new signal and its
         # verdict first, then whatever the executor did about it.
         if created:
@@ -948,7 +1008,9 @@ class ReplaySession:
             raise ValueError('bad session id')
         base = RUNS / sid
         doc = json.loads((base / 'session.json').read_text(encoding='utf-8'))
-        s = cls(doc['cfg'], sid=sid, created_ms=doc.get('created_ms'))
+        cfg = dict(doc['cfg'])
+        cfg.setdefault('fidelity', 1)        # recorded before the key existed
+        s = cls(cfg, sid=sid, created_ms=doc.get('created_ms'))
         s.bar_notes = doc.get('bar_notes') or []
         s.snaps = doc.get('snapshots') or []
         s.trade_tags = doc.get('trade_tags') or {}

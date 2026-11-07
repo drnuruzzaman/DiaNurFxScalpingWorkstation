@@ -146,6 +146,7 @@ async def push_frame() -> None:
     if s is None:
         return
     p = await asyncio.to_thread(s.view_payload)
+    p = await asyncio.to_thread(_with_smc, s, p)
     ev_n, tr_n = len(s.events), len(s.trades)
     stats = None
     for ws, sent in list(LAB.clients.items()):
@@ -162,6 +163,49 @@ async def push_frame() -> None:
         LAB.clients[ws] = {'ev': ev_n, 'tr': tr_n}
         await _send(ws, msg)
     await _autosave()
+
+
+# Liquidity pools for the lab chart (server/smc_overlay.py) - order blocks are
+# the engine's own, already on the snapshot -
+# added 2026-11-06. Attached HERE, as the frame is sent, so the replay itself
+# (session.py, fingerprinted by the forward books) is untouched and nothing it
+# decides can see them. Only bars closed by the frame's own time are used.
+_SMC_DATA: dict = {}        # session id -> {tf: series} for the pool sources
+_SMC_MEMO: dict = {}        # session id -> (5m bucket, pools, pip)
+
+
+def _with_smc(s, p: dict) -> dict:
+    from .. import smc_overlay
+    try:
+        now = int(p['cursor']['now'])
+        tf = s.cfg['tf']
+        tf_ms = TF_SECONDS[tf] * 1000
+        data = _SMC_DATA.get(s.sid)
+        if data is None:
+            data = {name: lab_data.load(s.cfg['symbol'], name, s.cfg['start'],
+                                        s.cfg['end'] + TF_SECONDS[name] * 1000, n + 5)[0]
+                    for name, n in smc_overlay.POOL_BARS.items()}
+            _SMC_DATA.clear()               # one session at a time
+            _SMC_DATA[s.sid] = data
+        t, o, h, l, c = smc_overlay.closed(s.series, tf_ms, now, 600)
+        if len(t) < 60:
+            return p
+        last = float(c[-1])
+        t_start = int(t[max(0, len(t) - 300)])
+        pip = 10 * float(s.spec.get('point') or 0.01)
+        memo = _SMC_MEMO.get(s.sid)
+        bucket = now // 300_000
+        if memo is None or memo[0] != bucket:
+            pools = smc_overlay.build_pools(lambda name: data[name], now,
+                                            smc_overlay.fx_identity, pip)
+            memo = (bucket, pools, pip)
+        _SMC_MEMO.clear()
+        _SMC_MEMO[s.sid] = memo
+        snap = dict(p.get('snapshot') or {})
+        snap['smc'] = {'pools': smc_overlay.pick_pools(memo[1], now, t_start, last, pip)}
+        return dict(p, snapshot=snap)
+    except Exception:                                    # noqa: BLE001
+        return p                     # the frame goes out without them, never not at all
 
 
 async def _autosave(force: bool = False) -> None:

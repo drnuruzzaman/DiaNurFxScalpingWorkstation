@@ -33,6 +33,8 @@ from dataclasses import dataclass, field, asdict
 
 import numpy as np
 
+from .precision import rp
+
 
 @dataclass
 class Pattern:
@@ -251,8 +253,8 @@ def head_and_shoulders(swings, h, l, c, t, atr_val) -> list:
                 {'t': int(t2.t), 'price': float(t2.price), 'role': 'neckline'},
                 {'t': int(rs.t), 'price': float(rs.price), 'role': 'right shoulder'},
             ],
-            break_level=round(float(neck_now), 3),
-            target=round(float(target), 3),
+            break_level=rp(neck_now),
+            target=rp(target),
             invalidation=invalidation,
             rr=_rr(neck_now, target, invalidation),
             start_t=int(ls.t), end_t=int(rs.t),
@@ -328,8 +330,8 @@ def double_tops_bottoms(swings, h, l, c, t, atr_val) -> list:
             kind=kind, label=label,
             direction='bearish' if bearish else 'bullish',
             status=_status(broke, failed), quality=quality, points=pts,
-            break_level=round(neck, 3), target=round(float(target), 3),
-            invalidation=round(invalidation, 3),
+            break_level=rp(neck), target=rp(target),
+            invalidation=rp(invalidation),
             rr=_rr(neck, target, invalidation),
             start_t=int(a.t), end_t=int(b.t),
             start_idx=int(a.idx), end_idx=int(b.idx),
@@ -430,9 +432,9 @@ def triangles_wedges(swings, h, l, c, t, atr_val) -> list:
             status=_status(broke, failed), quality=quality,
             points=[{'t': int(s.t), 'price': float(s.price), 'role': s.kind}
                     for s in seg],
-            break_level=round(float(break_level), 3),
-            target=round(float(target), 3),
-            invalidation=round(float(invalidation), 3),
+            break_level=rp(break_level),
+            target=rp(target),
+            invalidation=rp(invalidation),
             rr=_rr(break_level, target, invalidation),
             start_t=int(seg[0].t), end_t=int(seg[-1].t),
             start_idx=int(start_idx), end_idx=int(seg[-1].idx),
@@ -517,9 +519,9 @@ def flags(swings, h, l, c, t, atr_val) -> list:
             points=[{'t': int(a.t), 'price': float(a.price), 'role': 'pole start'},
                     {'t': int(b.t), 'price': float(b.price), 'role': 'pole end'}] +
                    [{'t': int(s.t), 'price': float(s.price), 'role': 'flag'} for s in rest],
-            break_level=round(float(break_level), 3),
-            target=round(float(target), 3),
-            invalidation=round(float(invalidation), 3),
+            break_level=rp(break_level),
+            target=rp(target),
+            invalidation=rp(invalidation),
             rr=_rr(break_level, target, invalidation),
             start_t=int(a.t), end_t=int(rest[-1].t),
             start_idx=int(a.idx), end_idx=int(rest[-1].idx),
@@ -569,8 +571,8 @@ def rectangles(swings, h, l, c, t, atr_val) -> list:
         kind='rectangle', label='Rectangle / Range', direction='neutral',
         status=_status(broke, False), quality=quality,
         points=[{'t': int(s.t), 'price': float(s.price), 'role': s.kind} for s in seg],
-        break_level=round(break_level, 3), target=round(float(target), 3),
-        invalidation=round(invalidation, 3),
+        break_level=rp(break_level), target=rp(target),
+        invalidation=rp(invalidation),
         rr=_rr(break_level, target, invalidation),
         start_t=int(seg[0].t), end_t=int(seg[-1].t),
         start_idx=int(seg[0].idx), end_idx=int(seg[-1].idx),

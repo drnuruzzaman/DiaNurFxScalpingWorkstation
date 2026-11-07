@@ -44,8 +44,9 @@ ARMS = FILTERS + (NEWS_GATE,)
 
 # The heavy parts of a snapshot that qualification does not read. The CHECK
 # replay proves the rest is enough: any key qualification needed and lost
-# would change a trade, and the run would stop.
-HEAVY = ('swings', 'breaks', 'trendlines', 'channels', 'patterns', 'events', 'fvg', 'zones',
+# would change a trade, and the run would stop. 'fvg', 'zones' and
+# 'order_blocks' stay: the zone gate reads them (2026-11-07).
+HEAVY = ('swings', 'breaks', 'trendlines', 'channels', 'patterns', 'events',
          'liquidity', 'equal_highs', 'equal_lows', 'regression_channel', 'volume_profile')
 
 

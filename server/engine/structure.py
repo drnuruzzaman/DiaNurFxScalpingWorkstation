@@ -139,10 +139,15 @@ def find_swings(h: np.ndarray, l: np.ndarray, c: np.ndarray, t: np.ndarray,
         prev = swings[-1]
         if prev.kind == kind:
             # Same side twice: keep the more extreme one, it extends the leg.
+            # Re-measure that leg from the swing before it - created without a
+            # strength, the extremes of the biggest moves (a sell-off that kept
+            # making lower lows, a rally that kept making higher highs) were
+            # left at 0 and drawn as minor swings (fixed 2026-11-07).
             better = (price > prev.price) if kind == 'high' else (price < prev.price)
             if better:
+                leg = abs(price - swings[-2].price) / local_atr if len(swings) >= 2 else 0.0
                 swings[-1] = Swing(idx=idx, t=int(t[idx]), price=price, kind=kind,
-                                   confirmed_at=idx + k)
+                                   confirmed_at=idx + k, strength=round(leg, 2))
             continue
 
         leg = abs(price - prev.price)
@@ -196,54 +201,71 @@ def find_swings(h: np.ndarray, l: np.ndarray, c: np.ndarray, t: np.ndarray,
 def structure_breaks(swings: list, h: np.ndarray, l: np.ndarray,
                      c: np.ndarray, t: np.ndarray) -> list:
     """
-    BOS and CHoCH, detected on CLOSES.
+    BOS and CHoCH, detected on CLOSES, with PROTECTED levels.
 
     Closes, not wicks, deliberately. A wick through a swing high is a liquidity
     sweep - often the opposite signal - and treating it as a break is how a
     system ends up buying every top. Sweeps are handled in events.py.
 
-    BOS   = a break that continues the existing direction.
-    CHoCH = the first break against it, i.e. the character changed.
+    A state machine, bar by bar (the method ScalpingWorkstation's smc/structure
+    uses), on swings only once they are CONFIRMED:
+      BOS   = a close through the latest swing in the direction of the trend
+              (or the first break out of no direction).
+      CHoCH = a close through the PROTECTED level against the trend: after a
+              break up, the lowest low of the leg that made it (the higher low
+              the up-move launched from); after a break down, the highest high.
+
+    Until 2026-11-07 a CHoCH was the first break of ANY swing against the last
+    direction, internal pullback swings included, flipping back on the next:
+    on 5m it called 17 of 25 breaks a CHoCH, against 8 by this rule.
+    `from_swing` is the swing whose level broke (the protected point for a
+    CHoCH), so the chart can draw the line from it to the break.
     """
     if len(swings) < 3:
         return []
+    known = sorted(swings, key=lambda s: (s.confirmed_at, s.idx))
     breaks: list = []
-    direction = None            # current structural direction
-
-    for si, sw in enumerate(swings):
-        if si < 1:
+    state = 0                    # +1 bullish, -1 bearish, 0 not yet decided
+    cand_h = cand_l = None       # latest confirmed swing since the last break that way
+    prot = None                  # (price, bar) of the protected level
+    last_up = last_dn = -1
+    ptr = 0
+    for j in range(min(s.idx for s in swings), c.size):
+        while ptr < len(known) and known[ptr].confirmed_at <= j:
+            p = known[ptr]
+            if p.kind == 'high' and p.idx >= last_up:
+                cand_h = p
+            elif p.kind == 'low' and p.idx >= last_dn:
+                cand_l = p
+            ptr += 1
+        cj = c[j]
+        up = None
+        if state == -1 and prot is not None and cj > prot[0]:
+            up = ('CHoCH', prot[0], prot[1])
+        elif state >= 0 and cand_h is not None and cj > cand_h.price:
+            up = ('BOS', cand_h.price, cand_h.idx)
+        if up is not None:
+            li = up[2]
+            lo_i = li + int(np.argmin(l[li:j + 1]))
+            prot = (float(l[lo_i]), lo_i)
+            state = 1
+            breaks.append(StructureBreak(idx=j, t=int(t[j]), price=float(up[1]), kind=up[0],
+                                         direction='up', from_swing=int(li)))
+            cand_h, last_up = None, j
             continue
-        # Only bars after this swing was CONFIRMED may break it.
-        start = max(sw.confirmed_at, sw.idx + 1)
-        if start >= c.size:
-            continue
-        # A swing is broken once, by the first close through it.
-        if sw.kind == 'high':
-            hit = np.flatnonzero(c[start:] > sw.price)
-        else:
-            hit = np.flatnonzero(c[start:] < sw.price)
-        if hit.size == 0:
-            continue
-        bar = int(start + hit[0])
-
-        # Don't report a break of a swing that a later swing already superseded.
-        later = [s for s in swings[si + 1:] if s.kind == sw.kind and s.idx < bar]
-        if later:
-            continue
-
-        new_dir = 'up' if sw.kind == 'high' else 'down'
-        kind = 'BOS' if (direction is None or direction == new_dir) else 'CHoCH'
-        direction = new_dir
-        breaks.append(StructureBreak(idx=bar, t=int(t[bar]), price=float(sw.price),
-                                     kind=kind, direction=new_dir, from_swing=sw.idx))
-
-    breaks.sort(key=lambda b: b.idx)
-    # Re-derive BOS/CHoCH in time order; the per-swing walk above can emit them
-    # out of sequence when two swings break on the same bar.
-    direction = None
-    for b in breaks:
-        b.kind = 'BOS' if (direction is None or direction == b.direction) else 'CHoCH'
-        direction = b.direction
+        dn = None
+        if state == 1 and prot is not None and cj < prot[0]:
+            dn = ('CHoCH', prot[0], prot[1])
+        elif state <= 0 and cand_l is not None and cj < cand_l.price:
+            dn = ('BOS', cand_l.price, cand_l.idx)
+        if dn is not None:
+            li = dn[2]
+            hi_i = li + int(np.argmax(h[li:j + 1]))
+            prot = (float(h[hi_i]), hi_i)
+            state = -1
+            breaks.append(StructureBreak(idx=j, t=int(t[j]), price=float(dn[1]), kind=dn[0],
+                                         direction='down', from_swing=int(li)))
+            cand_l, last_dn = None, j
     return breaks
 
 
