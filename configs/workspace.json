@@ -4,7 +4,12 @@
    {
     "id": "tmw4ndj5j",
     "symbol": "XAUUSD.a",
-    "tf": "1h"
+    "tf": "4h"
+   },
+   {
+    "id": "tmw7cg4nn",
+    "symbol": "EURUSD.a",
+    "tf": "15m"
    }
   ],
   "dianur.activeTab": "tmw4ndj5j",
@@ -20,7 +25,7 @@
    "orderBlocks": false,
    "swings": true,
    "structure": true,
-   "liquidity": true,
+   "liquidity": false,
    "signal": false,
    "volumeProfile": false,
    "regimeBands": false,
@@ -52,8 +57,8 @@
    "evidence"
   ],
   "dianur.panels": {
-   "left": true,
-   "right": true,
+   "left": false,
+   "right": false,
    "bottom": false
   },
   "dianur.dockTab": "calendar",
@@ -79,7 +84,7 @@
      "orderBlocks": false,
      "swings": true,
      "structure": true,
-     "liquidity": true,
+     "liquidity": false,
      "signal": false,
      "volumeProfile": false,
      "regimeBands": false,
@@ -91,8 +96,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 345,
-    "saved_ms": 1794012210144
+    "span": 600,
+    "saved_ms": 1794113033675
    },
    "USDJPY.a|15m": {
     "overlays": {
@@ -131,7 +136,7 @@
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": true,
+     "orderBlocks": false,
      "swings": true,
      "structure": false,
      "liquidity": false,
@@ -146,8 +151,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794015555177
+    "span": 600,
+    "saved_ms": 1794113026371
    },
    "XAUUSD.a|4h": {
     "overlays": {
@@ -162,7 +167,7 @@
      "orderBlocks": false,
      "swings": true,
      "structure": true,
-     "liquidity": true,
+     "liquidity": false,
      "signal": false,
      "volumeProfile": false,
      "regimeBands": false,
@@ -174,8 +179,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010226423
+    "span": 600,
+    "saved_ms": 1794113039331
    },
    "XAUUSD.a|5m": {
     "overlays": {
@@ -400,5 +405,5 @@
   "dianur.lab.dockH": 173,
   "dianur.lab.cone": false
  },
- "saved_ms": 1794016753816
+ "saved_ms": 1794113040143
 }

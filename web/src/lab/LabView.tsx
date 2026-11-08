@@ -492,7 +492,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
             <div className="lab-transport">
               <button title="First bar (Home)" onClick={() => send('first')} disabled={busy}>⏮</button>
               <button title="Back 10 bars (Shift+←)" onClick={() => step(-10)} disabled={busy}>◀◀</button>
-              <button title="Back one bar (←)" onClick={() => step(-1)} disabled={busy}>◀</button>
+              <button title="Back one bar (←)" onClick={() => step(-1)} disabled={busy}>|◀︎</button>
               <button className={`lab-play ${playing ? 'on' : ''}`} title="Play / pause (Space)" onClick={togglePlay}
                 disabled={busy && !playing}>{playing ? '❚❚' : '▶'}</button>
               <button title="Forward one bar (→)" onClick={() => step(1)} disabled={busy}>▶︎|</button>

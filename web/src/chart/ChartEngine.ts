@@ -238,11 +238,12 @@ export type HoverInfo = {
 /**
  * Candles visible when the chart first loads, and what Reset returns to.
  *
- * Kept in step with the engine's tl_lookback_max_bars: the geometry window is
- * capped at the same figure so a trendline's anchors are on screen at this
- * zoom, rather than off the left edge where they cannot be checked.
+ * 600 = candles half as wide as the old 300 (user request 2026-11-08). The
+ * engine's tl_lookback_max_bars is still 300, so trendline geometry only
+ * covers the right half of this default view; it was NOT raised with it,
+ * because that setting feeds the signal engine and the forward books.
  */
-const DEFAULT_SPAN = 300
+const DEFAULT_SPAN = 600
 
 /**
  * Chart typefaces. Canvas text gets no ClearType, so a thin face at 8px reads
@@ -757,7 +758,21 @@ export class ChartEngine {
     }
     this.bctx.setTransform(bw / cw, 0, 0, bh / ch, 0, 0)
     this.tctx.setTransform(bw / cw, 0, 0, bh / ch, 0, 0)
+    const oldW = this.pane.w
     this.layout()
+    // Keep the candle width fixed across a resize: a wider window shows MORE
+    // bars rather than the same bars stretched. The right edge stays put, so
+    // the latest bar does not move; the extra room opens up on the left.
+    // A pane that was (or is) collapsed has no meaningful width to scale from.
+    const newW = this.pane.w
+    if (oldW > 50 && newW > 50 && Math.abs(newW - oldW) >= 1) {
+      const right = this.view.start + this.view.span
+      const span = Math.max(30, Math.min(1200, this.view.span * (newW / oldW)))
+      this.view.span = span
+      this.view.start = right - span
+      this.clampView()
+      this.onViewChange?.(this.getViewport())
+    }
     this.scheduleBase()
   }
 

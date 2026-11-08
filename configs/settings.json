@@ -39,10 +39,7 @@
   "min_mtf_score": 25,
   "cooldown_bars": 2,
   "disabled_playbooks": [
-   "sweep_reversal",
-   "breakout_retest",
-   "range_fade",
-   "trendline_bounce"
+   "mtf_pullback"
   ],
   "news_blocks": false,
   "news_blackout_min": 10,

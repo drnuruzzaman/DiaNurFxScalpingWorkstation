@@ -136599,3 +136599,63 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 ********************************************************************
 * bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
 * endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:26:31 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:27:41 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:28:22 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:39:57 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send

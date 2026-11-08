@@ -99,7 +99,7 @@
     "reason": "fades the up leg 0.7 ATR off its extreme - a spot that lost in all three years tested",
     "confidence": 47,
     "net_rr2": 1.93,
-    "at_ms": 1794016776644
+    "at_ms": 1794112809779
    },
    "trail": {},
    "reverse": null,
@@ -233,10 +233,10 @@
    ],
    "qual": {
     "status": "qualified",
-    "reason": "2 warning(s), cleared",
+    "reason": "3 warning(s), cleared",
     "confidence": 55,
-    "net_rr2": 1.93,
-    "at_ms": 1794016754652
+    "net_rr2": 1.94,
+    "at_ms": 1794112811299
    },
    "trail": {},
    "reverse": null,
@@ -366,7 +366,7 @@
     "reason": "confidence 41 below the 52 floor after 3 warning(s)",
     "confidence": 41,
     "net_rr2": 1.95,
-    "at_ms": 1794016754744
+    "at_ms": 1794112808810
    },
    "trail": {},
    "reverse": null,
@@ -125818,7 +125818,7 @@
     "reason": "fades the up leg 0.7 ATR off its extreme - a spot that lost in all three years tested",
     "confidence": 43,
     "net_rr2": 1.99,
-    "at_ms": 1794016755651
+    "at_ms": 1794112811260
    },
    "trail": {},
    "reverse": null,
@@ -142741,11 +142741,11 @@
     ]
    ],
    "qual": {
-    "status": "qualified",
-    "reason": "1 warning(s), cleared",
+    "status": "rejected",
+    "reason": "stop is too wide for the risk budget - 0.01 lots would risk 4.18% against a 2.00% limit",
     "confidence": 63,
     "net_rr2": 1.63,
-    "at_ms": 1794016755449
+    "at_ms": 1794112811089
    },
    "trail": {},
    "reverse": null,
@@ -142790,7 +142790,7 @@
    "tf": "2h",
    "side": "sell",
    "playbook": "sweep_reversal",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "sweep_reversal",
     "label": "SWEEP REVERSAL",
@@ -142873,12 +142873,17 @@
    "final_bar_ms": 1793937600000,
    "expires_ms": 1794031200000,
    "created_ms": 1793946713811,
-   "updated_ms": 1793946716885,
+   "updated_ms": 1794111996993,
    "history": [
     [
      1793946713811,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794111996993,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -163743,7 +163748,7 @@
    "tf": "30m",
    "side": "sell",
    "playbook": "flag_continuation",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "flag_continuation",
     "label": "FLAG CONTINUATION",
@@ -163801,12 +163806,17 @@
    "final_bar_ms": 1793998800000,
    "expires_ms": 1794029400000,
    "created_ms": 1794002995002,
-   "updated_ms": 1794002995002,
+   "updated_ms": 1794111997126,
    "history": [
     [
      1794002995002,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794111997126,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -164625,7 +164635,7 @@
    "tf": "1h",
    "side": "sell",
    "playbook": "pattern_break",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "pattern_break",
     "label": "PATTERN BREAK",
@@ -164690,12 +164700,17 @@
    "final_bar_ms": 1793964600000,
    "expires_ms": 1794040200000,
    "created_ms": 1794009118323,
-   "updated_ms": 1794009118323,
+   "updated_ms": 1794111997268,
    "history": [
     [
      1794009118323,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794111997268,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -164877,7 +164892,1022 @@
      ]
     ]
    }
+  },
+  "EURUSD.a:2h:pattern_break:sell:1793988000000": {
+   "id": "EURUSD.a:2h:pattern_break:sell:1793988000000",
+   "symbol": "EURUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "playbook": "pattern_break",
+   "stage": "FINAL",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "sell",
+    "symbol": "EURUSD.a",
+    "tf": "2h",
+    "entry": 1.11397,
+    "stop": 1.12772,
+    "tp1": 1.10022,
+    "tp2": 1.08648,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 63,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 0.01375,
+    "atr_at_signal": 0.0020843,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Head & Shoulders (confirmed), quality 79/100",
+      "weight": 20,
+      "kind": "pattern"
+     },
+     {
+      "text": "shoulder symmetry 90%",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "head depth 2.6 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "higher timeframes agree (-100)",
+      "weight": 12,
+      "kind": "mtf"
+     }
+    ],
+    "against": [],
+    "invalidation": "Head & Shoulders fails on a close beyond 1.13",
+    "expiry_bars": 20,
+    "created_ms": 1794112002308,
+    "bar_time_ms": 1793988000000,
+    "bar_idx": 598,
+    "id": "EURUSD.a:2h:pattern_break:sell:1793988000000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1793988000000,
+   "expires_ms": 1794139200000,
+   "created_ms": 1794112002309,
+   "updated_ms": 1794112002309,
+   "history": [
+    [
+     1794112002309,
+     "FINAL",
+     "bar closed with the setup intact"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "stop is too wide for the risk budget - 0.05 lots would risk 2.76% against a 2.00% limit",
+    "confidence": 57,
+    "net_rr2": 1.9,
+    "at_ms": 1794112002466
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1793988000000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 62,
+    "volatility": "high",
+    "mtf_score": -100,
+    "mtf_direction": "down",
+    "atr": 0.0020843,
+    "session": "newyork",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 5.42,
+     "pull_atr": 0.42
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 57,
+    "at_ms": 1794112002466,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "sizing",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
+  },
+  "XAUUSD.a:2h:pattern_break:buy:1793988000000": {
+   "id": "XAUUSD.a:2h:pattern_break:buy:1793988000000",
+   "symbol": "XAUUSD.a",
+   "tf": "2h",
+   "side": "buy",
+   "playbook": "pattern_break",
+   "stage": "FINAL",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "2h",
+    "entry": 4081.18,
+    "stop": 4017.94,
+    "tp1": 4144.42,
+    "tp2": 4207.67,
+    "entry_type": "stop",
+    "trigger": 4081.18,
+    "confidence": 50,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 63.24,
+    "atr_at_signal": 26.9627,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Double Bottom (forming), quality 67/100",
+      "weight": 20,
+      "kind": "pattern"
+     },
+     {
+      "text": "peaks within 0.22 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "depth 1.8 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "against higher-timeframe direction",
+      "weight": -10,
+      "kind": "mtf"
+     }
+    ],
+    "against": [
+     "pattern points against the higher-timeframe lean (-40)",
+     "the break level has not traded yet - this is a pending order"
+    ],
+    "invalidation": "Double Bottom fails on a close beyond 4023.33",
+    "expiry_bars": 20,
+    "created_ms": 1794112002509,
+    "bar_time_ms": 1793988000000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:2h:pattern_break:buy:1793988000000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1793988000000,
+   "expires_ms": 1794139200000,
+   "created_ms": 1794112002509,
+   "updated_ms": 1794112002509,
+   "history": [
+    [
+     1794112002509,
+     "FINAL",
+     "bar closed with the setup intact"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "stop is too wide for the risk budget - 0.01 lots would risk 2.53% against a 2.00% limit",
+    "confidence": 30,
+    "net_rr2": 1.98,
+    "at_ms": 1794112810345
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1793988000000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 57,
+    "volatility": "extreme",
+    "mtf_score": -40,
+    "mtf_direction": "down",
+    "atr": 26.9627,
+    "session": "newyork",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 1.8,
+     "pull_atr": 0.55
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 30,
+    "at_ms": 1794112809777,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "sizing",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
+  },
+  "XAUUSD.a:1m:breakout_retest:buy:1794002100000": {
+   "id": "XAUUSD.a:1m:breakout_retest:buy:1794002100000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "breakout_retest",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "breakout_retest",
+    "label": "BREAKOUT RETEST",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 4071.07,
+    "stop": 4066.86,
+    "tp1": 4075.28,
+    "tp2": 4079.48,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 75,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 4.21,
+    "atr_at_signal": 1.0358,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "broke 4067.23 and retested it successfully",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "break bar 2.0x average range",
+      "weight": 10,
+      "kind": "event"
+     },
+     {
+      "text": "retest held (89/100)",
+      "weight": 14,
+      "kind": "event"
+     },
+     {
+      "text": "regime is UPTREND - breaks tend to run",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "volatility expanding into the break",
+      "weight": 8,
+      "kind": "volatility"
+     }
+    ],
+    "against": [],
+    "invalidation": "back inside 4067.23 turns this into a false break",
+    "expiry_bars": 15,
+    "created_ms": 1794112803022,
+    "bar_time_ms": 1794002100000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:breakout_retest:buy:1794002100000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794002100000,
+   "expires_ms": 1794003060000,
+   "created_ms": 1794112803023,
+   "updated_ms": 1794112804612,
+   "history": [
+    [
+     1794112803023,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794112804612,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "ATR 104 pts is under 176 - less than 4x the 44 pt round trip",
+    "confidence": 53,
+    "net_rr2": 1.7,
+    "at_ms": 1794112803746
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794002100000,
+    "regime": "trend",
+    "regime_label": "UPTREND",
+    "regime_confidence": 68,
+    "volatility": "very_low",
+    "mtf_score": 3,
+    "mtf_direction": null,
+    "atr": 1.0358,
+    "session": "sydney",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 7.17,
+     "pull_atr": 0.99
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 53,
+    "at_ms": 1794112803746,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "volatility",
+      "BLOCK",
+      0
+     ],
+     [
+      "session",
+      "WARN",
+      10
+     ],
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
+  },
+  "XAUUSD.a:1h:pattern_break:buy:1793995200000": {
+   "id": "XAUUSD.a:1h:pattern_break:buy:1793995200000",
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "buy",
+   "playbook": "pattern_break",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "entry": 4081.18,
+    "stop": 4022.02,
+    "tp1": 4140.34,
+    "tp2": 4199.5,
+    "entry_type": "stop",
+    "trigger": 4081.18,
+    "confidence": 50,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 59.16,
+    "atr_at_signal": 17.8867,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Double Bottom (forming), quality 69/100",
+      "weight": 20,
+      "kind": "pattern"
+     },
+     {
+      "text": "peaks within 0.32 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "depth 2.7 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "against higher-timeframe direction",
+      "weight": -10,
+      "kind": "mtf"
+     }
+    ],
+    "against": [
+     "pattern points against the higher-timeframe lean (-68)",
+     "the break level has not traded yet - this is a pending order"
+    ],
+    "invalidation": "Double Bottom fails on a close beyond 4025.60",
+    "expiry_bars": 20,
+    "created_ms": 1794112803250,
+    "bar_time_ms": 1793995200000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1h:pattern_break:buy:1793995200000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1793995200000,
+   "expires_ms": 1794070800000,
+   "created_ms": 1794112803250,
+   "updated_ms": 1794112804796,
+   "history": [
+    [
+     1794112803250,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794112804796,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "stop is too wide for the risk budget - 0.01 lots would risk 2.37% against a 2.00% limit",
+    "confidence": 20,
+    "net_rr2": 1.98,
+    "at_ms": 1794112804052
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1793995200000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 57,
+    "volatility": "extreme",
+    "mtf_score": -68,
+    "mtf_direction": "down",
+    "atr": 17.8867,
+    "session": "newyork",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 2.71,
+     "pull_atr": 0.71
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 20,
+    "at_ms": 1794112804052,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "session",
+      "WARN",
+      10
+     ],
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "sizing",
+      "BLOCK",
+      0
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
+  },
+  "EURUSD.a:15m:trendline_bounce:sell:1794000600000": {
+   "id": "EURUSD.a:15m:trendline_bounce:sell:1794000600000",
+   "symbol": "EURUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "playbook": "trendline_bounce",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "trendline_bounce",
+    "label": "TRENDLINE BOUNCE",
+    "side": "sell",
+    "symbol": "EURUSD.a",
+    "tf": "15m",
+    "entry": 1.11401,
+    "stop": 1.1147,
+    "tp1": 1.11332,
+    "tp2": 1.11263,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 64,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 0.00069,
+    "atr_at_signal": 0.0004599,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "falling resistance held (3 touches)",
+      "weight": 22,
+      "kind": "structure"
+     },
+     {
+      "text": "bar closed back below the line, down",
+      "weight": 10,
+      "kind": "event"
+     },
+     {
+      "text": "higher timeframes agree (-100)",
+      "weight": 12,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.79 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close above 1.11 breaks the line",
+    "expiry_bars": 12,
+    "created_ms": 1794112808186,
+    "bar_time_ms": 1794000600000,
+    "bar_idx": 598,
+    "id": "EURUSD.a:15m:trendline_bounce:sell:1794000600000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794000600000,
+   "expires_ms": 1794012300000,
+   "created_ms": 1794112808186,
+   "updated_ms": 1794112809454,
+   "history": [
+    [
+     1794112808186,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794112809454,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "ATR 46 pts is under 176 - less than 4x the 44 pt round trip",
+    "confidence": 40,
+    "net_rr2": 0.78,
+    "at_ms": 1794112808432
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794000600000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 67,
+    "volatility": "very_low",
+    "mtf_score": -100,
+    "mtf_direction": "down",
+    "atr": 0.0004599,
+    "session": "sydney",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 4.67,
+     "pull_atr": 0.85
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 40,
+    "at_ms": 1794112808432,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "volatility",
+      "BLOCK",
+      0
+     ],
+     [
+      "session",
+      "WARN",
+      10
+     ],
+     [
+      "reward",
+      "WARN",
+      8
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
+  },
+  "EURUSD.a:30m:breakout_retest:buy:1793998800000": {
+   "id": "EURUSD.a:30m:breakout_retest:buy:1793998800000",
+   "symbol": "EURUSD.a",
+   "tf": "30m",
+   "side": "buy",
+   "playbook": "breakout_retest",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "breakout_retest",
+    "label": "BREAKOUT RETEST",
+    "side": "buy",
+    "symbol": "EURUSD.a",
+    "tf": "30m",
+    "entry": 1.11421,
+    "stop": 1.11296,
+    "tp1": 1.11546,
+    "tp2": 1.11671,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 66,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 0.00125,
+    "atr_at_signal": 0.0008327,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "broke 1.11 and retested it successfully",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "break bar 2.1x average range",
+      "weight": 10,
+      "kind": "event"
+     },
+     {
+      "text": "retest held (85/100)",
+      "weight": 14,
+      "kind": "event"
+     },
+     {
+      "text": "regime is DOWNTREND - breaks tend to run",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.05 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "two-sided setup - conviction reduced",
+      "weight": -6,
+      "kind": "conflict"
+     }
+    ],
+    "against": [
+     "an opposing FLAG CONTINUATION sell was also detected (confidence 64 vs 72)"
+    ],
+    "invalidation": "back inside 1.11 turns this into a false break",
+    "expiry_bars": 15,
+    "created_ms": 1794112810077,
+    "bar_time_ms": 1793998800000,
+    "bar_idx": 598,
+    "id": "EURUSD.a:30m:breakout_retest:buy:1793998800000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1793998800000,
+   "expires_ms": 1794027600000,
+   "created_ms": 1794112810077,
+   "updated_ms": 1794112811712,
+   "history": [
+    [
+     1794112810077,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794112811712,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "ATR 83 pts is under 176 - less than 4x the 44 pt round trip",
+    "confidence": 42,
+    "net_rr2": 1.18,
+    "at_ms": 1794112810306
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1793998800000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 82,
+    "volatility": "normal",
+    "mtf_score": -100,
+    "mtf_direction": "down",
+    "atr": 0.0008327,
+    "session": "sydney",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.89,
+     "pull_atr": 0.71
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 42,
+    "at_ms": 1794112810306,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "volatility",
+      "BLOCK",
+      0
+     ],
+     [
+      "session",
+      "WARN",
+      10
+     ],
+     [
+      "mtf",
+      "BLOCK",
+      0
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "reward",
+      "WARN",
+      8
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
+  },
+  "EURUSD.a:1h:breakout_retest:sell:1793995200000": {
+   "id": "EURUSD.a:1h:breakout_retest:sell:1793995200000",
+   "symbol": "EURUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "playbook": "breakout_retest",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "breakout_retest",
+    "label": "BREAKOUT RETEST",
+    "side": "sell",
+    "symbol": "EURUSD.a",
+    "tf": "1h",
+    "entry": 1.11422,
+    "stop": 1.11609,
+    "tp1": 1.11235,
+    "tp2": 1.11049,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 73,
+    "rr1": 1.0,
+    "rr2": 1.99,
+    "risk_points": 0.00187,
+    "atr_at_signal": 0.0012445,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "broke 1.12 and retested it successfully",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "break bar 1.1x average range",
+      "weight": 10,
+      "kind": "event"
+     },
+     {
+      "text": "retest held (94/100)",
+      "weight": 14,
+      "kind": "event"
+     },
+     {
+      "text": "break not yet past the false-break window",
+      "weight": -10,
+      "kind": "event"
+     },
+     {
+      "text": "regime is DOWNTREND - breaks tend to run",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "higher timeframes agree (-100)",
+      "weight": 12,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.13 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [
+     "the break is younger than the false-break window"
+    ],
+    "invalidation": "back inside 1.12 turns this into a false break",
+    "expiry_bars": 15,
+    "created_ms": 1794112811334,
+    "bar_time_ms": 1793995200000,
+    "bar_idx": 598,
+    "id": "EURUSD.a:1h:breakout_retest:sell:1793995200000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1793995200000,
+   "expires_ms": 1794052800000,
+   "created_ms": 1794112811334,
+   "updated_ms": 1794112811854,
+   "history": [
+    [
+     1794112811334,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794112811854,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "ATR 124 pts is under 176 - less than 4x the 44 pt round trip",
+    "confidence": 57,
+    "net_rr2": 1.39,
+    "at_ms": 1794112811467
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1793995200000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 70,
+    "volatility": "normal",
+    "mtf_score": -100,
+    "mtf_direction": "down",
+    "atr": 0.0012445,
+    "session": "newyork",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 1.94,
+     "pull_atr": 0.48
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 57,
+    "at_ms": 1794112811467,
+    "gates": [
+     [
+      "spread",
+      "WARN",
+      6
+     ],
+     [
+      "volatility",
+      "BLOCK",
+      0
+     ],
+     [
+      "session",
+      "WARN",
+      10
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "daily",
+      "WARN",
+      0
+     ]
+    ]
+   }
   }
  },
- "saved_ms": 1794016800496
+ "saved_ms": 1794112811854
 }
