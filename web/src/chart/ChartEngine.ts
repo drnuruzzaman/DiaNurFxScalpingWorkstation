@@ -26,6 +26,10 @@ import type {
 } from './types'
 import { findRanges, type RangeBox } from './ranges'
 import { findSwings, structureBreaks, type HBreak, type HSwing } from './structure'
+import {
+  TOOL_POINTS, hitTest, loadDrawings, moveHandle, newId, newPosition, renderDrawing, saveDrawings,
+  type DPoint, type DrawHost, type Drawing, type ToolId,
+} from './drawings'
 
 export type ChartTheme = {
   bg: string
@@ -345,7 +349,7 @@ export class ChartEngine {
   /** Set when the timeframe changes; consumed by the next setBars(). */
   private resetOnNextBars = false
 
-  private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true, legRead: true }
+  private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true, legRead: true, drawBar: true }
   /** Signals on this chart the leg gate BLOCKED, marked when legRead is on. */
   private legBlocked: Signal[] = []
   private news: NewsMark[] = []
@@ -450,6 +454,27 @@ export class ChartEngine {
   onViewChange: ((v: Viewport) => void) | null = null
   /** Fired when the view approaches the oldest bar we hold. */
   onNeedHistory: (() => void) | null = null
+
+  // --- your drawings (drawings.ts, 2026-11-12) ------------------------ //
+  private drawScope = 'live'
+  private drawSymbol = ''
+  private drawList: Drawing[] = []
+  private drawTool: ToolId | null = null
+  /** The drawing being placed, click by click. Its last point follows the mouse. */
+  private draft: Drawing | null = null
+  /** Set when this press created the draft: releasing it far away places the next point (drag to draw). */
+  private draftByPress = false
+  /** A finished measurement; the next click clears it, as TradingView does. */
+  private measure: Drawing | null = null
+  private selectedId: string | null = null
+  private editing: { kind: 'handle' | 'body'; idx: number; x: number; y: number; orig: Drawing } | null = null
+  private downAt: { x: number; y: number } | null = null
+  private mouseDown = false
+  private drawFlags = { magnet: false, locked: false, hidden: false }
+  /** The toolbar's view of the drawing state: the tool in use, the selection, how many. */
+  onDrawState: ((s: { tool: ToolId | null; selected: string | null; count: number; drawing: Drawing | null }) => void) | null = null
+  /** Ask the page for a text (new text drawing, or editing one). null = cancelled. */
+  onTextRequest: ((req: { x: number; y: number; text: string; done: (text: string | null) => void }) => void) | null = null
 
   constructor(base: HTMLCanvasElement, top: HTMLCanvasElement, overlays: Overlays) {
     this.base = base
@@ -1062,11 +1087,15 @@ export class ChartEngine {
     if (this.layoutOpts.positions) this.drawPositions()
     if (this.cursorT != null) this.drawFuture()
     if (this.forecast) this.drawForecast()
+    this.drawUserDrawings()
 
     this.drawSubPanes()
     this.drawPriceAxis()
     this.drawTimeAxis()
     this.drawLastPrice()
+    // The selected / in-progress drawing lives on the top layer; it has to
+    // follow a pan, zoom or new bar too.
+    if (this.selectedId || this.draft || this.measure) this.scheduleTop()
   }
 
   /**
@@ -3367,6 +3396,13 @@ export class ChartEngine {
   private drawTop() {
     const ctx = this.tctx
     ctx.clearRect(0, 0, this.width, this.height)
+    if (this.bars.length && (this.selectedId || this.draft || this.measure)) {
+      const host = this.drawHost()
+      const sel = this.drawFlags.hidden ? null : this.drawList.find((d) => d.id === this.selectedId)
+      if (sel) renderDrawing(ctx, sel, host, true)
+      if (this.draft) renderDrawing(ctx, this.draft, host, true)
+      if (this.measure) renderDrawing(ctx, this.measure, host)
+    }
     const h = this.hover
     if (!h) return
     ctx.save()
@@ -3454,8 +3490,9 @@ export class ChartEngine {
       this.scheduleBase()
       this.onViewChange?.(this.getViewport())
     }
-    if (!this.dragging) {
-      this.top.style.cursor = this.onPriceAxis(x) ? 'ns-resize' : 'crosshair'
+    const drawn = this.drawMove(x, y)
+    if (!this.dragging && !drawn) {
+      this.top.style.cursor = this.onPriceAxis(x) ? 'ns-resize' : this.drawCursor(x, y)
     }
     const bi = Math.round(this.barAt(x))
     const bar = bi >= 0 && bi < this.bars.length ? this.bars[bi] : null
@@ -3489,6 +3526,10 @@ export class ChartEngine {
     const r = this.top.getBoundingClientRect()
     const x = e.clientX - r.left
     const y = e.clientY - r.top
+    if (e.button === 0) {
+      this.mouseDown = true
+      if (!this.onPriceAxis(x) && y < this.pane.y + this.pane.h && this.drawDown(x, y)) return
+    }
     this.dragging = true
     this.dragMode = this.onPriceAxis(x) ? 'scale' : 'pan'
     this.dragStartX = x
@@ -3499,7 +3540,9 @@ export class ChartEngine {
     this.top.style.cursor = this.dragMode === 'scale' ? 'ns-resize' : 'grabbing'
   }
 
-  private onUp = () => {
+  private onUp = (e: MouseEvent) => {
+    this.mouseDown = false
+    this.drawUp(e)
     this.dragging = false
     this.top.style.cursor = 'crosshair'
   }
@@ -3510,7 +3553,12 @@ export class ChartEngine {
    * chart. It used to work only over the price axis, which is a thin target
    * and had to be advertised with a permanent badge to be discoverable.
    */
-  private onDouble = () => {
+  private onDouble = (e: MouseEvent) => {
+    // On a text drawing: edit it. While drawing: nothing (a double click is
+    // two placement clicks, not a request to reset the scale).
+    const r = this.top.getBoundingClientRect()
+    if (this.editText(e.clientX - r.left, e.clientY - r.top)) return
+    if (this.draft || this.drawTool) return
     this.resetPriceScale()
   }
 
@@ -3535,6 +3583,7 @@ export class ChartEngine {
     this.top.addEventListener('mousedown', this.onDown)
     this.top.addEventListener('dblclick', this.onDouble)
     window.addEventListener('mouseup', this.onUp)
+    window.addEventListener('keydown', this.onKey)
     this.top.addEventListener('wheel', this.onWheel, { passive: false })
   }
 
@@ -3544,6 +3593,315 @@ export class ChartEngine {
     this.top.removeEventListener('mousedown', this.onDown)
     this.top.removeEventListener('dblclick', this.onDouble)
     window.removeEventListener('mouseup', this.onUp)
+    window.removeEventListener('keydown', this.onKey)
     this.top.removeEventListener('wheel', this.onWheel)
+  }
+
+  // ------------------------------------------------------------------ //
+  // your drawings - the engine side (drawings.ts does the geometry)    //
+  // ------------------------------------------------------------------ //
+  /** Which symbol's drawings to show; live and lab keep separate sets. */
+  setDrawingKey(scope: string, symbol: string) {
+    if (scope === this.drawScope && symbol === this.drawSymbol) return
+    this.drawScope = scope
+    this.drawSymbol = symbol
+    this.drawList = loadDrawings(scope, symbol)
+    this.draft = null; this.measure = null; this.selectedId = null; this.editing = null
+    this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  /** The toolbar picked a tool (null = the cursor). */
+  setDrawTool(tool: ToolId | null) {
+    this.drawTool = tool
+    this.draft = null; this.measure = null; this.selectedId = null; this.editing = null
+    this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  setDrawFlags(f: Partial<{ magnet: boolean; locked: boolean; hidden: boolean }>) {
+    Object.assign(this.drawFlags, f)
+    if (this.drawFlags.locked || this.drawFlags.hidden) { this.selectedId = null; this.editing = null }
+    this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  deleteSelectedDrawing() {
+    if (!this.selectedId) return
+    this.drawList = this.drawList.filter((d) => d.id !== this.selectedId)
+    this.selectedId = null; this.editing = null
+    this.persistDrawings(); this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  clearDrawings() {
+    this.drawList = []
+    this.draft = null; this.measure = null; this.selectedId = null; this.editing = null
+    this.persistDrawings(); this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  private persistDrawings() { saveDrawings(this.drawScope, this.drawSymbol, this.drawList) }
+
+  private emitDraw() {
+    this.onDrawState?.({ tool: this.drawTool, selected: this.selectedId, count: this.drawList.length,
+      drawing: this.drawList.find((d) => d.id === this.selectedId) ?? null })
+  }
+
+  /** The selection bar changed the selected drawing's colour, width or line style. */
+  styleSelectedDrawing(patch: Partial<Pick<Drawing, 'color' | 'width' | 'dash'>>) {
+    if (!this.selectedId) return
+    this.drawList = this.drawList.map((d) => (d.id === this.selectedId ? { ...d, ...patch } : d))
+    this.persistDrawings(); this.emitDraw(); this.scheduleTop()
+  }
+
+  /** One bar's length: the timeframe when known, else the last bar gap. */
+  private barStep(): number {
+    if (this.tfMs > 0) return this.tfMs
+    const n = this.bars.length
+    return n > 1 ? Math.max(1, this.bars[n - 1].t - this.bars[n - 2].t) : 60_000
+  }
+
+  /** xOfTime, but extrapolated before the first bar too (drawings older than the history held). */
+  private xOfTimeFree(t: number): number {
+    if (this.bars.length && t < this.bars[0].t) return this.xOf((t - this.bars[0].t) / this.barStep())
+    return this.xOfTime(t)
+  }
+
+  /** x pixel -> time, the inverse of xOfTimeFree. */
+  private timeAtX(x: number): number {
+    const n = this.bars.length
+    if (!n) return 0
+    const fi = this.barAt(x)
+    const step = this.barStep()
+    if (fi <= 0) return this.bars[0].t + fi * step
+    if (fi >= n - 1) return this.bars[n - 1].t + (fi - (n - 1)) * step
+    const lo = Math.floor(fi)
+    return this.bars[lo].t + (fi - lo) * (this.bars[lo + 1].t - this.bars[lo].t)
+  }
+
+  private drawHost(): DrawHost {
+    return {
+      x: (t) => this.xOfTimeFree(t),
+      y: (p) => this.yOf(p),
+      t: (x) => this.timeAtX(x),
+      p: (y) => this.priceAt(y),
+      pane: this.pane,
+      theme: this.theme,
+      digits: this.digits,
+      pips: (d) => this.pips(d),
+      cash: (d) => this.cash(d),
+      barsBetween: (t0, t1) => Math.round(Math.abs(this.barAt(this.xOfTimeFree(t1)) - this.barAt(this.xOfTimeFree(t0)))),
+      font: NUM_FONT,
+    }
+  }
+
+  /**
+   * Mouse -> (time, price). Time snaps to the bar under the cursor (or the
+   * bar slot beyond the last one); with the magnet on, price snaps to that
+   * bar's nearest open / high / low / close.
+   */
+  private snapPoint(x: number, y: number): DPoint {
+    const n = this.bars.length
+    const fi = Math.round(this.barAt(x))
+    const yy = Math.max(this.pane.y, Math.min(this.pane.y + this.pane.h, y))
+    let p = this.priceAt(yy)
+    if (fi >= 0 && fi < n) {
+      const b = this.bars[fi]
+      if (this.drawFlags.magnet) {
+        p = [b.o, b.h, b.l, b.c].reduce((a, v) => (Math.abs(v - p) < Math.abs(a - p) ? v : a), b.c)
+      }
+      return { t: b.t, p }
+    }
+    return { t: this.timeAtX(this.xOf(fi)), p }
+  }
+
+  private commitDrawing(d: Drawing) {
+    this.drawList = [...this.drawList, d]
+    this.draft = null
+    this.selectedId = d.id
+    this.drawTool = null
+    this.persistDrawings(); this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  /** Fix the draft's moving point; finish when it has all its points. */
+  private placeDraftPoint(q: DPoint) {
+    const d = this.draft
+    if (!d) return
+    d.points[d.points.length - 1] = q
+    if (d.points.length >= TOOL_POINTS[d.tool]) {
+      if (d.tool === 'ruler') {
+        this.measure = d; this.draft = null; this.drawTool = null
+        this.emitDraw(); this.scheduleTop()
+        return
+      }
+      this.commitDrawing(d)
+      return
+    }
+    d.points.push({ ...q })
+    this.scheduleTop()
+  }
+
+  /** Average bar range near `i` - the default stop distance of a new position. */
+  private typicalRange(i: number): number {
+    const n = this.bars.length
+    const to = Math.max(1, Math.min(n, i + 1)), from = Math.max(0, to - 14)
+    let s = 0
+    for (let k = from; k < to; k++) s += this.bars[k].h - this.bars[k].l
+    const avg = to > from ? s / (to - from) : (this.priceMax - this.priceMin) * 0.03
+    return avg > 0 ? avg : (this.priceMax - this.priceMin) * 0.03
+  }
+
+  /** A press on the chart. true = the drawings took it (no pan). */
+  private drawDown(x: number, y: number): boolean {
+    this.downAt = { x, y }
+    this.draftByPress = false
+    if (this.measure && !this.draft) {
+      this.measure = null
+      this.scheduleTop()
+      if (!this.drawTool) return true
+    }
+    const tool = this.drawTool
+    if (tool) {
+      const q = this.snapPoint(x, y)
+      if (this.draft) { this.placeDraftPoint(q); return true }
+      if (tool === 'brush') {
+        this.draft = { id: newId(), tool, points: [{ t: this.timeAtX(x), p: this.priceAt(y) }] }
+        return true
+      }
+      if (tool === 'hline' || tool === 'vline') { this.commitDrawing({ id: newId(), tool, points: [q] }); return true }
+      if (tool === 'long' || tool === 'short') {
+        const fi = Math.round(this.barAt(x))
+        this.commitDrawing(newPosition(tool, q, this.typicalRange(fi) * 1.5, q.t + 30 * this.barStep()))
+        return true
+      }
+      if (tool === 'text') {
+        this.drawTool = null
+        this.emitDraw()
+        this.onTextRequest?.({ x, y, text: '', done: (text) => {
+          if (text && text.trim()) this.commitDrawing({ id: newId(), tool: 'text', points: [q], text })
+        } })
+        return true
+      }
+      this.draft = { id: newId(), tool, points: [q, { ...q }] }
+      this.draftByPress = true
+      this.scheduleTop()
+      return true
+    }
+    if (this.drawFlags.hidden || this.drawFlags.locked) return false
+    const host = this.drawHost()
+    for (let i = this.drawList.length - 1; i >= 0; i--) {
+      const d = this.drawList[i]
+      const hit = hitTest(this.tctx, d, host, x, y)
+      if (hit) {
+        this.selectedId = d.id
+        this.editing = { kind: hit.kind, idx: hit.kind === 'handle' ? hit.idx : -1, x, y,
+          orig: JSON.parse(JSON.stringify(d)) }
+        this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+        return true
+      }
+    }
+    if (this.selectedId) {
+      this.selectedId = null
+      this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+    }
+    return false
+  }
+
+  /** Mouse move for drawings. true = it handled the cursor. */
+  private drawMove(x: number, y: number): boolean {
+    if (this.draft) {
+      if (this.draft.tool === 'brush') {
+        if (this.mouseDown) {
+          const last = this.draft.points[this.draft.points.length - 1]
+          if (Math.hypot(this.xOfTimeFree(last.t) - x, this.yOf(last.p) - y) >= 3) {
+            this.draft.points.push({ t: this.timeAtX(x), p: this.priceAt(y) })
+          }
+        }
+      } else {
+        this.draft.points[this.draft.points.length - 1] = this.snapPoint(x, y)
+      }
+      this.top.style.cursor = 'crosshair'
+      this.scheduleTop()
+      return true
+    }
+    if (this.editing && this.mouseDown) {
+      const ed = this.editing
+      let d: Drawing
+      if (ed.kind === 'handle') {
+        d = moveHandle(ed.orig, ed.idx, this.snapPoint(x, y))
+      } else {
+        // Whole bars sideways, so every point stays on a candle.
+        const shift = Math.round((x - ed.x) / this.barW()) * this.barW()
+        const dy = y - ed.y
+        d = { ...ed.orig, points: ed.orig.points.map((q) => ({
+          t: this.timeAtX(this.xOfTimeFree(q.t) + shift), p: this.priceAt(this.yOf(q.p) + dy) })) }
+      }
+      this.drawList = this.drawList.map((o) => (o.id === d.id ? d : o))
+      this.top.style.cursor = ed.kind === 'handle' ? 'pointer' : 'move'
+      this.scheduleTop()
+      return true
+    }
+    return false
+  }
+
+  /** The cursor over the chart: a drawing under it shows it can be grabbed. */
+  private drawCursor(x: number, y: number): string {
+    if (this.drawTool || this.drawFlags.hidden || this.drawFlags.locked || !this.drawList.length) return 'crosshair'
+    const host = this.drawHost()
+    for (let i = this.drawList.length - 1; i >= 0; i--) {
+      const hit = hitTest(this.tctx, this.drawList[i], host, x, y)
+      if (hit) return hit.kind === 'handle' ? 'pointer' : 'move'
+    }
+    return 'crosshair'
+  }
+
+  private drawUp(e: MouseEvent) {
+    const r = this.top.getBoundingClientRect()
+    const x = e.clientX - r.left, y = e.clientY - r.top
+    if (this.draft?.tool === 'brush') {
+      const d = this.draft
+      if (d.points.length >= 2) this.commitDrawing(d)
+      else { this.draft = null; this.scheduleTop() }
+    } else if (this.draft && this.draftByPress && this.downAt &&
+               Math.hypot(x - this.downAt.x, y - this.downAt.y) > 6) {
+      // Pressed, dragged, released: the release places the next point.
+      this.placeDraftPoint(this.snapPoint(x, y))
+    }
+    this.draftByPress = false
+    if (this.editing) {
+      this.editing = null
+      this.persistDrawings()
+      this.scheduleBase(); this.scheduleTop()
+    }
+  }
+
+  private editText(x: number, y: number): boolean {
+    if (this.drawFlags.hidden || this.drawFlags.locked || this.drawTool) return false
+    const host = this.drawHost()
+    const d = [...this.drawList].reverse().find((o) => o.tool === 'text' && hitTest(this.tctx, o, host, x, y))
+    if (!d) return false
+    this.onTextRequest?.({ x, y, text: d.text ?? '', done: (text) => {
+      if (text == null) return
+      this.drawList = text.trim()
+        ? this.drawList.map((o) => (o.id === d.id ? { ...o, text } : o))
+        : this.drawList.filter((o) => o.id !== d.id)
+      this.persistDrawings(); this.scheduleBase(); this.scheduleTop()
+    } })
+    return true
+  }
+
+  private drawUserDrawings() {
+    if (this.drawFlags.hidden || !this.drawList.length) return
+    const host = this.drawHost()
+    for (const d of this.drawList) if (d.id !== this.selectedId) renderDrawing(this.bctx, d, host)
+  }
+
+  /** Escape cancels / deselects; Delete removes the selected drawing. */
+  private onKey = (e: KeyboardEvent) => {
+    const el = e.target as HTMLElement | null
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || el.isContentEditable)) return
+    if (e.key === 'Escape' && (this.draft || this.measure || this.drawTool || this.selectedId)) {
+      this.draft = null; this.measure = null; this.drawTool = null; this.selectedId = null; this.editing = null
+      this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+    } else if ((e.key === 'Delete' || e.key === 'Backspace') && this.selectedId) {
+      e.preventDefault()
+      this.deleteSelectedDrawing()
+    }
   }
 }

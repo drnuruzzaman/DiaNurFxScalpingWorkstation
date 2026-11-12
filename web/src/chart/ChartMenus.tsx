@@ -75,6 +75,7 @@ export const LAYOUT_ROWS: { key: keyof LayoutOpts; label: string; hint: string }
   { key: 'newsMarks', label: 'News marks', hint: 'high impact only' },
   { key: 'positions', label: 'Trade positions', hint: 'open entries' },
   { key: 'legRead', label: 'Leg read', hint: 'avoid-fade rules' },
+  { key: 'drawBar', label: 'Drawing', hint: 'drawing toolbar' },
 ]
 
 /** The Indicators dropdown. `children` adds sections above the footer. */

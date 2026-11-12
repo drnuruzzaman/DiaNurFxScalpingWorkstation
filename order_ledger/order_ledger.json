@@ -73899,7 +73899,561 @@
    "side": "sell",
    "kind": "limit",
    "lots": 0.01
+  },
+  "XAUUSD.a:3m:liquidity_sweep_breakout:sell:1794450780000": {
+   "id": "XAUUSD.a:3m:liquidity_sweep_breakout:sell:1794450780000",
+   "tag": "DNX 197dc405ae",
+   "state": "refused",
+   "attempts": 18,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3980.59,
+    "sl": 3989.33,
+    "tp": 3971.85,
+    "expiration_ms": 1794453120000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794451323561,
+     "sending",
+     ""
+    ],
+    [
+     1794451324130,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451355582,
+     "sending",
+     ""
+    ],
+    [
+     1794451355631,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451387206,
+     "sending",
+     ""
+    ],
+    [
+     1794451387279,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451419000,
+     "sending",
+     ""
+    ],
+    [
+     1794451419105,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451451339,
+     "sending",
+     ""
+    ],
+    [
+     1794451451409,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451481440,
+     "sending",
+     ""
+    ],
+    [
+     1794451481525,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451511476,
+     "sending",
+     ""
+    ],
+    [
+     1794451511533,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451542146,
+     "sending",
+     ""
+    ],
+    [
+     1794451542196,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451573155,
+     "sending",
+     ""
+    ],
+    [
+     1794451573199,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451603414,
+     "sending",
+     ""
+    ],
+    [
+     1794451603474,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451635168,
+     "sending",
+     ""
+    ],
+    [
+     1794451635247,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451665436,
+     "sending",
+     ""
+    ],
+    [
+     1794451665495,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451695507,
+     "sending",
+     ""
+    ],
+    [
+     1794451695557,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451725681,
+     "sending",
+     ""
+    ],
+    [
+     1794451725752,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451755881,
+     "sending",
+     ""
+    ],
+    [
+     1794451756041,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451786167,
+     "sending",
+     ""
+    ],
+    [
+     1794451786245,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451816804,
+     "sending",
+     ""
+    ],
+    [
+     1794451816850,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794451847426,
+     "sending",
+     ""
+    ],
+    [
+     1794451847498,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794451323561,
+   "updated_ms": 1794451847498,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1794453240000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1794453240000",
+   "tag": "DNX 72c4089a87",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3981.04,
+    "sl": 3984.86,
+    "tp": 3977.22,
+    "expiration_ms": 1794454500000
+   },
+   "ticket": 10172936,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794453311960,
+     "sending",
+     ""
+    ],
+    [
+     1794453312279,
+     "placed",
+     "limit ticket 10172936"
+    ],
+    [
+     1794453426538,
+     "reversed",
+     "opposite FINAL XAUUSD.a:1m:rejection_wick_reversal:buy:1794453360000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1794453311960,
+   "updated_ms": 1794453426538,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:false_break:sell:1794453300000": {
+   "id": "XAUUSD.a:5m:false_break:sell:1794453300000",
+   "tag": "DNX 4c04345270",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 3985.44,
+    "tp": 3970.42,
+    "expiration_ms": 0
+   },
+   "ticket": 10173019,
+   "position": 10173019,
+   "fill_price": 3978.07,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794453623048,
+     "sending",
+     ""
+    ],
+    [
+     1794453623454,
+     "placed",
+     "market ticket 10173019"
+    ],
+    [
+     1794453626010,
+     "filled",
+     "position 10173019"
+    ]
+   ],
+   "created_ms": 1794453623048,
+   "updated_ms": 1794453626010,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:false_break:sell:1794452040000": {
+   "id": "XAUUSD.a:3m:false_break:sell:1794452040000",
+   "tag": "DNX 0ad0f9ea47",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3979.67,
+    "sl": 3985.51,
+    "tp": 3973.83,
+    "expiration_ms": 1794454020000
+   },
+   "ticket": 10173032,
+   "position": 10173032,
+   "fill_price": 3979.74,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794453695491,
+     "sending",
+     ""
+    ],
+    [
+     1794453695829,
+     "placed",
+     "limit ticket 10173032"
+    ],
+    [
+     1794453908520,
+     "filled",
+     "position 10173032"
+    ]
+   ],
+   "created_ms": 1794453695491,
+   "updated_ms": 1794453908520,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000": {
+   "id": "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000",
+   "tag": "DNX d17de4a93b",
+   "state": "refused",
+   "attempts": 2,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3977.91,
+    "sl": 3980.11,
+    "tp": 3975.71,
+    "expiration_ms": 1794454560000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794453911256,
+     "sending",
+     ""
+    ],
+    [
+     1794453911301,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794453941721,
+     "sending",
+     ""
+    ],
+    [
+     1794453941794,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794453911256,
+   "updated_ms": 1794453941794,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:range_edge_fade:buy:1794454800000": {
+   "id": "XAUUSD.a:1m:range_edge_fade:buy:1794454800000",
+   "tag": "DNX 04add3dcaf",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3978.21,
+    "sl": 3975.72,
+    "tp": 3980.7,
+    "expiration_ms": 1794455460000
+   },
+   "ticket": 10173272,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794455172934,
+     "sending",
+     ""
+    ],
+    [
+     1794455173235,
+     "placed",
+     "limit ticket 10173272"
+    ],
+    [
+     1794455198373,
+     "cancelled",
+     "TP1 reached before the entry filled - the move already happened - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1794455172934,
+   "updated_ms": 1794455198373,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:false_break:buy:1794455160000": {
+   "id": "XAUUSD.a:1m:false_break:buy:1794455160000",
+   "tag": "DNX 3687384795",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3981.17,
+    "sl": 3976.28,
+    "tp": 3986.06,
+    "expiration_ms": 1794455820000
+   },
+   "ticket": 10173281,
+   "position": 10173281,
+   "fill_price": 3981.07,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794455223907,
+     "sending",
+     ""
+    ],
+    [
+     1794455224241,
+     "placed",
+     "limit ticket 10173281"
+    ],
+    [
+     1794455254452,
+     "filled",
+     "position 10173281"
+    ]
+   ],
+   "created_ms": 1794455223907,
+   "updated_ms": 1794455254452,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:false_break:buy:1794454020000": {
+   "id": "XAUUSD.a:3m:false_break:buy:1794454020000",
+   "tag": "DNX d380c9a115",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 3976.31,
+    "tp": 3987.57,
+    "expiration_ms": 0
+   },
+   "ticket": 10173287,
+   "position": 10173287,
+   "fill_price": 3981.33,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794455282544,
+     "sending",
+     ""
+    ],
+    [
+     1794455282909,
+     "placed",
+     "market ticket 10173287"
+    ],
+    [
+     1794455285690,
+     "filled",
+     "position 10173287"
+    ]
+   ],
+   "created_ms": 1794455282544,
+   "updated_ms": 1794455285690,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01
   }
  },
- "saved_ms": 1794449417699
+ "saved_ms": 1794455285690
 }

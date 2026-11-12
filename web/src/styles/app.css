@@ -354,6 +354,148 @@
   min-height: 0;
   background: var(--bg-base);
 }
+/* Chart + its left drawing toolbar (DrawToolbar.tsx, 2026-11-12). */
+.chart-shell {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+}
+.chart-shell > .chart-wrap { min-width: 0; }
+.draw-bar {
+  flex: 0 0 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--line);
+  z-index: 6;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.draw-btn {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-sm, 4px);
+  background: transparent;
+  color: var(--ink-mid);
+  cursor: pointer;
+}
+.draw-btn:hover { background: var(--bg-hover, rgba(255,255,255,0.06)); color: var(--ink-hi); }
+.draw-btn.on { color: var(--info); background: var(--bg-hover, rgba(255,255,255,0.08)); }
+.draw-btn.danger { color: var(--bear, #ff2d78); }
+.draw-btn:disabled { opacity: 0.35; cursor: default; }
+.draw-more {
+  position: absolute; right: 2px; bottom: 2px;
+  border-left: 4px solid transparent; border-bottom: 4px solid currentColor; opacity: 0.6;
+}
+.draw-sep { width: 20px; height: 1px; margin: 4px 0; background: var(--line); flex: 0 0 auto; }
+.draw-group { position: relative; }
+.draw-menu {
+  position: fixed;
+  margin-left: 32px;
+  margin-top: -30px;
+  min-width: 200px;
+  padding: 4px 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r, 6px);
+  box-shadow: 0 16px 40px #000b;
+  z-index: 30;
+}
+.draw-menu-h { padding: 5px 12px 3px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-low); }
+.draw-menu-item {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+  padding: 5px 12px; border: 0; background: none; color: var(--ink-mid);
+  font-size: 12px; text-align: left; cursor: pointer;
+}
+.draw-menu-item:hover, .draw-menu-item.on { background: var(--bg-hover, rgba(255,255,255,0.06)); color: var(--ink-hi); }
+/* The bar over a selected drawing (SelectionBar in DrawToolbar.tsx). */
+.sel-bar {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 4px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px #0009;
+}
+.sel-item { position: relative; }
+.sel-btn {
+  position: relative;
+  height: 28px;
+  min-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 5px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-mid);
+  font: 600 11px var(--mono, monospace);
+  cursor: pointer;
+}
+.sel-btn:hover, .sel-btn.on { background: var(--bg-hover); color: var(--ink-hi); }
+.sel-swatch-bar { position: absolute; left: 6px; right: 6px; bottom: 3px; height: 3px; border-radius: 2px; }
+.sel-pop {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  min-width: 110px;
+  padding: 4px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  box-shadow: 0 12px 30px #000b;
+  z-index: 10;
+}
+.sel-swatches { display: grid; grid-template-columns: repeat(6, 18px); gap: 5px; min-width: 0; }
+.sel-swatch { width: 18px; height: 18px; border-radius: 3px; border: 1px solid #0006; cursor: pointer; }
+.sel-swatch.on { outline: 2px solid var(--ink-hi); outline-offset: 1px; }
+.sel-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--ink-mid);
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.sel-row:hover, .sel-row.on { background: var(--bg-hover); color: var(--ink-hi); }
+.draw-text-input {
+  position: absolute;
+  z-index: 8;
+  width: 220px;
+  min-height: 34px;
+  padding: 4px 6px;
+  font: 600 12px ui-sans-serif, system-ui;
+  color: var(--ink-hi);
+  background: var(--bg-panel);
+  border: 1px solid var(--info);
+  border-radius: 4px;
+  outline: none;
+  resize: both;
+}
 .chart-wrap canvas {
   position: absolute;
   inset: 0;

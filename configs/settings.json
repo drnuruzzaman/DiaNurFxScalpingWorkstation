@@ -20,7 +20,9 @@
    "2h",
    "4h",
    "1d",
-   "5m"
+   "5m",
+   "3m",
+   "1m"
   ],
   "auto": true,
   "max_per_symbol_tf": 5,
@@ -32,7 +34,7 @@
   ]
  },
  "gates": {
-  "min_confidence": 51,
+  "min_confidence": 50,
   "max_spread_points": 45.0,
   "min_atr_cost_multiple": 4.0,
   "max_atr_percentile": 97.0,

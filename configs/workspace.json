@@ -4,7 +4,7 @@
    {
     "id": "tmwah4mth",
     "symbol": "XAUUSD.a",
-    "tf": "5m"
+    "tf": "3m"
    }
   ],
   "dianur.activeTab": "tmwah4mth",
@@ -36,7 +36,8 @@
    "grid": false,
    "newsMarks": false,
    "positions": false,
-   "legRead": false
+   "legRead": false,
+   "drawBar": true
   },
   "dianur.mtfSources": null,
   "dianur.hideFigures": 1,
@@ -56,7 +57,7 @@
    "right": true,
    "bottom": true
   },
-  "dianur.dockTab": "orders",
+  "dianur.dockTab": "signals",
   "dianur.boardSort": {
    "key": "tf",
    "dir": 1
@@ -441,5 +442,5 @@
   "dianur.lab.dockH": 374,
   "dianur.lab.cone": false
  },
- "saved_ms": 1794450893947
+ "saved_ms": 1794453797343
 }

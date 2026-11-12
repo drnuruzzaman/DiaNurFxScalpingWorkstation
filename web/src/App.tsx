@@ -1112,7 +1112,7 @@ export default function App() {
             <ChartPane
               bars={bars} snapshot={snap} signal={overlays.signal && showsLevels(selected) ? selected : null}
               overlays={overlays} digits={digits} money={money}
-              onNeedHistory={loadOlderBars} status={chartStatus}
+              onNeedHistory={loadOlderBars} status={chartStatus} drawScope="live" drawSymbol={symbol}
               watermark="DIANURFX" watermarkStyle="brand"
               onEngine={(e) => { chartEngine.current = e }}
               chartKey={presetKey} preferredSpan={null}

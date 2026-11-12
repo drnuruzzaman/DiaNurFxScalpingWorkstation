@@ -614,7 +614,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
                 bars={shownBars} snapshot={frame?.snapshot ?? null}
                 signal={overlays.signal && showsLevels(shownSignal) ? shownSignal : null}
                 overlays={overlays} digits={digits} money={money}
-                onEngine={(e) => { engine.current = e }}
+                onEngine={(e) => { engine.current = e }} drawScope="lab" drawSymbol={session?.cfg.symbol}
                 tfMs={0} layout={layout} news={[]} positions={[]}
                 legBlocked={legBlocked} trades={marks}
                 cursorT={reveal && cur ? cur.t : null}

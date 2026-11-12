@@ -320,6 +320,8 @@ export type LayoutOpts = {
   positions: boolean
   /** The leg in progress and the avoid-fade rules, as the gate sees them. */
   legRead: boolean
+  /** The drawing toolbar on the chart's left (DrawToolbar.tsx). */
+  drawBar: boolean
 }
 
 export const DEFAULT_LAYOUT: LayoutOpts = {
@@ -327,6 +329,7 @@ export const DEFAULT_LAYOUT: LayoutOpts = {
   newsMarks: true,
   positions: true,
   legRead: true,
+  drawBar: true,
 }
 
 /**

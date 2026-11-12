@@ -1215,148 +1215,6 @@
     ]
    }
   },
-  "XAUUSD.a:15m:pattern_break:buy:1793828700000": {
-   "id": "XAUUSD.a:15m:pattern_break:buy:1793828700000",
-   "symbol": "XAUUSD.a",
-   "tf": "15m",
-   "side": "buy",
-   "playbook": "pattern_break",
-   "stage": "EXPIRED",
-   "signal": {
-    "playbook": "pattern_break",
-    "label": "PATTERN BREAK",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "15m",
-    "entry": 4059.97,
-    "stop": 4026.5,
-    "tp1": 4093.44,
-    "tp2": 4126.92,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 81,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 33.47,
-    "atr_at_signal": 6.1842,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Triple Bottom (confirmed), quality 88/100",
-      "weight": 20,
-      "kind": "pattern"
-     },
-     {
-      "text": "peaks within 0.28 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "depth 3.3 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     },
-     {
-      "text": "FLAG CONTINUATION agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "an opposing PATTERN BREAK sell was also detected (confidence 57 vs 81)"
-    ],
-    "invalidation": "Triple Bottom fails on a close beyond 4027.73",
-    "expiry_bars": 20,
-    "created_ms": 1793833261036,
-    "bar_time_ms": 1793828700000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:15m:pattern_break:buy:1793828700000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793828700000,
-   "expires_ms": 1793847600000,
-   "created_ms": 1793833261037,
-   "updated_ms": 1793847602083,
-   "history": [
-    [
-     1793833261037,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847602083,
-     "EXPIRED",
-     "expired before it was sent"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 35.20% today - daily loss limit reached",
-    "confidence": 67,
-    "net_rr2": 1.99,
-    "at_ms": 1793847601439
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793828700000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 44,
-    "volatility": "very_low",
-    "mtf_score": 7,
-    "mtf_direction": null,
-    "atr": 6.1842,
-    "session": "sydney",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 1.54,
-     "pull_atr": 0.31
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 65,
-    "at_ms": 1793833261157,
-    "gates": [
-     [
-      "session",
-      "WARN",
-      10
-     ],
-     [
-      "mtf",
-      "WARN",
-      6
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
   "XAUUSD.a:30m:pattern_break:buy:1793827800000": {
    "id": "XAUUSD.a:30m:pattern_break:buy:1793827800000",
    "symbol": "XAUUSD.a",
@@ -2216,2763 +2074,6 @@
     ]
    }
   },
-  "XAUUSD.a:5m:flag_continuation:buy:1793844900000": {
-   "id": "XAUUSD.a:5m:flag_continuation:buy:1793844900000",
-   "symbol": "XAUUSD.a",
-   "tf": "5m",
-   "side": "buy",
-   "playbook": "flag_continuation",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "flag_continuation",
-    "label": "FLAG CONTINUATION",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "5m",
-    "entry": 4138.0,
-    "stop": 4120.89,
-    "tp1": 4155.11,
-    "tp2": 4172.85,
-    "entry_type": "stop",
-    "trigger": 4138.0,
-    "confidence": 72,
-    "rr1": 1.0,
-    "rr2": 2.04,
-    "risk_points": 17.11,
-    "atr_at_signal": 8.4151,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Bull Flag with a pole 4.1 ATR in 4 bars",
-      "weight": 20,
-      "kind": "pattern"
-     },
-     {
-      "text": "flag retraces 36% of pole",
-      "weight": 10,
-      "kind": "pattern"
-     },
-     {
-      "text": "UPTREND - continuation is the base case",
-      "weight": 14,
-      "kind": "regime"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "an opposing PATTERN BREAK sell was also detected (confidence 58 vs 72)"
-    ],
-    "invalidation": "losing 4122.57 breaks the flag",
-    "expiry_bars": 16,
-    "created_ms": 1793845222379,
-    "bar_time_ms": 1793844900000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:5m:flag_continuation:buy:1793844900000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793844900000,
-   "expires_ms": 1793850000000,
-   "created_ms": 1793845222379,
-   "updated_ms": 1793847638117,
-   "history": [
-    [
-     1793845222379,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847638117,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:5m:breakout_retest:sell:1793847300000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "resistance at 4138.64 (score 54) sits only 4% of the way to TP1",
-    "confidence": 72,
-    "net_rr2": 2.0,
-    "at_ms": 1793847577818
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793844900000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 100,
-    "volatility": "extreme",
-    "mtf_score": 65,
-    "mtf_direction": "up",
-    "atr": 8.4151,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 4.49,
-     "pull_atr": 1.25
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 64,
-    "at_ms": 1793845222487,
-    "gates": [
-     [
-      "volatility",
-      "WARN",
-      8
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:flag_continuation:sell:1793845920000": {
-   "id": "XAUUSD.a:1m:flag_continuation:sell:1793845920000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "flag_continuation",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "flag_continuation",
-    "label": "FLAG CONTINUATION",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4124.73,
-    "stop": 4128.38,
-    "tp1": 4121.08,
-    "tp2": 4117.15,
-    "entry_type": "stop",
-    "trigger": 4124.73,
-    "confidence": 60,
-    "rr1": 1.0,
-    "rr2": 2.08,
-    "risk_points": 3.65,
-    "atr_at_signal": 2.433,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Bear Flag with a pole 3.1 ATR in 3 bars",
-      "weight": 20,
-      "kind": "pattern"
-     },
-     {
-      "text": "flag retraces 33% of pole",
-      "weight": 10,
-      "kind": "pattern"
-     },
-     {
-      "text": "DOWNTREND - continuation is the base case",
-      "weight": 14,
-      "kind": "regime"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (1.32 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     },
-     {
-      "text": "two-sided setup - conviction reduced",
-      "weight": -12,
-      "kind": "conflict"
-     }
-    ],
-    "against": [
-     "an opposing MTF PULLBACK buy was also detected (confidence 70 vs 72)"
-    ],
-    "invalidation": "losing 4127.46 breaks the flag",
-    "expiry_bars": 16,
-    "created_ms": 1793845985093,
-    "bar_time_ms": 1793845920000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:flag_continuation:sell:1793845920000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793845920000,
-   "expires_ms": 1793846940000,
-   "created_ms": 1793845985093,
-   "updated_ms": 1793846220800,
-   "history": [
-    [
-     1793845985093,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846220800,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:buy:1793846160000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "continuation setup against higher timeframes (+86)",
-    "confidence": 48,
-    "net_rr2": 1.92,
-    "at_ms": 1793846208554
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793845920000,
-    "regime": "trend",
-    "regime_label": "DOWNTREND",
-    "regime_confidence": 41,
-    "volatility": "high",
-    "mtf_score": 77,
-    "mtf_direction": "up",
-    "atr": 2.433,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 1.76,
-     "pull_atr": 1.03
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 48,
-    "at_ms": 1793845985195,
-    "gates": [
-     [
-      "mtf",
-      "BLOCK",
-      0
-     ],
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "room",
-      "BLOCK",
-      0
-     ],
-     [
-      "regime",
-      "WARN",
-      12
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:3m:mtf_pullback:buy:1793845800000": {
-   "id": "EURUSD.a:3m:mtf_pullback:buy:1793845800000",
-   "symbol": "EURUSD.a",
-   "tf": "3m",
-   "side": "buy",
-   "playbook": "mtf_pullback",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "mtf_pullback",
-    "label": "MTF PULLBACK",
-    "side": "buy",
-    "symbol": "EURUSD.a",
-    "tf": "3m",
-    "entry": 1.12548,
-    "stop": 1.12491,
-    "tp1": 1.12605,
-    "tp2": 1.12661,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 66,
-    "rr1": 1.0,
-    "rr2": 1.98,
-    "risk_points": 0.00057,
-    "atr_at_signal": 0.0002442,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "higher timeframes strongly aligned up (+80)",
-      "weight": 22,
-      "kind": "mtf"
-     },
-     {
-      "text": "pullback into the normal (26% of the last leg)",
-      "weight": 10,
-      "kind": "fib"
-     },
-     {
-      "text": "level confluence at 1.13 (2 touches, score 66)",
-      "weight": 14,
-      "kind": "level"
-     }
-    ],
-    "against": [
-     "no reclaim confirmation on this timeframe yet",
-     "an opposing PATTERN BREAK sell was also detected (confidence 42 vs 66)"
-    ],
-    "invalidation": "close beyond 1.12 ends the pullback read",
-    "expiry_bars": 18,
-    "created_ms": 1793846004008,
-    "bar_time_ms": 1793845800000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:3m:mtf_pullback:buy:1793845800000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793845800000,
-   "expires_ms": 1793849220000,
-   "created_ms": 1793846004008,
-   "updated_ms": 1793846186598,
-   "history": [
-    [
-     1793846004008,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846186598,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:3m:pattern_break:sell:1793845980000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 24 pts is under 65 - less than 4x the 16 pt round trip",
-    "confidence": 46,
-    "net_rr2": 1.23,
-    "at_ms": 1793846149976
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793845800000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 41,
-    "volatility": "low",
-    "mtf_score": 80,
-    "mtf_direction": "up",
-    "atr": 0.0002442,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 2.33,
-     "pull_atr": 0.37
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 46,
-    "at_ms": 1793846004114,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "reward",
-      "WARN",
-      8
-     ],
-     [
-      "regime",
-      "WARN",
-      12
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:1m:sweep_reversal:buy:1793846040000": {
-   "id": "EURUSD.a:1m:sweep_reversal:buy:1793846040000",
-   "symbol": "EURUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "buy",
-    "symbol": "EURUSD.a",
-    "tf": "1m",
-    "entry": 1.12555,
-    "stop": 1.1252,
-    "tp1": 1.1259,
-    "tp2": 1.12626,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 92,
-    "rr1": 1.0,
-    "rr2": 2.03,
-    "risk_points": 0.00035,
-    "atr_at_signal": 0.0001129,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 1.13, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.53 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "took equal lows x2 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "higher timeframes agree (+69)",
-      "weight": 12,
-      "kind": "mtf"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [],
-    "invalidation": "a close beyond 1.13 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846107528,
-    "bar_time_ms": 1793846040000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:1m:sweep_reversal:buy:1793846040000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846040000,
-   "expires_ms": 1793846820000,
-   "created_ms": 1793846107528,
-   "updated_ms": 1793846221129,
-   "history": [
-    [
-     1793846107528,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846221129,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:1m:pattern_break:sell:1793846160000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 11 pts is under 65 - less than 4x the 16 pt round trip",
-    "confidence": 84,
-    "net_rr2": 0.96,
-    "at_ms": 1793846208589
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846040000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 50,
-    "volatility": "normal",
-    "mtf_score": 69,
-    "mtf_direction": "up",
-    "atr": 0.0001129,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 5.05,
-     "pull_atr": 0.18
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 84,
-    "at_ms": 1793846107638,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "reward",
-      "WARN",
-      8
-     ],
-     [
-      "room",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:3m:pattern_break:sell:1793845980000": {
-   "id": "XAUUSD.a:3m:pattern_break:sell:1793845980000",
-   "symbol": "XAUUSD.a",
-   "tf": "3m",
-   "side": "sell",
-   "playbook": "pattern_break",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "pattern_break",
-    "label": "PATTERN BREAK",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "3m",
-    "entry": 4122.57,
-    "stop": 4140.53,
-    "tp1": 4104.61,
-    "tp2": 4086.65,
-    "entry_type": "stop",
-    "trigger": 4122.57,
-    "confidence": 42,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 17.96,
-    "atr_at_signal": 5.6195,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Double Top (forming), quality 58/100",
-      "weight": 12,
-      "kind": "pattern"
-     },
-     {
-      "text": "peaks within 0.52 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "depth 2.5 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "against higher-timeframe direction",
-      "weight": -10,
-      "kind": "mtf"
-     }
-    ],
-    "against": [
-     "pattern points against the higher-timeframe lean (+100)",
-     "the break level has not traded yet - this is a pending order"
-    ],
-    "invalidation": "Double Top fails on a close beyond 4139.40",
-    "expiry_bars": 20,
-    "created_ms": 1793846162125,
-    "bar_time_ms": 1793845980000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:3m:pattern_break:sell:1793845980000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793845980000,
-   "expires_ms": 1793849760000,
-   "created_ms": 1793846162125,
-   "updated_ms": 1793846344444,
-   "history": [
-    [
-     1793846162125,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846344444,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:3m:mtf_pullback:buy:1793846160000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 33.73% today - daily loss limit reached",
-    "confidence": 28,
-    "net_rr2": 1.97,
-    "at_ms": 1793846307860
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793845980000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 69,
-    "volatility": "high",
-    "mtf_score": 100,
-    "mtf_direction": "up",
-    "atr": 5.6195,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 2.4,
-     "pull_atr": 0.5
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 28,
-    "at_ms": 1793846162235,
-    "gates": [
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:3m:pattern_break:sell:1793845980000": {
-   "id": "EURUSD.a:3m:pattern_break:sell:1793845980000",
-   "symbol": "EURUSD.a",
-   "tf": "3m",
-   "side": "sell",
-   "playbook": "pattern_break",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "pattern_break",
-    "label": "PATTERN BREAK",
-    "side": "sell",
-    "symbol": "EURUSD.a",
-    "tf": "3m",
-    "entry": 1.12538,
-    "stop": 1.12588,
-    "tp1": 1.12488,
-    "tp2": 1.12453,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 42,
-    "rr1": 1.0,
-    "rr2": 1.7,
-    "risk_points": 0.0005,
-    "atr_at_signal": 0.0002418,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Head & Shoulders (confirmed), quality 56/100",
-      "weight": 12,
-      "kind": "pattern"
-     },
-     {
-      "text": "shoulder symmetry 0%",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "head depth 5.0 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "against higher-timeframe direction",
-      "weight": -10,
-      "kind": "mtf"
-     }
-    ],
-    "against": [
-     "pattern points against the higher-timeframe lean (+80)"
-    ],
-    "invalidation": "Head & Shoulders fails on a close beyond 1.13",
-    "expiry_bars": 20,
-    "created_ms": 1793846186598,
-    "bar_time_ms": 1793845980000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:3m:pattern_break:sell:1793845980000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793845980000,
-   "expires_ms": 1793849760000,
-   "created_ms": 1793846186598,
-   "updated_ms": 1793847607687,
-   "history": [
-    [
-     1793846186598,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847607687,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:3m:pattern_break:buy:1793847420000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 24 pts is under 61 - less than 4x the 15 pt round trip",
-    "confidence": 20,
-    "net_rr2": 0.98,
-    "at_ms": 1793847571090
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793845980000,
-    "regime": "squeeze",
-    "regime_label": "SQUEEZE",
-    "regime_confidence": 51,
-    "volatility": "low",
-    "mtf_score": 80,
-    "mtf_direction": "up",
-    "atr": 0.0002418,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 2.44,
-     "pull_atr": 0.87
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 20,
-    "at_ms": 1793846186712,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "reward",
-      "WARN",
-      8
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:buy:1793846160000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793846160000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4127.45,
-    "stop": 4123.64,
-    "tp1": 4131.26,
-    "tp2": 4132.24,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 90,
-    "rr1": 1.0,
-    "rr2": 1.26,
-    "risk_points": 3.81,
-    "atr_at_signal": 2.5379,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4124.98, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.17 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "rejection wick at 4124.60 (72/100)",
-      "weight": 12,
-      "kind": "event"
-     },
-     {
-      "text": "took equal lows x3 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "higher timeframes agree (+86)",
-      "weight": 12,
-      "kind": "mtf"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (1.45 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "an opposing PATTERN BREAK sell was also detected (confidence 50 vs 90)"
-    ],
-    "invalidation": "a close beyond 4124.54 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846220800,
-    "bar_time_ms": 1793846160000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:buy:1793846160000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846160000,
-   "expires_ms": 1793846940000,
-   "created_ms": 1793846220800,
-   "updated_ms": 1793846283206,
-   "history": [
-    [
-     1793846220800,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846283206,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:sell:1793846220000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "resistance at 4128.96 (score 54) sits only 40% of the way to TP1",
-    "confidence": 90,
-    "net_rr2": 1.15,
-    "at_ms": 1793846270619
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846160000,
-    "regime": "range",
-    "regime_label": "RANGE",
-    "regime_confidence": 44,
-    "volatility": "high",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 2.5379,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 1.74,
-     "pull_atr": 0.57
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 90,
-    "at_ms": 1793846220907,
-    "gates": [
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:1m:pattern_break:sell:1793846160000": {
-   "id": "EURUSD.a:1m:pattern_break:sell:1793846160000",
-   "symbol": "EURUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "pattern_break",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "pattern_break",
-    "label": "PATTERN BREAK",
-    "side": "sell",
-    "symbol": "EURUSD.a",
-    "tf": "1m",
-    "entry": 1.12538,
-    "stop": 1.1257,
-    "tp1": 1.12506,
-    "tp2": 1.12491,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 42,
-    "rr1": 1.0,
-    "rr2": 1.47,
-    "risk_points": 0.00032,
-    "atr_at_signal": 0.000122,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Double Top (confirmed), quality 55/100",
-      "weight": 12,
-      "kind": "pattern"
-     },
-     {
-      "text": "peaks within 0.66 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "depth 2.9 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "against higher-timeframe direction",
-      "weight": -10,
-      "kind": "mtf"
-     }
-    ],
-    "against": [
-     "pattern points against the higher-timeframe lean (+63)"
-    ],
-    "invalidation": "Double Top fails on a close beyond 1.13",
-    "expiry_bars": 20,
-    "created_ms": 1793846221129,
-    "bar_time_ms": 1793846160000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:1m:pattern_break:sell:1793846160000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846160000,
-   "expires_ms": 1793847420000,
-   "created_ms": 1793846221129,
-   "updated_ms": 1793846346417,
-   "history": [
-    [
-     1793846221129,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846346417,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:1m:sweep_reversal:buy:1793846280000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 12 pts is under 61 - less than 4x the 15 pt round trip",
-    "confidence": 20,
-    "net_rr2": 0.57,
-    "at_ms": 1793846333763
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846160000,
-    "regime": "range",
-    "regime_label": "RANGE",
-    "regime_confidence": 51,
-    "volatility": "high",
-    "mtf_score": 63,
-    "mtf_direction": "up",
-    "atr": 0.000122,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 2.54,
-     "pull_atr": 0.82
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 20,
-    "at_ms": 1793846221231,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "reward",
-      "WARN",
-      8
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:sell:1793846220000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:sell:1793846220000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4124.18,
-    "stop": 4129.72,
-    "tp1": 4118.64,
-    "tp2": 4100.28,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 87,
-    "rr1": 1.0,
-    "rr2": 4.31,
-    "risk_points": 5.54,
-    "atr_at_signal": 2.7331,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4127.46, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.53 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "took equal highs x2 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "higher timeframes lean the other way (+77)"
-    ],
-    "invalidation": "a close beyond 4128.90 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846283206,
-    "bar_time_ms": 1793846220000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:sell:1793846220000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846220000,
-   "expires_ms": 1793847000000,
-   "created_ms": 1793846283206,
-   "updated_ms": 1793846407829,
-   "history": [
-    [
-     1793846283206,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846407829,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:pattern_break:buy:1793846340000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "fades the up impulse while 1h is trending up too - lost in all three years tested",
-    "confidence": 73,
-    "net_rr2": 4.15,
-    "at_ms": 1793846395453
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846220000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 37,
-    "volatility": "high",
-    "mtf_score": 77,
-    "mtf_direction": "up",
-    "atr": 2.7331,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 2.36,
-     "pull_atr": 0.63
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 73,
-    "at_ms": 1793846283321,
-    "gates": [
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:3m:mtf_pullback:buy:1793846160000": {
-   "id": "XAUUSD.a:3m:mtf_pullback:buy:1793846160000",
-   "symbol": "XAUUSD.a",
-   "tf": "3m",
-   "side": "buy",
-   "playbook": "mtf_pullback",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "mtf_pullback",
-    "label": "MTF PULLBACK",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "3m",
-    "entry": 4126.56,
-    "stop": 4118.1,
-    "tp1": 4135.02,
-    "tp2": 4143.48,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 60,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 8.46,
-    "atr_at_signal": 5.6395,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "higher timeframes strongly aligned up (+100)",
-      "weight": 22,
-      "kind": "mtf"
-     },
-     {
-      "text": "pullback into the normal (24% of the last leg)",
-      "weight": 10,
-      "kind": "fib"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (1.06 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     }
-    ],
-    "against": [
-     "no reclaim confirmation on this timeframe yet",
-     "an opposing PATTERN BREAK sell was also detected (confidence 42 vs 60)"
-    ],
-    "invalidation": "close beyond 4122.57 ends the pullback read",
-    "expiry_bars": 18,
-    "created_ms": 1793846344444,
-    "bar_time_ms": 1793846160000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:3m:mtf_pullback:buy:1793846160000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846160000,
-   "expires_ms": 1793849580000,
-   "created_ms": 1793846344444,
-   "updated_ms": 1793847438074,
-   "history": [
-    [
-     1793846344444,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847438074,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:3m:breakout_retest:sell:1793847240000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 33.83% today - daily loss limit reached",
-    "confidence": 60,
-    "net_rr2": 1.96,
-    "at_ms": 1793847401605
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846160000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 58,
-    "volatility": "high",
-    "mtf_score": 100,
-    "mtf_direction": "up",
-    "atr": 5.6395,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 2.76,
-     "pull_atr": 0.73
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 60,
-    "at_ms": 1793846344553,
-    "gates": [
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:1m:sweep_reversal:buy:1793846280000": {
-   "id": "EURUSD.a:1m:sweep_reversal:buy:1793846280000",
-   "symbol": "EURUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "buy",
-    "symbol": "EURUSD.a",
-    "tf": "1m",
-    "entry": 1.12537,
-    "stop": 1.1252,
-    "tp1": 1.12554,
-    "tp2": 1.12558,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 82,
-    "rr1": 1.0,
-    "rr2": 1.24,
-    "risk_points": 0.00017,
-    "atr_at_signal": 0.0001162,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 1.13, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.09 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "rejection wick at 1.13 (75/100)",
-      "weight": 12,
-      "kind": "event"
-     },
-     {
-      "text": "took equal lows x3 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "higher timeframes agree (+69)",
-      "weight": 12,
-      "kind": "mtf"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (1.07 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     }
-    ],
-    "against": [
-     "an opposing PATTERN BREAK sell was also detected (confidence 42 vs 82)"
-    ],
-    "invalidation": "a close beyond 1.13 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846346416,
-    "bar_time_ms": 1793846280000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:1m:sweep_reversal:buy:1793846280000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846280000,
-   "expires_ms": 1793847060000,
-   "created_ms": 1793846346417,
-   "updated_ms": 1793846822364,
-   "history": [
-    [
-     1793846346417,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846822364,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:1m:sweep_reversal:sell:1793846760000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 12 pts is under 65 - less than 4x the 16 pt round trip",
-    "confidence": 82,
-    "net_rr2": 0.05,
-    "at_ms": 1793846809895
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846280000,
-    "regime": "range",
-    "regime_label": "RANGE",
-    "regime_confidence": 45,
-    "volatility": "normal",
-    "mtf_score": 69,
-    "mtf_direction": "up",
-    "atr": 0.0001162,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 2.67,
-     "pull_atr": 0.77
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 82,
-    "at_ms": 1793846346525,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "reward",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:pattern_break:buy:1793846340000": {
-   "id": "XAUUSD.a:1m:pattern_break:buy:1793846340000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "pattern_break",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "pattern_break",
-    "label": "PATTERN BREAK",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4129.02,
-    "stop": 4121.22,
-    "tp1": 4136.82,
-    "tp2": 4144.62,
-    "entry_type": "stop",
-    "trigger": 4129.02,
-    "confidence": 54,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 7.8,
-    "atr_at_signal": 2.7556,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Triple Bottom (forming), quality 84/100",
-      "weight": 20,
-      "kind": "pattern"
-     },
-     {
-      "text": "peaks within 0.09 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "depth 1.6 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "higher timeframes agree (+77)",
-      "weight": 12,
-      "kind": "mtf"
-     },
-     {
-      "text": "two-sided setup - conviction reduced",
-      "weight": -9,
-      "kind": "conflict"
-     }
-    ],
-    "against": [
-     "the break level has not traded yet - this is a pending order",
-     "an opposing PATTERN BREAK sell was also detected (confidence 58 vs 63)"
-    ],
-    "invalidation": "Triple Bottom fails on a close beyond 4121.77",
-    "expiry_bars": 20,
-    "created_ms": 1793846407828,
-    "bar_time_ms": 1793846340000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:pattern_break:buy:1793846340000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846340000,
-   "expires_ms": 1793847600000,
-   "created_ms": 1793846407829,
-   "updated_ms": 1793846582092,
-   "history": [
-    [
-     1793846407829,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846582092,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:sell:1793846520000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "flip at 4132.12 (score 74) sits only 40% of the way to TP1",
-    "confidence": 54,
-    "net_rr2": 1.94,
-    "at_ms": 1793846569774
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846340000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 60,
-    "volatility": "high",
-    "mtf_score": 77,
-    "mtf_direction": "up",
-    "atr": 2.7556,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 2.36,
-     "pull_atr": 0.26
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 54,
-    "at_ms": 1793846407951,
-    "gates": [
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:sell:1793846520000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:sell:1793846520000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4131.41,
-    "stop": 4135.71,
-    "tp1": 4127.11,
-    "tp2": 4122.52,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 65,
-    "rr1": 1.0,
-    "rr2": 2.07,
-    "risk_points": 4.3,
-    "atr_at_signal": 2.8662,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4131.92, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.19 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "took equal highs x2 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (0.67 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     },
-     {
-      "text": "two-sided setup - conviction reduced",
-      "weight": -6,
-      "kind": "conflict"
-     }
-    ],
-    "against": [
-     "higher timeframes lean the other way (+86)",
-     "an opposing PATTERN BREAK buy was also detected (confidence 63 vs 71)"
-    ],
-    "invalidation": "a close beyond 4132.46 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846582092,
-    "bar_time_ms": 1793846520000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:sell:1793846520000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846520000,
-   "expires_ms": 1793847300000,
-   "created_ms": 1793846582092,
-   "updated_ms": 1793846705826,
-   "history": [
-    [
-     1793846582092,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846705826,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:buy:1793846640000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "fades the up leg 0.5 ATR off its extreme - a spot that lost in all three years tested",
-    "confidence": 51,
-    "net_rr2": 1.94,
-    "at_ms": 1793846693400
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846520000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 66,
-    "volatility": "high",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 2.8662,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 3.61,
-     "pull_atr": 0.48
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 43,
-    "at_ms": 1793846582195,
-    "gates": [
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "room",
-      "WARN",
-      8
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:buy:1793846640000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:buy:1793846640000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4133.81,
-    "stop": 4125.67,
-    "tp1": 4141.95,
-    "tp2": 4150.08,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 71,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 8.14,
-    "atr_at_signal": 2.8524,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4127.66, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.40 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "higher timeframes agree (+86)",
-      "weight": 12,
-      "kind": "mtf"
-     }
-    ],
-    "against": [],
-    "invalidation": "a close beyond 4126.53 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846705826,
-    "bar_time_ms": 1793846640000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:buy:1793846640000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846640000,
-   "expires_ms": 1793847420000,
-   "created_ms": 1793846705826,
-   "updated_ms": 1793846941843,
-   "history": [
-    [
-     1793846705826,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846941843,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:sell:1793846880000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 36.24% today - daily loss limit reached",
-    "confidence": 71,
-    "net_rr2": 1.95,
-    "at_ms": 1793846929514
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846640000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 36,
-    "volatility": "high",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 2.8524,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 4.09,
-     "pull_atr": 0.11
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 71,
-    "at_ms": 1793846705933,
-    "gates": [
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:1m:sweep_reversal:sell:1793846760000": {
-   "id": "EURUSD.a:1m:sweep_reversal:sell:1793846760000",
-   "symbol": "EURUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "sell",
-    "symbol": "EURUSD.a",
-    "tf": "1m",
-    "entry": 1.12543,
-    "stop": 1.12559,
-    "tp1": 1.12527,
-    "tp2": 1.1251,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 79,
-    "rr1": 1.0,
-    "rr2": 2.06,
-    "risk_points": 0.00016,
-    "atr_at_signal": 0.0001084,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 1.13, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.18 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "rejection wick at 1.13 (57/100)",
-      "weight": 12,
-      "kind": "event"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (0.76 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "higher timeframes lean the other way (+69)",
-     "an opposing PATTERN BREAK buy was also detected (confidence 59 vs 79)"
-    ],
-    "invalidation": "a close beyond 1.13 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846822364,
-    "bar_time_ms": 1793846760000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:1m:sweep_reversal:sell:1793846760000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846760000,
-   "expires_ms": 1793847540000,
-   "created_ms": 1793846822364,
-   "updated_ms": 1793846884324,
-   "history": [
-    [
-     1793846822364,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793846884324,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:1m:sweep_reversal:buy:1793846820000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 11 pts is under 61 - less than 4x the 15 pt round trip",
-    "confidence": 65,
-    "net_rr2": 0.43,
-    "at_ms": 1793846871976
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846760000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 42,
-    "volatility": "normal",
-    "mtf_score": 69,
-    "mtf_direction": "up",
-    "atr": 0.0001084,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 2.21,
-     "pull_atr": 0.55
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 65,
-    "at_ms": 1793846822471,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "reward",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "EURUSD.a:1m:sweep_reversal:buy:1793846820000": {
-   "id": "EURUSD.a:1m:sweep_reversal:buy:1793846820000",
-   "symbol": "EURUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "buy",
-    "symbol": "EURUSD.a",
-    "tf": "1m",
-    "entry": 1.12549,
-    "stop": 1.12523,
-    "tp1": 1.12575,
-    "tp2": 1.12601,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 84,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 0.00026,
-    "atr_at_signal": 0.0001056,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 1.13, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.28 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "took equal lows x2 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "higher timeframes agree (+69)",
-      "weight": 12,
-      "kind": "mtf"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "an opposing PATTERN BREAK sell was also detected (confidence 50 vs 84)"
-    ],
-    "invalidation": "a close beyond 1.13 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846884323,
-    "bar_time_ms": 1793846820000,
-    "bar_idx": 598,
-    "id": "EURUSD.a:1m:sweep_reversal:buy:1793846820000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846820000,
-   "expires_ms": 1793847600000,
-   "created_ms": 1793846884324,
-   "updated_ms": 1793847360939,
-   "history": [
-    [
-     1793846884324,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847360939,
-     "REVERSED",
-     "opposite FINAL signal EURUSD.a:1m:sweep_reversal:sell:1793847300000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "ATR 11 pts is under 37 - less than 4x the 9 pt round trip",
-    "confidence": 76,
-    "net_rr2": 1.04,
-    "at_ms": 1793847348628
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846820000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 54,
-    "volatility": "normal",
-    "mtf_score": 69,
-    "mtf_direction": "up",
-    "atr": 0.0001056,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 2.37,
-     "pull_atr": 0.09
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 76,
-    "at_ms": 1793846884422,
-    "gates": [
-     [
-      "volatility",
-      "BLOCK",
-      0
-     ],
-     [
-      "reward",
-      "WARN",
-      8
-     ],
-     [
-      "room",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:sell:1793846880000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:sell:1793846880000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4134.56,
-    "stop": 4140.0,
-    "tp1": 4129.12,
-    "tp2": 4122.52,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 76,
-    "rr1": 1.0,
-    "rr2": 2.21,
-    "risk_points": 5.44,
-    "atr_at_signal": 3.0444,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4138.00, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.36 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "rejection wick at 4137.74 (67/100)",
-      "weight": 12,
-      "kind": "event"
-     },
-     {
-      "text": "took equal highs x2 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     }
-    ],
-    "against": [
-     "higher timeframes lean the other way (+86)",
-     "an opposing PATTERN BREAK buy was also detected (confidence 59 vs 76)"
-    ],
-    "invalidation": "a close beyond 4139.09 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793846941843,
-    "bar_time_ms": 1793846880000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:sell:1793846880000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846880000,
-   "expires_ms": 1793847660000,
-   "created_ms": 1793846941843,
-   "updated_ms": 1793847005598,
-   "history": [
-    [
-     1793846941843,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847005598,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:pattern_break:buy:1793846940000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 37.34% today - daily loss limit reached",
-    "confidence": 50,
-    "net_rr2": 2.1,
-    "at_ms": 1793846993024
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846880000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 42,
-    "volatility": "high",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 3.0444,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 1.74,
-     "pull_atr": 0.2
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 62,
-    "at_ms": 1793846941954,
-    "gates": [
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:pattern_break:buy:1793846940000": {
-   "id": "XAUUSD.a:1m:pattern_break:buy:1793846940000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "pattern_break",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "pattern_break",
-    "label": "PATTERN BREAK",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4137.17,
-    "stop": 4123.28,
-    "tp1": 4151.06,
-    "tp2": 4164.95,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 59,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 13.89,
-    "atr_at_signal": 3.2198,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "Triple Bottom (confirmed), quality 52/100",
-      "weight": 12,
-      "kind": "pattern"
-     },
-     {
-      "text": "peaks within 0.83 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "depth 1.9 ATR",
-      "weight": 5,
-      "kind": "pattern"
-     },
-     {
-      "text": "higher timeframes agree (+86)",
-      "weight": 12,
-      "kind": "mtf"
-     }
-    ],
-    "against": [],
-    "invalidation": "Triple Bottom fails on a close beyond 4123.93",
-    "expiry_bars": 20,
-    "created_ms": 1793847005598,
-    "bar_time_ms": 1793846940000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:pattern_break:buy:1793846940000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793846940000,
-   "expires_ms": 1793848200000,
-   "created_ms": 1793847005598,
-   "updated_ms": 1793847067549,
-   "history": [
-    [
-     1793847005598,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847067549,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:sell:1793847000000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 36.61% today - daily loss limit reached",
-    "confidence": 59,
-    "net_rr2": 1.97,
-    "at_ms": 1793847055179
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793846940000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 34,
-    "volatility": "high",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 3.2198,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 2.2,
-     "pull_atr": 1.55
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 59,
-    "at_ms": 1793847005706,
-    "gates": [
-     [
-      "room",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:sell:1793847000000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:sell:1793847000000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4134.85,
-    "stop": 4140.24,
-    "tp1": 4129.46,
-    "tp2": 4122.52,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 76,
-    "rr1": 1.0,
-    "rr2": 2.29,
-    "risk_points": 5.39,
-    "atr_at_signal": 3.2427,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4138.00, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.39 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "rejection wick at 4137.74 (67/100)",
-      "weight": 12,
-      "kind": "event"
-     },
-     {
-      "text": "took unswept swing HH - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     }
-    ],
-    "against": [
-     "higher timeframes lean the other way (+86)",
-     "an opposing PATTERN BREAK buy was also detected (confidence 59 vs 76)"
-    ],
-    "invalidation": "a close beyond 4139.27 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793847067548,
-    "bar_time_ms": 1793847000000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:sell:1793847000000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793847000000,
-   "expires_ms": 1793847780000,
-   "created_ms": 1793847067549,
-   "updated_ms": 1793847242356,
-   "history": [
-    [
-     1793847067549,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847242356,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:mtf_pullback:buy:1793847180000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
-    "confidence": 50,
-    "net_rr2": 2.2,
-    "at_ms": 1793847230037
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793847000000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 44,
-    "volatility": "high",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 3.2427,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 1.54,
-     "pull_atr": 0.72
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 62,
-    "at_ms": 1793847067654,
-    "gates": [
-     [
-      "mtf",
-      "WARN",
-      14
-     ],
-     [
-      "leg",
-      "BLOCK",
-      0
-     ],
-     [
-      "room",
-      "BLOCK",
-      0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:mtf_pullback:buy:1793847180000": {
-   "id": "XAUUSD.a:1m:mtf_pullback:buy:1793847180000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "buy",
-   "playbook": "mtf_pullback",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "mtf_pullback",
-    "label": "MTF PULLBACK",
-    "side": "buy",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4135.17,
-    "stop": 4130.32,
-    "tp1": 4140.02,
-    "tp2": 4144.88,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 79,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 4.85,
-    "atr_at_signal": 3.2363,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "higher timeframes strongly aligned up (+92)",
-      "weight": 22,
-      "kind": "mtf"
-     },
-     {
-      "text": "pullback into the normal (24% of the last leg)",
-      "weight": 10,
-      "kind": "fib"
-     },
-     {
-      "text": "level confluence at 4124.82 (5 touches, score 96)",
-      "weight": 14,
-      "kind": "level"
-     },
-     {
-      "text": "hidden divergence supports continuation",
-      "weight": 10,
-      "kind": "momentum"
-     },
-     {
-      "text": "stop widened to the 1.5 ATR noise floor (1.27 ATR was inside normal fluctuation)",
-      "weight": -4,
-      "kind": "risk"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "no reclaim confirmation on this timeframe yet"
-    ],
-    "invalidation": "close beyond 4132.18 ends the pullback read",
-    "expiry_bars": 18,
-    "created_ms": 1793847242356,
-    "bar_time_ms": 1793847180000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:mtf_pullback:buy:1793847180000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793847180000,
-   "expires_ms": 1793848320000,
-   "created_ms": 1793847242356,
-   "updated_ms": 1793847418846,
-   "history": [
-    [
-     1793847242356,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847418846,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:sell:1793847360000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 33.91% today - daily loss limit reached",
-    "confidence": 67,
-    "net_rr2": 1.93,
-    "at_ms": 1793847406559
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793847180000,
-    "regime": "trend",
-    "regime_label": "UPTREND",
-    "regime_confidence": 38,
-    "volatility": "high",
-    "mtf_score": 92,
-    "mtf_direction": "up",
-    "atr": 3.2363,
-    "session": "tokyo",
-    "leg": {
-     "dir": 1,
-     "ext_atr": 1.66,
-     "pull_atr": 0.73
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 67,
-    "at_ms": 1793847242458,
-    "gates": [
-     [
-      "regime",
-      "WARN",
-      12
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
   "EURUSD.a:1m:sweep_reversal:sell:1793847300000": {
    "id": "EURUSD.a:1m:sweep_reversal:sell:1793847300000",
    "symbol": "EURUSD.a",
@@ -5111,144 +2212,6 @@
       "room",
       "BLOCK",
       0
-     ],
-     [
-      "daily",
-      "BLOCK",
-      0
-     ]
-    ]
-   }
-  },
-  "XAUUSD.a:1m:sweep_reversal:sell:1793847360000": {
-   "id": "XAUUSD.a:1m:sweep_reversal:sell:1793847360000",
-   "symbol": "XAUUSD.a",
-   "tf": "1m",
-   "side": "sell",
-   "playbook": "sweep_reversal",
-   "stage": "REVERSED",
-   "signal": {
-    "playbook": "sweep_reversal",
-    "label": "SWEEP REVERSAL",
-    "side": "sell",
-    "symbol": "XAUUSD.a",
-    "tf": "1m",
-    "entry": 4127.11,
-    "stop": 4136.52,
-    "tp1": 4117.69,
-    "tp2": 4108.28,
-    "entry_type": "market",
-    "trigger": 0.0,
-    "confidence": 84,
-    "rr1": 1.0,
-    "rr2": 2.0,
-    "risk_points": 9.41,
-    "atr_at_signal": 3.318,
-    "exit_plan": {
-     "mode": "trail",
-     "arm_r": 1.0,
-     "lock_r": 0.75,
-     "trail_atr": 1.0
-    },
-    "evidence": [
-     {
-      "text": "confirmed sweep of 4132.56, reclaimed and held",
-      "weight": 24,
-      "kind": "liquidity"
-     },
-     {
-      "text": "penetrated 0.90 ATR beyond the level",
-      "weight": 8,
-      "kind": "liquidity"
-     },
-     {
-      "text": "structure changed character after the sweep",
-      "weight": 16,
-      "kind": "structure"
-     },
-     {
-      "text": "rejection wick at 4137.67 (78/100)",
-      "weight": 12,
-      "kind": "event"
-     },
-     {
-      "text": "took equal highs x2 - a genuine stop pocket",
-      "weight": 12,
-      "kind": "liquidity"
-     },
-     {
-      "text": "PATTERN BREAK agrees on the same side",
-      "weight": 8,
-      "kind": "confluence"
-     }
-    ],
-    "against": [
-     "higher timeframes lean the other way (+86)",
-     "an opposing PATTERN BREAK buy was also detected (confidence 71 vs 84)"
-    ],
-    "invalidation": "a close beyond 4135.53 means the sweep failed",
-    "expiry_bars": 12,
-    "created_ms": 1793847418846,
-    "bar_time_ms": 1793847360000,
-    "bar_idx": 598,
-    "id": "XAUUSD.a:1m:sweep_reversal:sell:1793847360000",
-    "qualified": false,
-    "status": "detected",
-    "stage": "",
-    "gates": [],
-    "sizing": {},
-    "reason": ""
-   },
-   "final_bar_ms": 1793847360000,
-   "expires_ms": 1793848140000,
-   "created_ms": 1793847418846,
-   "updated_ms": 1793847606874,
-   "history": [
-    [
-     1793847418846,
-     "FINAL",
-     "bar closed with the setup intact"
-    ],
-    [
-     1793847606874,
-     "REVERSED",
-     "opposite FINAL signal XAUUSD.a:1m:sweep_reversal:buy:1793847540000"
-    ]
-   ],
-   "qual": {
-    "status": "rejected",
-    "reason": "down 35.17% today - daily loss limit reached",
-    "confidence": 70,
-    "net_rr2": 1.95,
-    "at_ms": 1793847594686
-   },
-   "trail": {},
-   "reverse": null,
-   "entry_context": {
-    "bar_ms": 1793847360000,
-    "regime": "transition",
-    "regime_label": "TRANSITION",
-    "regime_confidence": 66,
-    "volatility": "extreme",
-    "mtf_score": 86,
-    "mtf_direction": "up",
-    "atr": 3.318,
-    "session": "tokyo",
-    "leg": {
-     "dir": -1,
-     "ext_atr": 3.53,
-     "pull_atr": 0.38
-    }
-   },
-   "first_qual": {
-    "status": "rejected",
-    "confidence": 70,
-    "at_ms": 1793847418956,
-    "gates": [
-     [
-      "mtf",
-      "WARN",
-      14
      ],
      [
       "daily",
@@ -260527,7 +257490,7 @@
    "final_bar_ms": 1794261600000,
    "expires_ms": 1795384800000,
    "created_ms": 1794351675672,
-   "updated_ms": 1794450542243,
+   "updated_ms": 1794451301723,
    "history": [
     [
      1794351675672,
@@ -260540,7 +257503,7 @@
     "reason": "support at 3944.08 (score 66) sits only 52% of the way to TP1",
     "confidence": 37,
     "net_rr2": 2.0,
-    "at_ms": 1794450910760
+    "at_ms": 1794455910514
    },
    "trail": {},
    "reverse": null,
@@ -260597,7 +257560,7 @@
      ]
     ]
    },
-   "note": "not sent: rejected - support at 3944.08 (score 67) sits only 52% of the way to TP1"
+   "note": "not sent: no fresh analysis - "
   },
   "XAUUSD.a:1m:three_candle_reversal:buy:1794351720000": {
    "id": "XAUUSD.a:1m:three_candle_reversal:buy:1794351720000",
@@ -335305,7 +332268,7 @@
    "final_bar_ms": 1794405600000,
    "expires_ms": 1794592800000,
    "created_ms": 1794432144957,
-   "updated_ms": 1794450542772,
+   "updated_ms": 1794451302091,
    "history": [
     [
      1794432144957,
@@ -335318,7 +332281,7 @@
     "reason": "support at 3973.03 (score 57) sits only 38% of the way to TP1",
     "confidence": 46,
     "net_rr2": 1.99,
-    "at_ms": 1794450910166
+    "at_ms": 1794455909982
    },
    "trail": {},
    "reverse": null,
@@ -335355,7 +332318,7 @@
      ]
     ]
    },
-   "note": "not sent: rejected - support at 3973.03 (score 56) sits only 38% of the way to TP1"
+   "note": "not sent: no fresh analysis - "
   },
   "EURUSD.a:15m:trendline_breakout:sell:1794430800000": {
    "id": "EURUSD.a:15m:trendline_breakout:sell:1794430800000",
@@ -371264,7 +368227,7 @@
    "tf": "15m",
    "side": "sell",
    "playbook": "three_candle_reversal",
-   "stage": "FINAL",
+   "stage": "EXPIRED",
    "signal": {
     "playbook": "three_candle_reversal",
     "label": "THREE CANDLE REVERSAL",
@@ -371327,12 +368290,17 @@
    "final_bar_ms": 1794446100000,
    "expires_ms": 1794454200000,
    "created_ms": 1794447134565,
-   "updated_ms": 1794447141784,
+   "updated_ms": 1794454201147,
    "history": [
     [
      1794447134565,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794454201147,
+     "EXPIRED",
+     "expired before it was sent"
     ]
    ],
    "qual": {
@@ -375877,7 +372845,7 @@
    "final_bar_ms": 1794447000000,
    "expires_ms": 1794470400000,
    "created_ms": 1794450602046,
-   "updated_ms": 1794450605054,
+   "updated_ms": 1794456057610,
    "history": [
     [
      1794450602046,
@@ -375887,10 +372855,10 @@
    ],
    "qual": {
     "status": "watch",
-    "reason": "confidence 43 below the 51 floor after 2 warning(s)",
-    "confidence": 43,
-    "net_rr2": 1.96,
-    "at_ms": 1794450908255
+    "reason": "confidence 49 below the 50 floor after 1 warning(s)",
+    "confidence": 49,
+    "net_rr2": 1.97,
+    "at_ms": 1794456057207
    },
    "trail": {},
    "reverse": null,
@@ -375922,7 +372890,7 @@
      ]
     ]
    },
-   "note": "not sent: watch - confidence 49 below the 51 floor after 1 warning(s)"
+   "note": "not sent: watch - confidence 43 below the 50 floor after 2 warning(s)"
   },
   "XAUUSD.a:3m:false_break:sell:1794450420000": {
    "id": "XAUUSD.a:3m:false_break:sell:1794450420000",
@@ -376056,7 +373024,7 @@
    "tf": "5m",
    "side": "sell",
    "playbook": "false_break",
-   "stage": "FINAL",
+   "stage": "CANCELLED",
    "signal": {
     "playbook": "false_break",
     "label": "FALSE BREAK",
@@ -376124,20 +373092,25 @@
    "final_bar_ms": 1794450300000,
    "expires_ms": 1794453600000,
    "created_ms": 1794450604321,
-   "updated_ms": 1794450902737,
+   "updated_ms": 1794451123828,
    "history": [
     [
      1794450604321,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794451123828,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened"
     ]
    ],
    "qual": {
-    "status": "rejected",
-    "reason": "flip at 3983.27 (score 100) sits only 46% of the way to TP1",
+    "status": "qualified",
+    "reason": "1 warning(s), cleared",
     "confidence": 66,
     "net_rr2": 1.91,
-    "at_ms": 1794450970466
+    "at_ms": 1794451122485
    },
    "trail": {},
    "reverse": null,
@@ -376434,7 +373407,7 @@
    "tf": "1m",
    "side": "sell",
    "playbook": "squeeze_breakout",
-   "stage": "FINAL",
+   "stage": "CANCELLED",
    "signal": {
     "playbook": "squeeze_breakout",
     "label": "SQUEEZE BREAKOUT",
@@ -376497,20 +373470,25 @@
    "final_bar_ms": 1794450780000,
    "expires_ms": 1794451320000,
    "created_ms": 1794450841361,
-   "updated_ms": 1794450842827,
+   "updated_ms": 1794451117046,
    "history": [
     [
      1794450841361,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794451117046,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened"
     ]
    ],
    "qual": {
     "status": "qualified",
     "reason": "2 warning(s), cleared",
     "confidence": 59,
-    "net_rr2": 1.6,
-    "at_ms": 1794450966327
+    "net_rr2": 1.57,
+    "at_ms": 1794451103854
    },
    "trail": {},
    "reverse": null,
@@ -376560,7 +373538,7 @@
    "tf": "3m",
    "side": "sell",
    "playbook": "liquidity_sweep_breakout",
-   "stage": "FINAL",
+   "stage": "REVERSED",
    "signal": {
     "playbook": "liquidity_sweep_breakout",
     "label": "LIQUIDITY SWEEP BREAKOUT",
@@ -376633,20 +373611,25 @@
    "final_bar_ms": 1794450780000,
    "expires_ms": 1794453120000,
    "created_ms": 1794450969954,
-   "updated_ms": 1794450970578,
+   "updated_ms": 1794451862574,
    "history": [
     [
      1794450969954,
      "FINAL",
      "bar closed with the setup intact"
+    ],
+    [
+     1794451862574,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:3m:false_break:buy:1794451680000"
     ]
    ],
    "qual": {
     "status": "qualified",
     "reason": "2 warning(s), cleared",
-    "confidence": 73,
-    "net_rr2": 1.93,
-    "at_ms": 1794450970353
+    "confidence": 71,
+    "net_rr2": 1.95,
+    "at_ms": 1794451861157
    },
    "trail": {},
    "reverse": null,
@@ -376683,8 +373666,4771 @@
      ]
     ]
    },
-   "note": "waiting: 3m is not enabled for auto trading"
+   "note": "refused: MT5 rejected the request: (-2, 'Invalid \"comment\" argument')",
+   "retry_after_ms": 1794451877394
+  },
+  "XAUUSD.a:1m:false_break:sell:1794451080000": {
+   "id": "XAUUSD.a:1m:false_break:sell:1794451080000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "false_break",
+   "stage": "CANCELLED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3979.72,
+    "stop": 3982.87,
+    "tp1": 3976.57,
+    "tp2": 3973.41,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 59,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 3.15,
+    "atr_at_signal": 2.0445,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the resistance 3980.11 (score 79): 2 closes above it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "momentum turned with the fade (-46)",
+      "weight": 8,
+      "kind": "momentum"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3982.26 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794451142564,
+    "bar_time_ms": 1794451080000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:sell:1794451080000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794451080000,
+   "expires_ms": 1794451740000,
+   "created_ms": 1794451142570,
+   "updated_ms": 1794451230357,
+   "history": [
+    [
+     1794451142570,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794451230357,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened"
+    ]
+   ],
+   "qual": {
+    "status": "qualified",
+    "reason": "1 warning(s), cleared",
+    "confidence": 53,
+    "net_rr2": 1.82,
+    "at_ms": 1794451217773
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794451080000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 40,
+    "volatility": "high",
+    "mtf_score": 13,
+    "mtf_direction": null,
+    "atr": 2.0445,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 5.14,
+     "pull_atr": 0.2
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 53,
+    "at_ms": 1794451142952,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "waiting: 1m is not enabled for auto trading"
+  },
+  "XAUUSD.a:5m:hz_support_breakdown:sell:1794450900000": {
+   "id": "XAUUSD.a:5m:hz_support_breakdown:sell:1794450900000",
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "playbook": "hz_support_breakdown",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "hz_support_breakdown",
+    "label": "HORIZONTAL SUPPORT BREAKDOWN",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "entry": 3978.54,
+    "stop": 3989.75,
+    "tp1": 3967.33,
+    "tp2": 3956.12,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 54,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 11.21,
+    "atr_at_signal": 4.9201,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "two closes below flip 3987.29 (score 99, 6 touches)",
+      "weight": 24,
+      "kind": "structure"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close back above 3987.29",
+    "expiry_bars": 12,
+    "created_ms": 1794451211583,
+    "bar_time_ms": 1794450900000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:5m:hz_support_breakdown:sell:1794450900000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794450900000,
+   "expires_ms": 1794454800000,
+   "created_ms": 1794451211585,
+   "updated_ms": 1794451817689,
+   "history": [
+    [
+     1794451211585,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794451817689,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:5m:ob_reversal:buy:1794451500000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "support at 3978.53 (score 53) sits only 0% of the way to TP1",
+    "confidence": 36,
+    "net_rr2": 1.95,
+    "at_ms": 1794451757240
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794450900000,
+    "regime": "trend",
+    "regime_label": "UPTREND",
+    "regime_confidence": 36,
+    "volatility": "extreme",
+    "mtf_score": 3,
+    "mtf_direction": null,
+    "atr": 4.9201,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.58,
+     "pull_atr": 0.28
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 36,
+    "at_ms": 1794451211978,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 36 below the 51 floor after 2 warning(s)"
+  },
+  "XAUUSD.a:15m:bos_retest_pullback:sell:1794450600000": {
+   "id": "XAUUSD.a:15m:bos_retest_pullback:sell:1794450600000",
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "playbook": "bos_retest_pullback",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "bos_retest_pullback",
+    "label": "BOS RETEST PULLBACK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "entry": 3976.0,
+    "stop": 3987.2,
+    "tp1": 3964.8,
+    "tp2": 3953.61,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 62,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 11.2,
+    "atr_at_signal": 7.4635,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "BOS down 13 bars ago, retest of 3983.13 held",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.46 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "MA PULLBACK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close back through 3983.13",
+    "expiry_bars": 12,
+    "created_ms": 1794451509651,
+    "bar_time_ms": 1794450600000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:15m:bos_retest_pullback:sell:1794450600000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794450600000,
+   "expires_ms": 1794462300000,
+   "created_ms": 1794451509653,
+   "updated_ms": 1794452408818,
+   "history": [
+    [
+     1794451509653,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452408818,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:15m:ob_reversal:buy:1794451500000"
+    ]
+   ],
+   "qual": {
+    "status": "watch",
+    "reason": "confidence 44 below the 51 floor after 2 warning(s)",
+    "confidence": 44,
+    "net_rr2": 1.96,
+    "at_ms": 1794452262284
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794450600000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 80,
+    "volatility": "normal",
+    "mtf_score": -11,
+    "mtf_direction": null,
+    "atr": 7.4635,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.12,
+     "pull_atr": 0.27
+    }
+   },
+   "first_qual": {
+    "status": "watch",
+    "confidence": 44,
+    "at_ms": 1794451509978,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 44 below the 51 floor after 2 warning(s)"
+  },
+  "XAUUSD.a:1m:breakout_retest:buy:1794451500000": {
+   "id": "XAUUSD.a:1m:breakout_retest:buy:1794451500000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "breakout_retest",
+   "stage": "CANCELLED",
+   "signal": {
+    "playbook": "breakout_retest",
+    "label": "BREAKOUT RETEST",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3974.96,
+    "stop": 3971.89,
+    "tp1": 3978.03,
+    "tp2": 3981.1,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 58,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 3.07,
+    "atr_at_signal": 2.0472,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "broke 3974.13 on two closes and retested it",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "retest held (85/100)",
+      "weight": 14,
+      "kind": "event"
+     },
+     {
+      "text": "break bar 0.9x average range",
+      "weight": 4,
+      "kind": "event"
+     },
+     {
+      "text": "break against the DOWNTREND regime",
+      "weight": -12,
+      "kind": "regime"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.76 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [
+     "regime is DOWNTREND - the break is against it"
+    ],
+    "invalidation": "back inside 3974.13 turns this into a false break",
+    "expiry_bars": 15,
+    "created_ms": 1794451568037,
+    "bar_time_ms": 1794451500000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:breakout_retest:buy:1794451500000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794451500000,
+   "expires_ms": 1794452460000,
+   "created_ms": 1794451568044,
+   "updated_ms": 1794451655755,
+   "history": [
+    [
+     1794451568044,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794451655755,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades a down leg that has run 7.8 ATR - long legs are no likelier to turn, and this lost in all three years tested",
+    "confidence": 52,
+    "net_rr2": 1.83,
+    "at_ms": 1794451643244
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794451500000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 86,
+    "volatility": "high",
+    "mtf_score": 4,
+    "mtf_direction": null,
+    "atr": 2.0472,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 7.73,
+     "pull_atr": 0.47
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 52,
+    "at_ms": 1794451568362,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades a down leg that has run 7.8 ATR - long legs are no likelier to turn, and this lost in all three years tested"
+  },
+  "XAUUSD.a:1m:rejection_wick_reversal:sell:1794451620000": {
+   "id": "XAUUSD.a:1m:rejection_wick_reversal:sell:1794451620000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "rejection_wick_reversal",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "rejection_wick_reversal",
+    "label": "REJECTION WICK REVERSAL",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3976.91,
+    "stop": 3979.99,
+    "tp1": 3973.83,
+    "tp2": 3970.76,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 58,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 3.08,
+    "atr_at_signal": 2.0516,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "rejection wick 0.9 ATR long",
+      "weight": 18,
+      "kind": "event"
+     },
+     {
+      "text": "at resistance 3978.62 (score 68)",
+      "weight": 14,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.07 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close beyond the wick",
+    "expiry_bars": 8,
+    "created_ms": 1794451681272,
+    "bar_time_ms": 1794451620000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:rejection_wick_reversal:sell:1794451620000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794451620000,
+   "expires_ms": 1794452160000,
+   "created_ms": 1794451681274,
+   "updated_ms": 1794452162114,
+   "history": [
+    [
+     1794451681274,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452162114,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades an up leg that has run 4.2 ATR - long legs are no likelier to turn, and this lost in all three years tested",
+    "confidence": 40,
+    "net_rr2": 1.87,
+    "at_ms": 1794452156878
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794451620000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 84,
+    "volatility": "high",
+    "mtf_score": 4,
+    "mtf_direction": null,
+    "atr": 2.0516,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 2.29,
+     "pull_atr": 0.87
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 40,
+    "at_ms": 1794451681662,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades an up leg that has run 4.2 ATR - long legs are no likelier to turn, and this lost in all three years tested"
+  },
+  "XAUUSD.a:5m:ob_reversal:buy:1794451500000": {
+   "id": "XAUUSD.a:5m:ob_reversal:buy:1794451500000",
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "playbook": "ob_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "ob_reversal",
+    "label": "ORDER BLOCK REVERSAL",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "entry": 3980.6,
+    "stop": 3969.48,
+    "tp1": 3991.72,
+    "tp2": 4002.84,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 54,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 11.12,
+    "atr_at_signal": 5.1029,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "tapped the bullish order block 3971.01-3976.85 (made by a CHoCH) and closed back out",
+      "weight": 24,
+      "kind": "structure"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close through the order block",
+    "expiry_bars": 12,
+    "created_ms": 1794451817688,
+    "bar_time_ms": 1794451500000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:5m:ob_reversal:buy:1794451500000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794451500000,
+   "expires_ms": 1794455400000,
+   "created_ms": 1794451817689,
+   "updated_ms": 1794453621156,
+   "history": [
+    [
+     1794451817689,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453621156,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:5m:false_break:sell:1794453300000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3983.36 (score 100) sits only 25% of the way to TP1",
+    "confidence": 36,
+    "net_rr2": 1.96,
+    "at_ms": 1794453560847
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794451500000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 29,
+    "volatility": "extreme",
+    "mtf_score": 3,
+    "mtf_direction": null,
+    "atr": 5.1029,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 1.55,
+     "pull_atr": 0.25
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 36,
+    "at_ms": 1794451818017,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - flip at 3983.26 (score 100) sits only 24% of the way to TP1"
+  },
+  "XAUUSD.a:3m:false_break:buy:1794451680000": {
+   "id": "XAUUSD.a:3m:false_break:buy:1794451680000",
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "entry": 3981.98,
+    "stop": 3972.8,
+    "tp1": 3991.16,
+    "tp2": 4000.35,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 69,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 9.18,
+    "atr_at_signal": 4.0142,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the support 3978.93 (score 67): 3 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "RANGE regime - failed breaks are the dominant behaviour here",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "FVG ORDER BLOCK BREAKOUT agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3974.00 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794451862570,
+    "bar_time_ms": 1794451680000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:3m:false_break:buy:1794451680000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794451680000,
+   "expires_ms": 1794453660000,
+   "created_ms": 1794451862574,
+   "updated_ms": 1794452220445,
+   "history": [
+    [
+     1794451862574,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452220445,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:3m:false_break:sell:1794452040000"
+    ]
+   ],
+   "qual": {
+    "status": "watch",
+    "reason": "confidence 47 below the 51 floor after 2 warning(s)",
+    "confidence": 47,
+    "net_rr2": 1.96,
+    "at_ms": 1794452219128
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794451680000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 52,
+    "volatility": "extreme",
+    "mtf_score": -13,
+    "mtf_direction": null,
+    "atr": 4.0142,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 2.23,
+     "pull_atr": 0.24
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 55,
+    "at_ms": 1794451862938,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - flip at 3983.58 (score 100) sits only 17% of the way to TP1"
+  },
+  "XAUUSD.a:3m:false_break:sell:1794452040000": {
+   "id": "XAUUSD.a:3m:false_break:sell:1794452040000",
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "playbook": "false_break",
+   "stage": "FILLED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "entry": 3979.67,
+    "stop": 3985.51,
+    "tp1": 3973.83,
+    "tp2": 3968.0,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 80,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 5.84,
+    "atr_at_signal": 3.8905,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the support 3978.93 (score 67): 2 closes above it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "RANGE regime - failed breaks are the dominant behaviour here",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "momentum turned with the fade (-25)",
+      "weight": 8,
+      "kind": "momentum"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.20 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "ENGULFING REVERSAL agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "FVG PULLBACK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3983.18 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794452220440,
+    "bar_time_ms": 1794452040000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:3m:false_break:sell:1794452040000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794452040000,
+   "expires_ms": 1794454020000,
+   "created_ms": 1794452220446,
+   "updated_ms": 1794453908591,
+   "history": [
+    [
+     1794452220446,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453695880,
+     "SENT",
+     "limit 0.01 lots, ticket 10173032"
+    ],
+    [
+     1794453908591,
+     "FILLED",
+     "filled at 3979.74"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the up leg 0.7 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 74,
+    "net_rr2": 1.93,
+    "at_ms": 1794456056876
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794452040000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 40,
+    "volatility": "extreme",
+    "mtf_score": -13,
+    "mtf_direction": null,
+    "atr": 3.8905,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 2.36,
+     "pull_atr": 0.9
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 80,
+    "at_ms": 1794452220770,
+    "gates": [
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - support at 3978.89 (score 80) sits only 13% of the way to TP1",
+   "lots": 0.01,
+   "kind": "limit",
+   "checked_bar_ms": 1794453660000,
+   "send_verdict": {
+    "confidence": 80,
+    "judged_bar_ms": 1794453480000,
+    "warnings": []
+   },
+   "position": 10173032,
+   "fill_price": 3979.74,
+   "fill_ms": 1794453908047
+  },
+  "XAUUSD.a:1m:engulfing_reversal:buy:1794452280000": {
+   "id": "XAUUSD.a:1m:engulfing_reversal:buy:1794452280000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "engulfing_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "engulfing_reversal",
+    "label": "ENGULFING REVERSAL",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3980.36,
+    "stop": 3977.53,
+    "tp1": 3983.19,
+    "tp2": 3986.02,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 58,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.83,
+    "atr_at_signal": 1.8863,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "bullish engulfing",
+      "weight": 18,
+      "kind": "event"
+     },
+     {
+      "text": "at support 3978.75 (score 88)",
+      "weight": 14,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.83 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close beyond the engulfing extreme",
+    "expiry_bars": 8,
+    "created_ms": 1794452344899,
+    "bar_time_ms": 1794452280000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:engulfing_reversal:buy:1794452280000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794452280000,
+   "expires_ms": 1794452820000,
+   "created_ms": 1794452344901,
+   "updated_ms": 1794452470383,
+   "history": [
+    [
+     1794452344901,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452470383,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:ma_pullback:sell:1794452400000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down leg 0.8 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 32,
+    "net_rr2": 1.86,
+    "at_ms": 1794452457578
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794452280000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 66,
+    "volatility": "high",
+    "mtf_score": -2,
+    "mtf_direction": null,
+    "atr": 1.8863,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.14,
+     "pull_atr": 0.64
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 40,
+    "at_ms": 1794452345236,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down leg 0.8 ATR off its extreme - a spot that lost in all three years tested"
+  },
+  "XAUUSD.a:15m:ob_reversal:buy:1794451500000": {
+   "id": "XAUUSD.a:15m:ob_reversal:buy:1794451500000",
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "playbook": "ob_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "ob_reversal",
+    "label": "ORDER BLOCK REVERSAL",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "entry": 3980.65,
+    "stop": 3966.52,
+    "tp1": 3994.78,
+    "tp2": 4008.91,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 54,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 14.13,
+    "atr_at_signal": 7.5383,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "tapped the bullish order block 3968.78-3979.28 (made by a CHoCH) and closed back out",
+      "weight": 24,
+      "kind": "structure"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-22)"
+    ],
+    "invalidation": "a close through the order block",
+    "expiry_bars": 12,
+    "created_ms": 1794452408814,
+    "bar_time_ms": 1794451500000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:15m:ob_reversal:buy:1794451500000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794451500000,
+   "expires_ms": 1794463200000,
+   "created_ms": 1794452408818,
+   "updated_ms": 1794455153085,
+   "history": [
+    [
+     1794452408818,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794455153085,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:15m:bos_retest_pullback:sell:1794454200000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down impulse while 1h is trending down too - lost in all three years tested",
+    "confidence": 36,
+    "net_rr2": 1.97,
+    "at_ms": 1794455002507
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794451500000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 54,
+    "volatility": "normal",
+    "mtf_score": -22,
+    "mtf_direction": "down",
+    "atr": 7.5383,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.1,
+     "pull_atr": 0.88
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 36,
+    "at_ms": 1794452409407,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down impulse while 1h is trending down too - lost in all three years tested"
+  },
+  "XAUUSD.a:1m:ma_pullback:sell:1794452400000": {
+   "id": "XAUUSD.a:1m:ma_pullback:sell:1794452400000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "ma_pullback",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "ma_pullback",
+    "label": "MA PULLBACK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3979.84,
+    "stop": 3982.73,
+    "tp1": 3976.95,
+    "tp2": 3974.0,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 57,
+    "rr1": 1.0,
+    "rr2": 2.02,
+    "risk_points": 2.89,
+    "atr_at_signal": 1.8565,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "EMAs stacked down, dip to the fast EMA 3980.19 rejected",
+      "weight": 20,
+      "kind": "trend"
+     },
+     {
+      "text": "higher timeframes agree (-21)",
+      "weight": 10,
+      "kind": "mtf"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close through the slow EMA",
+    "expiry_bars": 10,
+    "created_ms": 1794452470380,
+    "bar_time_ms": 1794452400000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:ma_pullback:sell:1794452400000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794452400000,
+   "expires_ms": 1794453060000,
+   "created_ms": 1794452470384,
+   "updated_ms": 1794452584193,
+   "history": [
+    [
+     1794452470384,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452584193,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:false_break:buy:1794452520000"
+    ]
+   ],
+   "qual": {
+    "status": "watch",
+    "reason": "confidence 45 below the 51 floor after 1 warning(s)",
+    "confidence": 45,
+    "net_rr2": 1.83,
+    "at_ms": 1794452571736
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794452400000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 36,
+    "volatility": "normal",
+    "mtf_score": -21,
+    "mtf_direction": "down",
+    "atr": 1.8565,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.17,
+     "pull_atr": 0.37
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 45,
+    "at_ms": 1794452470927,
+    "gates": [
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 45 below the 51 floor after 1 warning(s)"
+  },
+  "XAUUSD.a:1m:false_break:buy:1794452520000": {
+   "id": "XAUUSD.a:1m:false_break:buy:1794452520000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3980.62,
+    "stop": 3977.88,
+    "tp1": 3983.36,
+    "tp2": 3986.1,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 54,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.74,
+    "atr_at_signal": 1.8255,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the flip 3981.09 (score 97): 2 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "fading a with-trend break",
+      "weight": -10,
+      "kind": "regime"
+     },
+     {
+      "text": "momentum turned with the fade (+11)",
+      "weight": 8,
+      "kind": "momentum"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.32 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [
+     "DOWNTREND regime - the break was WITH the trend and may yet resolve that way"
+    ],
+    "invalidation": "a new close beyond 3978.76 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794452584187,
+    "bar_time_ms": 1794452520000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:buy:1794452520000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794452520000,
+   "expires_ms": 1794453180000,
+   "created_ms": 1794452584193,
+   "updated_ms": 1794452762098,
+   "history": [
+    [
+     1794452584193,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452762098,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:engulfing_reversal:sell:1794452700000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3981.09 (score 97) sits only 17% of the way to TP1",
+    "confidence": 40,
+    "net_rr2": 1.79,
+    "at_ms": 1794452749182
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794452520000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 49,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.8255,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.42,
+     "pull_atr": 1.02
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 40,
+    "at_ms": 1794452584688,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 32 below the 51 floor after 2 warning(s)"
+  },
+  "XAUUSD.a:1m:engulfing_reversal:sell:1794452700000": {
+   "id": "XAUUSD.a:1m:engulfing_reversal:sell:1794452700000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "engulfing_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "engulfing_reversal",
+    "label": "ENGULFING REVERSAL",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.35,
+    "stop": 3984.07,
+    "tp1": 3978.63,
+    "tp2": 3975.91,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 63,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.72,
+    "atr_at_signal": 1.8145,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "bearish engulfing",
+      "weight": 18,
+      "kind": "event"
+     },
+     {
+      "text": "at flip 3983.64 (score 86)",
+      "weight": 14,
+      "kind": "structure"
+     },
+     {
+      "text": "higher timeframes agree (-37)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.02 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close beyond the engulfing extreme",
+    "expiry_bars": 8,
+    "created_ms": 1794452762096,
+    "bar_time_ms": 1794452700000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:engulfing_reversal:sell:1794452700000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794452700000,
+   "expires_ms": 1794453240000,
+   "created_ms": 1794452762098,
+   "updated_ms": 1794452892483,
+   "history": [
+    [
+     1794452762098,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794452892483,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:false_break:buy:1794452820000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "support at 3980.07 (score 94) sits only 47% of the way to TP1",
+    "confidence": 51,
+    "net_rr2": 1.85,
+    "at_ms": 1794452880088
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794452700000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 42,
+    "volatility": "normal",
+    "mtf_score": -37,
+    "mtf_direction": "down",
+    "atr": 1.8145,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 1.59,
+     "pull_atr": 0.78
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 51,
+    "at_ms": 1794452762703,
+    "gates": [
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - flip at 3981.09 (score 97) sits only 10% of the way to TP1"
+  },
+  "XAUUSD.a:1m:false_break:buy:1794452820000": {
+   "id": "XAUUSD.a:1m:false_break:buy:1794452820000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3982.51,
+    "stop": 3979.41,
+    "tp1": 3985.61,
+    "tp2": 3988.72,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 54,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 3.1,
+    "atr_at_signal": 1.778,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the flip 3982.50 (score 97): 2 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "fading a with-trend break",
+      "weight": -10,
+      "kind": "regime"
+     },
+     {
+      "text": "momentum turned with the fade (+28)",
+      "weight": 8,
+      "kind": "momentum"
+     }
+    ],
+    "against": [
+     "DOWNTREND regime - the break was WITH the trend and may yet resolve that way"
+    ],
+    "invalidation": "a new close beyond 3979.94 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794452892477,
+    "bar_time_ms": 1794452820000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:buy:1794452820000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794452820000,
+   "expires_ms": 1794453480000,
+   "created_ms": 1794452892483,
+   "updated_ms": 1794453065269,
+   "history": [
+    [
+     1794452892483,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453063876,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:liquidity_sweep_breakout:sell:1794453000000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down impulse while 1h is trending down too - lost in all three years tested",
+    "confidence": 48,
+    "net_rr2": 1.86,
+    "at_ms": 1794453063147
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794452820000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 30,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.778,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 1.7,
+     "pull_atr": 0.26
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 40,
+    "at_ms": 1794452892887,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down impulse while 1h is trending down too - lost in all three years tested"
+  },
+  "XAUUSD.a:1m:liquidity_sweep_breakout:sell:1794453000000": {
+   "id": "XAUUSD.a:1m:liquidity_sweep_breakout:sell:1794453000000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "liquidity_sweep_breakout",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "liquidity_sweep_breakout",
+    "label": "LIQUIDITY SWEEP BREAKOUT",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.66,
+    "stop": 3984.22,
+    "tp1": 3979.1,
+    "tp2": 3976.53,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 64,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.56,
+    "atr_at_signal": 1.7085,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "swept high 3982.83 1 bars ago",
+      "weight": 16,
+      "kind": "event"
+     },
+     {
+      "text": "then a close through the other side of the move",
+      "weight": 18,
+      "kind": "structure"
+     },
+     {
+      "text": "higher timeframes agree (-24)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.23 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new extreme beyond the sweep 3983.25",
+    "expiry_bars": 12,
+    "created_ms": 1794453063852,
+    "bar_time_ms": 1794453000000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:liquidity_sweep_breakout:sell:1794453000000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453000000,
+   "expires_ms": 1794453780000,
+   "created_ms": 1794453063876,
+   "updated_ms": 1794453185347,
+   "history": [
+    [
+     1794453063876,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453185347,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:false_break:buy:1794453120000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3981.11 (score 100) sits only 22% of the way to TP1",
+    "confidence": 46,
+    "net_rr2": 1.85,
+    "at_ms": 1794453172808
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453000000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 56,
+    "volatility": "normal",
+    "mtf_score": -24,
+    "mtf_direction": "down",
+    "atr": 1.7085,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 1.68,
+     "pull_atr": 0.26
+    }
+   },
+   "first_qual": {
+    "status": "watch",
+    "confidence": 46,
+    "at_ms": 1794453066029,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 46 below the 50 floor after 2 warning(s)"
+  },
+  "XAUUSD.a:1m:false_break:buy:1794453120000": {
+   "id": "XAUUSD.a:1m:false_break:buy:1794453120000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3983.44,
+    "stop": 3980.71,
+    "tp1": 3986.17,
+    "tp2": 3988.89,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 67,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.73,
+    "atr_at_signal": 1.6904,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the flip 3982.50 (score 97): 2 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "momentum turned with the fade (+19)",
+      "weight": 8,
+      "kind": "momentum"
+     },
+     {
+      "text": "TREND STRUCTURE PULLBACK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3981.22 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794453185337,
+    "bar_time_ms": 1794453120000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:buy:1794453120000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453120000,
+   "expires_ms": 1794453780000,
+   "created_ms": 1794453185347,
+   "updated_ms": 1794453310544,
+   "history": [
+    [
+     1794453185347,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453310544,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:pattern_break:sell:1794453240000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down impulse while 1h is trending down too - lost in all three years tested",
+    "confidence": 61,
+    "net_rr2": 1.85,
+    "at_ms": 1794453298131
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453120000,
+    "regime": "trend",
+    "regime_label": "UPTREND",
+    "regime_confidence": 39,
+    "volatility": "normal",
+    "mtf_score": -14,
+    "mtf_direction": null,
+    "atr": 1.6904,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 1.51,
+     "pull_atr": 0.2
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 61,
+    "at_ms": 1794453185733,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down impulse while 1h is trending down too - lost in all three years tested"
+  },
+  "XAUUSD.a:1m:pattern_break:sell:1794453240000": {
+   "id": "XAUUSD.a:1m:pattern_break:sell:1794453240000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "pattern_break",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "pattern_break",
+    "label": "PATTERN BREAK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.04,
+    "stop": 3984.86,
+    "tp1": 3977.22,
+    "tp2": 3973.4,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 79,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 3.82,
+    "atr_at_signal": 1.7168,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "Double Top (confirmed), quality 67/100",
+      "weight": 20,
+      "kind": "pattern"
+     },
+     {
+      "text": "peaks within 0.19 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "depth 1.6 ATR",
+      "weight": 5,
+      "kind": "pattern"
+     },
+     {
+      "text": "higher timeframes agree (-24)",
+      "weight": 12,
+      "kind": "mtf"
+     },
+     {
+      "text": "HORIZONTAL SUPPORT BREAKDOWN agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "TRENDLINE BREAKOUT agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "Double Top fails on a close beyond 3984.52",
+    "expiry_bars": 20,
+    "created_ms": 1794453310544,
+    "bar_time_ms": 1794453240000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:pattern_break:sell:1794453240000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453240000,
+   "expires_ms": 1794454500000,
+   "created_ms": 1794453310544,
+   "updated_ms": 1794453426635,
+   "history": [
+    [
+     1794453310544,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453312331,
+     "SENT",
+     "limit 0.01 lots, ticket 10172936"
+    ],
+    [
+     1794453426635,
+     "REVERSED",
+     "opposite FINAL XAUUSD.a:1m:rejection_wick_reversal:buy:1794453360000 - pending order cancelled"
+    ]
+   ],
+   "qual": {
+    "status": "qualified",
+    "reason": "2 warning(s), cleared",
+    "confidence": 65,
+    "net_rr2": 1.86,
+    "at_ms": 1794453423676
+   },
+   "trail": {},
+   "reverse": "XAUUSD.a:1m:rejection_wick_reversal:buy:1794453360000",
+   "entry_context": {
+    "bar_ms": 1794453240000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 42,
+    "volatility": "normal",
+    "mtf_score": -24,
+    "mtf_direction": "down",
+    "atr": 1.7168,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 1.99,
+     "pull_atr": 0.4
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 73,
+    "at_ms": 1794453310865,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "lots": 0.01,
+   "kind": "limit",
+   "checked_bar_ms": 1794453360000,
+   "send_verdict": {
+    "confidence": 73,
+    "judged_bar_ms": 1794453240000,
+    "warnings": [
+     [
+      "mtf",
+      6,
+      "higher timeframes conflicted (-24)"
+     ]
+    ]
+   }
+  },
+  "XAUUSD.a:1m:rejection_wick_reversal:buy:1794453360000": {
+   "id": "XAUUSD.a:1m:rejection_wick_reversal:buy:1794453360000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "rejection_wick_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "rejection_wick_reversal",
+    "label": "REJECTION WICK REVERSAL",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3979.28,
+    "stop": 3976.7,
+    "tp1": 3981.86,
+    "tp2": 3984.43,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 47,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.58,
+    "atr_at_signal": 1.7168,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "rejection wick 0.7 ATR long",
+      "weight": 18,
+      "kind": "event"
+     },
+     {
+      "text": "at support 3978.75 (score 91)",
+      "weight": 14,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.92 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "two-sided setup - conviction reduced",
+      "weight": -11,
+      "kind": "conflict"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-24)",
+     "an opposing HORIZONTAL SUPPORT BREAKDOWN sell was also detected (confidence 55 vs 58)"
+    ],
+    "invalidation": "a close beyond the wick",
+    "expiry_bars": 8,
+    "created_ms": 1794453423242,
+    "bar_time_ms": 1794453360000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:rejection_wick_reversal:buy:1794453360000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453360000,
+   "expires_ms": 1794453900000,
+   "created_ms": 1794453423244,
+   "updated_ms": 1794453549624,
+   "history": [
+    [
+     1794453423244,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453549624,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:fvg_pullback:sell:1794453480000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down leg 0.9 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 29,
+    "net_rr2": 1.8,
+    "at_ms": 1794453536935
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453360000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 42,
+    "volatility": "normal",
+    "mtf_score": -24,
+    "mtf_direction": "down",
+    "atr": 1.7168,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 3.34,
+     "pull_atr": 0.72
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 29,
+    "at_ms": 1794453423676,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down leg 0.9 ATR off its extreme - a spot that lost in all three years tested"
+  },
+  "XAUUSD.a:1m:fvg_pullback:sell:1794453480000": {
+   "id": "XAUUSD.a:1m:fvg_pullback:sell:1794453480000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "fvg_pullback",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "fvg_pullback",
+    "label": "FVG PULLBACK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3979.07,
+    "stop": 3981.55,
+    "tp1": 3976.59,
+    "tp2": 3974.11,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 59,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.48,
+    "atr_at_signal": 1.6519,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "tapped the bearish fair value gap 3979.41-3980.79 (made by a BOS) and closed back out",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "higher timeframes agree (-29)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.34 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close through the fair value gap",
+    "expiry_bars": 12,
+    "created_ms": 1794453549623,
+    "bar_time_ms": 1794453480000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:fvg_pullback:sell:1794453480000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453480000,
+   "expires_ms": 1794454260000,
+   "created_ms": 1794453549624,
+   "updated_ms": 1794453788660,
+   "history": [
+    [
+     1794453549624,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453788660,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:false_break:buy:1794453720000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "support at 3978.15 (score 58) sits only 37% of the way to TP1",
+    "confidence": 47,
+    "net_rr2": 1.84,
+    "at_ms": 1794453776089
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453480000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 36,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.6519,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 3.47,
+     "pull_atr": 0.62
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 41,
+    "at_ms": 1794453550012,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 47 below the 50 floor after 1 warning(s)"
+  },
+  "XAUUSD.a:5m:false_break:sell:1794453300000": {
+   "id": "XAUUSD.a:5m:false_break:sell:1794453300000",
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "playbook": "false_break",
+   "stage": "FILLED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "entry": 3977.93,
+    "stop": 3985.44,
+    "tp1": 3970.42,
+    "tp2": 3962.92,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 72,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 7.51,
+    "atr_at_signal": 4.4837,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the resistance 3978.60 (score 66): 4 closes above it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "TRANSITION regime - failed breaks are the dominant behaviour here",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "momentum turned with the fade (-25)",
+      "weight": 8,
+      "kind": "momentum"
+     },
+     {
+      "text": "HORIZONTAL SUPPORT BREAKDOWN agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [
+     "an opposing PATTERN BREAK buy was also detected (confidence 57 vs 72)"
+    ],
+    "invalidation": "a new close beyond 3984.09 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794453621156,
+    "bar_time_ms": 1794453300000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:5m:false_break:sell:1794453300000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453300000,
+   "expires_ms": 1794456600000,
+   "created_ms": 1794453621156,
+   "updated_ms": 1794453626060,
+   "history": [
+    [
+     1794453621156,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453623521,
+     "SENT",
+     "market 0.01 lots, ticket 10173019"
+    ],
+    [
+     1794453626060,
+     "FILLED",
+     "filled at 3978.07"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the up leg 0.5 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 66,
+    "net_rr2": 1.94,
+    "at_ms": 1794456041212
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453300000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 30,
+    "volatility": "high",
+    "mtf_score": -12,
+    "mtf_direction": null,
+    "atr": 4.4837,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 2.25,
+     "pull_atr": 1.37
+    }
+   },
+   "first_qual": {
+    "status": "qualified",
+    "confidence": 66,
+    "at_ms": 1794453621517,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ]
+    ]
+   },
+   "lots": 0.01,
+   "kind": "market",
+   "checked_bar_ms": 1794453300000,
+   "send_verdict": {
+    "confidence": 66,
+    "judged_bar_ms": 1794453300000,
+    "warnings": [
+     [
+      "mtf",
+      6,
+      "higher timeframes conflicted (-12)"
+     ]
+    ]
+   },
+   "position": 10173019,
+   "fill_price": 3978.07,
+   "fill_ms": 1794453623538
+  },
+  "XAUUSD.a:1m:false_break:buy:1794453720000": {
+   "id": "XAUUSD.a:1m:false_break:buy:1794453720000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3978.16,
+    "stop": 3975.93,
+    "tp1": 3980.39,
+    "tp2": 3982.62,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 55,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.23,
+    "atr_at_signal": 1.4853,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the support 3978.15 (score 58): 2 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.89 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3977.28 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794453788653,
+    "bar_time_ms": 1794453720000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:buy:1794453720000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453720000,
+   "expires_ms": 1794454380000,
+   "created_ms": 1794453788660,
+   "updated_ms": 1794453848033,
+   "history": [
+    [
+     1794453788660,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794453848033,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 41,
+    "net_rr2": 1.82,
+    "at_ms": 1794453835472
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453720000,
+    "regime": "trend",
+    "regime_label": "UPTREND",
+    "regime_confidence": 42,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.4853,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 4.37,
+     "pull_atr": 0.59
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 41,
+    "at_ms": 1794453789329,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+  },
+  "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000": {
+   "id": "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "bos_retest_pullback",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "bos_retest_pullback",
+    "label": "BOS RETEST PULLBACK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3977.91,
+    "stop": 3980.11,
+    "tp1": 3975.71,
+    "tp2": 3973.5,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 67,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.2,
+    "atr_at_signal": 1.4692,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "BOS down 4 bars ago, retest of 3978.04 held",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "higher timeframes agree (-29)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.59 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "ORDER BLOCK PULLBACK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close back through 3978.04",
+    "expiry_bars": 12,
+    "created_ms": 1794453848031,
+    "bar_time_ms": 1794453780000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794453780000,
+   "expires_ms": 1794454560000,
+   "created_ms": 1794453848033,
+   "updated_ms": 1794454084937,
+   "history": [
+    [
+     1794453848033,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454084937,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454020000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the up leg 0.7 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 55,
+    "net_rr2": 1.82,
+    "at_ms": 1794454072378
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794453780000,
+    "regime": "trend",
+    "regime_label": "UPTREND",
+    "regime_confidence": 45,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.4692,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 4.42,
+     "pull_atr": 0.43
+    }
+   },
+   "first_qual": {
+    "status": "qualified",
+    "confidence": 55,
+    "at_ms": 1794453848467,
+    "gates": [
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the up leg 0.7 ATR off its extreme - a spot that lost in all three years tested",
+   "retry_after_ms": 1794453971710
+  },
+  "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454020000": {
+   "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454020000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "liquidity_sweep_breakout",
+   "stage": "CANCELLED",
+   "signal": {
+    "playbook": "liquidity_sweep_breakout",
+    "label": "LIQUIDITY SWEEP BREAKOUT",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3979.82,
+    "stop": 3977.72,
+    "tp1": 3981.92,
+    "tp2": 3983.81,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 59,
+    "rr1": 1.0,
+    "rr2": 1.9,
+    "risk_points": 2.1,
+    "atr_at_signal": 1.3988,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "swept low 3978.76 1 bars ago",
+      "weight": 16,
+      "kind": "event"
+     },
+     {
+      "text": "then a close through the other side of the move",
+      "weight": 18,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.45 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-29)"
+    ],
+    "invalidation": "a new extreme beyond the sweep 3978.21",
+    "expiry_bars": 12,
+    "created_ms": 1794454084934,
+    "bar_time_ms": 1794454020000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454020000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454020000,
+   "expires_ms": 1794454800000,
+   "created_ms": 1794454084937,
+   "updated_ms": 1794454184685,
+   "history": [
+    [
+     1794454084937,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454184685,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3980.74 (score 74) sits only 44% of the way to TP1",
+    "confidence": 33,
+    "net_rr2": 1.64,
+    "at_ms": 1794454172345
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454020000,
+    "regime": "trend",
+    "regime_label": "DOWNTREND",
+    "regime_confidence": 41,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.3988,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 1.93,
+     "pull_atr": 0.11
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 33,
+    "at_ms": 1794454085259,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - flip at 3979.98 (score 100) sits only 8% of the way to TP1"
+  },
+  "XAUUSD.a:3m:false_break:buy:1794454020000": {
+   "id": "XAUUSD.a:3m:false_break:buy:1794454020000",
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "FILLED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "entry": 3981.94,
+    "stop": 3976.31,
+    "tp1": 3987.57,
+    "tp2": 3993.2,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 72,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 5.63,
+    "atr_at_signal": 3.2392,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the support 3980.57 (score 67): 4 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "RANGE regime - failed breaks are the dominant behaviour here",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "momentum turned with the fade (+3)",
+      "weight": 8,
+      "kind": "momentum"
+     },
+     {
+      "text": "LIQUIDITY SWEEP BREAKOUT agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3977.28 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794454201587,
+    "bar_time_ms": 1794454020000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:3m:false_break:buy:1794454020000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454020000,
+   "expires_ms": 1794456000000,
+   "created_ms": 1794454201595,
+   "updated_ms": 1794455285744,
+   "history": [
+    [
+     1794454201595,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794455282967,
+     "SENT",
+     "market 0.01 lots, ticket 10173287"
+    ],
+    [
+     1794455285744,
+     "FILLED",
+     "filled at 3981.33"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3983.49 (score 100) sits only 27% of the way to TP1",
+    "confidence": 66,
+    "net_rr2": 1.93,
+    "at_ms": 1794456056876
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454020000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 51,
+    "volatility": "high",
+    "mtf_score": -30,
+    "mtf_direction": "down",
+    "atr": 3.2392,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.1,
+     "pull_atr": 1.44
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 66,
+    "at_ms": 1794454202110,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
+   "lots": 0.01,
+   "kind": "market",
+   "checked_bar_ms": 1794455100000,
+   "send_verdict": {
+    "confidence": 58,
+    "judged_bar_ms": 1794455100000,
+    "warnings": [
+     [
+      "mtf",
+      14,
+      "counter-trend to higher timeframes (-25)"
+     ]
+    ]
+   },
+   "position": 10173287,
+   "fill_price": 3981.33,
+   "fill_ms": 1794455282982
+  },
+  "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454140000": {
+   "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454140000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "liquidity_sweep_breakout",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "liquidity_sweep_breakout",
+    "label": "LIQUIDITY SWEEP BREAKOUT",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.94,
+    "stop": 3979.15,
+    "tp1": 3984.73,
+    "tp2": 3987.52,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 75,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.79,
+    "atr_at_signal": 1.4044,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "swept low 3979.94 1 bars ago",
+      "weight": 16,
+      "kind": "event"
+     },
+     {
+      "text": "then a close through the other side of the move",
+      "weight": 18,
+      "kind": "structure"
+     },
+     {
+      "text": "FVG ORDER BLOCK BREAKOUT agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "CHoCH REVERSAL agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-29)"
+    ],
+    "invalidation": "a new extreme beyond the sweep 3979.57",
+    "expiry_bars": 12,
+    "created_ms": 1794454209667,
+    "bar_time_ms": 1794454140000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454140000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454140000,
+   "expires_ms": 1794454920000,
+   "created_ms": 1794454209667,
+   "updated_ms": 1794454272289,
+   "history": [
+    [
+     1794454209667,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454272289,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:fibonacci_pullback:sell:1794454200000"
+    ]
+   ],
+   "qual": {
+    "status": "watch",
+    "reason": "confidence 49 below the 50 floor after 2 warning(s)",
+    "confidence": 49,
+    "net_rr2": 1.79,
+    "at_ms": 1794454259887
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454140000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 41,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.4044,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 3.41,
+     "pull_atr": 0.09
+    }
+   },
+   "first_qual": {
+    "status": "watch",
+    "confidence": 49,
+    "at_ms": 1794454210024,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - resistance at 3982.65 (score 79) sits only 25% of the way to TP1"
+  },
+  "XAUUSD.a:1m:fibonacci_pullback:sell:1794454200000": {
+   "id": "XAUUSD.a:1m:fibonacci_pullback:sell:1794454200000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "fibonacci_pullback",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "fibonacci_pullback",
+    "label": "FIBONACCI PULLBACK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.23,
+    "stop": 3984.19,
+    "tp1": 3978.27,
+    "tp2": 3975.32,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 71,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.96,
+    "atr_at_signal": 1.389,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "pullback into the 61.8-78.6% pocket 3981.58-3982.54",
+      "weight": 22,
+      "kind": "fib"
+     },
+     {
+      "text": "rejection close",
+      "weight": 10,
+      "kind": "event"
+     },
+     {
+      "text": "higher timeframes agree (-29)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "ORDER BLOCK PULLBACK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [
+     "an opposing HORIZONTAL RESISTANCE BREAKOUT buy was also detected (confidence 46 vs 71)"
+    ],
+    "invalidation": "a close beyond the leg start",
+    "expiry_bars": 12,
+    "created_ms": 1794454272289,
+    "bar_time_ms": 1794454200000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:fibonacci_pullback:sell:1794454200000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454200000,
+   "expires_ms": 1794454980000,
+   "created_ms": 1794454272289,
+   "updated_ms": 1794454323289,
+   "history": [
+    [
+     1794454272289,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454323289,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454260000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested",
+    "confidence": 53,
+    "net_rr2": 1.8,
+    "at_ms": 1794454310722
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454200000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 39,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.389,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 3.45,
+     "pull_atr": 0.6
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 53,
+    "at_ms": 1794454272622,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the up leg 0.6 ATR off its extreme - a spot that lost in all three years tested"
+  },
+  "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454260000": {
+   "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454260000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "liquidity_sweep_breakout",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "liquidity_sweep_breakout",
+    "label": "LIQUIDITY SWEEP BREAKOUT",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3982.87,
+    "stop": 3980.44,
+    "tp1": 3985.3,
+    "tp2": 3987.74,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 59,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.43,
+    "atr_at_signal": 1.4441,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "swept low 3981.22 1 bars ago",
+      "weight": 16,
+      "kind": "event"
+     },
+     {
+      "text": "then a close through the other side of the move",
+      "weight": 18,
+      "kind": "structure"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-29)"
+    ],
+    "invalidation": "a new extreme beyond the sweep 3980.87",
+    "expiry_bars": 12,
+    "created_ms": 1794454323287,
+    "bar_time_ms": 1794454260000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794454260000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454260000,
+   "expires_ms": 1794455040000,
+   "created_ms": 1794454323289,
+   "updated_ms": 1794454385933,
+   "history": [
+    [
+     1794454323289,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454385933,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:rejection_wick_reversal:sell:1794454320000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3983.73 (score 100) sits only 36% of the way to TP1",
+    "confidence": 33,
+    "net_rr2": 1.77,
+    "at_ms": 1794454373260
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454260000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 39,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.4441,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 3.91,
+     "pull_atr": 0.04
+    }
+   },
+   "first_qual": {
+    "status": "watch",
+    "confidence": 33,
+    "at_ms": 1794454323584,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      14
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 33 below the 50 floor after 2 warning(s)"
+  },
+  "XAUUSD.a:1m:rejection_wick_reversal:sell:1794454320000": {
+   "id": "XAUUSD.a:1m:rejection_wick_reversal:sell:1794454320000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "rejection_wick_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "rejection_wick_reversal",
+    "label": "REJECTION WICK REVERSAL",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3982.53,
+    "stop": 3984.85,
+    "tp1": 3980.21,
+    "tp2": 3977.89,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 58,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.32,
+    "atr_at_signal": 1.4952,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "rejection wick 1.1 ATR long",
+      "weight": 18,
+      "kind": "event"
+     },
+     {
+      "text": "at flip 3984.47 (score 73)",
+      "weight": 14,
+      "kind": "structure"
+     },
+     {
+      "text": "higher timeframes agree (-29)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "two-sided setup - conviction reduced",
+      "weight": -5,
+      "kind": "conflict"
+     }
+    ],
+    "against": [
+     "an opposing HORIZONTAL RESISTANCE BREAKOUT buy was also detected (confidence 54 vs 63)"
+    ],
+    "invalidation": "a close beyond the wick",
+    "expiry_bars": 8,
+    "created_ms": 1794454385933,
+    "bar_time_ms": 1794454320000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:rejection_wick_reversal:sell:1794454320000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454320000,
+   "expires_ms": 1794454860000,
+   "created_ms": 1794454385933,
+   "updated_ms": 1794454560502,
+   "history": [
+    [
+     1794454385933,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454560502,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:three_candle_reversal:buy:1794454500000"
+    ]
+   ],
+   "qual": {
+    "status": "watch",
+    "reason": "confidence 40 below the 50 floor after 2 warning(s)",
+    "confidence": 40,
+    "net_rr2": 1.83,
+    "at_ms": 1794454548070
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454320000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 43,
+    "volatility": "normal",
+    "mtf_score": -29,
+    "mtf_direction": "down",
+    "atr": 1.4952,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 4.86,
+     "pull_atr": 1.35
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 46,
+    "at_ms": 1794454386263,
+    "gates": [
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 32 below the 50 floor after 3 warning(s)"
+  },
+  "XAUUSD.a:1m:three_candle_reversal:buy:1794454500000": {
+   "id": "XAUUSD.a:1m:three_candle_reversal:buy:1794454500000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "three_candle_reversal",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "three_candle_reversal",
+    "label": "THREE CANDLE REVERSAL",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.86,
+    "stop": 3979.73,
+    "tp1": 3983.99,
+    "tp2": 3986.12,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 58,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.13,
+    "atr_at_signal": 1.4214,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "morning star",
+      "weight": 20,
+      "kind": "event"
+     },
+     {
+      "text": "at flip 3980.86 (score 85)",
+      "weight": 12,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.99 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-21)"
+    ],
+    "invalidation": "a close beyond the pattern extreme",
+    "expiry_bars": 8,
+    "created_ms": 1794454560502,
+    "bar_time_ms": 1794454500000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:three_candle_reversal:buy:1794454500000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454500000,
+   "expires_ms": 1794455040000,
+   "created_ms": 1794454560502,
+   "updated_ms": 1794454748410,
+   "history": [
+    [
+     1794454560502,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454748410,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:false_break:sell:1794454680000"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "fades the down impulse while 1h is trending down too - lost in all three years tested",
+    "confidence": 40,
+    "net_rr2": 1.73,
+    "at_ms": 1794454735987
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454500000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 44,
+    "volatility": "normal",
+    "mtf_score": -21,
+    "mtf_direction": "down",
+    "atr": 1.4214,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.69,
+     "pull_atr": 0.79
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 40,
+    "at_ms": 1794454560845,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades the down impulse while 1h is trending down too - lost in all three years tested"
+  },
+  "XAUUSD.a:1m:false_break:sell:1794454680000": {
+   "id": "XAUUSD.a:1m:false_break:sell:1794454680000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "false_break",
+   "stage": "CANCELLED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.19,
+    "stop": 3983.54,
+    "tp1": 3978.84,
+    "tp2": 3976.49,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 61,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.35,
+    "atr_at_signal": 1.5664,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the flip 3980.92 (score 86): 3 closes above it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "TRANSITION regime - failed breaks are the dominant behaviour here",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.17 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3982.56 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794454748393,
+    "bar_time_ms": 1794454680000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:sell:1794454680000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454680000,
+   "expires_ms": 1794455340000,
+   "created_ms": 1794454748410,
+   "updated_ms": 1794454773710,
+   "history": [
+    [
+     1794454748410,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454773710,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened"
+    ]
+   ],
+   "qual": {
+    "status": "qualified",
+    "reason": "1 warning(s), cleared",
+    "confidence": 55,
+    "net_rr2": 1.75,
+    "at_ms": 1794454761121
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454680000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 42,
+    "volatility": "normal",
+    "mtf_score": -15,
+    "mtf_direction": null,
+    "atr": 1.5664,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 3.31,
+     "pull_atr": 1.16
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 55,
+    "at_ms": 1794454748758,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - flip at 3980.92 (score 86) sits only 12% of the way to TP1"
+  },
+  "XAUUSD.a:1m:displacement_breakout:sell:1794454740000": {
+   "id": "XAUUSD.a:1m:displacement_breakout:sell:1794454740000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "displacement_breakout",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "displacement_breakout",
+    "label": "DISPLACEMENT BREAKOUT",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3977.86,
+    "stop": 3980.44,
+    "tp1": 3975.28,
+    "tp2": 3972.7,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 74,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.58,
+    "atr_at_signal": 1.7203,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "displacement candle: body 1.9 ATR, 90% of its range",
+      "weight": 22,
+      "kind": "momentum"
+     },
+     {
+      "text": "closed beyond the last 10 bars",
+      "weight": 10,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.17 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "FVG ORDER BLOCK BREAKOUT agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "BOS RETEST PULLBACK agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "back above the candle midpoint",
+    "expiry_bars": 6,
+    "created_ms": 1794454811159,
+    "bar_time_ms": 1794454740000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:displacement_breakout:sell:1794454740000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454740000,
+   "expires_ms": 1794455160000,
+   "created_ms": 1794454811159,
+   "updated_ms": 1794454861384,
+   "history": [
+    [
+     1794454811159,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794454861384,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:1m:range_edge_fade:buy:1794454800000"
+    ]
+   ],
+   "qual": {
+    "status": "qualified",
+    "reason": "2 warning(s), cleared",
+    "confidence": 56,
+    "net_rr2": 1.82,
+    "at_ms": 1794454848690
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454740000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 42,
+    "volatility": "normal",
+    "mtf_score": -15,
+    "mtf_direction": null,
+    "atr": 1.7203,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 3.95,
+     "pull_atr": 0.06
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 56,
+    "at_ms": 1794454811553,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - support at 3977.07 (score 57) sits only 31% of the way to TP1"
+  },
+  "XAUUSD.a:1m:range_edge_fade:buy:1794454800000": {
+   "id": "XAUUSD.a:1m:range_edge_fade:buy:1794454800000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "range_edge_fade",
+   "stage": "CANCELLED",
+   "signal": {
+    "playbook": "range_edge_fade",
+    "label": "RANGE EDGE FADE",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3978.21,
+    "stop": 3975.72,
+    "tp1": 3980.7,
+    "tp2": 3983.41,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 62,
+    "rr1": 1.0,
+    "rr2": 2.09,
+    "risk_points": 2.49,
+    "atr_at_signal": 1.6609,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "horizontal range 3977.28-3984.09 (4.0 ATR, developing)",
+      "weight": 16,
+      "kind": "structure"
+     },
+     {
+      "text": "rejected the bottom edge 3977.28",
+      "weight": 16,
+      "kind": "event"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.01 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "ORDER BLOCK REVERSAL agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "two-sided setup - conviction reduced",
+      "weight": -3,
+      "kind": "conflict"
+     }
+    ],
+    "against": [
+     "an opposing HORIZONTAL SUPPORT BREAKDOWN sell was also detected (confidence 54 vs 65)"
+    ],
+    "invalidation": "two closes beyond 3977.28 break the range and void the fade",
+    "expiry_bars": 10,
+    "created_ms": 1794454861384,
+    "bar_time_ms": 1794454800000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:range_edge_fade:buy:1794454800000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454800000,
+   "expires_ms": 1794455460000,
+   "created_ms": 1794454861384,
+   "updated_ms": 1794455198411,
+   "history": [
+    [
+     1794454861384,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794455173264,
+     "SENT",
+     "limit 0.01 lots, ticket 10173272"
+    ],
+    [
+     1794455198411,
+     "CANCELLED",
+     "TP1 reached before the entry filled - the move already happened - pending order cancelled"
+    ]
+   ],
+   "qual": {
+    "status": "qualified",
+    "reason": "1 warning(s), cleared",
+    "confidence": 56,
+    "net_rr2": 1.91,
+    "at_ms": 1794455197096
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454800000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 35,
+    "volatility": "normal",
+    "mtf_score": -15,
+    "mtf_direction": null,
+    "atr": 1.6609,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 4.21,
+     "pull_atr": 0.4
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 56,
+    "at_ms": 1794454861762,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ]
+    ]
+   },
+   "note": "not sent: rejected - fades a down leg that has run 4.8 ATR - long legs are no likelier to turn, and this lost in all three years tested",
+   "lots": 0.01,
+   "kind": "limit",
+   "checked_bar_ms": 1794455100000,
+   "send_verdict": {
+    "confidence": 56,
+    "judged_bar_ms": 1794455100000,
+    "warnings": [
+     [
+      "mtf",
+      6,
+      "higher timeframes conflicted (-6)"
+     ]
+    ]
+   },
+   "target_hit": true
+  },
+  "XAUUSD.a:5m:fibonacci_pullback:buy:1794454800000": {
+   "id": "XAUUSD.a:5m:fibonacci_pullback:buy:1794454800000",
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "playbook": "fibonacci_pullback",
+   "stage": "FINAL",
+   "signal": {
+    "playbook": "fibonacci_pullback",
+    "label": "FIBONACCI PULLBACK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "entry": 3978.63,
+    "stop": 3967.53,
+    "tp1": 3989.73,
+    "tp2": 4000.43,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 66,
+    "rr1": 1.0,
+    "rr2": 1.96,
+    "risk_points": 11.1,
+    "atr_at_signal": 4.1671,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "pullback into the 61.8-78.6% pocket 3975.55-3980.87",
+      "weight": 22,
+      "kind": "fib"
+     },
+     {
+      "text": "rejection close",
+      "weight": 10,
+      "kind": "event"
+     },
+     {
+      "text": "ORDER BLOCK REVERSAL agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close beyond the leg start",
+    "expiry_bars": 12,
+    "created_ms": 1794455132469,
+    "bar_time_ms": 1794454800000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:5m:fibonacci_pullback:buy:1794454800000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454800000,
+   "expires_ms": 1794458700000,
+   "created_ms": 1794455132470,
+   "updated_ms": 1794455435366,
+   "history": [
+    [
+     1794455132470,
+     "FINAL",
+     "bar closed with the setup intact"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3983.49 (score 100) sits only 44% of the way to TP1",
+    "confidence": 48,
+    "net_rr2": 1.93,
+    "at_ms": 1794456041212
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454800000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 38,
+    "volatility": "high",
+    "mtf_score": -1,
+    "mtf_direction": null,
+    "atr": 4.1671,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 1.86,
+     "pull_atr": 0.44
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 48,
+    "at_ms": 1794455132763,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "leg",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - flip at 3983.49 (score 100) sits only 44% of the way to TP1"
+  },
+  "XAUUSD.a:15m:bos_retest_pullback:sell:1794454200000": {
+   "id": "XAUUSD.a:15m:bos_retest_pullback:sell:1794454200000",
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "playbook": "bos_retest_pullback",
+   "stage": "REVERSED",
+   "signal": {
+    "playbook": "bos_retest_pullback",
+    "label": "BOS RETEST PULLBACK",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "entry": 3978.63,
+    "stop": 3989.48,
+    "tp1": 3967.78,
+    "tp2": 3956.92,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 59,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 10.85,
+    "atr_at_signal": 7.2351,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "BOS down 17 bars ago, retest of 3983.13 held",
+      "weight": 24,
+      "kind": "structure"
+     },
+     {
+      "text": "higher timeframes agree (-22)",
+      "weight": 10,
+      "kind": "mtf"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (1.12 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     }
+    ],
+    "against": [],
+    "invalidation": "a close back through 3983.13",
+    "expiry_bars": 12,
+    "created_ms": 1794455153085,
+    "bar_time_ms": 1794454200000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:15m:bos_retest_pullback:sell:1794454200000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794454200000,
+   "expires_ms": 1794465900000,
+   "created_ms": 1794455153085,
+   "updated_ms": 1794456056228,
+   "history": [
+    [
+     1794455153085,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794456056228,
+     "REVERSED",
+     "opposite FINAL signal XAUUSD.a:15m:ob_reversal:buy:1794455100000"
+    ]
+   ],
+   "qual": {
+    "status": "watch",
+    "reason": "confidence 41 below the 50 floor after 2 warning(s)",
+    "confidence": 41,
+    "net_rr2": 1.96,
+    "at_ms": 1794455905897
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794454200000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 52,
+    "volatility": "normal",
+    "mtf_score": -22,
+    "mtf_direction": "down",
+    "atr": 7.2351,
+    "session": "tokyo",
+    "leg": {
+     "dir": -1,
+     "ext_atr": 2.19,
+     "pull_atr": 0.64
+    }
+   },
+   "first_qual": {
+    "status": "watch",
+    "confidence": 41,
+    "at_ms": 1794455153477,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 41 below the 50 floor after 2 warning(s)"
+  },
+  "XAUUSD.a:1m:false_break:buy:1794455160000": {
+   "id": "XAUUSD.a:1m:false_break:buy:1794455160000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "playbook": "false_break",
+   "stage": "FILLED",
+   "signal": {
+    "playbook": "false_break",
+    "label": "FALSE BREAK",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.17,
+    "stop": 3976.28,
+    "tp1": 3986.06,
+    "tp2": 3990.94,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 80,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 4.89,
+    "atr_at_signal": 1.7227,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "false break of the flip 3979.96 (score 92): 3 closes below it, then back inside",
+      "weight": 26,
+      "kind": "event"
+     },
+     {
+      "text": "RANGE regime - failed breaks are the dominant behaviour here",
+      "weight": 12,
+      "kind": "regime"
+     },
+     {
+      "text": "momentum turned with the fade (+13)",
+      "weight": 8,
+      "kind": "momentum"
+     },
+     {
+      "text": "LIQUIDITY SWEEP BREAKOUT agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     },
+     {
+      "text": "DOUBLE TOP BOTTOM agrees on the same side",
+      "weight": 8,
+      "kind": "confluence"
+     }
+    ],
+    "against": [],
+    "invalidation": "a new close beyond 3976.80 means the break was real",
+    "expiry_bars": 10,
+    "created_ms": 1794455221954,
+    "bar_time_ms": 1794455160000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:false_break:buy:1794455160000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794455160000,
+   "expires_ms": 1794455820000,
+   "created_ms": 1794455221987,
+   "updated_ms": 1794455254491,
+   "history": [
+    [
+     1794455221987,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794455224291,
+     "SENT",
+     "limit 0.01 lots, ticket 10173281"
+    ],
+    [
+     1794455254491,
+     "FILLED",
+     "filled at 3981.07"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "resistance at 3982.65 (score 68) sits only 30% of the way to TP1",
+    "confidence": 74,
+    "net_rr2": 1.91,
+    "at_ms": 1794456047416
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794455160000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 55,
+    "volatility": "normal",
+    "mtf_score": -15,
+    "mtf_direction": null,
+    "atr": 1.7227,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 2.83,
+     "pull_atr": 0.3
+    }
+   },
+   "first_qual": {
+    "status": "qualified",
+    "confidence": 74,
+    "at_ms": 1794455222394,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ]
+    ]
+   },
+   "lots": 0.01,
+   "kind": "limit",
+   "checked_bar_ms": 1794455160000,
+   "send_verdict": {
+    "confidence": 74,
+    "judged_bar_ms": 1794455160000,
+    "warnings": [
+     [
+      "mtf",
+      6,
+      "higher timeframes conflicted (-15)"
+     ]
+    ]
+   },
+   "position": 10173281,
+   "fill_price": 3981.07,
+   "fill_ms": 1794455253849
+  },
+  "XAUUSD.a:1m:rejection_wick_reversal:sell:1794455220000": {
+   "id": "XAUUSD.a:1m:rejection_wick_reversal:sell:1794455220000",
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "playbook": "rejection_wick_reversal",
+   "stage": "EXPIRED",
+   "signal": {
+    "playbook": "rejection_wick_reversal",
+    "label": "REJECTION WICK REVERSAL",
+    "side": "sell",
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "entry": 3981.28,
+    "stop": 3983.8,
+    "tp1": 3978.76,
+    "tp2": 3976.23,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 56,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 2.52,
+    "atr_at_signal": 1.6825,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "rejection wick 0.5 ATR long",
+      "weight": 18,
+      "kind": "event"
+     },
+     {
+      "text": "at resistance 3982.78 (score 80)",
+      "weight": 14,
+      "kind": "structure"
+     },
+     {
+      "text": "stop widened to the 1.5 ATR noise floor (0.66 ATR was inside normal fluctuation)",
+      "weight": -4,
+      "kind": "risk"
+     },
+     {
+      "text": "two-sided setup - conviction reduced",
+      "weight": -2,
+      "kind": "conflict"
+     }
+    ],
+    "against": [
+     "an opposing HORIZONTAL RESISTANCE BREAKOUT buy was also detected (confidence 46 vs 58)"
+    ],
+    "invalidation": "a close beyond the wick",
+    "expiry_bars": 8,
+    "created_ms": 1794455283993,
+    "bar_time_ms": 1794455220000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:1m:rejection_wick_reversal:sell:1794455220000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794455220000,
+   "expires_ms": 1794455760000,
+   "created_ms": 1794455283993,
+   "updated_ms": 1794455761412,
+   "history": [
+    [
+     1794455283993,
+     "FINAL",
+     "bar closed with the setup intact"
+    ],
+    [
+     1794455761412,
+     "EXPIRED",
+     "expired before it was sent"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "flip at 3980.92 (score 85) sits only 14% of the way to TP1",
+    "confidence": 38,
+    "net_rr2": 1.85,
+    "at_ms": 1794455761169
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794455220000,
+    "regime": "range",
+    "regime_label": "RANGE",
+    "regime_confidence": 61,
+    "volatility": "normal",
+    "mtf_score": -15,
+    "mtf_direction": null,
+    "atr": 1.6825,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 3.12,
+     "pull_atr": 0.46
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 38,
+    "at_ms": 1794455284329,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: watch - confidence 44 below the 50 floor after 1 warning(s)"
+  },
+  "XAUUSD.a:15m:ob_reversal:buy:1794455100000": {
+   "id": "XAUUSD.a:15m:ob_reversal:buy:1794455100000",
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "playbook": "ob_reversal",
+   "stage": "FINAL",
+   "signal": {
+    "playbook": "ob_reversal",
+    "label": "ORDER BLOCK REVERSAL",
+    "side": "buy",
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "entry": 3982.86,
+    "stop": 3966.62,
+    "tp1": 3999.1,
+    "tp2": 4015.34,
+    "entry_type": "market",
+    "trigger": 0.0,
+    "confidence": 54,
+    "rr1": 1.0,
+    "rr2": 2.0,
+    "risk_points": 16.24,
+    "atr_at_signal": 7.2062,
+    "exit_plan": {
+     "mode": "trail",
+     "arm_r": 1.0,
+     "lock_r": 0.75,
+     "trail_atr": 1.0
+    },
+    "evidence": [
+     {
+      "text": "tapped the bullish order block 3968.78-3979.28 (made by a CHoCH) and closed back out",
+      "weight": 24,
+      "kind": "structure"
+     }
+    ],
+    "against": [
+     "higher timeframes lean the other way (-22)"
+    ],
+    "invalidation": "a close through the order block",
+    "expiry_bars": 12,
+    "created_ms": 1794456056224,
+    "bar_time_ms": 1794455100000,
+    "bar_idx": 598,
+    "id": "XAUUSD.a:15m:ob_reversal:buy:1794455100000",
+    "qualified": false,
+    "status": "detected",
+    "stage": "",
+    "gates": [],
+    "sizing": {},
+    "reason": ""
+   },
+   "final_bar_ms": 1794455100000,
+   "expires_ms": 1794466800000,
+   "created_ms": 1794456056228,
+   "updated_ms": 1794456058521,
+   "history": [
+    [
+     1794456056228,
+     "FINAL",
+     "bar closed with the setup intact"
+    ]
+   ],
+   "qual": {
+    "status": "rejected",
+    "reason": "resistance at 3982.98 (score 67) sits only 1% of the way to TP1",
+    "confidence": 36,
+    "net_rr2": 1.97,
+    "at_ms": 1794456056578
+   },
+   "trail": {},
+   "reverse": null,
+   "entry_context": {
+    "bar_ms": 1794455100000,
+    "regime": "transition",
+    "regime_label": "TRANSITION",
+    "regime_confidence": 58,
+    "volatility": "normal",
+    "mtf_score": -22,
+    "mtf_direction": "down",
+    "atr": 7.2062,
+    "session": "tokyo",
+    "leg": {
+     "dir": 1,
+     "ext_atr": 1.53,
+     "pull_atr": 0.3
+    }
+   },
+   "first_qual": {
+    "status": "rejected",
+    "confidence": 36,
+    "at_ms": 1794456056578,
+    "gates": [
+     [
+      "mtf",
+      "WARN",
+      6
+     ],
+     [
+      "room",
+      "BLOCK",
+      0
+     ],
+     [
+      "regime",
+      "WARN",
+      12
+     ]
+    ]
+   },
+   "note": "not sent: rejected - resistance at 3982.98 (score 66) sits only 1% of the way to TP1"
   }
  },
- "saved_ms": 1794450970578
+ "saved_ms": 1794456058521
 }
