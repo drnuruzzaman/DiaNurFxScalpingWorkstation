@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ChartEngine, type HoverInfo } from './ChartEngine'
 import type { Bar, ForecastCone, LayoutOpts, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays, Signal, Snapshot, TradeMark } from './types'
 import { fmt, span } from '../lib/format'
+import { DrawToolbar, SelectionBar, loadFlags, saveFlags, type DrawFlags } from './DrawToolbar'
+import type { Drawing, ToolId } from './drawings'
 
 /**
  * React wrapper around ChartEngine.
@@ -121,8 +123,11 @@ export function ChartPane({
   tfMs = 0,
   mtfLines = [], mtfSources = [], layout, news = [], positions = [], legBlocked = [],
   trades, cursorT = null, watermark = null, watermarkStyle = 'center', preferredSpan = null, chartKey, workspace,
-  theme = 'glossy', forecast = null,
+  theme = 'glossy', forecast = null, drawScope = 'live', drawSymbol,
 }: {
+  /** Your drawings: which set (live / lab) and which symbol's. */
+  drawScope?: string
+  drawSymbol?: string
   bars: Bar[]
   snapshot: Snapshot | null
   signal: Signal | null
@@ -177,12 +182,21 @@ export function ChartPane({
   const [hover, setHover] = useState<HoverInfo>(null)
   const [newsHit, setNewsHit] = useState<NewsHover>(null)
   const [paneW, setPaneW] = useState(0)
+  // Drawing tools (DrawToolbar + drawings.ts).
+  const [drawTool, setDrawTool] = useState<ToolId | null>(null)
+  const [drawCount, setDrawCount] = useState(0)
+  const [selDrawing, setSelDrawing] = useState<Drawing | null>(null)
+  const [drawFlags, setDrawFlags] = useState<DrawFlags>(() => loadFlags())
+  const [textReq, setTextReq] = useState<{ x: number; y: number; text: string; done: (t: string | null) => void } | null>(null)
 
   useEffect(() => {
     if (!base.current || !top.current) return
     const e = new ChartEngine(base.current, top.current, overlays)
     e.onHover = setHover
     e.onNewsHover = setNewsHit
+    e.onDrawState = (st) => { setDrawTool(st.tool); setDrawCount(st.count); setSelDrawing(st.drawing) }
+    e.onTextRequest = (req) => setTextReq(req)
+    e.setDrawFlags(loadFlags())
     engine.current = e
     onEngine?.(e)
 
@@ -267,6 +281,18 @@ export function ChartPane({
   useEffect(() => { engine.current?.setDigits(digits) }, [digits])
   useEffect(() => { engine.current?.setMoney(money ?? null) }, [money])
   useEffect(() => { engine.current?.setTimeframe(tfMs) }, [tfMs])
+  const symKey = drawSymbol ?? snapshot?.symbol ?? ''
+  useEffect(() => { engine.current?.setDrawingKey(drawScope, symKey) }, [drawScope, symKey])
+  const pickTool = (t: ToolId | null) => { engine.current?.setDrawTool(t); setDrawTool(t) }
+  const changeFlags = (f: DrawFlags) => { setDrawFlags(f); saveFlags(f); engine.current?.setDrawFlags(f) }
+  // Layout -> Drawing hides the toolbar; leave no tool armed behind it.
+  const showBar = layout.drawBar !== false
+  useEffect(() => { if (!showBar) engine.current?.setDrawTool(null) }, [showBar])
+  const finishText = (text: string | null) => {
+    const req = textReq
+    setTextReq(null)
+    req?.done(text)
+  }
 
   const b = hover?.bar
   const last = bars.length ? bars[bars.length - 1] : null
@@ -274,9 +300,30 @@ export function ChartPane({
   const chg = shown ? shown.c - shown.o : 0
 
   return (
+    <div className="chart-shell">
+    {showBar && (
+      <DrawToolbar tool={drawTool} count={drawCount} flags={drawFlags}
+        onTool={pickTool} onFlags={changeFlags}
+        onClear={() => engine.current?.clearDrawings()} />
+    )}
     <div className="chart-wrap" ref={wrap}>
       <canvas ref={base} />
       <canvas ref={top} />
+      {selDrawing && showBar && !drawFlags.hidden && !drawFlags.locked && (
+        <SelectionBar drawing={selDrawing}
+          onStyle={(p) => engine.current?.styleSelectedDrawing(p)}
+          onDelete={() => engine.current?.deleteSelectedDrawing()} />
+      )}
+      {textReq && (
+        <textarea className="draw-text-input" autoFocus defaultValue={textReq.text}
+          style={{ left: Math.max(4, Math.min(paneW - 220, textReq.x)), top: Math.max(4, textReq.y - 12) }}
+          placeholder="Text - Enter to place, Shift+Enter new line, Esc to cancel"
+          onKeyDown={(ev) => {
+            if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); finishText((ev.target as HTMLTextAreaElement).value) }
+            else if (ev.key === 'Escape') { ev.preventDefault(); finishText(null) }
+          }}
+          onBlur={(ev) => finishText(ev.target.value)} />
+      )}
       <div className="chart-legend">
         <div>
           <b>{snapshot?.symbol ?? ''}</b>{'  '}
@@ -351,6 +398,7 @@ export function ChartPane({
           </div>
         )}
       </div>
+    </div>
     </div>
   )
 }

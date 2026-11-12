@@ -58,7 +58,7 @@ from .forecast import shadow as forecast_shadow
 from . import quality_shadow
 from . import trade_journal
 from .order_ledger import OrderLedger
-from .signal_store import SignalStore, FINAL
+from .signal_store import SignalStore, FINAL, CANCELLED
 from .daily import DailyLimits, day_start_ms, judging_context
 from .telegram_commands import TelegramCommands, private_destinations
 from .chart_levels import chart_levels
@@ -272,13 +272,23 @@ def _showing_context(ctx: dict):
     Done here, not in engine/qualify.py: that file is fingerprinted by the
     forward books, and the lab's backtests rely on the gate as it stands.
     """
+    # 2026-11-12: the daily TRADE COUNT limit is lifted the same way - it too
+    # stops orders, not signals (_requalify still enforces it at send time).
     pct = float(ctx.get('daily_pnl_pct') or 0.0)
-    if pct > -CONFIG.risk.max_daily_loss_pct:
+    n = int(ctx.get('trades_today') or 0)
+    loss_hit = pct <= -CONFIG.risk.max_daily_loss_pct
+    count_hit = n >= CONFIG.risk.max_daily_trades
+    if not (loss_hit or count_hit):
         return ctx, None
-    return dict(ctx, daily_pnl_pct=0.0), pct
+    shown = dict(ctx)
+    if loss_hit:
+        shown['daily_pnl_pct'] = 0.0
+    if count_hit:
+        shown['trades_today'] = 0
+    return shown, {'pct': pct if loss_hit else None, 'trades': n if count_hit else None}
 
 
-def _note_daily_loss(sigs: list, pct: float) -> None:
+def _note_daily_loss(sigs: list, lifted: dict) -> None:
     """
     Put the real figure back on signals judged under _showing_context, as a
     WARN with no penalty - how the exposure gate words a cap that applies to
@@ -287,9 +297,14 @@ def _note_daily_loss(sigs: list, pct: float) -> None:
     for s in sigs:
         for g in getattr(s, 'gates', None) or []:
             if g.get('name') == 'daily' and g.get('verdict') == 'PASS':
+                why = []
+                if lifted.get('trades') is not None:
+                    why.append(f"{lifted['trades']} trades today - daily trade limit "
+                               f"{CONFIG.risk.max_daily_trades} reached")
+                if lifted.get('pct') is not None:
+                    why.append(f"down {abs(lifted['pct']):.2f}% today - daily loss limit reached")
                 g.update(verdict='WARN', penalty=0,
-                         detail=f'down {abs(pct):.2f}% today - daily loss limit reached '
-                                f'(it stops orders, not signals)')
+                         detail='; '.join(why) + ' (it stops orders, not signals)')
                 if getattr(s, 'status', None) == 'qualified':
                     n = sum(1 for x in s.gates if x.get('verdict') == 'WARN')
                     s.reason = f'{n} warning(s), cleared'
@@ -334,6 +349,36 @@ def _run_engine(symbol: str, tf: str, live: bool = True, bars: int = None,
     if live and not watched(symbol):
         detected = []
     elif live:
+        # TP1 reached since the signal's bar closed, before its entry filled:
+        # the move is spent. FINAL ones are withdrawn here; a SENT one is
+        # flagged and the executor cancels its pending order (executor.py
+        # TARGET_SPENT). Bars after the FINAL bar, the forming one included.
+        from .executor import TARGET_SPENT
+        tf_ms = int(TF_SECONDS.get(tf, 300) * 1000)
+        for r in STORE.active_for(symbol, tf):
+            if r['stage'] not in (FINAL, 'SENT') or r.get('target_hit'):
+                continue
+            after = series.t >= int(r['final_bar_ms']) + tf_ms
+            if not after.any():
+                continue
+            tp1 = float(r['signal']['tp1'])
+            hit = (float(series.h[after].max()) >= tp1 if r['side'] == 'buy'
+                   else float(series.l[after].min()) <= tp1)
+            if not hit:
+                continue
+            if r['stage'] == FINAL:
+                STORE.move(r['id'], CANCELLED, TARGET_SPENT)
+            else:
+                STORE.update(r['id'], target_hit=True)
+        # A FINAL signal recorded before its playbook was switched off for
+        # this timeframe (Settings -> Playbooks) is withdrawn: off the panel,
+        # no alert, no order, and its side is free for the next signal.
+        # SENT orders are pulled by _requalify; FILLED trades are left alone.
+        from .engine.signals import playbook_on
+        for r in STORE.active_for(symbol, tf):
+            if r['stage'] == FINAL and not playbook_on(r['playbook'], tf):
+                STORE.move(r['id'], CANCELLED,
+                           f"{r['playbook']} switched off on {tf} (Settings -> Playbooks)")
         # FORMING: what the open bar shows right now. Display only.
         STORE.set_forming(symbol, tf, generate(snap, series))
         # FINAL: decided on CLOSED bars, once per bar - re-run the engine
@@ -2002,14 +2047,20 @@ def _check_setting(group: str, key: str, v):
         # 0 disables the cap; above 20 per slot is not a setting, it is a typo.
         ('execution', 'max_per_symbol_tf'): (0, 20),
         ('execution', 'every_s'): (1.0, 60.0),
-        ('risk', 'risk_per_trade_pct'): (0.01, 5.0),
+        # Only nonsense is refused: it is a limit the user chooses, not a safety cap.
+        ('risk', 'risk_per_trade_pct'): (0.01, 100.0),
         ('risk', 'max_concurrent'): (1, 50),
         ('risk', 'max_daily_loss_pct'): (0.1, 20.0),
         ('risk', 'max_daily_trades'): (1, 500),
         ('risk', 'trail_lock_r'): (0.0, 0.95),
         ('risk', 'trail_atr'): (0.2, 5.0),
         ('risk', 'min_stop_atr'): (0.1, 5.0),
+        ('risk', 'ob_stop_min_atr'): (0.0, 3.0),
+        ('risk', 'ob_stop_max_atr'): (0.5, 10.0),
+        ('risk', 'ob_stop_buffer_low_atr'): (0.0, 1.0),
+        ('risk', 'ob_stop_buffer_high_atr'): (0.0, 1.0),
         ('gates', 'min_confidence'): (0, 100),
+        ('gates', 'room_block_pct'): (0, 95),
         # 0 means "never blackout"; beyond two hours it is not a news window,
         # it is switching the system off for the session.
         ('gates', 'news_blackout_min'): (0, 120),
@@ -2019,6 +2070,14 @@ def _check_setting(group: str, key: str, v):
         return f'{group}.{key} must be between {lo_hi[0]} and {lo_hi[1]}'
     if (group, key) == ('risk', 'exit_mode') and v not in ('trail', 'partial'):
         return 'risk.exit_mode must be trail or partial'
+    if (group, key) == ('risk', 'stop_mode') and v not in ('atr_floor', 'order_block'):
+        return 'risk.stop_mode must be atr_floor or order_block'
+    if (group, key) == ('risk', 'ob_stop_fallback') and v not in ('atr_floor', 'skip'):
+        return 'risk.ob_stop_fallback must be atr_floor or skip'
+    if (group, key) == ('risk', 'ob_stop_timeframes'):
+        unknown = [x for x in v if x not in BOARD_TFS]
+        if unknown:
+            return 'unknown timeframe(s): ' + ', '.join(unknown)
     if (group, key) == ('quality', 'zone_gate') and v not in ('off', 'warn', 'block'):
         return 'quality.zone_gate must be off, warn or block'
     if (group, key) == ('execution', 'broker_tp') and v not in ('none', 'tp1', 'tp2', 'cap'):
@@ -2034,6 +2093,13 @@ def _check_setting(group: str, key: str, v):
         # characters - hence the length test, not just the type.
         if isinstance(v, str) or not all(isinstance(x, str) and len(x.strip()) >= 3 for x in v):
             return 'execution.auto_symbols must be a list of symbol names'
+    if (group, key) == ('gates', 'playbook_timeframes'):
+        unknown = [x for x in v if x not in _playbook_names()]
+        if unknown:
+            return f'unknown playbook(s): {", ".join(unknown)}'
+        bad = sorted({t for tfs in v.values() for t in tfs if t not in BOARD_TFS})
+        if bad:
+            return f'unknown timeframe(s): {", ".join(bad)}'
     if (group, key) == ('gates', 'disabled_playbooks'):
         unknown = [x for x in v if x not in _playbook_names()]
         if unknown:
@@ -2076,6 +2142,8 @@ def apply_settings(patch: dict, persist: bool = True) -> tuple:
                     value = tuple(value)
                 elif isinstance(current, str):
                     value = str(value)
+                elif isinstance(current, dict):
+                    value = {str(k): [str(t) for t in (v or [])] for k, v in dict(value).items()}
             except (TypeError, ValueError):
                 errors.append(f'{group}.{key}: not a valid value')
                 continue
@@ -2131,6 +2199,15 @@ def _migrate_settings(saved: dict) -> dict:
         old = [float(v) for v in (lo, hi) if v is not None]
         if old:
             ex.setdefault('lots_gold', min(old))
+    # Renamed playbooks (2026-11-08): an old id in the off-list follows its
+    # new name rather than failing validation and dropping the whole list.
+    from .config import migrate_playbook_names
+    gt = (saved or {}).get('gates')
+    if isinstance(gt, dict) and 'disabled_playbooks' in gt:
+        gt['disabled_playbooks'] = migrate_playbook_names(gt['disabled_playbooks'])
+    if isinstance(gt, dict) and isinstance(gt.get('playbook_timeframes'), dict):
+        from .config import migrate_playbook_map
+        gt['playbook_timeframes'] = migrate_playbook_map(gt['playbook_timeframes'])
     return saved
 
 
@@ -2177,6 +2254,50 @@ def get_settings():
         # is unreachable - absence is not the same as "no limit".
         'bridge_max_lots': ((BRIDGE.health() or {}).get('execution') or {}).get('max_lots'),
     }
+
+
+# --- the playbook grid's saved default (2026-11-12) ------------------------- #
+# Settings -> Playbooks: "Save as default" stores the grid (which playbooks run
+# on which timeframes) in its own file; "Load default" puts it back into the
+# grid as unsaved changes, so it still goes live only through Save. Separate
+# from configs/settings.json on purpose: editing the live grid must not touch
+# the default, and the default must not change anything until it is loaded.
+PLAYBOOK_DEFAULT_FILE = SETTINGS_FILE.parent / 'playbook_default.json'
+
+
+@app.get('/api/playbooks/default')
+def get_playbook_default():
+    try:
+        doc = json.loads(PLAYBOOK_DEFAULT_FILE.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {'ok': True, 'exists': False}
+    from .config import migrate_playbook_map, migrate_playbook_names
+    known = set(_playbook_names())
+    off = [x for x in migrate_playbook_names(doc.get('disabled_playbooks')) if x in known]
+    tf_map = {k: [t for t in v if t in BOARD_TFS]
+              for k, v in migrate_playbook_map(doc.get('playbook_timeframes')).items() if k in known}
+    return {'ok': True, 'exists': True, 'saved_ms': doc.get('saved_ms'),
+            'disabled_playbooks': off, 'playbook_timeframes': tf_map,
+            # Playbooks added since the default was saved run everywhere when
+            # it is loaded - say which, so that is not a surprise.
+            'new_since': sorted(known - set(doc.get('known') or known))}
+
+
+@app.post('/api/playbooks/default')
+def set_playbook_default(body: dict):
+    off = list(body.get('disabled_playbooks') or [])
+    tf_map = dict(body.get('playbook_timeframes') or {})
+    for key, val in (('disabled_playbooks', off), ('playbook_timeframes', tf_map)):
+        err = _check_setting('gates', key, val)
+        if err:
+            return {'ok': False, 'error': err}
+    doc = {'disabled_playbooks': off, 'playbook_timeframes': tf_map,
+           'known': _playbook_names(), 'saved_ms': int(time.time() * 1000)}
+    PLAYBOOK_DEFAULT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = PLAYBOOK_DEFAULT_FILE.with_suffix('.json.tmp')
+    tmp.write_text(json.dumps(doc, indent=1), encoding='utf-8')
+    tmp.replace(PLAYBOOK_DEFAULT_FILE)
+    return {'ok': True, 'saved_ms': doc['saved_ms']}
 
 
 @app.post('/api/settings')
@@ -2228,6 +2349,17 @@ def _requalify(rec: dict):
     sig = Signal(**{k: v for k, v in rec['signal'].items() if k in Signal.__dataclass_fields__})
     ctx = judging_context(STATE.context(), rec.get('stage'))
     out = qualify(sig, snap, FEED.spec(rec['symbol']), ctx)
+    # Settings -> Playbooks at SEND time: a signal recorded before its playbook
+    # was switched off for this timeframe is not sent, and a pending order from
+    # it is pulled at the next closed bar. A filled trade is never touched.
+    from .engine.signals import playbook_on
+    if out is not None and not playbook_on(sig.playbook, rec['tf']):
+        out.gates = list(out.gates or []) + [{
+            'name': 'playbook', 'verdict': 'BLOCK', 'penalty': 0,
+            'detail': f'{sig.playbook} is off on {rec["tf"]} (Settings -> Playbooks)'}]
+        out.status = 'rejected'
+        out.qualified = False
+        out.reason = f'{sig.playbook} is off on {rec["tf"]}'
     # Which closed bar this verdict belongs to. The executor re-judges a
     # pending order once per bar, and needs to tell a new verdict from the
     # same one handed back two seconds later.

@@ -37,6 +37,8 @@ def _cast(current, value):
         return tuple(value)
     if isinstance(current, str):
         return str(value)
+    if isinstance(current, dict):
+        return {str(k): [str(t) for t in (v or [])] for k, v in dict(value).items()}
     return value
 
 
@@ -52,6 +54,13 @@ def live_saved() -> dict:
                if v is not None]
         if old:
             ex.setdefault('lots_gold', min(old))
+    from ..config import migrate_playbook_names
+    gt = saved.get('gates')
+    if isinstance(gt, dict) and 'disabled_playbooks' in gt:
+        gt['disabled_playbooks'] = migrate_playbook_names(gt['disabled_playbooks'])
+    if isinstance(gt, dict) and isinstance(gt.get('playbook_timeframes'), dict):
+        from ..config import migrate_playbook_map
+        gt['playbook_timeframes'] = migrate_playbook_map(gt['playbook_timeframes'])
     return saved
 
 
@@ -104,6 +113,11 @@ def jsonable(eff: dict) -> dict:
 SCHEMA = [
     {'group': 'risk', 'key': 'equity', 'label': 'Starting balance', 'type': 'float',
      'lo': 100, 'hi': 10_000_000, 'hint': 'account currency'},
+    # A LIMIT, not a sizer: orders go out at the fixed lots below; a signal whose
+    # stop-out at that size would cost more than this % of equity is blocked
+    # (qualify.py, gate "sizing"). Same setting as live Settings -> Risk & gates.
+    {'group': 'risk', 'key': 'risk_per_trade_pct', 'label': 'Risk per trade %', 'type': 'float',
+     'lo': 0.01, 'hi': 100, 'hint': 'max loss per trade at the fixed lots; wider stops are blocked'},
     {'group': 'execution', 'key': 'lots_gold', 'label': 'Lots (gold)', 'type': 'float',
      'lo': 0.01, 'hi': 5},
     {'group': 'execution', 'key': 'lots_non_gold', 'label': 'Lots (other symbols)',
@@ -122,6 +136,20 @@ SCHEMA = [
      'lo': 0.2, 'hi': 5},
     {'group': 'risk', 'key': 'min_stop_atr', 'label': 'Min stop (ATR)', 'type': 'float',
      'lo': 0.1, 'hi': 5},
+    {'group': 'risk', 'key': 'stop_mode', 'label': 'Stop placement', 'type': 'enum',
+     'options': ['atr_floor', 'order_block']},
+    {'group': 'risk', 'key': 'ob_stop_timeframes', 'label': 'Order-block stop on this timeframe',
+     'type': 'tfs'},
+    {'group': 'risk', 'key': 'ob_stop_min_atr', 'label': 'OB stop min (ATR)', 'type': 'float',
+     'lo': 0, 'hi': 3},
+    {'group': 'risk', 'key': 'ob_stop_max_atr', 'label': 'OB stop max (ATR)', 'type': 'float',
+     'lo': 0.5, 'hi': 10},
+    {'group': 'risk', 'key': 'ob_stop_buffer_low_atr', 'label': 'OB buffer, 30m and below (ATR)',
+     'type': 'float', 'lo': 0, 'hi': 1},
+    {'group': 'risk', 'key': 'ob_stop_buffer_high_atr', 'label': 'OB buffer, 1h and above (ATR)',
+     'type': 'float', 'lo': 0, 'hi': 1},
+    {'group': 'risk', 'key': 'ob_stop_fallback', 'label': 'No order block in range', 'type': 'enum',
+     'options': ['atr_floor', 'skip']},
     {'group': 'risk', 'key': 'tp1_r', 'label': 'TP1 (R)', 'type': 'float', 'lo': 0.3, 'hi': 5},
     {'group': 'risk', 'key': 'tp2_r', 'label': 'TP2 (R)', 'type': 'float', 'lo': 0.5, 'hi': 10},
     {'group': 'risk', 'key': 'min_rr', 'label': 'Min R:R (net, TP2)', 'type': 'float',
@@ -134,6 +162,9 @@ SCHEMA = [
      'type': 'float', 'lo': 0.1, 'hi': 20},
     {'group': 'gates', 'key': 'min_confidence', 'label': 'Min confidence', 'type': 'int',
      'lo': 0, 'hi': 100},
+    {'group': 'gates', 'key': 'room_block_pct', 'label': 'Room: block below % to TP1',
+     'type': 'float', 'lo': 0, 'hi': 95,
+     'hint': 'a level against the trade nearer than this % of the way to TP1 blocks it; 0 = warn only'},
     {'group': 'gates', 'key': 'max_spread_points', 'label': 'Max spread (points)',
      'type': 'float', 'lo': 1, 'hi': 500},
     {'group': 'gates', 'key': 'min_mtf_score', 'label': 'Min MTF score', 'type': 'int',
@@ -144,7 +175,10 @@ SCHEMA = [
      'lo': 0, 'hi': 100},
     {'group': 'gates', 'key': 'avoid_fades', 'label': 'Avoid fading the leg', 'type': 'bool'},
     {'group': 'gates', 'key': 'session_blocks', 'label': 'Block thin sessions', 'type': 'bool'},
-    {'group': 'gates', 'key': 'disabled_playbooks', 'label': 'Playbooks off', 'type': 'playbooks'},
+    {'group': 'gates', 'key': 'disabled_playbooks', 'label': 'Playbooks on this timeframe', 'type': 'playbooks'},
+    # Edited through the playbooks row above (per session timeframe); listed so a
+    # session can override it.
+    {'group': 'gates', 'key': 'playbook_timeframes', 'label': 'Playbook timeframes', 'type': 'pbmap'},
 ]
 
 

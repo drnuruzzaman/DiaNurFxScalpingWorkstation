@@ -136599,3 +136599,1537 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 ********************************************************************
 * bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
 * endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:26:31 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:27:41 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:28:22 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 14:39:57 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 15:46:50 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55988)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56951)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55989)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+----------------------------------------
+
+===== 2026-11-08 16:52:35 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 17:48:56 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 20:17:22 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 20:28:03 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 21:05:12 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 21:30:56 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 21:41:33 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 21:49:49 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55896)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-08 21:58:49 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53771)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-08 22:18:23 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 22:48:41 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 23:16:32 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-08 23:19:08 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-09 06:34:09 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-09 07:23:01 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-09 09:03:33 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63415)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63414)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-09 12:38:57 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : market shut, keeping UTC+2.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58008)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-09 13:47:06 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
++ session recovered (2861 symbols)
++ session recovered (2862 symbols)
+
+===== 2026-11-09 22:13:31 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 511472932 on FTMO-Server ($10k FTMO Challenge Swing 2-Step USD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-10 05:47:43 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 511472932 on FTMO-Server ($10k FTMO Challenge Swing 2-Step USD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-10 05:48:06 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54530)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54531)
+----------------------------------------
+Exception occurred during processing of request from ----------------------------------------('127.0.0.1', 54532)
+
+Exception occurred during processing of request from ('127.0.0.1', 50791)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50793)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50794)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52770)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1831, in do_GET
+    return self._json({'positions': rows})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+
+During handling of the above exception, another exception occurred:
+
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+----------------------------------------
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+----------------------------------------  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+----------------------------------------
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+----------------------------------------
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+
+===== 2026-11-10 09:19:33 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-10 19:09:02 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+1.00h (measured)
++ connected: account 511472932 on FTMO-Server ($10k FTMO Challenge Swing 2-Step USD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-10 19:10:45 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
++ session recovered (2858 symbols)
+
+===== 2026-11-11 08:48:20 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* note: "Algo Trading" is disabled in the terminal. Reading works; that toggle only affects order sending, which this bridge cannot do.
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50431)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50432)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-11 13:11:00 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-11 16:12:02 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC+2.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56449)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1749, in do_GET
+    return self._json({
+           ^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1506, in _json
+    self.wfile.write(body)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+
+===== 2026-11-11 19:28:20 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-12 06:54:54 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-12 07:22:05 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC+2.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+
+===== 2026-11-12 08:22:30 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-12 09:20:31 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54557)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54558)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54556)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+----------------------------------------
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-12 11:09:17 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49163)
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-12 12:02:36 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+2.00h (measured)
++ connected: account 21005391 on ICMarketsAU-Live (Mohammad Nuruzzaman AUD) [LIVE]
+* NOTE: this is a LIVE account. Reading is harmless; execution stays disarmed unless you pass --enable-trading --allow-live.
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-12 12:10:08 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+0.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59604)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59603)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-12 12:28:45 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC+0.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+
+===== 2026-11-12 14:47:18 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC+2.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+
+===== 2026-11-12 15:05:59 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC-3.00h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+
+===== 2026-11-12 15:27:36 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC-3.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60797)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60796)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 404, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-12 15:30:04 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC+2.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : market shut, keeping UTC+2.00h measured while open
+* clock    : broker runs UTC+2.00h (measured)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63362)
+Traceback (most recent call last):
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1918, in do_GET
+    return self._json(payload)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1970, in do_GET
+    return self._json({'error': '%s: %s' % (type(exc).__name__, exc)}, 500)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\bridge\mt5_bridge.py", line 1505, in _json
+    self.end_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 538, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python312\Lib\http\server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python312\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+
+===== 2026-11-12 17:49:16 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : market shut, keeping UTC+2.00h measured while open
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send
+* clock    : broker runs UTC+2.00h (measured)
+
+===== 2026-11-12 18:05:24 started by launcher =====
+* connecting to MetaTrader 5 using the terminal session already logged in (--attach-only: credentials ignored)
++ attach to the running terminal: ok
+* clock    : broker runs UTC+0.50h (measured)
++ connected: account 23011660 on ICMarketsAU-Demo (Mohammad Nuruzzaman USD) [DEMO]
+********************************************************************
+* EXECUTION IS ARMED. This bridge can place orders.
+* guard: *** LIVE ACCOUNTS ALLOWED ***   max 0.05 lots   magic 778899
+* every order still needs confirm=1 and a stop loss.
+********************************************************************
+* bridge on http://127.0.0.1:8765  (Ctrl+C to stop)
+* endpoints: /health /account /positions /orders /deals /symbols /spec /quotes /ticks /bars /calendar /cot /order/send

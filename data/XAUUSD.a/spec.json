@@ -10,9 +10,9 @@
  "stops_level_points": 0,
  "commission_per_lot_side": 3.0,
  "swap_mode": 1,
- "swap_long_points": -53.966,
- "swap_short_points": 36.801,
+ "swap_long_points": -54.593,
+ "swap_short_points": 37.656,
  "swap_rollover_3days_weekday": 3,
  "currency_profit": "USD",
- "saved_at": "2026-11-07 01:38"
+ "saved_at": "2026-11-12 08:11"
 }

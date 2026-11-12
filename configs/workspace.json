@@ -2,63 +2,64 @@
  "values": {
   "dianur.tabs.v2": [
    {
-    "id": "tmw4ndj5j",
+    "id": "tmwah4mth",
     "symbol": "XAUUSD.a",
-    "tf": "1h"
+    "tf": "15m"
    }
   ],
-  "dianur.activeTab": "tmw4ndj5j",
+  "dianur.activeTab": "tmwah4mth",
   "dianur.overlays": {
    "mtfTrendlines": false,
    "macd": false,
    "levels": true,
    "trendlines": false,
    "channels": true,
+   "ranges": true,
    "patterns": false,
    "fvg": false,
    "zones": false,
-   "orderBlocks": false,
+   "orderBlocks": true,
    "swings": true,
    "structure": true,
-   "liquidity": true,
-   "signal": false,
+   "liquidity": false,
+   "signal": true,
    "volumeProfile": false,
-   "regimeBands": false,
+   "regimeBands": true,
    "rsi": true,
    "volume": false,
    "zigzag": false,
    "fib": false,
-   "events": false,
+   "events": true,
    "engulfing": false
   },
   "dianur.layout": {
    "grid": false,
    "newsMarks": false,
    "positions": false,
-   "legRead": false
+   "legRead": false,
+   "drawBar": true
   },
   "dianur.mtfSources": null,
   "dianur.hideFigures": 1,
   "dianur.watchlist": [
-   "XAUUSD.a",
-   "EURUSD.a"
+   "XAUUSD.a"
   ],
   "dianur.theme": "glossy",
   "dianur.snapPanels.v2": [
-   "signal",
-   "patterns",
    "gauge",
    "trend",
-   "evidence"
+   "evidence",
+   "patterns",
+   "signal"
   ],
   "dianur.panels": {
    "left": true,
    "right": true,
-   "bottom": false
+   "bottom": true
   },
-  "dianur.dockTab": "calendar",
+  "dianur.dockTab": "execution",
   "dianur.boardSort": {
-   "key": "symbol",
+   "key": "tf",
    "dir": 1
   },
   "dianur.execSort": {
@@ -73,16 +74,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -91,53 +93,56 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 345,
-    "saved_ms": 1794012210144
+    "span": 197,
+    "saved_ms": 1794431763757
    },
    "USDJPY.a|15m": {
     "overlays": {
-     "mtfTrendlines": true,
-     "zigzag": false,
+     "mtfTrendlines": false,
      "macd": false,
      "levels": true,
      "trendlines": false,
      "channels": true,
-     "patterns": true,
+     "ranges": true,
+     "patterns": false,
      "fvg": false,
      "zones": true,
-     "fib": false,
-     "engulfing": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "events": false,
-     "liquidity": true,
+     "liquidity": false,
      "signal": true,
      "volumeProfile": false,
      "regimeBands": true,
      "rsi": true,
-     "volume": false
+     "volume": false,
+     "zigzag": false,
+     "fib": false,
+     "engulfing": false,
+     "events": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1790289977063
+    "span": 600,
+    "saved_ms": 1794302061357
    },
    "XAUUSD.a|15m": {
     "overlays": {
      "mtfTrendlines": false,
      "macd": false,
-     "levels": false,
-     "trendlines": true,
+     "levels": true,
+     "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
      "orderBlocks": true,
      "swings": true,
-     "structure": false,
+     "structure": true,
      "liquidity": false,
-     "signal": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -146,8 +151,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794015555177
+    "span": 229,
+    "saved_ms": 1794431906490
    },
    "XAUUSD.a|4h": {
     "overlays": {
@@ -156,16 +161,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
-     "zones": false,
+     "zones": true,
      "orderBlocks": false,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -174,8 +180,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010226423
+    "span": 197,
+    "saved_ms": 1794431706774
    },
    "XAUUSD.a|5m": {
     "overlays": {
@@ -184,16 +190,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -202,8 +209,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010102879
+    "span": 227,
+    "saved_ms": 1794304911959
    },
    "XAUUSD.a|3m": {
     "overlays": {
@@ -212,16 +219,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -230,8 +238,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010088464
+    "span": 600,
+    "saved_ms": 1794191809249
    },
    "EURUSD.a|1h": {
     "overlays": {
@@ -267,16 +275,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -285,8 +294,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010256849
+    "span": 600,
+    "saved_ms": 1794191778073
    },
    "XAUUSD.a|2h": {
     "overlays": {
@@ -295,16 +304,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -313,8 +323,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010221688
+    "span": 600,
+    "saved_ms": 1794191787857
    },
    "XAUUSD.a|30m": {
     "overlays": {
@@ -323,16 +333,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -341,8 +352,8 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010177144
+    "span": 600,
+    "saved_ms": 1794191795265
    },
    "XAUUSD.a|1m": {
     "overlays": {
@@ -351,16 +362,17 @@
      "levels": true,
      "trendlines": false,
      "channels": true,
+     "ranges": true,
      "patterns": false,
      "fvg": false,
      "zones": false,
-     "orderBlocks": false,
+     "orderBlocks": true,
      "swings": true,
      "structure": true,
-     "liquidity": true,
-     "signal": false,
+     "liquidity": false,
+     "signal": true,
      "volumeProfile": false,
-     "regimeBands": false,
+     "regimeBands": true,
      "rsi": true,
      "volume": false,
      "zigzag": false,
@@ -369,36 +381,66 @@
      "engulfing": false
     },
     "mtfSources": null,
-    "span": 300,
-    "saved_ms": 1794010083090
+    "span": 600,
+    "saved_ms": 1794191814953
+   },
+   "USDJPY.a|1h": {
+    "overlays": {
+     "mtfTrendlines": false,
+     "macd": false,
+     "levels": true,
+     "trendlines": false,
+     "channels": true,
+     "ranges": true,
+     "patterns": false,
+     "fvg": false,
+     "zones": false,
+     "orderBlocks": true,
+     "swings": true,
+     "structure": true,
+     "liquidity": false,
+     "signal": true,
+     "volumeProfile": false,
+     "regimeBands": true,
+     "rsi": true,
+     "volume": false,
+     "zigzag": false,
+     "fib": false,
+     "engulfing": false,
+     "events": false
+    },
+    "mtfSources": null,
+    "span": 600,
+    "saved_ms": 1794302039326
    }
   },
   "dianur.lab.overlays": {
    "mtfTrendlines": true,
    "macd": false,
-   "levels": false,
-   "trendlines": true,
+   "levels": true,
+   "trendlines": false,
    "channels": true,
+   "ranges": true,
    "patterns": false,
    "fvg": false,
    "zones": false,
    "orderBlocks": true,
    "swings": true,
    "structure": true,
-   "liquidity": true,
+   "liquidity": false,
    "signal": true,
    "volumeProfile": false,
    "regimeBands": false,
-   "rsi": true,
+   "rsi": false,
    "volume": false,
    "zigzag": false,
    "fib": false,
    "events": false,
    "engulfing": false
   },
-  "dianur.lab.dock": "trades",
-  "dianur.lab.dockH": 173,
+  "dianur.lab.dock": "performance",
+  "dianur.lab.dockH": 157,
   "dianur.lab.cone": false
  },
- "saved_ms": 1794016753816
+ "saved_ms": 1794471083777
 }

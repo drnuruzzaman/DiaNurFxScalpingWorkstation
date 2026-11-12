@@ -6,47 +6,265 @@
   "trail_atr": 1.0,
   "trail_lock_r": 0.75,
   "exit_mode": "trail",
-  "risk_per_trade_pct": 2.0,
-  "max_daily_loss_pct": 10.0,
+  "risk_per_trade_pct": 10.0,
+  "max_daily_loss_pct": 20.0,
   "max_daily_trades": 100,
   "min_rr": 0.5
  },
  "execution": {
   "entry_tolerance_atr": 0.2,
   "auto_timeframes": [
-   "5m",
    "15m",
    "30m",
    "1h",
    "2h",
-   "4h"
+   "4h",
+   "1d",
+   "5m"
   ],
-  "auto": false,
+  "auto": true,
   "max_per_symbol_tf": 5,
-  "broker_tp": "tp2",
+  "broker_tp": "tp1",
   "lots_gold": 0.01,
   "lots_non_gold": 0.05,
   "auto_symbols": [
-   "XAUUSD.a",
-   "EURUSD.a"
+   "XAUUSD.a"
   ]
  },
  "gates": {
-  "min_confidence": 52,
+  "min_confidence": 50,
   "max_spread_points": 45.0,
   "min_atr_cost_multiple": 4.0,
   "max_atr_percentile": 97.0,
   "min_mtf_score": 25,
-  "cooldown_bars": 2,
+  "cooldown_bars": 1,
   "disabled_playbooks": [
-   "sweep_reversal",
-   "breakout_retest",
-   "range_fade",
-   "trendline_bounce"
+   "trend_structure_pullback"
   ],
   "news_blocks": false,
   "news_blackout_min": 10,
-  "avoid_fades": true
+  "avoid_fades": true,
+  "playbook_timeframes": {
+   "liquidity_sweep_reversal": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "breakout_retest": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "false_break": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h"
+   ],
+   "trendline_bounce": [
+    "1m",
+    "3m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "range_breakout": [
+    "1m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "range_retest": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "range_sweep": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "range_compression_breakout": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "trendline_breakout": [
+    "1m",
+    "3m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "squeeze_breakout": [
+    "1m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "news_breakout": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "4h",
+    "1d"
+   ],
+   "displacement_breakout": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "1d"
+   ],
+   "liquidity_sweep_breakout": [
+    "1m",
+    "3m",
+    "30m",
+    "1h",
+    "4h",
+    "1d"
+   ],
+   "fvg_ob_breakout": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "4h",
+    "1d"
+   ],
+   "choch_reversal": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "fvg_reversal": [
+    "1m",
+    "3m",
+    "5m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "engulfing_reversal": [
+    "3m",
+    "30m",
+    "4h",
+    "1d"
+   ],
+   "rejection_wick_reversal": [
+    "1m",
+    "5m",
+    "30m",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "three_candle_reversal": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "divergence_reversal": [
+    "1m",
+    "3m",
+    "5m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "bos_retest_pullback": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "2h",
+    "4h",
+    "1d"
+   ],
+   "internal_structure_pullback": [
+    "5m",
+    "15m",
+    "30m",
+    "4h",
+    "1d"
+   ],
+   "fvg_pullback": [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "4h",
+    "1d"
+   ],
+   "fibonacci_pullback": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ]
+  },
+  "room_block_pct": 50.0
  },
  "quality": {
   "pattern_classic_only": true,

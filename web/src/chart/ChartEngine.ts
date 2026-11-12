@@ -21,9 +21,15 @@
  */
 
 import type {
-  Bar, ForecastCone, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
+  Bar, Channel, ForecastCone, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
   PriceArea, Snapshot, Signal, TradeMark, Viewport,
 } from './types'
+import { findRanges, type RangeBox } from './ranges'
+import { findSwings, structureBreaks, type HBreak, type HSwing } from './structure'
+import {
+  TOOL_POINTS, hitTest, loadDrawings, moveHandle, newId, newPosition, renderDrawing, saveDrawings,
+  type DPoint, type DrawHost, type Drawing, type ToolId,
+} from './drawings'
 
 export type ChartTheme = {
   bg: string
@@ -238,11 +244,19 @@ export type HoverInfo = {
 /**
  * Candles visible when the chart first loads, and what Reset returns to.
  *
- * Kept in step with the engine's tl_lookback_max_bars: the geometry window is
- * capped at the same figure so a trendline's anchors are on screen at this
- * zoom, rather than off the left edge where they cannot be checked.
+ * 600 = candles half as wide as the old 300 (user request 2026-11-08). The
+ * engine's tl_lookback_max_bars is still 300, so trendline geometry only
+ * covers the right half of this default view; it was NOT raised with it,
+ * because that setting feeds the signal engine and the forward books.
  */
-const DEFAULT_SPAN = 300
+const DEFAULT_SPAN = 600
+
+/** A channel this long (bars) is the MAJOR trend channel, drawn solid. */
+const MAJOR_CHANNEL_BARS = 120
+/** ...or this long and 1.5x the next-longest channel. */
+const MAJOR_MIN_BARS = 40
+/** A counter-slope channel starting within this many bars of a major one's end is its pullback. */
+const PULLBACK_GAP_BARS = 6
 
 /**
  * Chart typefaces. Canvas text gets no ClearType, so a thin face at 8px reads
@@ -313,6 +327,10 @@ export class ChartEngine {
   private dpr = 1
 
   private bars: Bar[] = []
+  /** Swing-based ranges (ranges.ts); rebuilt when the bars change. */
+  private rangeCache: { key: string; boxes: RangeBox[] } = { key: '', boxes: [] }
+  /** Swings + BOS/CHoCH over every bar held (structure.ts); rebuilt when the bars change. */
+  private structCache: { key: string; swings: HSwing[]; breaks: HBreak[] } = { key: '', swings: [], breaks: [] }
   private snap: Snapshot | null = null
   private signal: Signal | null = null
   /**
@@ -331,7 +349,7 @@ export class ChartEngine {
   /** Set when the timeframe changes; consumed by the next setBars(). */
   private resetOnNextBars = false
 
-  private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true, legRead: true }
+  private layoutOpts: LayoutOpts = { grid: true, newsMarks: true, positions: true, legRead: true, drawBar: true }
   /** Signals on this chart the leg gate BLOCKED, marked when legRead is on. */
   private legBlocked: Signal[] = []
   private news: NewsMark[] = []
@@ -436,6 +454,27 @@ export class ChartEngine {
   onViewChange: ((v: Viewport) => void) | null = null
   /** Fired when the view approaches the oldest bar we hold. */
   onNeedHistory: (() => void) | null = null
+
+  // --- your drawings (drawings.ts, 2026-11-12) ------------------------ //
+  private drawScope = 'live'
+  private drawSymbol = ''
+  private drawList: Drawing[] = []
+  private drawTool: ToolId | null = null
+  /** The drawing being placed, click by click. Its last point follows the mouse. */
+  private draft: Drawing | null = null
+  /** Set when this press created the draft: releasing it far away places the next point (drag to draw). */
+  private draftByPress = false
+  /** A finished measurement; the next click clears it, as TradingView does. */
+  private measure: Drawing | null = null
+  private selectedId: string | null = null
+  private editing: { kind: 'handle' | 'body'; idx: number; x: number; y: number; orig: Drawing } | null = null
+  private downAt: { x: number; y: number } | null = null
+  private mouseDown = false
+  private drawFlags = { magnet: false, locked: false, hidden: false }
+  /** The toolbar's view of the drawing state: the tool in use, the selection, how many. */
+  onDrawState: ((s: { tool: ToolId | null; selected: string | null; count: number; drawing: Drawing | null }) => void) | null = null
+  /** Ask the page for a text (new text drawing, or editing one). null = cancelled. */
+  onTextRequest: ((req: { x: number; y: number; text: string; done: (text: string | null) => void }) => void) | null = null
 
   constructor(base: HTMLCanvasElement, top: HTMLCanvasElement, overlays: Overlays) {
     this.base = base
@@ -757,7 +796,21 @@ export class ChartEngine {
     }
     this.bctx.setTransform(bw / cw, 0, 0, bh / ch, 0, 0)
     this.tctx.setTransform(bw / cw, 0, 0, bh / ch, 0, 0)
+    const oldW = this.pane.w
     this.layout()
+    // Keep the candle width fixed across a resize: a wider window shows MORE
+    // bars rather than the same bars stretched. The right edge stays put, so
+    // the latest bar does not move; the extra room opens up on the left.
+    // A pane that was (or is) collapsed has no meaningful width to scale from.
+    const newW = this.pane.w
+    if (oldW > 50 && newW > 50 && Math.abs(newW - oldW) >= 1) {
+      const right = this.view.start + this.view.span
+      const span = Math.max(30, Math.min(1200, this.view.span * (newW / oldW)))
+      this.view.span = span
+      this.view.start = right - span
+      this.clampView()
+      this.onViewChange?.(this.getViewport())
+    }
     this.scheduleBase()
   }
 
@@ -1010,6 +1063,7 @@ export class ChartEngine {
 
     if (this.overlays.regimeBands) this.drawRegimeBand()
 
+    if (this.overlays.ranges) this.drawRanges()
     if (this.overlays.channels) this.drawChannels()
     // Areas sit UNDER everything structural. They are the widest marks on
     // the chart, and a band drawn over a trendline hides the line.
@@ -1033,11 +1087,15 @@ export class ChartEngine {
     if (this.layoutOpts.positions) this.drawPositions()
     if (this.cursorT != null) this.drawFuture()
     if (this.forecast) this.drawForecast()
+    this.drawUserDrawings()
 
     this.drawSubPanes()
     this.drawPriceAxis()
     this.drawTimeAxis()
     this.drawLastPrice()
+    // The selected / in-progress drawing lives on the top layer; it has to
+    // follow a pan, zoom or new bar too.
+    if (this.selectedId || this.draft || this.measure) this.scheduleTop()
   }
 
   /**
@@ -1849,48 +1907,90 @@ export class ChartEngine {
     ctx.restore()
   }
 
-  private drawChannels() {
+  // --- channels and ranges ---------------------------------------------- //
+  //
+  // 2026-11-08: the major trend channel and the smaller corridors inside it
+  // were drawn identically, so the eye could not tell the trend from the
+  // pullback. Now:
+  //   MAJOR   long (>= MAJOR_CHANNEL_BARS) or containing another channel -
+  //           solid, heavier edges, faint fill, "UPTREND / DOWNTREND CHANNEL"
+  //   MINOR   everything else - thin dashed edges, no fill, small label;
+  //           "PULLBACK" when it slopes against a major channel it overlaps
+  //   RANGE   horizontal channels are not drawn; ranges come from the
+  //           swing-based finder in ranges.ts (drawRanges).
+  // Chart-only: the engine's channels and every signal that reads them are
+  // unchanged.
+
+  /** Snapshot channels, sorted into major / minor (horizontal ones excluded). */
+  private classifiedChannels(): { ch: Channel; tier: 'major' | 'minor'; pullback: boolean }[] {
     const s = this.snap
-    // The live chart draws chart_channels: the engine's channels and the ones
-    // fitted across the whole default view, best ONE of each kind (server
-    // one_per_kind, 2026-11-06). The backtest chart has only the engine's.
-    const all = s?.chart_channels ?? s?.channels ?? []
-    if (!all.length) return
+    const all = (s?.chart_channels ?? s?.channels ?? []).filter((c) => c.kind !== 'horizontal')
+    const bars = (c: Channel) => c.upper.x2 - c.upper.x1
+    // Major: long in its own right, or wrapping a shorter channel, or clearly
+    // the longest on the chart (1.5x the runner-up) - the engine's channels
+    // often run end to end (the trend leg, then the pullback that starts
+    // where it stops), so neither contains the other.
+    const lens = all.map(bars).sort((a, b) => b - a)
+    const tiers = all.map((c) => {
+      const contains = all.some((o) => o !== c && c.t1 <= o.t1 && c.t2 >= o.t2 && bars(c) >= bars(o) * 1.5)
+      const dominant = lens.length > 1 && bars(c) === lens[0] && bars(c) >= MAJOR_MIN_BARS &&
+        bars(c) >= lens[1] * 1.5
+      return bars(c) >= MAJOR_CHANNEL_BARS || contains || dominant ? 'major' as const : 'minor' as const
+    })
+    // Pullback: a minor channel sloping against a major one that it overlaps
+    // or that it starts right where it ends.
+    return all.map((ch, i) => {
+      const pullback = tiers[i] === 'minor' && all.some((o, k) =>
+        tiers[k] === 'major' && o.kind !== ch.kind &&
+        o.upper.x1 <= ch.upper.x2 && o.upper.x2 >= ch.upper.x1 - PULLBACK_GAP_BARS)
+      return { ch, tier: tiers[i], pullback }
+    })
+  }
+
+  private drawChannels() {
+    const list = this.classifiedChannels()
+    if (!list.length) return
     const ctx = this.bctx
     ctx.save()
     ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
-    for (const ch of all) {
-      const col = ch.kind === 'ascending' ? this.theme.up
-        : ch.kind === 'descending' ? this.theme.down
-        : this.theme.info
+    // Majors first, so a pullback's dashed edges sit on top of the trend.
+    list.sort((a, b) => (a.tier === b.tier ? 0 : a.tier === 'major' ? -1 : 1))
+    for (const { ch, tier, pullback } of list) {
+      const major = tier === 'major'
+      const col = ch.kind === 'ascending' ? this.theme.up : this.theme.down
       const ux1 = this.snapX(ch.upper.x1), uy1 = this.yOf(ch.upper.y1)
       const ux2 = this.snapX(ch.upper.x2), uy2 = this.yOf(ch.upper.y2)
       const lx1 = this.snapX(ch.lower.x1), ly1 = this.yOf(ch.lower.y1)
       const lx2 = this.snapX(ch.lower.x2), ly2 = this.yOf(ch.lower.y2)
 
-      ctx.globalAlpha = 0.07
-      ctx.fillStyle = col
-      ctx.beginPath()
-      ctx.moveTo(ux1, uy1); ctx.lineTo(ux2, uy2)
-      ctx.lineTo(lx2, ly2); ctx.lineTo(lx1, ly1)
-      ctx.closePath(); ctx.fill()
+      if (major) {
+        ctx.globalAlpha = 0.045
+        ctx.fillStyle = col
+        ctx.beginPath()
+        ctx.moveTo(ux1, uy1); ctx.lineTo(ux2, uy2)
+        ctx.lineTo(lx2, ly2); ctx.lineTo(lx1, ly1)
+        ctx.closePath(); ctx.fill()
+      }
 
-      ctx.globalAlpha = 0.6
+      ctx.globalAlpha = major ? 0.85 : 0.6
       ctx.strokeStyle = col
-      ctx.lineWidth = 1.2
+      ctx.lineWidth = major ? 1.8 : 1
+      ctx.setLineDash(major ? [] : [5, 4])
       ctx.beginPath(); ctx.moveTo(ux1, uy1); ctx.lineTo(ux2, uy2); ctx.stroke()
       ctx.beginPath(); ctx.moveTo(lx1, ly1); ctx.lineTo(lx2, ly2); ctx.stroke()
+      ctx.setLineDash([])
 
-      ctx.globalAlpha = 1
-      ctx.font = `700 9px ui-sans-serif, system-ui`
+      ctx.globalAlpha = major ? 1 : 0.85
+      ctx.font = major ? `700 10px ${UI_FONT}` : `600 8.5px ${UI_FONT}`
       ctx.fillStyle = col
       ctx.textAlign = 'left'
+      const name = major
+        ? (ch.kind === 'ascending' ? 'UPTREND CHANNEL' : 'DOWNTREND CHANNEL')
+        : pullback ? 'PULLBACK' : `${ch.kind === 'ascending' ? 'RISING' : 'FALLING'} CHANNEL`
+      const text = `${name}  ${Math.round(ch.containment * 100)}%`
       // OUTSIDE the channel: just above the upper edge, rotated to run along
       // it, from the channel's start (or the pane's left edge if that is off
       // screen) - and pulled back left when it would run off the right edge.
-      // (2026-11-07: it sat inside, at a height taken from the wrong end of
-      // the edge, so a rising channel's label floated far from the channel.)
-      const text = `${ch.kind.toUpperCase()} CHANNEL  ${Math.round(ch.containment * 100)}%`
       const dx = ux2 - ux1
       const ang = dx >= 1 ? Math.atan2(uy2 - uy1, dx) : 0
       const tw = ctx.measureText(text).width
@@ -1906,8 +2006,71 @@ export class ChartEngine {
       ctx.fillText(text, 0, -3)
       ctx.restore()
     }
+    ctx.globalAlpha = 1
     ctx.restore()
   }
+
+  /** Swing-based ranges (see ranges.ts), cached until the bars change. */
+  private getRanges(): RangeBox[] {
+    // In a backtest with the future revealed, the chart holds bars past the
+    // replay cursor. Ranges must not see them - a range would end at a
+    // breakout that has not happened yet - so they are found on the bars up
+    // to the cursor only (a prefix, so the indices still line up).
+    const cut = this.cursorT != null ? this.barIndexAtOrBefore(this.cursorT) : -1
+    const b = cut >= 0 ? this.bars.slice(0, cut + 1) : this.bars
+    const n = b.length
+    const key = `${n}:${n ? b[0].t : 0}:${n ? b[n - 1].t : 0}:${n ? b[n - 1].c : 0}`
+    if (this.rangeCache.key !== key) this.rangeCache = { key, boxes: findRanges(b) }
+    return this.rangeCache.boxes
+  }
+
+  /**
+   * Range boxes in three tiers: MAJOR cyan, MINOR orange, DEVELOPING purple.
+   * The engine's horizontal channels are no longer drawn as ranges: they are
+   * fitted to a trendline and run to the last bar regardless of breakouts,
+   * which is exactly the "one big box over everything" this replaced.
+   */
+  private drawRanges() {
+    const list = this.getRanges()
+    if (!list.length) return
+    const from = this.view.start - 1, to = this.view.start + this.view.span + 1
+    const ctx = this.bctx
+    const half = this.barW() / 2
+    const colOf = (t: RangeBox['tier']) =>
+      t === 'major' ? this.theme.info : t === 'minor' ? this.theme.warn : this.theme.accent
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    // Majors underneath, so a nested minor box is drawn on top of its parent.
+    const order = { major: 0, minor: 1, developing: 2 } as const
+    for (const r of [...list].sort((a, b) => order[a.tier] - order[b.tier])) {
+      if (r.i1 < from || r.i0 > to) continue
+      const col = colOf(r.tier)
+      const x0 = this.xOf(r.i0) - half, x1 = this.xOf(r.i1) + half
+      const y0 = this.yOf(r.top), y1 = this.yOf(r.bot)
+      ctx.globalAlpha = r.tier === 'major' ? 0.07 : 0.05
+      ctx.fillStyle = col
+      ctx.fillRect(x0, y0, x1 - x0, y1 - y0)
+      ctx.globalAlpha = r.tier === 'major' ? 0.75 : 0.6
+      ctx.strokeStyle = col
+      ctx.lineWidth = r.tier === 'major' ? 1.4 : 1
+      // A developing range is not finished: dashed until it is confirmed.
+      ctx.setLineDash(r.tier === 'developing' ? [5, 4] : [])
+      ctx.strokeRect(Math.round(x0) + 0.5, Math.round(y0) + 0.5, Math.round(x1 - x0), Math.round(y1 - y0))
+      ctx.setLineDash([])
+      ctx.globalAlpha = 0.95
+      ctx.font = r.tier === 'major' ? `700 9px ${UI_FONT}` : `600 8.5px ${UI_FONT}`
+      ctx.fillStyle = col
+      ctx.textAlign = 'left'
+      ctx.textBaseline = 'bottom'
+      const name = r.tier === 'major' ? 'MAJOR RANGE' : r.tier === 'minor' ? 'RANGE' : 'DEVELOPING RANGE'
+      const tag = r.strong && r.breakout ? (r.breakout === 'up' ? '  ▲ BREAKOUT' : '  ▼ BREAKDOWN') : ''
+      ctx.fillText(name + tag, Math.max(x0, 0) + 4, y0 - 2)
+    }
+    ctx.globalAlpha = 1
+    ctx.restore()
+  }
+
+
 
   // --- patterns: the Autochartist signature ---------------------------- //
   private drawPatterns() {
@@ -2016,9 +2179,40 @@ export class ChartEngine {
   }
 
   // --- swings, structure, events --------------------------------------- //
+  /**
+   * The engine's structure on every bar the chart holds (structure.ts, a
+   * port of engine/structure.py). Like the ranges, never past the replay
+   * cursor in a backtest with the future revealed.
+   */
+  private getStructure(): { swings: HSwing[]; breaks: HBreak[] } {
+    const cut = this.cursorT != null ? this.barIndexAtOrBefore(this.cursorT) : -1
+    const b = cut >= 0 ? this.bars.slice(0, cut + 1) : this.bars
+    const n = b.length
+    const key = `${n}:${n ? b[0].t : 0}:${n ? b[n - 1].t : 0}:${n ? b[n - 1].c : 0}`
+    if (this.structCache.key !== key) {
+      const swings = findSwings(b)
+      this.structCache = { key, swings, breaks: structureBreaks(swings, b) }
+    }
+    return this.structCache
+  }
+
+  /**
+   * Swings to draw, in CHART indices: the engine's own inside its analysis
+   * window (what the signals read), and the chart-side port for the history
+   * before the engine's first swing (2026-11-08 - the left of the chart used
+   * to be bare).
+   */
+  private allSwings() {
+    const own = (this.snap?.swings ?? []).map((w) => ({ ...w, ci: w.idx + this.snapOffset }))
+    const from = own.length ? Math.min(...own.map((w) => w.t)) : Infinity
+    const hist = this.getStructure().swings.filter((w) => w.t < from).map((w) => ({ ...w, ci: w.idx }))
+    return [...hist, ...own]
+  }
+
   private drawSwings() {
     const s = this.snap
-    if (!s?.swings) return
+    const swings = this.allSwings()
+    if (!swings.length) return
     const ctx = this.bctx
 
     // Significant swings get a ring with a solid dot; the rest - lower-
@@ -2028,22 +2222,22 @@ export class ChartEngine {
     // "Significant" is the top 30% by leg size (strength, in ATR). A fixed
     // ATR cut-off would mean different things on different charts; the
     // percentile lands at ~2.7 ATR on 5m, 15m and 1h alike (measured).
-    const legs = s.swings.map((w) => w.strength ?? 0).sort((a, b) => a - b)
+    const legs = swings.map((w) => w.strength ?? 0).sort((a, b) => a - b)
     const cut = legs.length ? legs[Math.floor(legs.length * 0.7)] : Infinity
     // The reversal that confirms a major turn, in price: the top-30% leg size
     // times the ATR AT THE SWINGS (each swing's leg / its strength, median),
     // not the last bar's. A quiet last bar - a weekend on 5m - shrank the
     // threshold and made 37 of 60 swings "major".
-    const local = s.swings
+    const local = swings
       .map((w, i) => (i > 0 && (w.strength ?? 0) > 0
-        ? Math.abs(w.price - s.swings[i - 1].price) / (w.strength as number) : 0))
+        ? Math.abs(w.price - swings[i - 1].price) / (w.strength as number) : 0))
       .filter((x) => x > 0).sort((a, b) => a - b)
-    const swingAtr = local.length ? local[Math.floor(local.length / 2)] : (s.atr || 0)
-    const major = this.majorSwings(s.swings, (Number.isFinite(cut) && cut > 0 ? cut : 3) * swingAtr)
+    const swingAtr = local.length ? local[Math.floor(local.length / 2)] : (s?.atr || 0)
+    const major = this.majorSwings(swings, (Number.isFinite(cut) && cut > 0 ? cut : 3) * swingAtr)
 
     ctx.save()
-    for (const [i, sw] of s.swings.entries()) {
-      const x = this.snapX(sw.idx)
+    for (const [i, sw] of swings.entries()) {
+      const x = this.xOf(sw.ci)
       if (x < -20 || x > this.pane.w + 20) continue
       const high = sw.kind === 'high'
       const y = this.yOf(sw.price) + (high ? -6 : 6)
@@ -2061,7 +2255,8 @@ export class ChartEngine {
       } else {
         ctx.globalAlpha *= 0.8
         ctx.lineWidth = 1
-        ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.stroke()
+        // 2.4 px (was 3.2, 2026-11-08): minor swings are context, not signals.
+        ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2); ctx.stroke()
       }
     }
     ctx.restore()
@@ -2124,15 +2319,26 @@ export class ChartEngine {
    */
   private drawStructureBreaks() {
     const s = this.snap
-    if (!s?.breaks) return
+    // The engine's breaks (its latest 30) where it has them; the chart-side
+    // port's for everything before - same rules, see structure.ts.
+    const own = (s?.breaks ?? []).map((b) => ({
+      ...b, ci: b.idx + this.snapOffset,
+      cf: b.from_swing != null && b.from_swing >= 0 ? b.from_swing + this.snapOffset : null,
+    }))
+    const from = own.length ? Math.min(...own.map((b) => b.t))
+      : (s?.swings?.length ? Math.min(...s.swings.map((w) => w.t)) : Infinity)
+    const hist = this.getStructure().breaks.filter((b) => b.t < from)
+      .map((b) => ({ ...b, ci: b.idx, cf: b.from_swing }))
+    const all = [...hist, ...own]
+    if (!all.length) return
     const ctx = this.bctx
     ctx.save()
     ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
     ctx.font = `700 8.5px ${UI_FONT}`
     ctx.textAlign = 'center'
-    for (const b of s.breaks) {
-      const x1 = this.snapX(b.idx)
-      const x0 = b.from_swing != null && b.from_swing >= 0 ? this.snapX(b.from_swing) : x1 - this.barW() * 6
+    for (const b of all) {
+      const x1 = this.xOf(b.ci)
+      const x0 = b.cf != null ? this.xOf(b.cf) : x1 - this.barW() * 6
       if (x1 < -30 || x0 > this.pane.w + 30) continue
       const y = this.yOf(b.price)
       if (y < -10 || y > this.pane.h + 10) continue
@@ -2248,7 +2454,9 @@ export class ChartEngine {
     }
     rail(yT2, col, away('TP2', sig.tp2, '+'), true)
     rail(yT1, col, away('TP1', sig.tp1, '+'), true)
-    rail(yE, this.theme.warn, 'ENTRY')
+    // Which rule fired, on the entry rail - with 40+ playbooks the chart has
+    // to say which one this is (2026-11-08).
+    rail(yE, this.theme.warn, 'ENTRY')     // the playbook's name is on the signals panel
     rail(yS, buy ? this.theme.down : this.theme.up, away('SL', sig.stop, '-'))
 
     // direction marker at the signal bar
@@ -3188,6 +3396,13 @@ export class ChartEngine {
   private drawTop() {
     const ctx = this.tctx
     ctx.clearRect(0, 0, this.width, this.height)
+    if (this.bars.length && (this.selectedId || this.draft || this.measure)) {
+      const host = this.drawHost()
+      const sel = this.drawFlags.hidden ? null : this.drawList.find((d) => d.id === this.selectedId)
+      if (sel) renderDrawing(ctx, sel, host, true)
+      if (this.draft) renderDrawing(ctx, this.draft, host, true)
+      if (this.measure) renderDrawing(ctx, this.measure, host)
+    }
     const h = this.hover
     if (!h) return
     ctx.save()
@@ -3275,8 +3490,9 @@ export class ChartEngine {
       this.scheduleBase()
       this.onViewChange?.(this.getViewport())
     }
-    if (!this.dragging) {
-      this.top.style.cursor = this.onPriceAxis(x) ? 'ns-resize' : 'crosshair'
+    const drawn = this.drawMove(x, y)
+    if (!this.dragging && !drawn) {
+      this.top.style.cursor = this.onPriceAxis(x) ? 'ns-resize' : this.drawCursor(x, y)
     }
     const bi = Math.round(this.barAt(x))
     const bar = bi >= 0 && bi < this.bars.length ? this.bars[bi] : null
@@ -3310,6 +3526,10 @@ export class ChartEngine {
     const r = this.top.getBoundingClientRect()
     const x = e.clientX - r.left
     const y = e.clientY - r.top
+    if (e.button === 0) {
+      this.mouseDown = true
+      if (!this.onPriceAxis(x) && y < this.pane.y + this.pane.h && this.drawDown(x, y)) return
+    }
     this.dragging = true
     this.dragMode = this.onPriceAxis(x) ? 'scale' : 'pan'
     this.dragStartX = x
@@ -3320,7 +3540,9 @@ export class ChartEngine {
     this.top.style.cursor = this.dragMode === 'scale' ? 'ns-resize' : 'grabbing'
   }
 
-  private onUp = () => {
+  private onUp = (e: MouseEvent) => {
+    this.mouseDown = false
+    this.drawUp(e)
     this.dragging = false
     this.top.style.cursor = 'crosshair'
   }
@@ -3331,7 +3553,12 @@ export class ChartEngine {
    * chart. It used to work only over the price axis, which is a thin target
    * and had to be advertised with a permanent badge to be discoverable.
    */
-  private onDouble = () => {
+  private onDouble = (e: MouseEvent) => {
+    // On a text drawing: edit it. While drawing: nothing (a double click is
+    // two placement clicks, not a request to reset the scale).
+    const r = this.top.getBoundingClientRect()
+    if (this.editText(e.clientX - r.left, e.clientY - r.top)) return
+    if (this.draft || this.drawTool) return
     this.resetPriceScale()
   }
 
@@ -3356,6 +3583,7 @@ export class ChartEngine {
     this.top.addEventListener('mousedown', this.onDown)
     this.top.addEventListener('dblclick', this.onDouble)
     window.addEventListener('mouseup', this.onUp)
+    window.addEventListener('keydown', this.onKey)
     this.top.addEventListener('wheel', this.onWheel, { passive: false })
   }
 
@@ -3365,6 +3593,315 @@ export class ChartEngine {
     this.top.removeEventListener('mousedown', this.onDown)
     this.top.removeEventListener('dblclick', this.onDouble)
     window.removeEventListener('mouseup', this.onUp)
+    window.removeEventListener('keydown', this.onKey)
     this.top.removeEventListener('wheel', this.onWheel)
+  }
+
+  // ------------------------------------------------------------------ //
+  // your drawings - the engine side (drawings.ts does the geometry)    //
+  // ------------------------------------------------------------------ //
+  /** Which symbol's drawings to show; live and lab keep separate sets. */
+  setDrawingKey(scope: string, symbol: string) {
+    if (scope === this.drawScope && symbol === this.drawSymbol) return
+    this.drawScope = scope
+    this.drawSymbol = symbol
+    this.drawList = loadDrawings(scope, symbol)
+    this.draft = null; this.measure = null; this.selectedId = null; this.editing = null
+    this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  /** The toolbar picked a tool (null = the cursor). */
+  setDrawTool(tool: ToolId | null) {
+    this.drawTool = tool
+    this.draft = null; this.measure = null; this.selectedId = null; this.editing = null
+    this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  setDrawFlags(f: Partial<{ magnet: boolean; locked: boolean; hidden: boolean }>) {
+    Object.assign(this.drawFlags, f)
+    if (this.drawFlags.locked || this.drawFlags.hidden) { this.selectedId = null; this.editing = null }
+    this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  deleteSelectedDrawing() {
+    if (!this.selectedId) return
+    this.drawList = this.drawList.filter((d) => d.id !== this.selectedId)
+    this.selectedId = null; this.editing = null
+    this.persistDrawings(); this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  clearDrawings() {
+    this.drawList = []
+    this.draft = null; this.measure = null; this.selectedId = null; this.editing = null
+    this.persistDrawings(); this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  private persistDrawings() { saveDrawings(this.drawScope, this.drawSymbol, this.drawList) }
+
+  private emitDraw() {
+    this.onDrawState?.({ tool: this.drawTool, selected: this.selectedId, count: this.drawList.length,
+      drawing: this.drawList.find((d) => d.id === this.selectedId) ?? null })
+  }
+
+  /** The selection bar changed the selected drawing's colour, width or line style. */
+  styleSelectedDrawing(patch: Partial<Pick<Drawing, 'color' | 'width' | 'dash'>>) {
+    if (!this.selectedId) return
+    this.drawList = this.drawList.map((d) => (d.id === this.selectedId ? { ...d, ...patch } : d))
+    this.persistDrawings(); this.emitDraw(); this.scheduleTop()
+  }
+
+  /** One bar's length: the timeframe when known, else the last bar gap. */
+  private barStep(): number {
+    if (this.tfMs > 0) return this.tfMs
+    const n = this.bars.length
+    return n > 1 ? Math.max(1, this.bars[n - 1].t - this.bars[n - 2].t) : 60_000
+  }
+
+  /** xOfTime, but extrapolated before the first bar too (drawings older than the history held). */
+  private xOfTimeFree(t: number): number {
+    if (this.bars.length && t < this.bars[0].t) return this.xOf((t - this.bars[0].t) / this.barStep())
+    return this.xOfTime(t)
+  }
+
+  /** x pixel -> time, the inverse of xOfTimeFree. */
+  private timeAtX(x: number): number {
+    const n = this.bars.length
+    if (!n) return 0
+    const fi = this.barAt(x)
+    const step = this.barStep()
+    if (fi <= 0) return this.bars[0].t + fi * step
+    if (fi >= n - 1) return this.bars[n - 1].t + (fi - (n - 1)) * step
+    const lo = Math.floor(fi)
+    return this.bars[lo].t + (fi - lo) * (this.bars[lo + 1].t - this.bars[lo].t)
+  }
+
+  private drawHost(): DrawHost {
+    return {
+      x: (t) => this.xOfTimeFree(t),
+      y: (p) => this.yOf(p),
+      t: (x) => this.timeAtX(x),
+      p: (y) => this.priceAt(y),
+      pane: this.pane,
+      theme: this.theme,
+      digits: this.digits,
+      pips: (d) => this.pips(d),
+      cash: (d) => this.cash(d),
+      barsBetween: (t0, t1) => Math.round(Math.abs(this.barAt(this.xOfTimeFree(t1)) - this.barAt(this.xOfTimeFree(t0)))),
+      font: NUM_FONT,
+    }
+  }
+
+  /**
+   * Mouse -> (time, price). Time snaps to the bar under the cursor (or the
+   * bar slot beyond the last one); with the magnet on, price snaps to that
+   * bar's nearest open / high / low / close.
+   */
+  private snapPoint(x: number, y: number): DPoint {
+    const n = this.bars.length
+    const fi = Math.round(this.barAt(x))
+    const yy = Math.max(this.pane.y, Math.min(this.pane.y + this.pane.h, y))
+    let p = this.priceAt(yy)
+    if (fi >= 0 && fi < n) {
+      const b = this.bars[fi]
+      if (this.drawFlags.magnet) {
+        p = [b.o, b.h, b.l, b.c].reduce((a, v) => (Math.abs(v - p) < Math.abs(a - p) ? v : a), b.c)
+      }
+      return { t: b.t, p }
+    }
+    return { t: this.timeAtX(this.xOf(fi)), p }
+  }
+
+  private commitDrawing(d: Drawing) {
+    this.drawList = [...this.drawList, d]
+    this.draft = null
+    this.selectedId = d.id
+    this.drawTool = null
+    this.persistDrawings(); this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+  }
+
+  /** Fix the draft's moving point; finish when it has all its points. */
+  private placeDraftPoint(q: DPoint) {
+    const d = this.draft
+    if (!d) return
+    d.points[d.points.length - 1] = q
+    if (d.points.length >= TOOL_POINTS[d.tool]) {
+      if (d.tool === 'ruler') {
+        this.measure = d; this.draft = null; this.drawTool = null
+        this.emitDraw(); this.scheduleTop()
+        return
+      }
+      this.commitDrawing(d)
+      return
+    }
+    d.points.push({ ...q })
+    this.scheduleTop()
+  }
+
+  /** Average bar range near `i` - the default stop distance of a new position. */
+  private typicalRange(i: number): number {
+    const n = this.bars.length
+    const to = Math.max(1, Math.min(n, i + 1)), from = Math.max(0, to - 14)
+    let s = 0
+    for (let k = from; k < to; k++) s += this.bars[k].h - this.bars[k].l
+    const avg = to > from ? s / (to - from) : (this.priceMax - this.priceMin) * 0.03
+    return avg > 0 ? avg : (this.priceMax - this.priceMin) * 0.03
+  }
+
+  /** A press on the chart. true = the drawings took it (no pan). */
+  private drawDown(x: number, y: number): boolean {
+    this.downAt = { x, y }
+    this.draftByPress = false
+    if (this.measure && !this.draft) {
+      this.measure = null
+      this.scheduleTop()
+      if (!this.drawTool) return true
+    }
+    const tool = this.drawTool
+    if (tool) {
+      const q = this.snapPoint(x, y)
+      if (this.draft) { this.placeDraftPoint(q); return true }
+      if (tool === 'brush') {
+        this.draft = { id: newId(), tool, points: [{ t: this.timeAtX(x), p: this.priceAt(y) }] }
+        return true
+      }
+      if (tool === 'hline' || tool === 'vline') { this.commitDrawing({ id: newId(), tool, points: [q] }); return true }
+      if (tool === 'long' || tool === 'short') {
+        const fi = Math.round(this.barAt(x))
+        this.commitDrawing(newPosition(tool, q, this.typicalRange(fi) * 1.5, q.t + 30 * this.barStep()))
+        return true
+      }
+      if (tool === 'text') {
+        this.drawTool = null
+        this.emitDraw()
+        this.onTextRequest?.({ x, y, text: '', done: (text) => {
+          if (text && text.trim()) this.commitDrawing({ id: newId(), tool: 'text', points: [q], text })
+        } })
+        return true
+      }
+      this.draft = { id: newId(), tool, points: [q, { ...q }] }
+      this.draftByPress = true
+      this.scheduleTop()
+      return true
+    }
+    if (this.drawFlags.hidden || this.drawFlags.locked) return false
+    const host = this.drawHost()
+    for (let i = this.drawList.length - 1; i >= 0; i--) {
+      const d = this.drawList[i]
+      const hit = hitTest(this.tctx, d, host, x, y)
+      if (hit) {
+        this.selectedId = d.id
+        this.editing = { kind: hit.kind, idx: hit.kind === 'handle' ? hit.idx : -1, x, y,
+          orig: JSON.parse(JSON.stringify(d)) }
+        this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+        return true
+      }
+    }
+    if (this.selectedId) {
+      this.selectedId = null
+      this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+    }
+    return false
+  }
+
+  /** Mouse move for drawings. true = it handled the cursor. */
+  private drawMove(x: number, y: number): boolean {
+    if (this.draft) {
+      if (this.draft.tool === 'brush') {
+        if (this.mouseDown) {
+          const last = this.draft.points[this.draft.points.length - 1]
+          if (Math.hypot(this.xOfTimeFree(last.t) - x, this.yOf(last.p) - y) >= 3) {
+            this.draft.points.push({ t: this.timeAtX(x), p: this.priceAt(y) })
+          }
+        }
+      } else {
+        this.draft.points[this.draft.points.length - 1] = this.snapPoint(x, y)
+      }
+      this.top.style.cursor = 'crosshair'
+      this.scheduleTop()
+      return true
+    }
+    if (this.editing && this.mouseDown) {
+      const ed = this.editing
+      let d: Drawing
+      if (ed.kind === 'handle') {
+        d = moveHandle(ed.orig, ed.idx, this.snapPoint(x, y))
+      } else {
+        // Whole bars sideways, so every point stays on a candle.
+        const shift = Math.round((x - ed.x) / this.barW()) * this.barW()
+        const dy = y - ed.y
+        d = { ...ed.orig, points: ed.orig.points.map((q) => ({
+          t: this.timeAtX(this.xOfTimeFree(q.t) + shift), p: this.priceAt(this.yOf(q.p) + dy) })) }
+      }
+      this.drawList = this.drawList.map((o) => (o.id === d.id ? d : o))
+      this.top.style.cursor = ed.kind === 'handle' ? 'pointer' : 'move'
+      this.scheduleTop()
+      return true
+    }
+    return false
+  }
+
+  /** The cursor over the chart: a drawing under it shows it can be grabbed. */
+  private drawCursor(x: number, y: number): string {
+    if (this.drawTool || this.drawFlags.hidden || this.drawFlags.locked || !this.drawList.length) return 'crosshair'
+    const host = this.drawHost()
+    for (let i = this.drawList.length - 1; i >= 0; i--) {
+      const hit = hitTest(this.tctx, this.drawList[i], host, x, y)
+      if (hit) return hit.kind === 'handle' ? 'pointer' : 'move'
+    }
+    return 'crosshair'
+  }
+
+  private drawUp(e: MouseEvent) {
+    const r = this.top.getBoundingClientRect()
+    const x = e.clientX - r.left, y = e.clientY - r.top
+    if (this.draft?.tool === 'brush') {
+      const d = this.draft
+      if (d.points.length >= 2) this.commitDrawing(d)
+      else { this.draft = null; this.scheduleTop() }
+    } else if (this.draft && this.draftByPress && this.downAt &&
+               Math.hypot(x - this.downAt.x, y - this.downAt.y) > 6) {
+      // Pressed, dragged, released: the release places the next point.
+      this.placeDraftPoint(this.snapPoint(x, y))
+    }
+    this.draftByPress = false
+    if (this.editing) {
+      this.editing = null
+      this.persistDrawings()
+      this.scheduleBase(); this.scheduleTop()
+    }
+  }
+
+  private editText(x: number, y: number): boolean {
+    if (this.drawFlags.hidden || this.drawFlags.locked || this.drawTool) return false
+    const host = this.drawHost()
+    const d = [...this.drawList].reverse().find((o) => o.tool === 'text' && hitTest(this.tctx, o, host, x, y))
+    if (!d) return false
+    this.onTextRequest?.({ x, y, text: d.text ?? '', done: (text) => {
+      if (text == null) return
+      this.drawList = text.trim()
+        ? this.drawList.map((o) => (o.id === d.id ? { ...o, text } : o))
+        : this.drawList.filter((o) => o.id !== d.id)
+      this.persistDrawings(); this.scheduleBase(); this.scheduleTop()
+    } })
+    return true
+  }
+
+  private drawUserDrawings() {
+    if (this.drawFlags.hidden || !this.drawList.length) return
+    const host = this.drawHost()
+    for (const d of this.drawList) if (d.id !== this.selectedId) renderDrawing(this.bctx, d, host)
+  }
+
+  /** Escape cancels / deselects; Delete removes the selected drawing. */
+  private onKey = (e: KeyboardEvent) => {
+    const el = e.target as HTMLElement | null
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || el.isContentEditable)) return
+    if (e.key === 'Escape' && (this.draft || this.measure || this.drawTool || this.selectedId)) {
+      this.draft = null; this.measure = null; this.drawTool = null; this.selectedId = null; this.editing = null
+      this.emitDraw(); this.scheduleBase(); this.scheduleTop()
+    } else if ((e.key === 'Delete' || e.key === 'Backspace') && this.selectedId) {
+      e.preventDefault()
+      this.deleteSelectedDrawing()
+    }
   }
 }

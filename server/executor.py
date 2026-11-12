@@ -53,6 +53,13 @@ RETRY_AFTER_REFUSAL_MS = 30_000
 # spike during a news print is simply not sampled; only what is true when the
 # bar closes counts.
 UNKNOWN_GIVE_UP_MS = 60_000
+# How far back _deals_list() asks the bridge for deal history.
+DEALS_DAYS = 3
+# Price reached TP1 after the signal's bar closed but before its entry filled:
+# the move it called has happened without it (2h fvg_reversal sell, 12 Nov
+# 2026 - entry 4050.6, price already at TP2 3985.8). Flagged by
+# server/main.py (signal_store record 'target_hit') or seen on the live quote.
+TARGET_SPENT = 'TP1 reached before the entry filled - the move already happened'
 
 
 def _now() -> int:
@@ -100,7 +107,7 @@ class Executor:
 
     def _deals_list(self):
         if self._deals is None:
-            payload = self.bridge.deals(3)
+            payload = self.bridge.deals(DEALS_DAYS)
             self._deals = (payload or {}).get('deals') if isinstance(payload, dict) else None
         return self._deals
 
@@ -126,6 +133,9 @@ class Executor:
         fid, sig, now = rec['id'], rec['signal'], _now()
         if now > rec['expires_ms']:
             self.store.move(fid, EXPIRED, 'expired before it was sent')
+            return
+        if rec.get('target_hit'):
+            self.store.move(fid, CANCELLED, TARGET_SPENT)
             return
         if not self.trading_enabled():
             if manual:
@@ -180,6 +190,10 @@ class Executor:
         entry, stop = float(sig['entry']), float(sig['stop'])
         if (buy and bid <= stop) or (not buy and ask >= stop):
             self.store.move(fid, CANCELLED, 'price is already through the stop')
+            return
+        tp1 = float(sig['tp1'])
+        if (buy and bid >= tp1) or (not buy and ask <= tp1):
+            self.store.move(fid, CANCELLED, TARGET_SPENT)
             return
 
         px = ask if buy else bid
@@ -307,6 +321,8 @@ class Executor:
                 why = (EXPIRED, 'expired unfilled - pending order cancelled')
             elif rec.get('reverse'):
                 why = (REVERSED, f'opposite FINAL {rec["reverse"]} - pending order cancelled')
+            elif rec.get('target_hit'):
+                why = (CANCELLED, TARGET_SPENT + ' - pending order cancelled')
             else:
                 q = self.feed.quote(rec['symbol']) or {}
                 bid, ask = float(q.get('bid') or 0), float(q.get('ask') or 0)
@@ -400,7 +416,21 @@ class Executor:
         pid = rec.get('position')
         out = [d for d in deals if d.get('position_id') == pid and d.get('entry') in (1, 3)]
         if not out:
-            return                      # history not written yet
+            # History not written yet - or no longer reaching back to it. The
+            # position is gone (positions are read strictly, so this is not a
+            # failed read), and a close older than the deal window will never
+            # show up: held FILLED it stayed on Live Signals and the chart and
+            # used up an order slot for weeks (three pattern_break sells from
+            # 30 Sep / 7 Oct, found 2026-11-12). Close it as 'unknown' instead -
+            # no price, no R, no journal line - rather than guess.
+            filled_ms = max((int(h[0]) for h in rec.get('history') or [] if h[1] == FILLED),
+                            default=int(rec.get('updated_ms') or 0))
+            if filled_ms and _now() - filled_ms > DEALS_DAYS * 86_400_000:
+                note = (f'position gone; its close is older than the {DEALS_DAYS}-day '
+                        'deal history, so price and result are unknown')
+                self.ledger.mark(fid, 'closed', note, outcome='unknown')
+                self.store.move(fid, CLOSED, note, outcome='unknown')
+            return
         d = out[-1]
         close = float(d['price'])
         fill = float(rec.get('fill_price') or rec['signal']['entry'])

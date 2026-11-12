@@ -16,7 +16,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { IndicatorsMenu, LAYOUT_ROWS, LayoutMenu } from '../chart/ChartMenus'
 import { ChartPane } from '../chart/ChartPane'
 import { DEFAULT_LAYOUT, DEFAULT_OVERLAYS, type Bar, type ForecastCone, type LayoutOpts,
-  type Overlays, type TradeMark } from '../chart/types'
+  type Overlays, type TradeMark, showsLevels } from '../chart/types'
 import { toBars } from '../lib/api'
 import { fmt, signed } from '../lib/format'
 import * as snapshot from '../lib/snapshot'
@@ -35,7 +35,7 @@ import './lab.css'
 
 const TF_MS: Record<string, number> = {
   '1m': 60_000, '3m': 180_000, '5m': 300_000, '15m': 900_000,
-  '30m': 1_800_000, '1h': 3_600_000, '4h': 14_400_000,
+  '30m': 1_800_000, '1h': 3_600_000, '2h': 7_200_000, '4h': 14_400_000, '1d': 86_400_000,
 }
 /** News marks are today's calendar and open positions come from the lab's own trade layer. */
 const LAB_LAYOUT_ROWS = LAYOUT_ROWS.filter((r) => r.key !== 'newsMarks' && r.key !== 'positions')
@@ -86,13 +86,13 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
   const [snaps, setSnaps] = useState<LabSnap[]>([])
   const [tags, setTags] = useState<Record<string, { tag?: string; note?: string }>>({})
   const [playing, setPlaying] = useState(false)
-  const [speed, setSpeed] = useState(4)
+  const [speed, setSpeed] = useState(64)          // 'max bars/s' by default
   const [job, setJob] = useState<LabJob>(null)
   const [banner, setBanner] = useState<{ kind: 'ok' | 'warn' | 'err'; text: string } | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const [reveal, setReveal] = useState(false)
   const [overlays, setOverlaysRaw] = useState<Overlays>(
-    () => load('dianur.lab.overlays', liveOverlays ?? DEFAULT_OVERLAYS))
+    () => ({ ...DEFAULT_OVERLAYS, ...load('dianur.lab.overlays', liveOverlays ?? DEFAULT_OVERLAYS) }))
   // Layout is system-wide (set here or on the live chart, it is the same
   // everywhere). News marks are today's calendar and positions the live
   // account, so on a replay those two are always off.
@@ -264,6 +264,14 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
 
   // ------------------------------------------------------------ derived
   const cur = frame?.cursor ?? null
+  // The date box shows the bar being tested, and follows it as the replay
+  // moves - except while you are typing a date into it.
+  const gotoRef = useRef<HTMLInputElement>(null)
+  const curT = cur?.t
+  useEffect(() => {
+    if (curT == null || document.activeElement === gotoRef.current) return
+    setGotoText(toInput(curT))
+  }, [curT])
   const v = cur?.v ?? 0
   const digits = session?.spec.digits ?? 2
   const atFrontier = !!cur && cur.v === cur.k
@@ -492,7 +500,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
             <div className="lab-transport">
               <button title="First bar (Home)" onClick={() => send('first')} disabled={busy}>⏮</button>
               <button title="Back 10 bars (Shift+←)" onClick={() => step(-10)} disabled={busy}>◀◀</button>
-              <button title="Back one bar (←)" onClick={() => step(-1)} disabled={busy}>◀</button>
+              <button title="Back one bar (←)" onClick={() => step(-1)} disabled={busy}>|◀︎</button>
               <button className={`lab-play ${playing ? 'on' : ''}`} title="Play / pause (Space)" onClick={togglePlay}
                 disabled={busy && !playing}>{playing ? '❚❚' : '▶'}</button>
               <button title="Forward one bar (→)" onClick={() => step(1)} disabled={busy}>▶︎|</button>
@@ -528,7 +536,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
               )}
             </div>
             <div className="lab-goto">
-              <input type="datetime-local" value={gotoText} title="Go to a date/time (UTC)"
+              <input ref={gotoRef} type="datetime-local" value={gotoText} title="The bar being tested (UTC) - type a date/time and press Go to jump"
                 onChange={(e) => setGotoText(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter' && Number.isFinite(fromInput(gotoText))) seekTime(fromInput(gotoText)) }} />
               <button className="tool-btn" disabled={busy || !Number.isFinite(fromInput(gotoText))}
@@ -612,9 +620,9 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
             {session ? (
               <ChartPane
                 bars={shownBars} snapshot={frame?.snapshot ?? null}
-                signal={overlays.signal ? shownSignal : null}
+                signal={overlays.signal && showsLevels(shownSignal) ? shownSignal : null}
                 overlays={overlays} digits={digits} money={money}
-                onEngine={(e) => { engine.current = e }}
+                onEngine={(e) => { engine.current = e }} drawScope="lab" drawSymbol={session?.cfg.symbol}
                 tfMs={0} layout={layout} news={[]} positions={[]}
                 legBlocked={legBlocked} trades={marks}
                 cursorT={reveal && cur ? cur.t : null}

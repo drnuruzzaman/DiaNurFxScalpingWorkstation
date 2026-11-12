@@ -44,6 +44,12 @@ def _gate(name: str, verdict: str, detail: str, penalty: int = 0) -> dict:
 # --------------------------------------------------------------------------- #
 # position sizing                                                             #
 # --------------------------------------------------------------------------- #
+def _more_groups():
+    """(playbook -> family, family -> home regimes) for the taxonomy playbooks."""
+    from .playbooks_more import GROUP_HOMES, GROUP_OF
+    return GROUP_OF, GROUP_HOMES
+
+
 def is_gold(symbol: str) -> bool:
     """Gold by its XAU prefix - one rule for sizing, sending and the chart."""
     return str(symbol or '').upper().startswith('XAU')
@@ -266,8 +272,7 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
     # timeframes block every playbook, and the two continuation playbooks
     # under test need them aligned, not just not-opposed.
     strict = CONFIG.quality.htf_block and mtf.get('verdict') != 'not evaluated'
-    if strict and (opposed or (not aligned and sig.playbook in (
-            'mtf_pullback', 'flag_continuation'))):
+    if strict and opposed:
         gates.append(_gate('mtf', 'BLOCK',
                            f'higher timeframes not with the trade ({mtf_score:+d})'))
     elif mtf.get('verdict') == 'not evaluated':
@@ -277,7 +282,7 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
                            f"{mtf.get('verdict')} ({mtf_score:+d})"))
     elif opposed:
         if g.require_mtf_agreement and sig.playbook in (
-                'mtf_pullback', 'breakout_retest', 'flag_continuation', 'trendline_bounce'):
+                'breakout_retest', 'trendline_bounce'):
             # Continuation playbooks have no reason to exist against the HTF.
             gates.append(_gate('mtf', 'BLOCK',
                                f'continuation setup against higher timeframes '
@@ -399,11 +404,11 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
     if not room['clear'] and room.get('obstacle'):
         obs = room['obstacle']
         frac = room['fraction']
-        if frac < 0.55:
+        if frac < g.room_block_pct / 100.0:
             gates.append(_gate('room', 'BLOCK',
                                f"{obs['kind']} at {obs['price']:.2f} (score "
                                f"{obs['score']}) sits only {frac * 100:.0f}% of "
-                               f"the way to TP1"))
+                               f"the way to TP1 (blocks below {g.room_block_pct:g}%)"))
         else:
             gates.append(_gate('room', 'WARN',
                                f"{obs['kind']} at {obs['price']:.2f} sits at "
@@ -422,6 +427,17 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
         gates.append(_gate('regime', 'PASS',
                            f"{regime.get('label')} (confidence "
                            f"{regime.get('confidence')}) suits this playbook"))
+    elif sig.playbook in _more_groups()[0]:
+        # The taxonomy playbooks: home regimes per family (playbooks_more.py).
+        group_of, homes = _more_groups()
+        grp = group_of[sig.playbook]
+        if regime.get('state') in homes[grp]:
+            gates.append(_gate('regime', 'PASS',
+                               f"{regime.get('label')} is a home regime for {grp} playbooks"))
+        else:
+            gates.append(_gate('regime', 'WARN',
+                               f"{regime.get('label')} is not a home regime for {grp} playbooks "
+                               f"({', '.join(homes[grp])})", 12))
     else:
         gates.append(_gate('regime', 'WARN',
                            f"{regime.get('label')} is not this playbook's "

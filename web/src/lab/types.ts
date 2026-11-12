@@ -326,7 +326,7 @@ export type LabDataInfo = {
 
 export type SchemaRow = {
   group: string; key: string; label: string
-  type: 'float' | 'int' | 'bool' | 'enum' | 'playbooks'
+  type: 'float' | 'int' | 'bool' | 'enum' | 'playbooks' | 'pbmap' | 'tfs'
   lo?: number; hi?: number; options?: string[]; hint?: string
 }
 

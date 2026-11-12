@@ -42,7 +42,7 @@ from . import session as S
 from . import settings as lab_settings
 
 ROOT = Path(__file__).resolve().parents[2]
-TIMEFRAMES = [tf for tf in ('1m', '3m', '5m', '15m', '30m', '1h', '4h') if tf in TF_SECONDS]
+TIMEFRAMES = [tf for tf in ('1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '1d') if tf in TF_SECONDS]
 SPEEDS = (1, 2, 4, 8, 16, 32, 64)
 CHUNK_S = 0.6               # a long job reports progress this often
 FRAMES_PER_S = 12           # play never pushes more frames than this
@@ -101,7 +101,7 @@ class Lab:
         self.sess: S.ReplaySession | None = None
         self.clients: dict = {}          # websocket -> {'ev': n sent, 'tr': n sent}
         self.playing = False
-        self.speed = 4
+        self.speed = max(SPEEDS)          # 'max bars/s' by default (2026-11-12)
         self.task: asyncio.Task | None = None
         self.job: dict | None = None     # {'label', 'done', 'total'}
         self.stop = False

@@ -60,6 +60,48 @@ TF_SECONDS = {
     '1h': 3600, '2h': 7200, '4h': 14400, '1d': 86400, '1w': 604800,
 }
 # The ladder a scalping signal consults for higher-timeframe context.
+# Playbooks renamed 2026-11-08. Saved settings (configs/settings.json, lab
+# overrides) naming an old id are carried onto the new one; records already
+# written (signal store, ledger, journal) keep the id they were made under.
+# Both were REBUILT, not just renamed - see server/engine/signals.py.
+PLAYBOOK_RENAMES = {
+    'range_fade': 'range_edge_fade',
+    'sweep_reversal': 'liquidity_sweep_reversal',
+    'false_break_fade': 'false_break',
+}
+
+
+# Playbooks deleted outright (2026-11-08: mtf_pullback and flag_continuation,
+# at the owner's request).
+PLAYBOOKS_REMOVED = ('mtf_pullback', 'flag_continuation')
+
+
+def migrate_playbook_map(m) -> dict:
+    """gates.playbook_timeframes with renamed playbooks carried over, removed ones
+    dropped and each timeframe list de-duplicated."""
+    out: dict = {}
+    for name, tfs in (m or {}).items():
+        if name in PLAYBOOKS_REMOVED:
+            continue
+        new = PLAYBOOK_RENAMES.get(name, name)
+        keep = out.setdefault(new, [])
+        for t in tfs or []:
+            if str(t) not in keep:
+                keep.append(str(t))
+    return out
+
+
+def migrate_playbook_names(names) -> list:
+    out = []
+    for x in names or []:
+        if x in PLAYBOOKS_REMOVED:
+            continue
+        y = PLAYBOOK_RENAMES.get(x, x)
+        if y not in out:
+            out.append(y)
+    return out
+
+
 MTF_LADDER = {
     '1m':  ['1m', '5m', '15m', '1h'],
     '3m':  ['3m', '15m', '30m', '1h'],
@@ -132,6 +174,24 @@ class RiskSettings:
     # years: indistinguishable (paired -0.001R, +0.003R, -0.002R per trade).
     trail_lock_r: float = 0.5
     trail_atr: float = 1.0
+    # Where the stop goes (2026-11-12).
+    #   'atr_floor'    the playbook's structural stop, pushed out to
+    #                  min_stop_atr when it is closer than that (the old rule).
+    #   'order_block'  beyond the nearest live order block on the trade's own
+    #                  timeframe that sits behind the entry, ob_stop_min_atr ..
+    #                  ob_stop_max_atr away, plus a buffer. Only on the
+    #                  timeframes in ob_stop_timeframes; elsewhere atr_floor.
+    # Measured on 140 lab trades (Jun-Nov 2026, gold): 15m +0.20R/trade vs the
+    # ATR floor (95% CI +0.01..+0.40), 1h -0.11R; higher-timeframe blocks were
+    # worse. Not yet confirmed on another period - hence off by default.
+    stop_mode: str = 'atr_floor'
+    ob_stop_timeframes: tuple = ('15m',)
+    ob_stop_min_atr: float = 0.5
+    ob_stop_max_atr: float = 4.0
+    ob_stop_buffer_low_atr: float = 0.2    # 30m and below: spread + noise
+    ob_stop_buffer_high_atr: float = 0.1   # 1h and above
+    # No block in range: 'atr_floor' keeps the playbook stop, 'skip' drops the signal.
+    ob_stop_fallback: str = 'atr_floor'
 
 
 @dataclass
@@ -176,6 +236,11 @@ class GateSettings:
     min_mtf_score: int = 25               # -100..100
     min_room_to_target_r: float = 1.0     # clear space before the first obstacle
     cooldown_bars: int = 5                # bars between signals on one playbook
+    # The room gate (qualify.py): the first unbroken scored level against the
+    # trade between entry and TP1 BLOCKS it when it sits less than this % of
+    # the way to TP1, and only warns beyond it. 0 = never block, just warn.
+    # Was a fixed 55% until 2026-11-12.
+    room_block_pct: float = 55.0
     # Playbooks that generate nothing. Adopted 2026-09-21 after three years
     # of testing (tools/exp_entries.py, tools/exp_confirm.py), on a rule fixed
     # BEFORE the holdout was seen:
@@ -188,7 +253,51 @@ class GateSettings:
     # which then carries ~69% of trades.
     # Only applied when no explicit playbook list is passed, so an experiment
     # asking for a playbook by name still gets it.
-    disabled_playbooks: tuple = ('sweep_reversal', 'breakout_retest', 'range_fade')
+    # (range_fade was renamed range_edge_fade and rebuilt 2026-11-08 - the
+    # numbers above are for the old rules.)
+    # + every taxonomy playbook (server/engine/playbooks_more.py): off until
+    # it has been tested and switched on.
+    disabled_playbooks: tuple = ('liquidity_sweep_reversal', 'breakout_retest', 'range_edge_fade',
+                                 'range_breakout',
+                                 'range_retest',
+                                 'range_sweep',
+                                 'mid_range_rotation',
+                                 'range_compression_breakout',
+                                 'range_expansion',
+                                 'range_failure',
+                                 'hz_resistance_breakout',
+                                 'hz_support_breakdown',
+                                 'trendline_breakout',
+                                 'squeeze_breakout',
+                                 'news_breakout',
+                                 'displacement_breakout',
+                                 'liquidity_sweep_breakout',
+                                 'bos_breakout',
+                                 'choch_breakout',
+                                 'fvg_ob_breakout',
+                                 'choch_reversal',
+                                 'ob_reversal',
+                                 'fvg_reversal',
+                                 'engulfing_reversal',
+                                 'rejection_wick_reversal',
+                                 'three_candle_reversal',
+                                 'double_top_bottom',
+                                 'divergence_reversal',
+                                 'trend_structure_pullback',
+                                 'bos_retest_pullback',
+                                 'internal_structure_pullback',
+                                 'fvg_pullback',
+                                 'ob_pullback',
+                                 'fibonacci_pullback',
+                                 'ma_pullback',
+                                 'volatility_pullback')
+    # Which timeframes each playbook runs on (2026-11-12, Settings -> Playbooks).
+    # A playbook MISSING from this map runs on every timeframe (unless it is in
+    # disabled_playbooks), so an empty map is exactly the old behaviour; one
+    # that is listed runs only on the timeframes listed ('1m' ... '1d').
+    # Like disabled_playbooks, only applied when no explicit playbook list is
+    # passed, so a research run asking for a playbook by name still gets it.
+    playbook_timeframes: dict = field(default_factory=dict)
     # Block the three ways of FADING a leg that lost in all three years of
     # Phase 0b (tools/phase0b_leg_position.py): after a 0.5-1.0 ATR pullback,
     # once the leg has run >= 4 ATR, and against the 1h impulse while it is in

@@ -13,13 +13,14 @@ trade; qualify.py does that, and keeping the two apart is deliberate:
 
 Eight playbooks, each mapped to the regimes where it has an edge:
 
-    mtf_pullback        trend      buy the dip with the higher timeframe
-    sweep_reversal      range/transition  stops taken, no follow-through
+    liquidity_sweep_reversal  range/transition  stops taken, no follow-through
     breakout_retest     trend/squeeze     the break held and came back
-    false_break_fade    range/transition  the break failed, fade it
+    false_break         any        a range edge / strong level broke on two
+                                   closes and came back inside - fade it
     pattern_break       any        a classical pattern reaching its trigger
-    range_fade          range      sell the top, buy the bottom of a box
-    flag_continuation   trend      the pause inside a move
+    range_edge_fade     any        fade the edge of the range price is in, by
+                                   type: horizontal / ascending / descending /
+                                   contracting / expanding
     trendline_bounce    trend      a rejection off the leg's trend line (2026-11-07)
 
 EVERY stop is placed beyond a STRUCTURAL price - a swing, a level, a sweep
@@ -37,16 +38,15 @@ import numpy as np
 
 from ..config import CONFIG
 from .precision import ra, rp, using
+from .ranges import failed_break as rg_failed_break
 
 
 PLAYBOOK_LABELS = {
-    'mtf_pullback': 'MTF PULLBACK',
-    'sweep_reversal': 'SWEEP REVERSAL',
+    'liquidity_sweep_reversal': 'LIQUIDITY SWEEP REVERSAL',
     'breakout_retest': 'BREAKOUT RETEST',
-    'false_break_fade': 'FALSE BREAK FADE',
+    'false_break': 'FALSE BREAK',
     'pattern_break': 'PATTERN BREAK',
-    'range_fade': 'RANGE FADE',
-    'flag_continuation': 'FLAG CONTINUATION',
+    'range_edge_fade': 'RANGE EDGE FADE',
     'trendline_bounce': 'TRENDLINE BOUNCE',
 }
 
@@ -98,6 +98,10 @@ class Signal:
         return asdict(self)
 
 
+# The evidence line an order-block stop leaves (see _apply_stop_mode).
+OB_STOP_TEXT = 'stop beyond the '
+
+
 def _mk_id(playbook: str, side: str, bar_ms: int) -> str:
     return f'{playbook}:{side}:{int(bar_ms)}'
 
@@ -118,6 +122,10 @@ def _widen_to_noise_floor(sig: Signal) -> Signal:
     """
     atr_v = float(sig.atr_at_signal or 0.0)
     if atr_v <= 0:
+        return sig
+    # An order-block stop (risk.stop_mode) is already placed on structure;
+    # resolve() re-finishing a merged signal must not widen it again.
+    if any(e.get('text', '').startswith(OB_STOP_TEXT) for e in sig.evidence):
         return sig
     floor = CONFIG.risk.min_stop_atr * atr_v
     risk = abs(sig.entry - sig.stop)
@@ -216,145 +224,70 @@ def _targets(entry: float, stop: float, side: str,
 
 
 # --------------------------------------------------------------------------- #
-# playbook 1: multi-timeframe pullback                                        #
-# --------------------------------------------------------------------------- #
-def pb_mtf_pullback(snap: dict, series) -> list:
-    mtf = snap.get('mtf') or {}
-    trend = snap.get('trend') or {}
-    regime = snap.get('regime') or {}
-    atr_v = snap['atr']
-    price = snap['price']
-
-    q = CONFIG.quality
-    direction = mtf.get('direction')
-    if not direction or abs(mtf.get('score', 0)) < q.pb_min_mtf_score:
-        return []
-    if regime.get('state') not in ('trend', 'transition'):
-        return []
-
-    # Measure against the last IMPULSE in the higher-timeframe direction, not
-    # the last leg - in an uptrend the last leg IS the pullback, so reading it
-    # directly asks the wrong question and the playbook never fires.
-    fib = (snap.get('pullback') or {}).get(direction) or {}
-    if not fib.get('valid'):
-        return []
-
-    side = 'buy' if direction == 'up' else 'sell'
-    if fib.get('zone') not in ('normal', 'pocket', 'deep'):
-        return []
-
-    ev_list = [
-        _ev(f"higher timeframes {mtf.get('verdict')} ({mtf.get('score'):+d})", 22, 'mtf'),
-        _ev(f"pullback into the {fib.get('zone')} "
-            f"({fib.get('retracement', 0) * 100:.0f}% of the last leg)",
-            18 if fib.get('in_pocket') else 10, 'fib'),
-    ]
-    against = []
-
-    levels = snap.get('levels') or []
-    pocket_lo = fib['levels'].get('0.618')
-    pocket_hi = fib['levels'].get('0.786')
-    zone_lo, zone_hi = sorted([pocket_lo, pocket_hi])
-    confluent = [lv for lv in levels
-                 if zone_lo - atr_v * 0.4 <= lv['price'] <= zone_hi + atr_v * 0.4
-                 and lv['score'] >= 55]
-    if confluent:
-        best = max(confluent, key=lambda x: x['score'])
-        ev_list.append(_ev(f"level confluence at {best['price']:.2f} "
-                           f"({best['touches']} touches, score {best['score']})",
-                           14, 'level'))
-    # Research rule A3 (off in live): a deep pullback is only a pullback when
-    # a strong level holds it.
-    if q.pb_deep_needs_level and fib.get('zone') == 'deep' and \
-            not any(lv['score'] >= 65 for lv in confluent):
-        return []
-
-    # A reclaim signal on the entry timeframe is what turns a falling knife into
-    # a pullback: rejection wick, or a CHoCH back in the trend direction.
-    recent = [e for e in (snap.get('events') or []) if e['bars_since'] <= 5]
-    want_bias = 'bullish' if side == 'buy' else 'bearish'
-    trigger_ev = next((e for e in recent
-                       if e['bias'] == want_bias and e['kind'] in ('rejection', 'sweep')), None)
-    if trigger_ev:
-        ev_list.append(_ev(f"{trigger_ev['kind']} at {trigger_ev['price']:.2f} "
-                           f"({trigger_ev['strength']}/100)", 14, 'event'))
-    else:
-        against.append('no reclaim confirmation on this timeframe yet')
-    # Research rule A1 (off in live): no reclaim, no trade. A CHoCH back in the
-    # trend direction counts as well as a rejection or sweep.
-    if q.pb_require_reclaim:
-        last = int(snap.get('bars') or 0) - 1
-        want_dir = 'up' if side == 'buy' else 'down'
-        choch = any(b.get('kind') == 'CHoCH' and b.get('direction') == want_dir
-                    and last - int(b.get('idx', -10**9)) <= q.reclaim_bars
-                    for b in (snap.get('breaks') or []))
-        near = any(e['bars_since'] <= q.reclaim_bars and e['bias'] == want_bias
-                   and e['kind'] in ('rejection', 'sweep')
-                   for e in (snap.get('events') or []))
-        if not (near or choch):
-            return []
-    # Research rule A4 (off in live): the leg WITH the entry has already run
-    # far - the entry is chasing, not buying a pullback.
-    leg_now = snap.get('leg') or {}
-    if q.pb_extended_atr and leg_now and \
-            (int(leg_now.get('dir', 0)) == 1) == (side == 'buy') and \
-            float(leg_now.get('ext_atr', 0.0)) > q.pb_extended_atr:
-        ev_list.append(_ev(f"leg already {float(leg_now['ext_atr']):.1f} ATR long",
-                           -10, 'leg'))
-
-    mom = snap.get('momentum') or {}
-    if (side == 'buy' and mom.get('total', 0) > 10) or \
-       (side == 'sell' and mom.get('total', 0) < -10):
-        ev_list.append(_ev(f"momentum agrees ({mom.get('total'):+d})", 8, 'momentum'))
-    elif (side == 'buy' and mom.get('total', 0) < -35) or \
-         (side == 'sell' and mom.get('total', 0) > 35):
-        against.append(f"momentum still against the entry ({mom.get('total'):+d})")
-
-    div = (mom.get('divergence') or {}).get('kind')
-    if div and div.endswith('hidden') and (mom['divergence']['bias'] ==
-                                           ('bullish' if side == 'buy' else 'bearish')):
-        ev_list.append(_ev(f'hidden divergence supports continuation', 10, 'momentum'))
-
-    # --- order ------------------------------------------------------------- #
-    swing_ref = trend.get('swing_low') if side == 'buy' else trend.get('swing_high')
-    leg_ref = fib.get('leg_low') if side == 'buy' else fib.get('leg_high')
-    anchor = swing_ref if swing_ref is not None else leg_ref
-    if anchor is None:
-        return []
-    pad = atr_v * 0.35
-    stop = anchor - pad if side == 'buy' else anchor + pad
-    if (side == 'buy' and stop >= price) or (side == 'sell' and stop <= price):
-        return []
-
-    structural = fib.get('leg_high') if side == 'buy' else fib.get('leg_low')
-    tp1, tp2 = _targets(price, stop, side, structural)
-
-    sig = Signal(
-        playbook='mtf_pullback', label='', side=side,
-        symbol=snap['symbol'], tf=snap['tf'],
-        entry=price, stop=stop, tp1=tp1, tp2=tp2, entry_type='market',
-        confidence=_score(ev_list, 34), evidence=ev_list, against=against,
-        atr_at_signal=atr_v,
-        invalidation=f"close beyond {anchor:.2f} ends the pullback read",
-        expiry_bars=18, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
-    )
-    return [_finish(sig)]
-
-
-# --------------------------------------------------------------------------- #
 # playbook 2: liquidity sweep reversal                                        #
 # --------------------------------------------------------------------------- #
-def pb_sweep_reversal(snap: dict, series) -> list:
+# Rebuilt 2026-11-08 after two lab losses (gold 1h 13 Oct and 21 Oct, both
+# -1R after reaching +0.7R): it bought 2.2 ATR above the swept level (late),
+# into a bearish order block 0.6-0.7R away (TP1 sat INSIDE it), once with no
+# structure confirmation and the higher timeframes at -91. Each is now a rule:
+SW_FRESH_BARS = 3          # the sweep is at most this many bars old
+SW_NEAR_ATR = 1.0          # entry within this of the swept level - no chasing
+SW_HTF_BLOCK = 50          # higher timeframes this strongly against: no trade
+SW_MIN_ROOM_R = 1.0        # the first opposing zone / level at least this far
+
+
+def _first_obstacle(snap: dict, price: float, side: str) -> tuple:
+    """The nearest thing in the way of the trade: an opposing order block, fair
+    value gap or supply / demand zone (its near edge), or a strong level
+    (score 55+). Returns (price, description) or (None, '')."""
+    buy = side == 'buy'
+    found = []
+    for z in snap.get('order_blocks') or []:
+        if z.get('side') == ('bearish' if buy else 'bullish'):
+            found.append((z['low'] if buy else z['high'], f"{z['side']} order block {z['low']:.2f}-{z['high']:.2f}"))
+    for z in snap.get('fvg') or []:
+        if z.get('side') == ('bearish' if buy else 'bullish'):
+            found.append((z['low'] if buy else z['high'], f"{z['side']} fair value gap {z['low']:.2f}-{z['high']:.2f}"))
+    for z in snap.get('zones') or []:
+        if z.get('side') == ('supply' if buy else 'demand'):
+            found.append((z['low'] if buy else z['high'], f"{z['side']} zone {z['low']:.2f}-{z['high']:.2f}"))
+    for lv in snap.get('levels') or []:
+        if lv.get('score', 0) >= 55:
+            found.append((lv['price'], f"{lv.get('kind', 'level')} {lv['price']:.2f} (score {lv['score']})"))
+    ahead = [(p_, d) for p_, d in found if (p_ > price if buy else p_ < price)]
+    if not ahead:
+        return None, ''
+    return min(ahead, key=lambda x: abs(x[0] - price))
+
+
+def pb_liquidity_sweep_reversal(snap: dict, series) -> list:
     atr_v = snap['atr']
     price = snap['price']
     reversal = snap.get('reversal') or {}
     events = snap.get('events') or []
 
     sweep = next((e for e in events
-                  if e['kind'] == 'sweep' and e['confirmed'] and e['bars_since'] <= 6), None)
+                  if e['kind'] == 'sweep' and e['confirmed'] and e['bars_since'] <= SW_FRESH_BARS), None)
     if sweep is None:
         return []
     side = 'buy' if sweep['bias'] == 'bullish' else 'sell'
+
+    # No chasing: still near the level that was swept.
+    if abs(price - sweep['price']) > SW_NEAR_ATR * atr_v:
+        return []
+
+    # Confirmation: structure changed character, or a rejection wick, after the sweep.
+    rej = next((e for e in events
+                if e['kind'] == 'rejection' and e['bias'] == sweep['bias']
+                and e['bars_since'] <= 4), None)
+    if not reversal.get('has_choch') and rej is None:
+        return []
+
+    # Higher timeframes strongly the other way: the sweep is more likely a pause.
+    mtf = snap.get('mtf') or {}
+    score = int(mtf.get('score') or 0)
+    if (score <= -SW_HTF_BLOCK and side == 'buy') or (score >= SW_HTF_BLOCK and side == 'sell'):
+        return []
 
     ev_list = [
         _ev(f"confirmed sweep of {sweep['price']:.2f}, reclaimed and held",
@@ -365,12 +298,6 @@ def pb_sweep_reversal(snap: dict, series) -> list:
 
     if reversal.get('has_choch'):
         ev_list.append(_ev('structure changed character after the sweep', 16, 'structure'))
-    else:
-        against.append('no CHoCH yet - the sweep has not been confirmed by structure')
-
-    rej = next((e for e in events
-                if e['kind'] == 'rejection' and e['bias'] == sweep['bias']
-                and e['bars_since'] <= 4), None)
     if rej:
         ev_list.append(_ev(f"rejection wick at {rej['price']:.2f} "
                            f"({rej['strength']}/100)", 12, 'event'))
@@ -391,11 +318,10 @@ def pb_sweep_reversal(snap: dict, series) -> list:
                            f"{regime.get('label')}")
             ev_list.append(_ev('counter-trend reversal attempt', -14, 'regime'))
 
-    mtf = snap.get('mtf') or {}
     if mtf.get('direction') == ('up' if side == 'buy' else 'down'):
-        ev_list.append(_ev(f"higher timeframes agree ({mtf.get('score'):+d})", 12, 'mtf'))
+        ev_list.append(_ev(f"higher timeframes agree ({score:+d})", 12, 'mtf'))
     elif mtf.get('direction'):
-        against.append(f"higher timeframes lean the other way ({mtf.get('score'):+d})")
+        against.append(f"higher timeframes lean the other way ({score:+d})")
 
     # --- order ------------------------------------------------------------- #
     extreme = sweep['extreme']
@@ -412,7 +338,7 @@ def pb_sweep_reversal(snap: dict, series) -> list:
     tp1, tp2 = _targets(price, stop, side, structural)
 
     sig = Signal(
-        playbook='sweep_reversal', label='', side=side,
+        playbook='liquidity_sweep_reversal', label='', side=side,
         symbol=snap['symbol'], tf=snap['tf'],
         entry=price, stop=stop, tp1=tp1, tp2=tp2, entry_type='market',
         confidence=_score(ev_list, 30), evidence=ev_list, against=against,
@@ -420,19 +346,53 @@ def pb_sweep_reversal(snap: dict, series) -> list:
         invalidation=f"a close beyond {extreme:.2f} means the sweep failed",
         expiry_bars=12, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
     )
-    return [_finish(sig)]
+    sig = _finish(sig)
+
+    # Room: the first opposing zone / level must be at least SW_MIN_ROOM_R away,
+    # measured with the FINAL stop (after the noise-floor widening). TP1 at 1R
+    # inside a supply zone is the trade both losses were.
+    ob_px, ob_txt = _first_obstacle(snap, price, side)
+    risk = abs(sig.entry - sig.stop)
+    if ob_px is not None and risk > 0:
+        room = abs(ob_px - sig.entry) / risk
+        if room < SW_MIN_ROOM_R:
+            return []
+        sig.evidence.append(_ev(f"first obstacle {ob_txt} is {room:.1f}R away", 6, 'structure'))
+    return [sig]
 
 
 # --------------------------------------------------------------------------- #
 # playbook 3: breakout + retest                                               #
 # --------------------------------------------------------------------------- #
+# Fixed 2026-11-08 after two lab losses (gold 1h 9 Oct and 14 Oct, both -1R):
+#   1. it entered BEFORE the break was confirmed (only -10 confidence) - a dip
+#      0.04 ATR under a level in an uptrend was sold as a "breakdown". Now the
+#      break must be the chart's two-close rule: two closes in a row more than
+#      BR_BREAK_ATR x ATR beyond the level, and the retest after them.
+#   2. the regime bonus ignored direction ("UPTREND - breaks tend to run" +12
+#      on a SELL). Now a trend only scores when it points the break's way, and
+#      a trend the other way is a penalty.
+#   3. the break bar always scored +10, even at 0.6x the average range. Now it
+#      is scored by its size, and a spike (> BR_SPIKE_ATR x ATR) counts against.
+#   4. it could enter up to 5 bars after the retest, 1.4 ATR from the level
+#      (chasing). Now only on the retest bar itself, within BR_NEAR_ATR of it.
+BR_BREAK_ATR = 0.3
+BR_NEAR_ATR = 0.5
+BR_SPIKE_ATR = 3.0
+
+
 def pb_breakout_retest(snap: dict, series) -> list:
     atr_v = snap['atr']
     price = snap['price']
     events = snap.get('events') or []
+    n = len(series)
+    c = np.asarray(series.c, dtype=float)
+    h = np.asarray(series.h, dtype=float)
+    l = np.asarray(series.l, dtype=float)
 
+    # (4) the retest is THIS bar, and price is still at the level
     retest = next((e for e in events
-                   if e['kind'] == 'retest' and e['confirmed'] and e['bars_since'] <= 5), None)
+                   if e['kind'] == 'retest' and e['confirmed'] and e['bars_since'] <= 0), None)
     if retest is None:
         return []
     brk = next((e for e in events
@@ -442,22 +402,53 @@ def pb_breakout_retest(snap: dict, series) -> list:
         return []
 
     side = 'buy' if retest['bias'] == 'bullish' else 'sell'
+    up = side == 'buy'
     level = retest['price']
+    if abs(price - level) > BR_NEAR_ATR * atr_v:
+        return []
+
+    # (1) two closes beyond the level, starting at the break bar, before the retest
+    bi = int(brk['idx'])
+    if bi < 1 or bi + 1 >= n - 1:
+        return []
+    d = BR_BREAK_ATR * atr_v
+    outside = (lambda k: c[k] > level + d) if up else (lambda k: c[k] < level - d)
+    if not (outside(bi) and outside(bi + 1)):
+        return []
 
     ev_list = [
-        _ev(f"broke {level:.2f} and retested it successfully", 24, 'structure'),
-        _ev(brk['notes'][0], 10, 'event'),
+        _ev(f"broke {level:.2f} on two closes and retested it", 24, 'structure'),
         _ev(f"retest held ({retest['strength']}/100)", 14, 'event'),
     ]
     against = []
-    if not brk['confirmed']:
-        against.append('the break is younger than the false-break window')
-        ev_list.append(_ev('break not yet past the false-break window', -10, 'event'))
 
+    # (3) the break bar, by its size against the 20 bars before it
+    rng = float(h[bi] - l[bi])
+    avg = float(np.mean(h[max(0, bi - 20):bi] - l[max(0, bi - 20):bi])) if bi > 1 else rng
+    ratio = rng / avg if avg > 0 else 1.0
+    if rng > BR_SPIKE_ATR * atr_v:
+        against.append(f"the break bar was a {rng / atr_v:.1f} ATR spike - spikes like this "
+                       f"often whipsaw back")
+        ev_list.append(_ev(f"break bar a {rng / atr_v:.1f} ATR spike", -12, 'event'))
+    elif ratio >= 1.2:
+        ev_list.append(_ev(f"strong break bar ({ratio:.1f}x average range)", 10, 'event'))
+    elif ratio >= 0.8:
+        ev_list.append(_ev(f"break bar {ratio:.1f}x average range", 4, 'event'))
+    else:
+        against.append(f"weak break bar ({ratio:.1f}x average range)")
+        ev_list.append(_ev(f"weak break bar ({ratio:.1f}x average range)", -6, 'event'))
+
+    # (2) the regime only helps when it points the break's way
     regime = snap.get('regime') or {}
-    if regime.get('state') in ('trend', 'squeeze'):
-        ev_list.append(_ev(f"regime is {regime.get('label')} - breaks tend to run",
-                           12, 'regime'))
+    rdir = regime.get('direction')
+    if regime.get('state') == 'trend':
+        if rdir == ('up' if up else 'down'):
+            ev_list.append(_ev(f"regime is {regime.get('label')} - with the break", 12, 'regime'))
+        else:
+            against.append(f"regime is {regime.get('label')} - the break is against it")
+            ev_list.append(_ev(f"break against the {regime.get('label')} regime", -12, 'regime'))
+    elif regime.get('state') == 'squeeze':
+        ev_list.append(_ev(f"regime is {regime.get('label')} - breaks tend to run", 8, 'regime'))
     elif regime.get('state') == 'range':
         against.append('range regime - breakouts fail more often than they run')
         ev_list.append(_ev('range regime penalises breakout continuation', -12, 'regime'))
@@ -497,60 +488,91 @@ def pb_breakout_retest(snap: dict, series) -> list:
 
 
 # --------------------------------------------------------------------------- #
-# playbook 4: false break fade                                                #
+# playbook 4: false break (2026-11-08; replaces false_break_fade)            #
 # --------------------------------------------------------------------------- #
-def pb_false_break_fade(snap: dict, series) -> list:
+# The break of a RANGE EDGE or a STRONG LEVEL that failed, by the chart's own
+# breakout rule (ranges.failed_break): two closes in a row more than 0.3 ATR
+# beyond it, then a close back inside within 3 bars. The signal is the bar
+# that closed back inside; the trade fades the failed side. false_break_fade
+# took any engine 'false_break' event and targeted the regime's 120-bar
+# high / low - this one only fades structure a trader would draw, and
+# targets the other side of THAT structure.
+FB_LEVEL_SCORE = 55          # a level this strong (0-100) counts as structure
+FB_LEVEL_NEAR_ATR = 4.0      # ...when it is within this of price
+
+
+def pb_false_break(snap: dict, series) -> list:
     atr_v = snap['atr']
     price = snap['price']
-    events = snap.get('events') or []
+    t, h, l, c = series.t, series.h, series.l, series.c
+    rs = snap.get('range_structure') or {}
 
-    fb = next((e for e in events
-               if e['kind'] == 'false_break' and e['bars_since'] <= 5), None)
+    # Range edges first: they are what the chart draws and the cleanest trap.
+    cands = []
+    if rs.get('type') == 'horizontal':
+        cands.append((rs['top'], f"range top {rs['top']:.2f}", rs['bot']))
+        cands.append((rs['bot'], f"range bottom {rs['bot']:.2f}", rs['top']))
+    for lv in sorted(snap.get('levels') or [], key=lambda x: -x.get('score', 0)):
+        if lv.get('score', 0) < FB_LEVEL_SCORE:
+            continue
+        if abs(lv['price'] - price) > atr_v * FB_LEVEL_NEAR_ATR:
+            continue
+        cands.append((lv['price'], f"{lv.get('kind', 'level')} {lv['price']:.2f} "
+                                   f"(score {lv['score']})", None))
+        if len(cands) >= 8:
+            break
+
+    fb, name, far = None, '', None
+    for level, nm, opp in cands:
+        hit = rg_failed_break(t, h, l, c, level, within=1)
+        if hit is not None:
+            fb, name, far = hit, nm, opp
+            break
     if fb is None:
         return []
-    side = 'buy' if fb['bias'] == 'bullish' else 'sell'
-    level = fb['price']
 
+    side = 'sell' if fb['side'] == 'above' else 'buy'
     ev_list = [
-        _ev(f"false break {fb['direction']} through {level:.2f} - "
-            f"price closed back inside", 24, 'event'),
-        _ev(fb['notes'][1], 8, 'event'),
+        _ev(f"false break of the {name}: {fb['outside_bars']} closes "
+            f"{fb['side']} it, then back inside", 26, 'event'),
     ]
     against = []
-
     regime = snap.get('regime') or {}
     if regime.get('state') in ('range', 'transition'):
         ev_list.append(_ev(f"{regime.get('label')} regime - failed breaks are "
-                           f"the dominant behaviour here", 14, 'regime'))
-    else:
-        against.append(f"{regime.get('label')} regime - a failed break can still "
-                       f"resolve in the original direction")
-
+                           f"the dominant behaviour here", 12, 'regime'))
+    elif regime.get('state') == 'trend' and regime.get('direction') == \
+            ('up' if fb['side'] == 'above' else 'down'):
+        against.append(f"{regime.get('label')} regime - the break was WITH the trend "
+                       f"and may yet resolve that way")
+        ev_list.append(_ev('fading a with-trend break', -10, 'regime'))
     mom = snap.get('momentum') or {}
-    if (side == 'buy' and mom.get('total', 0) > 0) or \
-       (side == 'sell' and mom.get('total', 0) < 0):
-        ev_list.append(_ev(f"momentum turned with the fade ({mom.get('total'):+d})",
-                           10, 'momentum'))
+    if (side == 'buy' and mom.get('total', 0) > 0) or (side == 'sell' and mom.get('total', 0) < 0):
+        ev_list.append(_ev(f"momentum turned with the fade ({mom.get('total'):+d})", 8, 'momentum'))
 
-    # --- order ------------------------------------------------------------- #
     pad = atr_v * 0.3
     stop = fb['extreme'] - pad if side == 'buy' else fb['extreme'] + pad
     if (side == 'buy' and stop >= price) or (side == 'sell' and stop <= price):
         return []
-
-    # The natural target is the far side of the structure that was faked out of.
-    regime_hi, regime_lo = regime.get('range_high'), regime.get('range_low')
-    structural = regime_hi if side == 'buy' else regime_lo
+    # Target: the other side of the range; for a level, the next strong level
+    # the other way.
+    structural = far
+    if structural is None:
+        beyond = [lv['price'] for lv in (snap.get('levels') or [])
+                  if lv.get('score', 0) >= FB_LEVEL_SCORE and
+                  (lv['price'] > price if side == 'buy' else lv['price'] < price)]
+        if beyond:
+            structural = min(beyond) if side == 'buy' else max(beyond)
     tp1, tp2 = _targets(price, stop, side, structural)
 
     sig = Signal(
-        playbook='false_break_fade', label='', side=side,
+        playbook='false_break', label='', side=side,
         symbol=snap['symbol'], tf=snap['tf'],
         entry=price, stop=stop, tp1=tp1, tp2=tp2, entry_type='market',
         confidence=_score(ev_list, 30), evidence=ev_list, against=against,
         atr_at_signal=atr_v,
-        invalidation=f"a second push through {fb['extreme']:.2f} means it was real",
-        expiry_bars=12, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
+        invalidation=f"a new close beyond {fb['extreme']:.2f} means the break was real",
+        expiry_bars=10, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
     )
     return [_finish(sig)]
 
@@ -581,6 +603,26 @@ def _break_confirmed(p: dict, side: str, snap: dict, series) -> bool:
     return base > 0 and float(np.mean(v[-3:])) >= 1.2 * base
 
 
+# Tightened 2026-11-08 after a lab loss (gold 1h 24 Aug): a confirmed pattern
+# stayed "actionable" for 30 bars, so a pullback 22 bars after the break was
+# bought - after the pattern had already reached its target - with the stop at
+# the head, 8.4 ATR away. Now:
+PB_FRESH_BARS = 5        # a confirmed pattern is traded within this many bars of its break
+PB_MAX_STOP_ATR = 4.0    # invalidation further than this from the entry: no trade
+
+
+def _pattern_break_age(p: dict, c: np.ndarray, side: str):
+    """Bars since the first close through the break level after the pattern
+    completed, or None if none has closed through."""
+    lvl = float(p['break_level'])
+    end = int(p.get('end_idx') or 0)
+    seg = c[end + 1:] if end + 1 < c.size else c[:0]
+    hit = np.nonzero(seg > lvl if side == 'buy' else seg < lvl)[0]
+    if not hit.size:
+        return None
+    return int(c.size - 1 - (end + 1 + int(hit[0])))
+
+
 def pb_pattern_break(snap: dict, series) -> list:
     atr_v = snap['atr']
     price = snap['price']
@@ -606,6 +648,21 @@ def pb_pattern_break(snap: dict, series) -> list:
             continue
         if q.pattern_need_confirm and not _break_confirmed(p, side, snap, series):
             continue
+        c_arr = np.asarray(series.c, dtype=float)
+        if p['status'] == 'confirmed':
+            # Fresh: the break happened in the last PB_FRESH_BARS bars.
+            age = _pattern_break_age(p, c_arr, side)
+            if age is None or age > PB_FRESH_BARS:
+                continue
+            # Not spent: price has not already reached the pattern's target.
+            end = int(p.get('end_idx') or 0)
+            tgt = float(p.get('target') or 0)
+            if tgt:
+                after_h = np.asarray(series.h, dtype=float)[end:]
+                after_l = np.asarray(series.l, dtype=float)[end:]
+                if (side == 'buy' and after_h.size and after_h.max() >= tgt) or \
+                        (side == 'sell' and after_l.size and after_l.min() <= tgt):
+                    continue
         # For a forming pattern this is a STOP order at the break level; for a
         # freshly confirmed one price is already through, so enter at market.
         if p['status'] == 'forming':
@@ -618,6 +675,8 @@ def pb_pattern_break(snap: dict, series) -> list:
         stop = stop - pad if side == 'buy' else stop + pad
         if (side == 'buy' and stop >= entry) or (side == 'sell' and stop <= entry):
             continue
+        if abs(entry - stop) > PB_MAX_STOP_ATR * atr_v:
+            continue                      # the pattern is too big to trade from here
 
         ev_list = [
             _ev(f"{p['label']} ({p['status']}), quality {p['quality']}/100",
@@ -655,125 +714,112 @@ def pb_pattern_break(snap: dict, series) -> list:
 
 
 # --------------------------------------------------------------------------- #
-# playbook 6: range fade                                                      #
+# playbook 6: range edge fade (2026-11-08; replaces range_fade)               #
 # --------------------------------------------------------------------------- #
-def pb_range_fade(snap: dict, series) -> list:
-    regime = snap.get('regime') or {}
-    if regime.get('state') != 'range':
+# Fades an edge of the range price is trading in NOW (ranges.range_structure:
+# the chart's flat box when there is one, else a fitted pair of lines), with a
+# rule per range TYPE:
+#
+#   horizontal   either edge; target the opposite edge
+#   ascending    buy the lower line only (selling the top of a rising range
+#                is fading the move); target the upper line
+#   descending   sell the upper line only; target the lower line
+#   contracting  either edge while the range is still 2.5+ ATR wide; target
+#                the middle - the far edge is closing in
+#   expanding    either edge, but only after a SWEEP through the line that
+#                closed back inside (the edges keep giving way); target the
+#                middle
+#
+# Every type needs a rejection ON the signal bar: it reached the edge (within
+# 0.2 ATR, or through it) and closed back away from it, in the fade's colour.
+# range_fade fired off the regime's 120-bar high / low whenever the regime
+# read RANGE; this one needs the range itself.
+RANGE_EDGE_ZONE = 0.18       # within this fraction of the width from an edge
+RANGE_MIN_W_ATR = 2.5        # narrower than this leaves no room for 1R
+RANGE_TAG_ATR = 0.2          # the bar must reach the edge to within this
+RANGE_STOP_ATR = 0.45        # stop beyond the edge / the bar's extreme
+
+
+def pb_range_edge_fade(snap: dict, series) -> list:
+    rs = snap.get('range_structure')
+    if not rs:
         return []
     atr_v = snap['atr']
     price = snap['price']
-    hi, lo = regime.get('range_high'), regime.get('range_low')
-    if hi is None or lo is None or hi - lo < atr_v * 2.5:
+    kind, top, bot, w = rs['type'], rs['top'], rs['bot'], rs['width']
+    if w < atr_v * RANGE_MIN_W_ATR:
         return []
-
-    span = hi - lo
-    pos = (price - lo) / span
-    if pos >= 0.82:
-        side, edge = 'sell', hi
-    elif pos <= 0.18:
-        side, edge = 'buy', lo
+    pos = rs['position']
+    if pos >= 1 - RANGE_EDGE_ZONE:
+        side, edge, far = 'sell', top, bot
+    elif pos <= RANGE_EDGE_ZONE:
+        side, edge, far = 'buy', bot, top
     else:
         return []
+    if kind == 'ascending' and side == 'sell':
+        return []
+    if kind == 'descending' and side == 'buy':
+        return []
 
+    o, h, l, c = (float(series.o[-1]), float(series.h[-1]),
+                  float(series.l[-1]), float(series.c[-1]))
+    if side == 'buy':
+        tagged = l <= edge + RANGE_TAG_ATR * atr_v
+        held = c > o and c > edge
+        swept = l < edge
+    else:
+        tagged = h >= edge - RANGE_TAG_ATR * atr_v
+        held = c < o and c < edge
+        swept = h > edge
+    if not (tagged and held):
+        return []
+    if kind == 'expanding' and not swept:
+        return []
+
+    names = {'horizontal': 'horizontal range', 'ascending': 'ascending range',
+             'descending': 'descending range', 'contracting': 'contracting range',
+             'expanding': 'expanding range'}
+    where = 'top' if side == 'sell' else 'bottom'
     ev_list = [
-        _ev(f"range regime, confidence {regime.get('confidence')}", 16, 'regime'),
-        _ev(f"price at the {'top' if side == 'sell' else 'bottom'} of the "
-            f"{lo:.2f}-{hi:.2f} box ({pos * 100:.0f}% of range)", 16, 'structure'),
+        _ev(f"{names[kind]} {bot:.2f}-{top:.2f} ({rs['width_atr']:.1f} ATR"
+            + (f", {rs['tier']}" if rs.get('tier') else '') + ")", 16, 'structure'),
+        _ev(f"rejected the {where} edge {edge:.2f}"
+            + (' after a sweep through it' if swept else ''), 16, 'event'),
     ]
     against = []
+    if kind in ('ascending', 'descending'):
+        ev_list.append(_ev(f"with the {kind} range's slope", 8, 'structure'))
+    if kind == 'contracting':
+        against.append('a contracting range resolves in a breakout - the fade has '
+                       'less room each swing')
+    if kind == 'expanding':
+        against.append('expanding range - edges keep giving way; size accordingly')
+    regime = snap.get('regime') or {}
+    if regime.get('state') == 'range':
+        ev_list.append(_ev(f"range regime ({regime.get('confidence')})", 8, 'regime'))
+    mtf = snap.get('mtf') or {}
+    if mtf.get('direction') and mtf.get('direction') != ('up' if side == 'buy' else 'down'):
+        against.append(f"higher timeframes lean the other way ({mtf.get('score'):+d})")
 
-    events = snap.get('events') or []
-    want = 'bearish' if side == 'sell' else 'bullish'
-    rej = next((e for e in events if e['bias'] == want and
-                e['kind'] in ('rejection', 'sweep') and e['bars_since'] <= 4), None)
-    if rej:
-        ev_list.append(_ev(f"{rej['kind']} at the edge ({rej['strength']}/100)",
-                           14, 'event'))
+    pad = atr_v * RANGE_STOP_ATR
+    stop = min(l, edge) - pad if side == 'buy' else max(h, edge) + pad
+    if (side == 'buy' and stop >= price) or (side == 'sell' and stop <= price):
+        return []
+    if kind in ('contracting', 'expanding'):
+        structural = bot + w * 0.5
     else:
-        against.append('no rejection at the edge yet - price may simply break through')
-        ev_list.append(_ev('no edge rejection confirmation', -8, 'event'))
-
-    ch = (snap.get('channels') or [None])[0]
-    if ch and ch['kind'] == 'horizontal':
-        ev_list.append(_ev(f"horizontal channel, {ch['containment'] * 100:.0f}% "
-                           f"containment", 10, 'structure'))
-
-    pad = atr_v * 0.45
-    stop = edge + pad if side == 'sell' else edge - pad
-    structural = lo + span * 0.5 if side == 'sell' else hi - span * 0.5
+        # Just inside the far edge: the edge is where the opposite fade sits.
+        structural = far - w * 0.1 if side == 'buy' else far + w * 0.1
     tp1, tp2 = _targets(price, stop, side, structural)
 
     sig = Signal(
-        playbook='range_fade', label='', side=side,
+        playbook='range_edge_fade', label='', side=side,
         symbol=snap['symbol'], tf=snap['tf'],
         entry=price, stop=stop, tp1=tp1, tp2=tp2, entry_type='market',
         confidence=_score(ev_list, 28), evidence=ev_list, against=against,
         atr_at_signal=atr_v,
-        invalidation=f"a close beyond {edge:.2f} breaks the range and voids the fade",
-        expiry_bars=14, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
-    )
-    return [_finish(sig)]
-
-
-# --------------------------------------------------------------------------- #
-# playbook 7: flag continuation                                               #
-# --------------------------------------------------------------------------- #
-def pb_flag_continuation(snap: dict, series) -> list:
-    atr_v = snap['atr']
-    price = snap['price']
-    regime = snap.get('regime') or {}
-    flags = [p for p in (snap.get('patterns') or [])
-             if p['kind'].endswith('flag') or p['kind'].endswith('pennant')]
-    if not flags:
-        return []
-    p = flags[0]
-    if not p.get('actionable'):
-        return []
-    side = 'buy' if p['direction'] == 'bullish' else 'sell'
-    if abs(p['break_level'] - price) / atr_v > 1.5:
-        return []
-    q = CONFIG.quality
-    # Research rules B1, B2 (off in live): a clear higher-timeframe trend
-    # behind the flag, and a cleaner flag.
-    if q.flag_need_htf:
-        mtf = snap.get('mtf') or {}
-        if mtf.get('direction') != ('up' if side == 'buy' else 'down') or \
-                abs(int(mtf.get('score') or 0)) < q.flag_htf_score:
-            return []
-    if q.flag_min_quality and int(p.get('quality') or 0) < q.flag_min_quality:
-        return []
-
-    ev_list = [
-        _ev(f"{p['label']} with a {p['notes'][0]}", 20, 'pattern'),
-        _ev(p['notes'][1], 10, 'pattern'),
-    ]
-    against = []
-    if regime.get('state') == 'trend' and regime.get('direction') == ('up' if side == 'buy' else 'down'):
-        ev_list.append(_ev(f"{regime.get('label')} - continuation is the base case",
-                           14, 'regime'))
-    else:
-        against.append('no confirmed trend behind the flag')
-
-    entry = p['break_level'] if p['status'] == 'forming' else price
-    entry_type = 'stop' if p['status'] == 'forming' else 'market'
-    # invalidation is the far edge of the WHOLE flag; research rule B3 widens
-    # the pad past the pattern's own 0.3 ATR failure buffer (0.2 in live).
-    pad = atr_v * q.flag_stop_pad_atr
-    stop = p['invalidation'] + (-pad if side == 'buy' else pad)
-    if (side == 'buy' and stop >= entry) or (side == 'sell' and stop <= entry):
-        return []
-    tp1, tp2 = _targets(entry, stop, side, p.get('target'))
-
-    sig = Signal(
-        playbook='flag_continuation', label='', side=side,
-        symbol=snap['symbol'], tf=snap['tf'],
-        entry=entry, stop=stop, tp1=tp1, tp2=tp2,
-        entry_type=entry_type, trigger=entry if entry_type == 'stop' else 0.0,
-        confidence=_score(ev_list, 30), evidence=ev_list, against=against,
-        atr_at_signal=atr_v,
-        invalidation=f"losing {p['invalidation']:.2f} breaks the flag",
-        expiry_bars=16, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
+        invalidation=f"two closes beyond {edge:.2f} break the range and void the fade",
+        expiry_bars=10, bar_time_ms=snap['bar_time_ms'], bar_idx=len(series) - 1,
     )
     return [_finish(sig)]
 
@@ -857,15 +903,26 @@ def pb_trendline_bounce(snap: dict, series) -> list:
 
 
 PLAYBOOKS = {
-    'mtf_pullback': pb_mtf_pullback,
-    'sweep_reversal': pb_sweep_reversal,
+    'liquidity_sweep_reversal': pb_liquidity_sweep_reversal,
     'breakout_retest': pb_breakout_retest,
-    'false_break_fade': pb_false_break_fade,
+    'false_break': pb_false_break,
     'pattern_break': pb_pattern_break,
-    'range_fade': pb_range_fade,
-    'flag_continuation': pb_flag_continuation,
+    'range_edge_fade': pb_range_edge_fade,
     'trendline_bounce': pb_trendline_bounce,
 }
+
+
+def playbook_on(name: str, tf: str) -> bool:
+    """
+    Settings -> Playbooks: is this playbook switched on for this timeframe?
+    Off-list first, then the per-timeframe map (a playbook not in the map runs
+    on every timeframe). The one rule _generate, the Telegram alerts and the
+    send-time re-check all use (2026-11-12).
+    """
+    if name in set(CONFIG.gates.disabled_playbooks or ()):
+        return False
+    tfs = (CONFIG.gates.playbook_timeframes or {}).get(name)
+    return tfs is None or tf in tfs
 
 
 def generate(snap: dict, series, only: list = None,
@@ -889,13 +946,22 @@ def _generate(snap: dict, series, only: list = None,
     # pattern_break is always allowed: a completing head and shoulders is
     # information in any regime.
     allowed.add('pattern_break')
+    # The taxonomy playbooks carry their own context rules (trend, range,
+    # structure) - the regime table does not gate them.
+    allowed.update(MORE)
+    # liquidity_sweep_reversal carries its own context rules since 2026-11-08
+    # (fresh sweep, confirmation, HTF block, room to the first obstacle); the
+    # range/transition-only gate removed the best of what those let through.
+    allowed.add('liquidity_sweep_reversal')
 
     out = []
-    disabled = set() if only else set(CONFIG.gates.disabled_playbooks)
+    # Settings -> Playbooks (the off-list and the per-timeframe map). Ignored
+    # for an explicit request.
+    tf = snap.get('tf')
     for name, fn in PLAYBOOKS.items():
         if only and name not in only:
             continue
-        if name in disabled:
+        if not only and not playbook_on(name, tf):
             continue
         if respect_regime and name not in allowed:
             continue
@@ -905,10 +971,84 @@ def _generate(snap: dict, series, only: list = None,
             # One broken playbook must not silence the other six.
             continue
 
+    out = _apply_stop_mode(out, snap)
     if CONFIG.quality.zone_confluence:
         for sig in out:
             _zone_confluence(sig, snap, series)
     return resolve(out)
+
+
+# --------------------------------------------------------------------------- #
+# order-block stops (2026-11-12) - risk.stop_mode = 'order_block'             #
+# --------------------------------------------------------------------------- #
+# The stop goes beyond the order block the trade leans on - the nearest live
+# block on the trade's OWN timeframe, on the trade's side, behind the entry -
+# instead of a fixed ATR distance. Higher-timeframe blocks are not used: on
+# the lab trades they sat ~3 ATR away and lost money as stops. See
+# RiskSettings.stop_mode in config.py for the measurement.
+_TF_MIN = {'1m': 1, '3m': 3, '5m': 5, '15m': 15, '30m': 30, '1h': 60, '2h': 120,
+           '4h': 240, '1d': 1440, '1w': 10080}
+
+
+def _order_block_stop(sig: Signal, snap: dict):
+    r = CONFIG.risk
+    atr_v = float(sig.atr_at_signal or snap.get('atr') or 0.0)
+    if atr_v <= 0:
+        return None, None
+    buf = (r.ob_stop_buffer_low_atr if _TF_MIN.get(snap.get('tf'), 60) <= 30
+           else r.ob_stop_buffer_high_atr) * atr_v
+    best, best_z = None, None
+    for z in snap.get('order_blocks') or []:
+        lo, hi = float(z['low']), float(z['high'])
+        if sig.side == 'buy' and z.get('side') == 'bullish' and lo < sig.entry:
+            stop = lo - buf
+        elif sig.side == 'sell' and z.get('side') == 'bearish' and hi > sig.entry:
+            stop = hi + buf
+        else:
+            continue
+        d = abs(sig.entry - stop) / atr_v
+        if r.ob_stop_min_atr <= d <= r.ob_stop_max_atr and (
+                best is None or d < abs(sig.entry - best) / atr_v):
+            best, best_z = stop, z
+    return best, best_z
+
+
+def _apply_stop_mode(out: list, snap: dict) -> list:
+    r = CONFIG.risk
+    if r.stop_mode != 'order_block' or snap.get('tf') not in tuple(r.ob_stop_timeframes):
+        return out
+    kept = []
+    for sig in out:
+        stop, z = _order_block_stop(sig, snap)
+        if stop is None:
+            if r.ob_stop_fallback == 'skip':
+                continue
+            sig.evidence.append(_ev(
+                f'no order block {r.ob_stop_min_atr:g}-{r.ob_stop_max_atr:g} ATR behind the '
+                'entry - kept the playbook stop', 0, 'risk'))
+            kept.append(sig)
+            continue
+        # Keep a structural TP2 across the move, as _widen_to_noise_floor does.
+        old_risk = abs(sig.entry - sig.stop)
+        t_sign = 1.0 if sig.side == 'buy' else -1.0
+        fixed_tp2 = sig.entry + t_sign * old_risk * r.tp2_r
+        structural = (None if abs(sig.tp2 - fixed_tp2) <= 1e-6 * max(1.0, abs(fixed_tp2))
+                      else sig.tp2)
+        sig.stop = stop
+        sig.tp1, sig.tp2 = _targets(sig.entry, sig.stop, sig.side, structural)
+        risk = abs(sig.entry - sig.stop)
+        sig.risk_points = ra(risk)
+        sig.rr1 = round(abs(sig.tp1 - sig.entry) / risk, 2) if risk > 1e-9 else 0.0
+        sig.rr2 = round(abs(sig.tp2 - sig.entry) / risk, 2) if risk > 1e-9 else 0.0
+        for f in ('stop', 'tp1', 'tp2'):
+            setattr(sig, f, rp(getattr(sig, f)))
+        sig.evidence = [e for e in sig.evidence if 'noise floor' not in e.get('text', '')]
+        atr_v = float(sig.atr_at_signal or snap.get('atr') or 1.0)
+        sig.evidence.append(_ev(
+            f"{OB_STOP_TEXT}{z['side']} order block {z['low']:g}-{z['high']:g} "
+            f"({risk / atr_v:.2f} ATR)", 0, 'risk'))
+        kept.append(sig)
+    return kept
 
 
 # --------------------------------------------------------------------------- #
@@ -1030,3 +1170,13 @@ def resolve(out: list) -> list:
 
 
 __all__ = ['Signal', 'generate', 'resolve', 'PLAYBOOKS', 'PLAYBOOK_LABELS']
+
+
+# --------------------------------------------------------------------------- #
+# the playbook taxonomy (2026-11-08) - server/engine/playbooks_more.py         #
+# --------------------------------------------------------------------------- #
+# Imported LAST: that module builds its signals with the helpers above.
+from .playbooks_more import MORE, MORE_LABELS          # noqa: E402
+
+PLAYBOOKS.update(MORE)
+PLAYBOOK_LABELS.update(MORE_LABELS)

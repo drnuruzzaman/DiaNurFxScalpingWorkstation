@@ -165,7 +165,7 @@
   "news": {
     "enabled": true,
     "lead_minutes": 10,
-    "impact": "low",
+    "impact": "high",
     "refresh_minutes": 360
   },
   "command_chats": [

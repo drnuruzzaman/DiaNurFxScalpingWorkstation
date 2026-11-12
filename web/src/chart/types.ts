@@ -320,6 +320,8 @@ export type LayoutOpts = {
   positions: boolean
   /** The leg in progress and the avoid-fade rules, as the gate sees them. */
   legRead: boolean
+  /** The drawing toolbar on the chart's left (DrawToolbar.tsx). */
+  drawBar: boolean
 }
 
 export const DEFAULT_LAYOUT: LayoutOpts = {
@@ -327,6 +329,7 @@ export const DEFAULT_LAYOUT: LayoutOpts = {
   newsMarks: true,
   positions: true,
   legRead: true,
+  drawBar: true,
 }
 
 /**
@@ -439,6 +442,8 @@ export type Overlays = {
   levels: boolean
   trendlines: boolean
   channels: boolean
+  /** Sideways boxes: runs of bars inside a tight band, plus horizontal channels. */
+  ranges: boolean
   patterns: boolean
   swings: boolean
   structure: boolean
@@ -464,6 +469,7 @@ export const DEFAULT_OVERLAYS: Overlays = {
   levels: true,
   trendlines: false,
   channels: true,
+  ranges: true,
   patterns: true,
   // FVG stays off: it draws a BAND rather than a line, and more bands on
   // top of the levels, zones and channels is an unreadable chart. It is
@@ -489,3 +495,12 @@ export type Viewport = {
   /** number of bars visible */
   span: number
 }
+
+/**
+ * Whether the chart draws a signal's entry / stop / target lines: only for a
+ * qualified signal (a daily-limit WARN still counts) or one already sent or
+ * filled. Anything else is detail for the signals panel - lines on the chart
+ * read as "this would be traded" (2026-11-12).
+ */
+export const showsLevels = (s: Signal | null | undefined): boolean =>
+  !!s && (s.status === 'qualified' || s.stage === 'SENT' || s.stage === 'FILLED')
