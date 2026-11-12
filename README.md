@@ -56,10 +56,10 @@ and serves the whole thing on port 8770.
 | **Momentum** | RSI, MACD, ROC, candle pressure, a volume-lean flow proxy, and regular/hidden divergence |
 | **MTF** | Weighted trend agreement across the timeframe ladder |
 
-### Signal generation — seven playbooks
+### Signal generation — 39 playbooks (six core + 33 in server/engine/playbooks_more.py, see docs/playbooks.html)
 
-`mtf_pullback` · `sweep_reversal` · `breakout_retest` · `false_break_fade` ·
-`pattern_break` · `range_fade` · `flag_continuation`
+`liquidity_sweep_reversal` · `breakout_retest` · `false_break` ·
+`pattern_break` · `range_edge_fade` · `trendline_bounce`
 
 Each produces a **fully-formed order**: side, entry, stop, TP1, TP2, entry type,
 a calibrated confidence, and the evidence that built it — plus the

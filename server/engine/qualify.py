@@ -266,8 +266,7 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
     # timeframes block every playbook, and the two continuation playbooks
     # under test need them aligned, not just not-opposed.
     strict = CONFIG.quality.htf_block and mtf.get('verdict') != 'not evaluated'
-    if strict and (opposed or (not aligned and sig.playbook in (
-            'mtf_pullback', 'flag_continuation'))):
+    if strict and opposed:
         gates.append(_gate('mtf', 'BLOCK',
                            f'higher timeframes not with the trade ({mtf_score:+d})'))
     elif mtf.get('verdict') == 'not evaluated':
@@ -277,7 +276,7 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
                            f"{mtf.get('verdict')} ({mtf_score:+d})"))
     elif opposed:
         if g.require_mtf_agreement and sig.playbook in (
-                'mtf_pullback', 'breakout_retest', 'flag_continuation', 'trendline_bounce'):
+                'breakout_retest', 'trendline_bounce'):
             # Continuation playbooks have no reason to exist against the HTF.
             gates.append(_gate('mtf', 'BLOCK',
                                f'continuation setup against higher timeframes '

@@ -5,7 +5,7 @@ import * as barcache from './lib/barcache'
 import * as workspace from './lib/workspace'
 import * as snapshot from './lib/snapshot'
 import { DEFAULT_LAYOUT, DEFAULT_OVERLAYS, type Bar, type LayoutOpts, type MtfTrendline,
-  type NewsMark, type Overlays, type Signal, type Snapshot } from './chart/types'
+  type NewsMark, type Overlays, type Signal, type Snapshot, showsLevels } from './chart/types'
 import { LiveFeed, api, mergeBars, toBars, type Board, type Health, type LivePayload, type Mt5State, type Pnl } from './lib/api'
 import { dirClass, fmt, signed } from './lib/format'
 import { AgentDock } from './panels/AgentDock'
@@ -205,7 +205,7 @@ export default function App() {
   // to be the one menu that did NOT persist, so every reload threw the whole
   // selection away and rebuilt it from DEFAULT_OVERLAYS.
   const [overlays, setOverlaysRaw] = useState<Overlays>(
-    () => loadPref('dianur.overlays', DEFAULT_OVERLAYS))
+    () => ({ ...DEFAULT_OVERLAYS, ...loadPref('dianur.overlays', DEFAULT_OVERLAYS) }))
 
   const setOverlays = (next: Overlays) => {
     setOverlaysRaw(next)
@@ -1110,7 +1110,7 @@ export default function App() {
 
           <div className="centre">
             <ChartPane
-              bars={bars} snapshot={snap} signal={overlays.signal ? selected : null}
+              bars={bars} snapshot={snap} signal={overlays.signal && showsLevels(selected) ? selected : null}
               overlays={overlays} digits={digits} money={money}
               onNeedHistory={loadOlderBars} status={chartStatus}
               watermark="DIANURFX" watermarkStyle="brand"

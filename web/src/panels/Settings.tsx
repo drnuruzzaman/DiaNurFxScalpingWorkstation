@@ -6,7 +6,9 @@ import { MarketData } from './MarketData'
 import { SymbolPicker } from './SymbolPicker'
 import { TrashConfirm, TrashIcon } from '../lab/DeleteSession'
 
-type Tab = 'alerts' | 'news' | 'destinations' | 'risk' | 'data' | 'log'
+import playbookData from '../data/playbooks.json'
+
+type Tab = 'alerts' | 'news' | 'destinations' | 'risk' | 'playbooks' | 'data' | 'log'
 export type SettingsTab = Tab
 
 /**
@@ -59,11 +61,46 @@ const BROKER_TP_HINT: Record<string, string> = {
     + 'system is off when the trade runs',
 }
 
+/**
+ * What each playbook trades, for the hover card on its chip. The text lives in
+ * src/data/playbooks.json - the same file docs/playbooks.html is built from
+ * (tools/build_playbook_docs.py) - so the card and the guide cannot drift.
+ * TP1, the stop's noise floor and the exit are shared by all of them and come
+ * from the risk settings (playbookCommon below).
+ */
+type PlaybookDoc = { id: string; group: string; title: string; idea: string; when: string;
+  entry: string; stop: string; target: string; tip?: string; tested?: string }
+const PLAYBOOK_DOCS: PlaybookDoc[] = (playbookData as any).playbooks
+const PLAYBOOK_INFO: Record<string, PlaybookDoc> =
+  Object.fromEntries(PLAYBOOK_DOCS.map((p) => [p.id, p]))
+
+/** The parts every playbook shares, from the live risk settings. */
+const playbookCommon = (r: any): string[] => {
+  const tp1 = r.tp1_r ?? 1, tp2 = r.tp2_r ?? 2
+  const exit = r.exit_mode === 'partial'
+    ? 'half closed at TP1, stop to break-even, the rest to TP2'
+    : `at TP1 the stop locks +${r.trail_lock_r ?? 0.5}R, then trails ${r.trail_atr ?? 1} ATR on closed bars`
+  return [
+    `TP1 ${tp1}R. TP2 is the target above when it is 1.2-6R away, else ${tp2}R.`,
+    (r.stop_mode === 'order_block'
+      ? `Stop beyond the nearest order block on ${(r.ob_stop_timeframes ?? []).join(', ') || 'no timeframe'}; elsewhere widened to at least ${r.min_stop_atr ?? 1} ATR.`
+      : `Stop widened to at least ${r.min_stop_atr ?? 1} ATR.`) + ` Exit: ${exit}.`,
+  ]
+}
+
+/** The Playbooks tab's groups, in order, with what belongs in each (playbooks.json). */
+const PLAYBOOK_GROUPS: { title: string; hint: string; built: string[] }[] =
+  (playbookData as any).groups.map((g: any) => ({
+    title: g.title, hint: g.hint,
+    built: PLAYBOOK_DOCS.filter((p) => p.group === g.key).map((p) => p.id),
+  }))
+
 const TABS: { key: Tab; label: string }[] = [
   { key: 'alerts', label: 'SIGNAL ALERTS' },
   { key: 'news', label: 'NEWS' },
   { key: 'destinations', label: 'DESTINATIONS' },
   { key: 'risk', label: 'RISK & GATES' },
+  { key: 'playbooks', label: 'PLAYBOOKS' },
   { key: 'data', label: 'MARKET DATA' },
   { key: 'log', label: 'LOG' },
 ]
@@ -170,6 +207,7 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
   useEffect(() => { load() }, [])
   useEffect(() => {
     if (tab === 'log') api.alertsLog().then((r) => setLog(r.entries)).catch(() => {})
+    if (tab === 'playbooks') loadPbDef()
     if (tab === 'news') fetchNews()
     // Resolved on arrival, and only for the ones not already known, so
     // switching back to this tab costs nothing.
@@ -220,6 +258,14 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
    * like the alert tabs: accumulate, show Save, write once.
    */
   const [pending, setPending] = useState<Record<string, any>>({})
+  // Playbooks tab: which groups are open, and the search box. Range opens
+  // first; the rest stay folded so the grid is not 39 rows at once.
+  const [pbOpen, setPbOpen] = useState<Set<string>>(() => new Set(['Range']))
+  const [pbQuery, setPbQuery] = useState('')
+  // The grid's saved default (configs/playbook_default.json): when it was saved,
+  // or exists=false. Fetched when the tab opens and after each save.
+  const [pbDef, setPbDef] = useState<{ exists: boolean; saved_ms?: number } | null>(null)
+  const loadPbDef = () => api.playbookDefault().then(setPbDef).catch(() => setPbDef(null))
   const engineDirty = Object.values(pending).some(
     (g: any) => g && Object.keys(g).length > 0)
 
@@ -831,6 +877,223 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
       )
     }
 
+    if (tab === 'playbooks') {
+      if (!engine) return <Empty>Loading…</Empty>
+      // The playbook x timeframe grid (2026-11-12). A cell is ON when the
+      // playbook is not in gates.disabled_playbooks AND either it is missing
+      // from gates.playbook_timeframes (runs everywhere) or that timeframe is
+      // listed for it. Every click stages BOTH keys from the whole grid, so the
+      // two can never disagree; Save writes them, live from the next bar.
+      const r = { ...engine.risk, ...(pending.risk || {}) }
+      const g = { ...engine.gates, ...(pending.gates || {}) }
+      const x = { ...(engine.execution ?? {}), ...(pending.execution || {}) }
+      const playbooks: string[] = engine.playbooks ?? []
+      const tfs: string[] = engine.timeframes ?? []
+      const autoTfs = new Set<string>(x.auto_timeframes ?? [])
+      const disabled = new Set<string>(g.disabled_playbooks ?? [])
+      const tfMap: Record<string, string[]> = g.playbook_timeframes ?? {}
+      const tfLabel = (t: string) => (t === '1d' ? 'D1' : t)
+      const runsOn = (pb: string): Set<string> =>
+        disabled.has(pb) ? new Set() : new Set(tfMap[pb] ?? tfs)
+      const grid: Record<string, Set<string>> =
+        Object.fromEntries(playbooks.map((pb) => [pb, runsOn(pb)]))
+      const write = (next: Record<string, Set<string>>) => {
+        const off: string[] = []
+        const map: Record<string, string[]> = {}
+        for (const pb of playbooks) {
+          const on = next[pb]
+          if (!on.size) off.push(pb)
+          else if (on.size < tfs.length) map[pb] = tfs.filter((t) => on.has(t))
+        }
+        if (off.length >= playbooks.length) { flash('At least one playbook must stay on'); return }
+        stage('gates')({ disabled_playbooks: off, playbook_timeframes: map })
+      }
+      const edit = (pbs: string[], ts: string[], on: boolean) => {
+        const next = Object.fromEntries(playbooks.map((pb) => [pb, new Set(grid[pb])]))
+        for (const pb of pbs) for (const t of ts) (on ? next[pb].add(t) : next[pb].delete(t))
+        write(next)
+      }
+      const allOn = (pbs: string[], ts: string[]) => pbs.every((pb) => ts.every((t) => grid[pb].has(t)))
+      const q = pbQuery.trim().toLowerCase()
+      const matches = (pb: string) => !q
+        || `${PLAYBOOK_INFO[pb]?.title ?? ''} ${pb}`.toLowerCase().includes(q)
+      const grouped = new Set(PLAYBOOK_GROUPS.flatMap((gr) => gr.built))
+      const groups = [...PLAYBOOK_GROUPS,
+        { title: 'Other', hint: '', built: playbooks.filter((p) => !grouped.has(p)) }]
+        .map((gr) => ({ ...gr, rows: gr.built.filter((b) => playbooks.includes(b) && matches(b)) }))
+        .filter((gr) => gr.rows.length)
+      const visible = groups.flatMap((gr) => gr.rows)
+      const PRESETS: Record<string, string[]> = {
+        scalp: ['1m', '3m', '5m', '15m'], intra: ['15m', '30m', '1h', '2h'],
+        swing: ['1h', '2h', '4h', '1d'], all: tfs, none: [],
+      }
+      const preset = (key: string) => {
+        const want = PRESETS[key]
+        if (!want) return
+        const next = Object.fromEntries(playbooks.map((pb) => [pb, new Set(grid[pb])]))
+        for (const pb of visible) next[pb] = new Set(want.filter((t) => tfs.includes(t)))
+        write(next)
+      }
+      // Save as default: the grid AS SHOWN (staged edits included) goes to its
+      // own file; nothing live changes. Load default: the saved grid is staged
+      // like any other edit, so it still goes live only through Save.
+      const saveDefault = () => {
+        const off = playbooks.filter((pb) => !grid[pb].size)
+        const map: Record<string, string[]> = {}
+        for (const pb of playbooks) {
+          if (grid[pb].size && grid[pb].size < tfs.length) map[pb] = tfs.filter((t) => grid[pb].has(t))
+        }
+        api.savePlaybookDefault({ disabled_playbooks: off, playbook_timeframes: map })
+          .then((res: any) => {
+            if (!res?.ok) { flash(`Default not saved: ${res?.error ?? 'unknown error'}`); return }
+            flash('Playbook grid saved as default')
+            loadPbDef()
+          })
+          .catch((e) => flash(`Default not saved: ${e.message}`))
+      }
+      const loadDefault = () => {
+        api.playbookDefault().then((d: any) => {
+          if (!d?.exists) { flash('No default saved yet - use Save as default first'); return }
+          stage('gates')({ disabled_playbooks: d.disabled_playbooks, playbook_timeframes: d.playbook_timeframes })
+          setFormKey((k) => k + 1)
+          const extra = d.new_since?.length ? ` (${d.new_since.length} playbooks added since run everywhere)` : ''
+          flash(`Default loaded - press Save to apply it${extra}`)
+        }).catch((e) => flash(`Could not load the default: ${e.message}`))
+      }
+      const defWhen = pbDef?.exists && pbDef.saved_ms
+        ? new Date(pbDef.saved_ms).toLocaleString(undefined, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
+        : null
+      const row = (pb: string) => {
+        const info = PLAYBOOK_INFO[pb]
+        const on = grid[pb]
+        return (
+          <tr key={pb}>
+            <td className="pbm-name">
+              <span className="pb-wrap">
+                <span className="pbm-label" tabIndex={0} aria-describedby={info ? `pb-tip-${pb}` : undefined}>
+                  {info?.title ?? pb.replace(/_/g, ' ')}
+                </span>
+                {info?.tested && <span className="pbm-tag ok">tested {info.tested}</span>}
+                {info && (
+                  <span className="pb-tip" role="tooltip" id={`pb-tip-${pb}`}>
+                    <b>{info.title}</b>
+                    <span className={`pb-state ${on.size ? 'on' : ''}`}>
+                      {on.size ? `${on.size} TF` : 'OFF'}
+                    </span>
+                    <p className="pb-idea">{info.idea}</p>
+                    <dl>
+                      <dt>When</dt><dd>{info.when}</dd>
+                      <dt>Entry</dt><dd>{info.entry}</dd>
+                      <dt>Stop</dt><dd>{info.stop}</dd>
+                      <dt>Target</dt><dd>{info.target}</dd>
+                    </dl>
+                    {playbookCommon(r).map((t) => <i key={t}>{t}</i>)}
+                  </span>
+                )}
+              </span>
+            </td>
+            {tfs.map((t) => (
+              <td key={t}>
+                <button className={`pbm-cell ${on.has(t) ? 'on' : ''}`}
+                  role="checkbox" aria-checked={on.has(t)}
+                  aria-label={`${info?.title ?? pb} on ${tfLabel(t)}`}
+                  title={`${info?.title ?? pb} on ${tfLabel(t)}`}
+                  onClick={() => edit([pb], [t], !on.has(t))}>{on.has(t) ? '✓' : ''}</button>
+              </td>
+            ))}
+            <td className="pbm-count">
+              <button className="pbm-rowall" title={allOn([pb], tfs) ? 'Switch off everywhere' : 'Switch on everywhere'}
+                onClick={() => edit([pb], tfs, !allOn([pb], tfs))}>
+                {on.size === tfs.length ? 'all' : on.size || 'off'}
+              </button>
+            </td>
+          </tr>
+        )
+      }
+      return (
+        <div key={formKey}>
+          <div className="pbm-bar">
+            <input className="pbm-search" placeholder="Search playbooks" value={pbQuery}
+              onChange={(e) => setPbQuery(e.target.value)} />
+            <select className="pbm-preset" value="" onChange={(e) => preset(e.target.value)}
+              title="Set the timeframes of every playbook shown">
+              <option value="">Apply preset to {q ? 'matches' : 'all'}…</option>
+              <option value="scalp">Scalping - 1m to 15m</option>
+              <option value="intra">Intraday - 15m to 2h</option>
+              <option value="swing">Swing - 1h to D1</option>
+              <option value="all">Every timeframe</option>
+              <option value="none">Off everywhere</option>
+            </select>
+            <button className="tool-btn pbm-defbtn" onClick={saveDefault}
+              title="Store this grid (as shown, unsaved edits included) as your default">Save as default</button>
+            <button className="tool-btn pbm-defbtn" onClick={loadDefault} disabled={pbDef?.exists === false}
+              title={pbDef?.exists === false ? 'No default saved yet' : 'Put the saved default back into the grid - then Save to apply'}>
+              Load default</button>
+            <span className="pbm-legend">{defWhen ? `default saved ${defWhen}` : pbDef?.exists === false ? 'no default yet' : ''}</span>
+            <span className="spacer" />
+            <span className="pbm-legend"><span className="pbm-cell on sm">✓</span> runs there</span>
+            <span className="pbm-legend"><span className="pbm-dot" /> auto-trading timeframe</span>
+          </div>
+          <div className="pbm-summary">
+            <span className="pbm-summary-l">Running per timeframe</span>
+            {tfs.map((t) => (
+              <span key={t} className="pbm-sum">
+                <b>{playbooks.filter((pb) => grid[pb].has(t)).length}</b>
+                <span>{tfLabel(t)}{autoTfs.has(t) && <span className="pbm-dot" />}</span>
+              </span>
+            ))}
+          </div>
+          {groups.map((gr) => {
+            const open = pbOpen.has(gr.title) || !!q
+            const running = gr.rows.filter((pb) => grid[pb].size).length
+            return (
+              <section className="set-block pbm-group" key={gr.title}>
+                <div className="set-block-head pbm-head"
+                  onClick={() => setPbOpen((o) => {
+                    const n = new Set(o); n.has(gr.title) ? n.delete(gr.title) : n.add(gr.title); return n
+                  })}>
+                  <span className="pbm-chev">{open ? '▾' : '▸'}</span>
+                  <span className="set-block-title">{gr.title}</span>
+                  {gr.hint && <span className="set-block-sub">{gr.hint}</span>}
+                  <span className="spacer" />
+                  <span className="pbm-run">{running} of {gr.rows.length} running</span>
+                  <button className="tool-btn pbm-grpbtn" onClick={(e) => {
+                    e.stopPropagation(); edit(gr.rows, tfs, !allOn(gr.rows, tfs))
+                  }}>{allOn(gr.rows, tfs) ? 'All off' : 'All on'}</button>
+                </div>
+                {open && (
+                  <table className="pbm">
+                    <thead>
+                      <tr>
+                        <th className="pbm-name">Playbook</th>
+                        {tfs.map((t) => (
+                          <th key={t}>
+                            <button className="pbm-col" title={`Switch ${tfLabel(t)} for every ${gr.title} playbook`}
+                              onClick={() => edit(gr.rows, [t], !allOn(gr.rows, [t]))}>
+                              {tfLabel(t)}{autoTfs.has(t) && <span className="pbm-dot" />}
+                            </button>
+                          </th>
+                        ))}
+                        <th className="pbm-count">TFs</th>
+                      </tr>
+                    </thead>
+                    <tbody>{gr.rows.map(row)}</tbody>
+                  </table>
+                )}
+              </section>
+            )
+          })}
+          <div className="set-hint" style={{ marginTop: 10 }}>
+            Click a cell, a timeframe heading (that column for the group), the count at the end of a
+            row (the whole row) or All on / All off. Save to apply - live from the next bar, and in new
+            backtest sessions. A playbook still trades automatically only on the auto-trading
+            timeframes (Risk &amp; gates); elsewhere its signals show and alert. New playbooks have not
+            been backtested - hover a name for its rules, full guide in docs/playbooks.html.
+          </div>
+        </div>
+      )
+    }
+
     if (tab === 'risk') {
       if (!engine) return <Empty>Loading…</Empty>
       // Risk decides how big a trade is, gates decide whether there is a trade
@@ -842,8 +1105,6 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
       const r = { ...engine.risk, ...(pending.risk || {}) }
       const g = { ...engine.gates, ...(pending.gates || {}) }
       const x = { ...(engine.execution ?? {}), ...(pending.execution || {}) }
-      const playbooks: string[] = engine.playbooks ?? []
-      const disabled: string[] = g.disabled_playbooks ?? []
       // The bridge's ceiling is a different process's setting; it can only be
       // compared, never edited from here.
       const bridgeMax: number | null = engine.bridge_max_lots ?? null
@@ -856,12 +1117,6 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
       const saveRisk = stage('risk')
       const saveGates = stage('gates')
       const saveExec = stage('execution')
-      const togglePlaybook = (name: string) => {
-        const next = disabled.includes(name)
-          ? disabled.filter((d) => d !== name)
-          : [...disabled, name]
-        saveGates({ disabled_playbooks: next })
-      }
       // APPLIED AT ONCE, unlike every other control on this tab. Staging it
       // behind Save would let the switch read "AUTO TRADING OFF" while orders
       // were still going out, which is the wrong way round for the one
@@ -1100,6 +1355,76 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
             </div>
           </section>
 
+          {/* Where the stop goes (2026-11-12). See RiskSettings.stop_mode in
+              server/config.py for the lab measurement behind it. */}
+          <section className="set-block">
+            <div className="set-block-head">
+              <span className="set-block-title">Stop placement</span>
+              <span className="set-block-sub">where each signal's stop loss goes</span>
+            </div>
+            <div className="set-grid">
+              <Field label="Stop placement"
+                hint={r.stop_mode === 'order_block'
+                  ? "beyond the nearest live order block on the trade's own timeframe"
+                  : `the playbook's structure stop, pushed out to at least ${r.min_stop_atr ?? 1} ATR`}>
+                <select value={r.stop_mode ?? 'atr_floor'}
+                  onChange={(e) => saveRisk({ stop_mode: e.target.value })}>
+                  <option value="atr_floor">Structure, min ATR</option>
+                  <option value="order_block">Order block</option>
+                </select>
+              </Field>
+              {r.stop_mode === 'order_block' && (<>
+                <Field label="No order block in range" hint="what happens when no block fits">
+                  <select value={r.ob_stop_fallback ?? 'atr_floor'}
+                    onChange={(e) => saveRisk({ ob_stop_fallback: e.target.value })}>
+                    <option value="atr_floor">Keep the playbook stop</option>
+                    <option value="skip">Skip the trade</option>
+                  </select>
+                </Field>
+                <Field label="OB stop min (ATR)" hint="a closer block is passed over">
+                  <input type="number" step={0.1} defaultValue={r.ob_stop_min_atr}
+                    onBlur={(e) => saveRisk({ ob_stop_min_atr: +e.target.value })} />
+                </Field>
+                <Field label="OB stop max (ATR)" hint="a further block is too wide to use">
+                  <input type="number" step={0.1} defaultValue={r.ob_stop_max_atr}
+                    onBlur={(e) => saveRisk({ ob_stop_max_atr: +e.target.value })} />
+                </Field>
+                <Field label="Buffer, 30m and below (ATR)" hint="gap past the block's edge">
+                  <input type="number" step={0.05} defaultValue={r.ob_stop_buffer_low_atr}
+                    onBlur={(e) => saveRisk({ ob_stop_buffer_low_atr: +e.target.value })} />
+                </Field>
+                <Field label="Buffer, 1h and above (ATR)" hint="gap past the block's edge">
+                  <input type="number" step={0.05} defaultValue={r.ob_stop_buffer_high_atr}
+                    onBlur={(e) => saveRisk({ ob_stop_buffer_high_atr: +e.target.value })} />
+                </Field>
+              </>)}
+            </div>
+            {r.stop_mode === 'order_block' && (
+              <div className="set-field" style={{ marginTop: 12 }}>
+                <label>Order-block stop on timeframes</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
+                  {(engine.timeframes ?? []).map((tf: string) => {
+                    const list: string[] = r.ob_stop_timeframes ?? []
+                    const on = list.includes(tf)
+                    return (
+                      <button key={tf} className={`pill ${on ? 'on' : ''}`}
+                        onClick={() => saveRisk({
+                          ob_stop_timeframes: on ? list.filter((t) => t !== tf) : [...list, tf],
+                        })}>
+                        {tf === '1d' ? 'D1' : tf.toUpperCase()}
+                      </button>
+                    )
+                  })}
+                </div>
+                <div className="set-hint">
+                  Other timeframes keep the structure stop with the ATR minimum. Lab trades
+                  (Jun-Nov 2026): order-block stops helped on 15m, not on 1h. Wider stops at
+                  fixed lots risk more, so Risk per trade % may block more trades.
+                </div>
+              </div>
+            )}
+          </section>
+
           <section className="set-block">
             <div className="set-block-head">
               <span className="set-block-title">Gates</span>
@@ -1180,26 +1505,6 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
                 <input type="number" defaultValue={g.cooldown_bars}
                   onBlur={(e) => saveGates({ cooldown_bars: +e.target.value })} />
               </Field>
-            </div>
-            <div className="set-field" style={{ marginTop: 12 }}>
-              <label>Playbooks</label>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
-                {playbooks.map((name) => {
-                  const on = !disabled.includes(name)
-                  return (
-                    <button key={name} className={`pill ${on ? 'on' : ''}`}
-                      onClick={() => togglePlaybook(name)}
-                      title={on ? 'Generating signals - click to switch off'
-                        : 'Switched off - click to switch on'}>
-                      {name.replace(/_/g, ' ')}
-                    </button>
-                  )
-                })}
-              </div>
-              <div className="set-hint">
-                Off by default: sweep reversal, breakout retest, range fade - negative across
-                2024-2026 in testing. Switching one back on takes effect from the next bar.
-              </div>
             </div>
             <div className="set-field" style={{ marginTop: 12 }}>
               <label>Auto-trading timeframes</label>
@@ -1347,7 +1652,7 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
               does not push the cards about, and gone again after a few seconds. */}
           {addNote && <span className="t-info foot-note">{addNote}</span>}
           {anyDirty && <span className="t-warn" style={{ fontSize: 10.5 }}>
-            unsaved changes in {[dirty && 'alerts', engineDirty && 'risk & gates']
+            unsaved changes in {[dirty && 'alerts', engineDirty && 'risk, gates & playbooks']
               .filter(Boolean).join(' and ')}
           </span>}
           <span className="spacer" />

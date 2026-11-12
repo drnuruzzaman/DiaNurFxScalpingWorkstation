@@ -42,7 +42,7 @@ from . import session as S
 from . import settings as lab_settings
 
 ROOT = Path(__file__).resolve().parents[2]
-TIMEFRAMES = [tf for tf in ('1m', '3m', '5m', '15m', '30m', '1h', '4h') if tf in TF_SECONDS]
+TIMEFRAMES = [tf for tf in ('1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '1d') if tf in TF_SECONDS]
 SPEEDS = (1, 2, 4, 8, 16, 32, 64)
 CHUNK_S = 0.6               # a long job reports progress this often
 FRAMES_PER_S = 12           # play never pushes more frames than this

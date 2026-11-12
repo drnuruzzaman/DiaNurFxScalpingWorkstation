@@ -322,9 +322,9 @@ def main() -> int:
         check('disabled playbooks are never run', not hit,
               f'ran {hit}' if hit else f'ran {sorted(set(called))}')
         called.clear()
-        _sg.generate(snap, series.tail(600), only=['sweep_reversal'], respect_regime=False)
+        _sg.generate(snap, series.tail(600), only=['liquidity_sweep_reversal'], respect_regime=False)
         check('an explicit request still reaches a disabled playbook',
-              called == ['sweep_reversal'], f'ran {called}')
+              called == ['liquidity_sweep_reversal'], f'ran {called}')
     finally:
         _sg.PLAYBOOKS.clear()
         _sg.PLAYBOOKS.update(real)

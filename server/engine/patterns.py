@@ -74,6 +74,42 @@ def _rr(break_level: float, target: float, invalidation: float) -> float:
     return round(reward / risk, 2) if risk > 1e-9 else 0.0
 
 
+# --- reversal-pattern sanity (2026-11-08) ---------------------------------- #
+# A lab loss (gold 1h 24 Aug, -1R on an 8.4 ATR stop) came from an "inverse
+# head and shoulders" read inside a strong UPTREND, whose right shoulder and
+# neckline point were the same candle. Two rules now apply to the reversal
+# patterns (head and shoulders, double / triple tops and bottoms):
+#   * the swing points are distinct and in order, at least MIN_POINT_GAP bars
+#     apart - one candle cannot be two points of a pattern
+#   * a reversal reverses something: of the PRIOR_SWINGS swings before the
+#     pattern, at least PRIOR_MIN must be labelled with the trend it reverses
+#     (LH / LL before a bullish reversal, HH / HL before a bearish one). With
+#     fewer labelled swings than that there is no evidence either way and the
+#     pattern is allowed.
+MIN_POINT_GAP = 2
+PRIOR_SWINGS = 4
+PRIOR_MIN = 2
+MIN_SHOULDER_SYMMETRY = 0.5   # head and shoulders: shoulders this level or better
+
+
+def _spaced(points) -> bool:
+    return all(b.idx - a.idx >= MIN_POINT_GAP for a, b in zip(points, points[1:]))
+
+
+def _reverses_trend(swings, first, bullish: bool) -> bool:
+    """`first` is the pattern's first swing. True when the swings before it
+    show the trend this pattern would reverse (or there are too few to tell)."""
+    try:
+        k = swings.index(first)
+    except ValueError:
+        return True
+    prior = [s for s in swings[max(0, k - PRIOR_SWINGS):k] if getattr(s, 'label', '')]
+    if len(prior) < PRIOR_MIN:
+        return True
+    want = ('LH', 'LL') if bullish else ('HH', 'HL')
+    return sum(1 for s in prior if s.label in want) >= PRIOR_MIN
+
+
 def _status(broke: bool, failed: bool) -> str:
     if failed:
         return 'failed'
@@ -191,10 +227,15 @@ def head_and_shoulders(swings, h, l, c, t, atr_val) -> list:
         else:
             continue
 
+        if not _spaced(p) or not _reverses_trend(swings, ls, direction == 'bullish'):
+            continue
+
         # --- measurements ------------------------------------------------- #
         shoulder_gap = abs(ls.price - rs.price)
         shoulder_avg = (abs(ls.price) + abs(rs.price)) / 2 or 1.0
         symmetry = max(0.0, 1.0 - shoulder_gap / max(atr_val * 2.5, 1e-9))
+        if symmetry < MIN_SHOULDER_SYMMETRY:
+            continue                    # lopsided shoulders: not a head and shoulders
         head_depth = abs(head.price - (t1.price + t2.price) / 2) / atr_val
         if head_depth < 1.2:
             continue                    # head barely clears the troughs
@@ -290,6 +331,8 @@ def double_tops_bottoms(swings, h, l, c, t, atr_val) -> list:
             continue                     # no meaningful trough between the peaks
 
         bearish = a.kind == 'high'
+        if not _spaced((a, mid, b)) or not _reverses_trend(swings, a, not bearish):
+            continue
         # A third touch upgrades it to a triple.
         triple = False
         if i + 4 < len(swings):

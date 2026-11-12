@@ -21,9 +21,11 @@
  */
 
 import type {
-  Bar, ForecastCone, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
+  Bar, Channel, ForecastCone, LayoutOpts, LegRead, MoneyModel, MtfTrendline, NewsHover, NewsMark, Overlays,
   PriceArea, Snapshot, Signal, TradeMark, Viewport,
 } from './types'
+import { findRanges, type RangeBox } from './ranges'
+import { findSwings, structureBreaks, type HBreak, type HSwing } from './structure'
 
 export type ChartTheme = {
   bg: string
@@ -245,6 +247,13 @@ export type HoverInfo = {
  */
 const DEFAULT_SPAN = 600
 
+/** A channel this long (bars) is the MAJOR trend channel, drawn solid. */
+const MAJOR_CHANNEL_BARS = 120
+/** ...or this long and 1.5x the next-longest channel. */
+const MAJOR_MIN_BARS = 40
+/** A counter-slope channel starting within this many bars of a major one's end is its pullback. */
+const PULLBACK_GAP_BARS = 6
+
 /**
  * Chart typefaces. Canvas text gets no ClearType, so a thin face at 8px reads
  * as a smudge on a dark background however sharp the canvas is. Segoe UI and
@@ -314,6 +323,10 @@ export class ChartEngine {
   private dpr = 1
 
   private bars: Bar[] = []
+  /** Swing-based ranges (ranges.ts); rebuilt when the bars change. */
+  private rangeCache: { key: string; boxes: RangeBox[] } = { key: '', boxes: [] }
+  /** Swings + BOS/CHoCH over every bar held (structure.ts); rebuilt when the bars change. */
+  private structCache: { key: string; swings: HSwing[]; breaks: HBreak[] } = { key: '', swings: [], breaks: [] }
   private snap: Snapshot | null = null
   private signal: Signal | null = null
   /**
@@ -1025,6 +1038,7 @@ export class ChartEngine {
 
     if (this.overlays.regimeBands) this.drawRegimeBand()
 
+    if (this.overlays.ranges) this.drawRanges()
     if (this.overlays.channels) this.drawChannels()
     // Areas sit UNDER everything structural. They are the widest marks on
     // the chart, and a band drawn over a trendline hides the line.
@@ -1864,48 +1878,90 @@ export class ChartEngine {
     ctx.restore()
   }
 
-  private drawChannels() {
+  // --- channels and ranges ---------------------------------------------- //
+  //
+  // 2026-11-08: the major trend channel and the smaller corridors inside it
+  // were drawn identically, so the eye could not tell the trend from the
+  // pullback. Now:
+  //   MAJOR   long (>= MAJOR_CHANNEL_BARS) or containing another channel -
+  //           solid, heavier edges, faint fill, "UPTREND / DOWNTREND CHANNEL"
+  //   MINOR   everything else - thin dashed edges, no fill, small label;
+  //           "PULLBACK" when it slopes against a major channel it overlaps
+  //   RANGE   horizontal channels are not drawn; ranges come from the
+  //           swing-based finder in ranges.ts (drawRanges).
+  // Chart-only: the engine's channels and every signal that reads them are
+  // unchanged.
+
+  /** Snapshot channels, sorted into major / minor (horizontal ones excluded). */
+  private classifiedChannels(): { ch: Channel; tier: 'major' | 'minor'; pullback: boolean }[] {
     const s = this.snap
-    // The live chart draws chart_channels: the engine's channels and the ones
-    // fitted across the whole default view, best ONE of each kind (server
-    // one_per_kind, 2026-11-06). The backtest chart has only the engine's.
-    const all = s?.chart_channels ?? s?.channels ?? []
-    if (!all.length) return
+    const all = (s?.chart_channels ?? s?.channels ?? []).filter((c) => c.kind !== 'horizontal')
+    const bars = (c: Channel) => c.upper.x2 - c.upper.x1
+    // Major: long in its own right, or wrapping a shorter channel, or clearly
+    // the longest on the chart (1.5x the runner-up) - the engine's channels
+    // often run end to end (the trend leg, then the pullback that starts
+    // where it stops), so neither contains the other.
+    const lens = all.map(bars).sort((a, b) => b - a)
+    const tiers = all.map((c) => {
+      const contains = all.some((o) => o !== c && c.t1 <= o.t1 && c.t2 >= o.t2 && bars(c) >= bars(o) * 1.5)
+      const dominant = lens.length > 1 && bars(c) === lens[0] && bars(c) >= MAJOR_MIN_BARS &&
+        bars(c) >= lens[1] * 1.5
+      return bars(c) >= MAJOR_CHANNEL_BARS || contains || dominant ? 'major' as const : 'minor' as const
+    })
+    // Pullback: a minor channel sloping against a major one that it overlaps
+    // or that it starts right where it ends.
+    return all.map((ch, i) => {
+      const pullback = tiers[i] === 'minor' && all.some((o, k) =>
+        tiers[k] === 'major' && o.kind !== ch.kind &&
+        o.upper.x1 <= ch.upper.x2 && o.upper.x2 >= ch.upper.x1 - PULLBACK_GAP_BARS)
+      return { ch, tier: tiers[i], pullback }
+    })
+  }
+
+  private drawChannels() {
+    const list = this.classifiedChannels()
+    if (!list.length) return
     const ctx = this.bctx
     ctx.save()
     ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
-    for (const ch of all) {
-      const col = ch.kind === 'ascending' ? this.theme.up
-        : ch.kind === 'descending' ? this.theme.down
-        : this.theme.info
+    // Majors first, so a pullback's dashed edges sit on top of the trend.
+    list.sort((a, b) => (a.tier === b.tier ? 0 : a.tier === 'major' ? -1 : 1))
+    for (const { ch, tier, pullback } of list) {
+      const major = tier === 'major'
+      const col = ch.kind === 'ascending' ? this.theme.up : this.theme.down
       const ux1 = this.snapX(ch.upper.x1), uy1 = this.yOf(ch.upper.y1)
       const ux2 = this.snapX(ch.upper.x2), uy2 = this.yOf(ch.upper.y2)
       const lx1 = this.snapX(ch.lower.x1), ly1 = this.yOf(ch.lower.y1)
       const lx2 = this.snapX(ch.lower.x2), ly2 = this.yOf(ch.lower.y2)
 
-      ctx.globalAlpha = 0.07
-      ctx.fillStyle = col
-      ctx.beginPath()
-      ctx.moveTo(ux1, uy1); ctx.lineTo(ux2, uy2)
-      ctx.lineTo(lx2, ly2); ctx.lineTo(lx1, ly1)
-      ctx.closePath(); ctx.fill()
+      if (major) {
+        ctx.globalAlpha = 0.045
+        ctx.fillStyle = col
+        ctx.beginPath()
+        ctx.moveTo(ux1, uy1); ctx.lineTo(ux2, uy2)
+        ctx.lineTo(lx2, ly2); ctx.lineTo(lx1, ly1)
+        ctx.closePath(); ctx.fill()
+      }
 
-      ctx.globalAlpha = 0.6
+      ctx.globalAlpha = major ? 0.85 : 0.6
       ctx.strokeStyle = col
-      ctx.lineWidth = 1.2
+      ctx.lineWidth = major ? 1.8 : 1
+      ctx.setLineDash(major ? [] : [5, 4])
       ctx.beginPath(); ctx.moveTo(ux1, uy1); ctx.lineTo(ux2, uy2); ctx.stroke()
       ctx.beginPath(); ctx.moveTo(lx1, ly1); ctx.lineTo(lx2, ly2); ctx.stroke()
+      ctx.setLineDash([])
 
-      ctx.globalAlpha = 1
-      ctx.font = `700 9px ui-sans-serif, system-ui`
+      ctx.globalAlpha = major ? 1 : 0.85
+      ctx.font = major ? `700 10px ${UI_FONT}` : `600 8.5px ${UI_FONT}`
       ctx.fillStyle = col
       ctx.textAlign = 'left'
+      const name = major
+        ? (ch.kind === 'ascending' ? 'UPTREND CHANNEL' : 'DOWNTREND CHANNEL')
+        : pullback ? 'PULLBACK' : `${ch.kind === 'ascending' ? 'RISING' : 'FALLING'} CHANNEL`
+      const text = `${name}  ${Math.round(ch.containment * 100)}%`
       // OUTSIDE the channel: just above the upper edge, rotated to run along
       // it, from the channel's start (or the pane's left edge if that is off
       // screen) - and pulled back left when it would run off the right edge.
-      // (2026-11-07: it sat inside, at a height taken from the wrong end of
-      // the edge, so a rising channel's label floated far from the channel.)
-      const text = `${ch.kind.toUpperCase()} CHANNEL  ${Math.round(ch.containment * 100)}%`
       const dx = ux2 - ux1
       const ang = dx >= 1 ? Math.atan2(uy2 - uy1, dx) : 0
       const tw = ctx.measureText(text).width
@@ -1921,8 +1977,71 @@ export class ChartEngine {
       ctx.fillText(text, 0, -3)
       ctx.restore()
     }
+    ctx.globalAlpha = 1
     ctx.restore()
   }
+
+  /** Swing-based ranges (see ranges.ts), cached until the bars change. */
+  private getRanges(): RangeBox[] {
+    // In a backtest with the future revealed, the chart holds bars past the
+    // replay cursor. Ranges must not see them - a range would end at a
+    // breakout that has not happened yet - so they are found on the bars up
+    // to the cursor only (a prefix, so the indices still line up).
+    const cut = this.cursorT != null ? this.barIndexAtOrBefore(this.cursorT) : -1
+    const b = cut >= 0 ? this.bars.slice(0, cut + 1) : this.bars
+    const n = b.length
+    const key = `${n}:${n ? b[0].t : 0}:${n ? b[n - 1].t : 0}:${n ? b[n - 1].c : 0}`
+    if (this.rangeCache.key !== key) this.rangeCache = { key, boxes: findRanges(b) }
+    return this.rangeCache.boxes
+  }
+
+  /**
+   * Range boxes in three tiers: MAJOR cyan, MINOR orange, DEVELOPING purple.
+   * The engine's horizontal channels are no longer drawn as ranges: they are
+   * fitted to a trendline and run to the last bar regardless of breakouts,
+   * which is exactly the "one big box over everything" this replaced.
+   */
+  private drawRanges() {
+    const list = this.getRanges()
+    if (!list.length) return
+    const from = this.view.start - 1, to = this.view.start + this.view.span + 1
+    const ctx = this.bctx
+    const half = this.barW() / 2
+    const colOf = (t: RangeBox['tier']) =>
+      t === 'major' ? this.theme.info : t === 'minor' ? this.theme.warn : this.theme.accent
+    ctx.save()
+    ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
+    // Majors underneath, so a nested minor box is drawn on top of its parent.
+    const order = { major: 0, minor: 1, developing: 2 } as const
+    for (const r of [...list].sort((a, b) => order[a.tier] - order[b.tier])) {
+      if (r.i1 < from || r.i0 > to) continue
+      const col = colOf(r.tier)
+      const x0 = this.xOf(r.i0) - half, x1 = this.xOf(r.i1) + half
+      const y0 = this.yOf(r.top), y1 = this.yOf(r.bot)
+      ctx.globalAlpha = r.tier === 'major' ? 0.07 : 0.05
+      ctx.fillStyle = col
+      ctx.fillRect(x0, y0, x1 - x0, y1 - y0)
+      ctx.globalAlpha = r.tier === 'major' ? 0.75 : 0.6
+      ctx.strokeStyle = col
+      ctx.lineWidth = r.tier === 'major' ? 1.4 : 1
+      // A developing range is not finished: dashed until it is confirmed.
+      ctx.setLineDash(r.tier === 'developing' ? [5, 4] : [])
+      ctx.strokeRect(Math.round(x0) + 0.5, Math.round(y0) + 0.5, Math.round(x1 - x0), Math.round(y1 - y0))
+      ctx.setLineDash([])
+      ctx.globalAlpha = 0.95
+      ctx.font = r.tier === 'major' ? `700 9px ${UI_FONT}` : `600 8.5px ${UI_FONT}`
+      ctx.fillStyle = col
+      ctx.textAlign = 'left'
+      ctx.textBaseline = 'bottom'
+      const name = r.tier === 'major' ? 'MAJOR RANGE' : r.tier === 'minor' ? 'RANGE' : 'DEVELOPING RANGE'
+      const tag = r.strong && r.breakout ? (r.breakout === 'up' ? '  ▲ BREAKOUT' : '  ▼ BREAKDOWN') : ''
+      ctx.fillText(name + tag, Math.max(x0, 0) + 4, y0 - 2)
+    }
+    ctx.globalAlpha = 1
+    ctx.restore()
+  }
+
+
 
   // --- patterns: the Autochartist signature ---------------------------- //
   private drawPatterns() {
@@ -2031,9 +2150,40 @@ export class ChartEngine {
   }
 
   // --- swings, structure, events --------------------------------------- //
+  /**
+   * The engine's structure on every bar the chart holds (structure.ts, a
+   * port of engine/structure.py). Like the ranges, never past the replay
+   * cursor in a backtest with the future revealed.
+   */
+  private getStructure(): { swings: HSwing[]; breaks: HBreak[] } {
+    const cut = this.cursorT != null ? this.barIndexAtOrBefore(this.cursorT) : -1
+    const b = cut >= 0 ? this.bars.slice(0, cut + 1) : this.bars
+    const n = b.length
+    const key = `${n}:${n ? b[0].t : 0}:${n ? b[n - 1].t : 0}:${n ? b[n - 1].c : 0}`
+    if (this.structCache.key !== key) {
+      const swings = findSwings(b)
+      this.structCache = { key, swings, breaks: structureBreaks(swings, b) }
+    }
+    return this.structCache
+  }
+
+  /**
+   * Swings to draw, in CHART indices: the engine's own inside its analysis
+   * window (what the signals read), and the chart-side port for the history
+   * before the engine's first swing (2026-11-08 - the left of the chart used
+   * to be bare).
+   */
+  private allSwings() {
+    const own = (this.snap?.swings ?? []).map((w) => ({ ...w, ci: w.idx + this.snapOffset }))
+    const from = own.length ? Math.min(...own.map((w) => w.t)) : Infinity
+    const hist = this.getStructure().swings.filter((w) => w.t < from).map((w) => ({ ...w, ci: w.idx }))
+    return [...hist, ...own]
+  }
+
   private drawSwings() {
     const s = this.snap
-    if (!s?.swings) return
+    const swings = this.allSwings()
+    if (!swings.length) return
     const ctx = this.bctx
 
     // Significant swings get a ring with a solid dot; the rest - lower-
@@ -2043,22 +2193,22 @@ export class ChartEngine {
     // "Significant" is the top 30% by leg size (strength, in ATR). A fixed
     // ATR cut-off would mean different things on different charts; the
     // percentile lands at ~2.7 ATR on 5m, 15m and 1h alike (measured).
-    const legs = s.swings.map((w) => w.strength ?? 0).sort((a, b) => a - b)
+    const legs = swings.map((w) => w.strength ?? 0).sort((a, b) => a - b)
     const cut = legs.length ? legs[Math.floor(legs.length * 0.7)] : Infinity
     // The reversal that confirms a major turn, in price: the top-30% leg size
     // times the ATR AT THE SWINGS (each swing's leg / its strength, median),
     // not the last bar's. A quiet last bar - a weekend on 5m - shrank the
     // threshold and made 37 of 60 swings "major".
-    const local = s.swings
+    const local = swings
       .map((w, i) => (i > 0 && (w.strength ?? 0) > 0
-        ? Math.abs(w.price - s.swings[i - 1].price) / (w.strength as number) : 0))
+        ? Math.abs(w.price - swings[i - 1].price) / (w.strength as number) : 0))
       .filter((x) => x > 0).sort((a, b) => a - b)
-    const swingAtr = local.length ? local[Math.floor(local.length / 2)] : (s.atr || 0)
-    const major = this.majorSwings(s.swings, (Number.isFinite(cut) && cut > 0 ? cut : 3) * swingAtr)
+    const swingAtr = local.length ? local[Math.floor(local.length / 2)] : (s?.atr || 0)
+    const major = this.majorSwings(swings, (Number.isFinite(cut) && cut > 0 ? cut : 3) * swingAtr)
 
     ctx.save()
-    for (const [i, sw] of s.swings.entries()) {
-      const x = this.snapX(sw.idx)
+    for (const [i, sw] of swings.entries()) {
+      const x = this.xOf(sw.ci)
       if (x < -20 || x > this.pane.w + 20) continue
       const high = sw.kind === 'high'
       const y = this.yOf(sw.price) + (high ? -6 : 6)
@@ -2076,7 +2226,8 @@ export class ChartEngine {
       } else {
         ctx.globalAlpha *= 0.8
         ctx.lineWidth = 1
-        ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.stroke()
+        // 2.4 px (was 3.2, 2026-11-08): minor swings are context, not signals.
+        ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2); ctx.stroke()
       }
     }
     ctx.restore()
@@ -2139,15 +2290,26 @@ export class ChartEngine {
    */
   private drawStructureBreaks() {
     const s = this.snap
-    if (!s?.breaks) return
+    // The engine's breaks (its latest 30) where it has them; the chart-side
+    // port's for everything before - same rules, see structure.ts.
+    const own = (s?.breaks ?? []).map((b) => ({
+      ...b, ci: b.idx + this.snapOffset,
+      cf: b.from_swing != null && b.from_swing >= 0 ? b.from_swing + this.snapOffset : null,
+    }))
+    const from = own.length ? Math.min(...own.map((b) => b.t))
+      : (s?.swings?.length ? Math.min(...s.swings.map((w) => w.t)) : Infinity)
+    const hist = this.getStructure().breaks.filter((b) => b.t < from)
+      .map((b) => ({ ...b, ci: b.idx, cf: b.from_swing }))
+    const all = [...hist, ...own]
+    if (!all.length) return
     const ctx = this.bctx
     ctx.save()
     ctx.beginPath(); ctx.rect(0, 0, this.pane.w, this.pane.h); ctx.clip()
     ctx.font = `700 8.5px ${UI_FONT}`
     ctx.textAlign = 'center'
-    for (const b of s.breaks) {
-      const x1 = this.snapX(b.idx)
-      const x0 = b.from_swing != null && b.from_swing >= 0 ? this.snapX(b.from_swing) : x1 - this.barW() * 6
+    for (const b of all) {
+      const x1 = this.xOf(b.ci)
+      const x0 = b.cf != null ? this.xOf(b.cf) : x1 - this.barW() * 6
       if (x1 < -30 || x0 > this.pane.w + 30) continue
       const y = this.yOf(b.price)
       if (y < -10 || y > this.pane.h + 10) continue
@@ -2263,7 +2425,9 @@ export class ChartEngine {
     }
     rail(yT2, col, away('TP2', sig.tp2, '+'), true)
     rail(yT1, col, away('TP1', sig.tp1, '+'), true)
-    rail(yE, this.theme.warn, 'ENTRY')
+    // Which rule fired, on the entry rail - with 40+ playbooks the chart has
+    // to say which one this is (2026-11-08).
+    rail(yE, this.theme.warn, 'ENTRY')     // the playbook's name is on the signals panel
     rail(yS, buy ? this.theme.down : this.theme.up, away('SL', sig.stop, '-'))
 
     // direction marker at the signal bar

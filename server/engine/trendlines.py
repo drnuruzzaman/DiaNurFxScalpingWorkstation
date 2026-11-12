@@ -33,6 +33,15 @@ import numpy as np
 
 from .precision import rp
 
+# A channel is HORIZONTAL - a range - while its slope stays within this many
+# ATR per FLAT_BARS bars; steeper is ascending / descending. 0.15 ATR per 20
+# bars (2026-11-08), the same flatness limit the chart's range finder uses
+# (server/engine/ranges.py, web/src/chart/ranges.ts). It was 0.05 ATR per
+# BAR - 1 ATR per 20 bars - which called clearly sloping corridors ranges.
+FLAT_ATR = 0.15
+FLAT_BARS = 20
+HORIZONTAL_ATR_PER_BAR = FLAT_ATR / FLAT_BARS
+
 
 @dataclass
 class Trendline:
@@ -251,9 +260,9 @@ def find_channels(h, l, c, t, trendlines: list, atr_val: float,
             continue
 
         slope_per_atr = tl.slope / atr_val
-        if slope_per_atr > 0.05:
+        if slope_per_atr > HORIZONTAL_ATR_PER_BAR:
             kind = 'ascending'
-        elif slope_per_atr < -0.05:
+        elif slope_per_atr < -HORIZONTAL_ATR_PER_BAR:
             kind = 'descending'
         else:
             kind = 'horizontal'

@@ -191,16 +191,19 @@ def classify(h, l, c, t, swings, trend, channels, atr_arr,
 
     # What the regime IMPLIES for playbook selection.
     if state == 'trend':
-        playbooks = ['mtf_pullback', 'breakout_retest', 'flag_continuation', 'trendline_bounce']
+        # range_edge_fade: an ascending / descending range inside a trend
+        # (it only fades WITH the slope there - see signals.py).
+        playbooks = ['breakout_retest', 'trendline_bounce',
+                     'range_edge_fade', 'false_break']
         guidance = f'Trade with the {direction}trend. Fade nothing.'
     elif state == 'range':
-        playbooks = ['range_fade', 'sweep_reversal', 'false_break_fade']
+        playbooks = ['range_edge_fade', 'liquidity_sweep_reversal', 'false_break']
         guidance = 'Fade the edges. Targets are the opposite boundary, not a measured move.'
     elif state == 'squeeze':
         playbooks = ['breakout_retest']
         guidance = 'Wait for the expansion. Do not pre-position inside the coil.'
     else:
-        playbooks = ['sweep_reversal', 'false_break_fade']
+        playbooks = ['liquidity_sweep_reversal', 'false_break', 'range_edge_fade']
         guidance = 'Transition - size down or stand aside. This is where fixed-R scalps bleed.'
 
     return {

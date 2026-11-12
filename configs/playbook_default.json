@@ -1,0 +1,229 @@
+{
+ "disabled_playbooks": [],
+ "playbook_timeframes": {
+  "liquidity_sweep_reversal": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "breakout_retest": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "false_break": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "2h",
+   "4h"
+  ],
+  "trendline_bounce": [
+   "1m",
+   "3m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "range_breakout": [
+   "1m",
+   "3m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "trendline_breakout": [
+   "1m",
+   "3m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "squeeze_breakout": [
+   "1m",
+   "3m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "news_breakout": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "4h",
+   "1d"
+  ],
+  "displacement_breakout": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "1d"
+  ],
+  "liquidity_sweep_breakout": [
+   "1m",
+   "3m",
+   "30m",
+   "1h",
+   "4h",
+   "1d"
+  ],
+  "fvg_ob_breakout": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "4h",
+   "1d"
+  ],
+  "fvg_reversal": [
+   "1m",
+   "3m",
+   "5m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "engulfing_reversal": [
+   "1m",
+   "3m",
+   "30m",
+   "4h",
+   "1d"
+  ],
+  "rejection_wick_reversal": [
+   "1m",
+   "3m",
+   "5m",
+   "30m",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "three_candle_reversal": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "divergence_reversal": [
+   "1m",
+   "3m",
+   "5m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "trend_structure_pullback": [
+   "1m",
+   "3m",
+   "30m",
+   "1d"
+  ],
+  "bos_retest_pullback": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "internal_structure_pullback": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "4h",
+   "1d"
+  ],
+  "fvg_pullback": [
+   "1m",
+   "3m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "4h",
+   "1d"
+  ]
+ },
+ "known": [
+  "liquidity_sweep_reversal",
+  "breakout_retest",
+  "false_break",
+  "pattern_break",
+  "range_edge_fade",
+  "trendline_bounce",
+  "range_breakout",
+  "range_retest",
+  "range_sweep",
+  "mid_range_rotation",
+  "range_compression_breakout",
+  "range_expansion",
+  "range_failure",
+  "hz_resistance_breakout",
+  "hz_support_breakdown",
+  "trendline_breakout",
+  "squeeze_breakout",
+  "news_breakout",
+  "displacement_breakout",
+  "liquidity_sweep_breakout",
+  "bos_breakout",
+  "choch_breakout",
+  "fvg_ob_breakout",
+  "choch_reversal",
+  "ob_reversal",
+  "fvg_reversal",
+  "engulfing_reversal",
+  "rejection_wick_reversal",
+  "three_candle_reversal",
+  "double_top_bottom",
+  "divergence_reversal",
+  "trend_structure_pullback",
+  "bos_retest_pullback",
+  "internal_structure_pullback",
+  "fvg_pullback",
+  "ob_pullback",
+  "fibonacci_pullback",
+  "ma_pullback",
+  "volatility_pullback"
+ ],
+ "saved_ms": 1794448921559
+}

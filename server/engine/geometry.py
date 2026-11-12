@@ -242,8 +242,10 @@ def leg_channels(t, h, l, c, atr_now: float) -> list:
         slope, top, bot = fit
         width = top - bot
         per_atr = slope / atr_now
-        kind = ('ascending' if per_atr > 0.05 else
-                'descending' if per_atr < -0.05 else 'horizontal')
+        # Same flatness rule as trendlines.find_channels (0.15 ATR / 20 bars).
+        from .trendlines import HORIZONTAL_ATR_PER_BAR as flat
+        kind = ('ascending' if per_atr > flat else
+                'descending' if per_atr < -flat else 'horizontal')
         xs = np.arange(i0, end + 1)
         tu = int((np.abs(h[i0:end + 1] - (top + slope * xs)) <= tol).sum())
         tlo = int((np.abs(l[i0:end + 1] - (bot + slope * xs)) <= tol).sum())

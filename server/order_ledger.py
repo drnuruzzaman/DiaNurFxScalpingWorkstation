@@ -48,11 +48,13 @@ PLAYBOOK_SHORT = {
     'trendline_bounce': 'TLBOUNCE',
     'breakout_retest': 'BRKRETEST',
     'sweep_reversal': 'SWEEPREV',
+    'liquidity_sweep_reversal': 'LSWEEPREV',
     'false_break_fade': 'FBFADE',
     'pattern_break': 'PATBREAK',
     'mtf_pullback': 'MTFPULL',
     'false_break': 'FBREAK',
     'range_fade': 'RANGEFADE',
+    'range_edge_fade': 'RANGEEDGE',
     'last_break': 'LASTBREAK',
 }
 

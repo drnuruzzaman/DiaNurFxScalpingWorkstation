@@ -6,7 +6,11 @@ import React, { useMemo, useState } from 'react'
 import { SymbolPicker } from '../panels/SymbolPicker'
 import type { LabDataInfo, LabSession } from './types'
 
-const TF_MIN: Record<string, number> = { '1m': 1, '3m': 3, '5m': 5, '15m': 15, '30m': 30, '1h': 60, '4h': 240 }
+const TF_MIN: Record<string, number> = {
+  '1m': 1, '3m': 3, '5m': 5, '15m': 15, '30m': 30, '1h': 60, '2h': 120, '4h': 240, '1d': 1440,
+}
+/** How the timeframe buttons read - the day bar as traders write it. */
+const TF_LABEL: Record<string, string> = { '1d': 'D1' }
 const DAY = 86_400_000
 
 /** "YYYY-MM-DDTHH:MM" in UTC, for a datetime-local input read as UTC. */
@@ -23,22 +27,24 @@ export function NewSession({ data, current, onCreate, onClose }: {
   onClose: () => void
 }) {
   const syms = data.symbols
-  const [symbol, setSymbol] = useState(current?.cfg.symbol ?? syms[0]?.symbol ?? 'XAUUSD.a')
-  const [tf, setTf] = useState(current?.cfg.tf ?? '5m')
+  // Every new session starts from the same defaults (2026-11-09): gold, 1h,
+  // the last month, news blackout off, recorded - not from the open session.
+  const [symbol, setSymbol] = useState(
+    syms.some((x) => x.symbol === 'XAUUSD.a') ? 'XAUUSD.a' : (syms[0]?.symbol ?? 'XAUUSD.a'))
+  const [tf, setTf] = useState('1h')
   const cover = syms.find((s) => s.symbol === symbol)?.coverage ?? {}
   const range = cover[tf]
   const m1 = cover['1m']
   const lastMs = Math.min(range?.last_ms ?? Date.now(), m1?.last_ms ?? Date.now())
   // The engine needs 600 bars of history before the first decision bar.
   const firstMs = (range?.first_ms ?? 0) + 720 * (TF_MIN[tf] ?? 5) * 60_000 * 1.6
-  const [start, setStart] = useState(() => toInput(lastMs - 14 * DAY))
+  const [start, setStart] = useState(() => toInput(lastMs - 30 * DAY))
   const [end, setEnd] = useState(() => toInput(lastMs))
-  const [mode, setMode] = useState<'auto' | 'manual'>(current?.cfg.mode ?? 'auto')
+  const [mode, setMode] = useState<'auto' | 'manual'>('auto')
   const [name, setName] = useState('')
   const [record, setRecord] = useState(true)
-  const [filter, setFilter] = useState<string>((current?.cfg as any)?.forecast_filter ?? '')
-  // On by default: live trades with the news blackout, and the lab can now replay it.
-  const [newsGate, setNewsGate] = useState<boolean>((current?.cfg as any)?.news_gate ?? true)
+  const [filter, setFilter] = useState<string>('')
+  const [newsGate, setNewsGate] = useState<boolean>(false)
   const [copySettings, setCopySettings] = useState(false)
   const [picker, setPicker] = useState(false)
 
@@ -56,10 +62,18 @@ export function NewSession({ data, current, onCreate, onClose }: {
             : estBars > data.max_bars ? `About ${estBars.toLocaleString()} bars - more than a replay handles (${data.max_bars.toLocaleString()}). Shorten it.`
               : null
 
+  // The quick button that set the current dates. It stays highlighted only
+  // while the dates are still the ones it set - editing either date by hand
+  // un-selects it, so the highlight never claims a range that is not shown.
+  const [quick, setQuick] = useState<{ key: string; start: string; end: string } | null>(
+    () => ({ key: 'd30', start: toInput(lastMs - 30 * DAY), end: toInput(lastMs) }))
+  const quickOn = (key: string) => !!quick && quick.key === key && quick.start === start && quick.end === end
+  const pick = (key: string, a: string, b: string) => {
+    setStart(a); setEnd(b); setQuick({ key, start: a, end: b })
+  }
   const preset = (days: number, back = true) => {
     const endAt = lastMs
-    setEnd(toInput(endAt))
-    setStart(toInput(back ? endAt - days * DAY : endAt))
+    pick(`d${days}`, toInput(back ? endAt - days * DAY : endAt), toInput(endAt))
   }
   const randomWeek = () => {
     // Somewhere uniformly between the earliest usable start and a week before
@@ -70,8 +84,7 @@ export function NewSession({ data, current, onCreate, onClose }: {
     const monday = new Date(t0)
     monday.setUTCHours(0, 0, 0, 0)
     monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7))
-    setStart(toInput(monday.getTime()))
-    setEnd(toInput(monday.getTime() + 5 * DAY))
+    pick('random', toInput(monday.getTime()), toInput(monday.getTime() + 5 * DAY))
   }
 
   const create = () => {
@@ -102,7 +115,7 @@ export function NewSession({ data, current, onCreate, onClose }: {
             <label>Timeframe
               <div className="lab-seg">
                 {data.timeframes.map((t) => (
-                  <button key={t} className={t === tf ? 'on' : ''} disabled={!cover[t]} onClick={() => setTf(t)}>{t}</button>
+                  <button key={t} className={t === tf ? 'on' : ''} disabled={!cover[t]} onClick={() => setTf(t)}>{TF_LABEL[t] ?? t}</button>
                 ))}
               </div>
             </label>
@@ -114,12 +127,12 @@ export function NewSession({ data, current, onCreate, onClose }: {
             </label>
             <div className="lab-presets">
               <span className="t-dim">quick:</span>
-              <button onClick={() => preset(1)}>last day</button>
-              <button onClick={() => preset(7)}>last week</button>
-              <button onClick={() => preset(14)}>2 weeks</button>
-              <button onClick={() => preset(30)}>month</button>
-              <button onClick={() => preset(90)}>3 months</button>
-              <button onClick={randomWeek} title="A random trading week - test without choosing the week">random week</button>
+              <button className={quickOn('d1') ? 'on' : ''} onClick={() => preset(1)}>last day</button>
+              <button className={quickOn('d7') ? 'on' : ''} onClick={() => preset(7)}>last week</button>
+              <button className={quickOn('d14') ? 'on' : ''} onClick={() => preset(14)}>2 weeks</button>
+              <button className={quickOn('d30') ? 'on' : ''} onClick={() => preset(30)}>month</button>
+              <button className={quickOn('d90') ? 'on' : ''} onClick={() => preset(90)}>3 months</button>
+              <button className={quickOn('random') ? 'on' : ''} onClick={randomWeek} title="A random trading week - test without choosing the week">random week</button>
             </div>
             <label>Who trades
               <div className="lab-seg">

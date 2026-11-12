@@ -24,7 +24,8 @@ export const OVERLAY_GROUPS: { title: string; rows: OverlayRow[] }[] = [
     rows: [
       { key: 'levels', label: 'S/R levels', hint: 'price turned repeatedly' },
       { key: 'trendlines', label: 'Trendlines', hint: 'swing-anchored' },
-      { key: 'channels', label: 'Channels', hint: 'parallel corridor' },
+      { key: 'channels', label: 'Channels', hint: 'trend solid, pullback dashed' },
+      { key: 'ranges', label: 'Ranges', hint: 'sideways boxes' },
       { key: 'patterns', label: 'Patterns', hint: 'wedges, tops, H&S' },
       { key: 'swings', label: 'Swing points', hint: 'HH / HL / LH / LL' },
       { key: 'structure', label: 'BOS / CHoCH', hint: 'structure breaks' },

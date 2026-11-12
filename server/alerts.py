@@ -560,6 +560,11 @@ def should_alert(cfg: dict, sig: dict, now_ms: int = None) -> AlertVerdict:
                    f"{cfg.get('min_confidence')}")
     if not is_watched(cfg, sig['symbol'], sig['tf']):
         return AlertVerdict(False, f"{sig['symbol']} {sig['tf']} is not watched")
+    # A signal recorded before its playbook was switched off for this
+    # timeframe (Settings -> Playbooks) is not alerted on (2026-11-12).
+    from .engine.signals import playbook_on
+    if sig.get('playbook') and not playbook_on(sig['playbook'], sig['tf']):
+        return AlertVerdict(False, f"{sig['playbook']} is off on {sig['tf']} (Settings -> Playbooks)")
 
     quiet = cfg.get('quiet_hours_utc') or {}
     if quiet.get('enabled'):

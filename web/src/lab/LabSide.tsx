@@ -16,6 +16,15 @@ import { fmt, signed } from '../lib/format'
 import { Meter } from '../panels/common'
 import { ForecastSide } from './LabForecast'
 import type { LabEvent, LabForecast, LabFrame, LabSession, LabTrade, SchemaRow } from './types'
+import playbookData from '../data/playbooks.json'
+
+/** Playbook groups (range, breakout, reversal, pullback) from the shared rule file. */
+const PB_GROUPS: { key: string; title: string }[] = (playbookData as any).groups
+const PB_GROUP_OF: Record<string, string> =
+  Object.fromEntries((playbookData as any).playbooks.map((p: any) => [p.id, p.group]))
+/** The same names Settings -> Playbooks shows. */
+const PB_TITLE: Record<string, string> =
+  Object.fromEntries((playbookData as any).playbooks.map((p: any) => [p.id, p.title]))
 
 export type SideTab = 'now' | 'trade' | 'strategy' | 'forecast'
 
@@ -397,6 +406,14 @@ const OPTION_LABELS: Record<string, Record<string, string>> = {
     trail: 'trail after TP1',
     partial: '50% at TP1, rest TP2',
   },
+  'risk.stop_mode': {
+    atr_floor: 'Structure, min ATR',
+    order_block: 'Order block',
+  },
+  'risk.ob_stop_fallback': {
+    atr_floor: 'Keep playbook stop',
+    skip: 'Skip the trade',
+  },
   'execution.broker_tp': {
     tp1: 'TP1 (all out at 1R)',
     tp2: 'TP2 (cap winners)',
@@ -415,6 +432,10 @@ const OPTION_ORDER: Record<string, string[]> = {
 /** The Exit dropdown's choice: trail with broker TP1 reads as "all out at TP1". */
 const exitValue = (d: Record<string, Record<string, any>>): string =>
   d.risk?.exit_mode === 'trail' && d.execution?.broker_tp === 'tp1' ? 'tp1' : d.risk?.exit_mode
+
+/** Every timeframe the live board scans (server/main.py BOARD_TFS) - the set an
+ * unmapped playbook runs on. */
+const BOARD_TFS = ['1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '1d']
 
 function StrategyTab(p: Parameters<typeof LabSide>[0]) {
   const s = p.session!
@@ -477,22 +498,79 @@ function StrategyTab(p: Parameters<typeof LabSide>[0]) {
           const v = draft[row.group]?.[row.key]
           const lv = p.live[row.group]?.[row.key]
           const diff = JSON.stringify(v) !== JSON.stringify(lv)
+          // The per-timeframe map is edited through the playbooks row below.
+          if (row.type === 'pbmap') return null
           if (row.type === 'playbooks') {
+            // A session runs ONE timeframe, so this row shows what runs on it:
+            // not in the off-list, and either unmapped (every timeframe) or
+            // mapped with this timeframe. A click edits the map for this
+            // timeframe only, as a session override (2026-11-12).
             const off: string[] = v ?? []
+            const map: Record<string, string[]> = draft.gates?.playbook_timeframes ?? {}
+            const liveMap: Record<string, string[]> = p.live.gates?.playbook_timeframes ?? {}
+            const tf = s.cfg.tf
+            const runs = (pb: string, o: string[], m: Record<string, string[]>) =>
+              !o.includes(pb) && (!m[pb] || m[pb].includes(tf))
+            const mapDiff = JSON.stringify(map) !== JSON.stringify(liveMap)
+            const toggle = (pb: string) => {
+              const on = runs(pb, off, map)
+              const nextMap = { ...map }
+              let nextOff = off
+              if (on) {
+                // Off on this timeframe: keep it everywhere else it ran.
+                const others = (map[pb] ?? BOARD_TFS).filter((t) => t !== tf)
+                if (others.length) nextMap[pb] = others
+                else { delete nextMap[pb]; nextOff = [...off, pb] }
+              } else {
+                nextOff = off.filter((x) => x !== pb)
+                if (off.includes(pb)) nextMap[pb] = [tf]
+                else if (nextMap[pb]) nextMap[pb] = [...nextMap[pb], tf]
+              }
+              setDraft((d) => ({ ...d, gates: { ...d.gates, disabled_playbooks: nextOff, playbook_timeframes: nextMap } }))
+            }
             return (
-              <div key={row.key} className={`lab-field ${diff ? 'diff' : ''}`}>
-                <span className="lab-field-l">{row.label}</span>
-                <div className="lab-pbs">
-                  {p.playbooks.map((pb) => {
-                    const on = !off.includes(pb)
-                    return (
-                      <button key={pb} className={`lab-pb ${on ? 'on' : ''}`}
-                        onClick={() => set(row.group, row.key, on ? [...off, pb] : off.filter((x) => x !== pb))}>
-                        {pb}
-                      </button>
-                    )
-                  })}
-                </div>
+              <div key={row.key} className={`lab-field ${diff || mapDiff ? 'diff' : ''}`}>
+                <span className="lab-field-l">{row.label} ({tf === '1d' ? 'D1' : tf})</span>
+                {/* Grouped like Settings -> Playbooks (range, breakout,
+                    reversal, pullback); anything not in playbooks.json goes
+                    to Other so a new playbook is never hidden. */}
+                {[...PB_GROUPS, { key: '_other', title: 'Other' }].map((g) => {
+                  const pbs = p.playbooks.filter((pb) =>
+                    g.key === '_other' ? !PB_GROUP_OF[pb] : PB_GROUP_OF[pb] === g.key)
+                  if (!pbs.length) return null
+                  const nOn = pbs.filter((pb) => runs(pb, off, map)).length
+                  return (
+                    <div key={g.key} className="lab-pbgroup">
+                      <div className="lab-pbgroup-h">{g.title}<span>{nOn}/{pbs.length}</span></div>
+                      <div className="lab-pbs">
+                        {pbs.map((pb) => {
+                          const on = runs(pb, off, map)
+                          return (
+                            <button key={pb} className={`lab-pb ${on ? 'on' : ''}`} onClick={() => toggle(pb)}
+                              title={pb}>
+                              {PB_TITLE[pb] ?? pb.replace(/_/g, ' ')}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          }
+          // The order-block stop's own settings only matter in that mode.
+          if (row.key.startsWith('ob_stop_') && draft.risk?.stop_mode !== 'order_block') return null
+          if (row.type === 'tfs') {
+            // A session runs one timeframe: on/off for it, the rest of the list kept.
+            const list: string[] = v ?? []
+            const tf = s.cfg.tf
+            return (
+              <div key={row.key} className={`lab-field ${diff ? 'diff' : ''}`} title={row.hint}>
+                <span className="lab-field-l">{row.label} ({tf === '1d' ? 'D1' : tf})</span>
+                <input type="checkbox" checked={list.includes(tf)}
+                  onChange={(e) => set(row.group, row.key, e.target.checked
+                    ? [...list, tf] : list.filter((x) => x !== tf))} />
               </div>
             )
           }

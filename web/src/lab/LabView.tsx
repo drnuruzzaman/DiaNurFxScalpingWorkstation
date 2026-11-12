@@ -16,7 +16,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { IndicatorsMenu, LAYOUT_ROWS, LayoutMenu } from '../chart/ChartMenus'
 import { ChartPane } from '../chart/ChartPane'
 import { DEFAULT_LAYOUT, DEFAULT_OVERLAYS, type Bar, type ForecastCone, type LayoutOpts,
-  type Overlays, type TradeMark } from '../chart/types'
+  type Overlays, type TradeMark, showsLevels } from '../chart/types'
 import { toBars } from '../lib/api'
 import { fmt, signed } from '../lib/format'
 import * as snapshot from '../lib/snapshot'
@@ -35,7 +35,7 @@ import './lab.css'
 
 const TF_MS: Record<string, number> = {
   '1m': 60_000, '3m': 180_000, '5m': 300_000, '15m': 900_000,
-  '30m': 1_800_000, '1h': 3_600_000, '4h': 14_400_000,
+  '30m': 1_800_000, '1h': 3_600_000, '2h': 7_200_000, '4h': 14_400_000, '1d': 86_400_000,
 }
 /** News marks are today's calendar and open positions come from the lab's own trade layer. */
 const LAB_LAYOUT_ROWS = LAYOUT_ROWS.filter((r) => r.key !== 'newsMarks' && r.key !== 'positions')
@@ -92,7 +92,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
   const [toast, setToast] = useState<string | null>(null)
   const [reveal, setReveal] = useState(false)
   const [overlays, setOverlaysRaw] = useState<Overlays>(
-    () => load('dianur.lab.overlays', liveOverlays ?? DEFAULT_OVERLAYS))
+    () => ({ ...DEFAULT_OVERLAYS, ...load('dianur.lab.overlays', liveOverlays ?? DEFAULT_OVERLAYS) }))
   // Layout is system-wide (set here or on the live chart, it is the same
   // everywhere). News marks are today's calendar and positions the live
   // account, so on a replay those two are always off.
@@ -612,7 +612,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
             {session ? (
               <ChartPane
                 bars={shownBars} snapshot={frame?.snapshot ?? null}
-                signal={overlays.signal ? shownSignal : null}
+                signal={overlays.signal && showsLevels(shownSignal) ? shownSignal : null}
                 overlays={overlays} digits={digits} money={money}
                 onEngine={(e) => { engine.current = e }}
                 tfMs={0} layout={layout} news={[]} positions={[]}

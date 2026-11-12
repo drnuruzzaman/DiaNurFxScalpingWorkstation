@@ -270,6 +270,9 @@ export const api = {
 
   settings: () => jget<any>('/api/settings'),
   saveSettings: (patch: any) => jpost<any>('/api/settings', patch),
+  playbookDefault: () => jget<any>('/api/playbooks/default'),
+  savePlaybookDefault: (grid: { disabled_playbooks: string[]; playbook_timeframes: Record<string, string[]> }) =>
+    jpost<any>('/api/playbooks/default', grid),
 
   placeOrder: (payload: any) => jpost<any>('/api/order/send', payload),
   execution: () => jget<any>('/api/execution'),

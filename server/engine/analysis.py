@@ -25,6 +25,7 @@ from . import geometry as geo
 from . import legs as lg
 from . import levels as lv
 from . import patterns as pat
+from . import ranges as rgs
 from . import regime as rg
 from . import structure as st
 from . import trendlines as tl
@@ -147,6 +148,35 @@ def _participation(v: np.ndarray, tail: int = 20) -> float:
         return 50.0
     pct = rolling_percentile(v.astype(np.float64), min(300, v.size), tail=tail)
     return float(np.nanmean(pct[-tail:])) if not np.isnan(pct[-tail:]).all() else 50.0
+
+
+def _major_news(t: np.ndarray, bar_utc_ms: int = None) -> dict:
+    """
+    The latest major release at or before the last bar's CLOSE, as minutes
+    since it and the window index of the bar it landed in, or {} when the
+    history has none in the last 24 hours. Bars may be on the broker's clock
+    (the lab): `bar_utc_ms` maps the last bar onto UTC, and the same offset
+    places the release among the bars.
+    """
+    try:
+        from ..forecast import news as nh
+        ts, kd = nh.events()['major']
+    except Exception:                               # noqa: BLE001
+        return {}
+    if t.size < 2 or not ts.size:
+        return {}
+    step = int(t[-1] - t[-2])
+    utc_last = int(t[-1] if bar_utc_ms is None else bar_utc_ms)
+    offset = int(t[-1]) - utc_last
+    close_utc = utc_last + step
+    j = int(np.searchsorted(ts, close_utc, 'right')) - 1
+    if j < 0 or close_utc - int(ts[j]) > 86_400_000:
+        return {}
+    rel = int(ts[j])
+    idx = int(np.searchsorted(t, rel + offset, 'right')) - 1
+    return {'kind': nh.KINDS[int(kd[j])], 'utc_ms': rel,
+            'minutes_since': round((close_utc - rel) / 60_000, 1),
+            'bar_idx': idx if idx >= 0 else None}
 
 
 def analyse(series: Series, mtf_reads: dict = None,
@@ -344,6 +374,16 @@ def _analyse(series: Series, mtf_reads: dict = None,
 
         'trendlines': [x.to_dict() for x in lines],
         'channels': channel_set,
+        # The range price is trading in now, by type (ranges.range_structure,
+        # 2026-11-08) - what range_edge_fade and false_break read.
+        'range_structure': rgs.range_structure(t, h, l, c, lookback=0),
+        # Every chart range in the window (ranges.find_ranges), for the range
+        # breakout / retest / failure playbooks. Indices are window indices.
+        'ranges': [r.to_dict() for r in rgs.find_ranges(t, h, l, c)][-12:],
+        # The latest MAJOR US release (NFP, CPI, FOMC, PPI, GDP, PCE, retail)
+        # at or before this bar - news_breakout reads it. Same history file
+        # live and in the lab, so both see the same releases.
+        'news': _major_news(t, bar_utc_ms),
         'chart_trendlines': leg_lines,
         'regression_channel': reg_channel,
 
