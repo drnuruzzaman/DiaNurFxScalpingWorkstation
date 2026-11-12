@@ -236,6 +236,11 @@ class GateSettings:
     min_mtf_score: int = 25               # -100..100
     min_room_to_target_r: float = 1.0     # clear space before the first obstacle
     cooldown_bars: int = 5                # bars between signals on one playbook
+    # The room gate (qualify.py): the first unbroken scored level against the
+    # trade between entry and TP1 BLOCKS it when it sits less than this % of
+    # the way to TP1, and only warns beyond it. 0 = never block, just warn.
+    # Was a fixed 55% until 2026-11-12.
+    room_block_pct: float = 55.0
     # Playbooks that generate nothing. Adopted 2026-09-21 after three years
     # of testing (tools/exp_entries.py, tools/exp_confirm.py), on a rule fixed
     # BEFORE the holdout was seen:

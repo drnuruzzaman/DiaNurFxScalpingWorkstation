@@ -2060,6 +2060,7 @@ def _check_setting(group: str, key: str, v):
         ('risk', 'ob_stop_buffer_low_atr'): (0.0, 1.0),
         ('risk', 'ob_stop_buffer_high_atr'): (0.0, 1.0),
         ('gates', 'min_confidence'): (0, 100),
+        ('gates', 'room_block_pct'): (0, 95),
         # 0 means "never blackout"; beyond two hours it is not a news window,
         # it is switching the system off for the session.
         ('gates', 'news_blackout_min'): (0, 120),

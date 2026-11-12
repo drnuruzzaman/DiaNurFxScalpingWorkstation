@@ -6310,3 +6310,77 @@ Error: connect ECONNREFUSED 127.0.0.1:8770
 [2m1:22:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/DrawToolbar.tsx[22m
 [2m1:22:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/chart/DrawToolbar.tsx[22m Could not Fast Refresh ("TOOL_ICON" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
 [2m1:22:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/chart/ChartPane.tsx[22m
+[2m2:44:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/panels/Settings.tsx[22m
+
+===== 2026-11-12 14:47:22 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.5[39m  [2mready in [0m[1m1082[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m2:47:24 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/data/job[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+[2m2:55:06 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lab/LabView.tsx[22m
+
+===== 2026-11-12 15:06:03 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.5[39m  [2mready in [0m[1m1089[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-11-12 15:27:40 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.5[39m  [2mready in [0m[1m908[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-11-12 15:30:08 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.5[39m  [2mready in [0m[1m613[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+
+===== 2026-11-12 17:49:20 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.5[39m  [2mready in [0m[1m1633[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m5:49:24 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+
+===== 2026-11-12 18:05:28 started by launcher =====
+
+> dianurfx-workstation@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v6.4.5[39m  [2mready in [0m[1m1086[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5180[22m/[39m
+[2m6:05:31 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/execution[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+[2m6:05:32 pm[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/quotes?symbols=XAUUSD.a[39m
+Error: connect ECONNREFUSED 127.0.0.1:8770
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)

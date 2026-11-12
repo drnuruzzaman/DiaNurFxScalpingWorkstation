@@ -1485,6 +1485,11 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
                 <input type="number" defaultValue={g.min_confidence}
                   onBlur={(e) => saveGates({ min_confidence: +e.target.value })} />
               </Field>
+              <Field label="Room to TP1 (%)"
+                hint="a support / resistance against the trade nearer than this % of the way to TP1 blocks it; further, it only warns. 0 = never block">
+                <input type="number" min={0} max={95} step={5} defaultValue={g.room_block_pct ?? 55}
+                  onBlur={(e) => saveGates({ room_block_pct: +e.target.value })} />
+              </Field>
               <Field label="Max spread (points)">
                 <input type="number" defaultValue={g.max_spread_points}
                   onBlur={(e) => saveGates({ max_spread_points: +e.target.value })} />

@@ -74164,7 +74164,7 @@
   "XAUUSD.a:5m:false_break:sell:1794453300000": {
    "id": "XAUUSD.a:5m:false_break:sell:1794453300000",
    "tag": "DNX 4c04345270",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -74180,10 +74180,10 @@
    "ticket": 10173019,
    "position": 10173019,
    "fill_price": 3978.07,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 3978.52,
+   "outcome": "trail",
+   "r": -0.061,
+   "profit": -0.53,
    "events": [
     [
      1794453623048,
@@ -74199,20 +74199,32 @@
      1794453626010,
      "filled",
      "position 10173019"
+    ],
+    [
+     1794459969061,
+     "filled",
+     "stop -> 3978.51"
+    ],
+    [
+     1794459975174,
+     "closed",
+     "trail at 3978.52"
     ]
    ],
    "created_ms": 1794453623048,
-   "updated_ms": 1794453626010,
+   "updated_ms": 1794459975174,
    "symbol": "XAUUSD.a",
    "tf": "5m",
    "side": "sell",
    "kind": "market",
-   "lots": 0.01
+   "lots": 0.01,
+   "r_net": -0.072,
+   "exit_ms": 1794477971653
   },
   "XAUUSD.a:3m:false_break:sell:1794452040000": {
    "id": "XAUUSD.a:3m:false_break:sell:1794452040000",
    "tag": "DNX 0ad0f9ea47",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -74228,10 +74240,10 @@
    "ticket": 10173032,
    "position": 10173032,
    "fill_price": 3979.74,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 3973.83,
+   "outcome": "target",
+   "r": 1.024,
+   "profit": 5.83,
    "events": [
     [
      1794453695491,
@@ -74247,15 +74259,27 @@
      1794453908520,
      "filled",
      "position 10173032"
+    ],
+    [
+     1794458032930,
+     "filled",
+     "stop -> 3975.41"
+    ],
+    [
+     1794458038287,
+     "closed",
+     "target at 3973.83"
     ]
    ],
    "created_ms": 1794453695491,
-   "updated_ms": 1794453908520,
+   "updated_ms": 1794458038287,
    "symbol": "XAUUSD.a",
    "tf": "3m",
    "side": "sell",
    "kind": "limit",
-   "lots": 0.01
+   "lots": 0.01,
+   "r_net": 1.01,
+   "exit_ms": 1794458036871
   },
   "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000": {
    "id": "XAUUSD.a:1m:bos_retest_pullback:sell:1794453780000",
@@ -74361,7 +74385,7 @@
   "XAUUSD.a:1m:false_break:buy:1794455160000": {
    "id": "XAUUSD.a:1m:false_break:buy:1794455160000",
    "tag": "DNX 3687384795",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -74377,10 +74401,10 @@
    "ticket": 10173281,
    "position": 10173281,
    "fill_price": 3981.07,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 3976.28,
+   "outcome": "stop",
+   "r": -1.0,
+   "profit": -4.87,
    "events": [
     [
      1794455223907,
@@ -74396,20 +74420,27 @@
      1794455254452,
      "filled",
      "position 10173281"
+    ],
+    [
+     1794457799527,
+     "closed",
+     "stop at 3976.28"
     ]
    ],
    "created_ms": 1794455223907,
-   "updated_ms": 1794455254452,
+   "updated_ms": 1794457799527,
    "symbol": "XAUUSD.a",
    "tf": "1m",
    "side": "buy",
    "kind": "limit",
-   "lots": 0.01
+   "lots": 0.01,
+   "r_net": -1.017,
+   "exit_ms": 1794457797651
   },
   "XAUUSD.a:3m:false_break:buy:1794454020000": {
    "id": "XAUUSD.a:3m:false_break:buy:1794454020000",
    "tag": "DNX d380c9a115",
-   "state": "filled",
+   "state": "closed",
    "attempts": 1,
    "request": {
     "symbol": "XAUUSD.a",
@@ -74425,10 +74456,10 @@
    "ticket": 10173287,
    "position": 10173287,
    "fill_price": 3981.33,
-   "close_price": null,
-   "outcome": null,
-   "r": null,
-   "profit": null,
+   "close_price": 3976.28,
+   "outcome": "stop",
+   "r": -1.006,
+   "profit": -5.13,
    "events": [
     [
      1794455282544,
@@ -74444,16 +74475,2883 @@
      1794455285690,
      "filled",
      "position 10173287"
+    ],
+    [
+     1794457798940,
+     "closed",
+     "stop at 3976.28"
     ]
    ],
    "created_ms": 1794455282544,
-   "updated_ms": 1794455285690,
+   "updated_ms": 1794457798940,
    "symbol": "XAUUSD.a",
    "tf": "3m",
    "side": "buy",
    "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.022,
+   "exit_ms": 1794457797651
+  },
+  "XAUUSD.a:1m:range_compression_breakout:sell:1794456420000": {
+   "id": "XAUUSD.a:1m:range_compression_breakout:sell:1794456420000",
+   "tag": "DNX 96d96f2f98",
+   "state": "refused",
+   "attempts": 6,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3980.12,
+    "sl": 3983.74,
+    "tp": 3976.5,
+    "expiration_ms": 1794456960000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794456552283,
+     "sending",
+     ""
+    ],
+    [
+     1794456552706,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794456583998,
+     "sending",
+     ""
+    ],
+    [
+     1794456584158,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794456665745,
+     "sending",
+     ""
+    ],
+    [
+     1794456665857,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794456696868,
+     "sending",
+     ""
+    ],
+    [
+     1794456697002,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794456728334,
+     "sending",
+     ""
+    ],
+    [
+     1794456728399,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794456759040,
+     "sending",
+     ""
+    ],
+    [
+     1794456759104,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794456552283,
+   "updated_ms": 1794456759104,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:false_break:sell:1794457080000": {
+   "id": "XAUUSD.a:1m:false_break:sell:1794457080000",
+   "tag": "DNX 0518086491",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3980.43,
+    "sl": 3983.71,
+    "tp": 3977.15,
+    "expiration_ms": 1794457740000
+   },
+   "ticket": 10173662,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794457264625,
+     "sending",
+     ""
+    ],
+    [
+     1794457264928,
+     "placed",
+     "limit ticket 10173662"
+    ],
+    [
+     1794457327294,
+     "cancelled",
+     "invalidated on the closed bar - flip at 3979.91 (score 80) sits only 16% of the way to TP1"
+    ]
+   ],
+   "created_ms": 1794457264625,
+   "updated_ms": 1794457327294,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:squeeze_breakout:sell:1794457740000": {
+   "id": "XAUUSD.a:1m:squeeze_breakout:sell:1794457740000",
+   "tag": "DNX 8aef30e7f2",
+   "state": "refused",
+   "attempts": 14,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3975.97,
+    "sl": 3980.32,
+    "tp": 3971.62,
+    "expiration_ms": 1794458280000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794457805792,
+     "sending",
+     ""
+    ],
+    [
+     1794457805844,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794457835932,
+     "sending",
+     ""
+    ],
+    [
+     1794457836041,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794457866766,
+     "sending",
+     ""
+    ],
+    [
+     1794457866819,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794457897029,
+     "sending",
+     ""
+    ],
+    [
+     1794457897095,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794457929050,
+     "sending",
+     ""
+    ],
+    [
+     1794457929112,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794457960905,
+     "sending",
+     ""
+    ],
+    [
+     1794457960952,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794457991133,
+     "sending",
+     ""
+    ],
+    [
+     1794457991233,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458023237,
+     "sending",
+     ""
+    ],
+    [
+     1794458023312,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458054960,
+     "sending",
+     ""
+    ],
+    [
+     1794458055036,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458085233,
+     "sending",
+     ""
+    ],
+    [
+     1794458085355,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458115250,
+     "sending",
+     ""
+    ],
+    [
+     1794458115384,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458146914,
+     "sending",
+     ""
+    ],
+    [
+     1794458147059,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458178498,
+     "sending",
+     ""
+    ],
+    [
+     1794458178557,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794458222637,
+     "sending",
+     ""
+    ],
+    [
+     1794458222689,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794457805792,
+   "updated_ms": 1794458222689,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:false_break:buy:1794477600000": {
+   "id": "XAUUSD.a:5m:false_break:buy:1794477600000",
+   "tag": "DNX 8baec05e47",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3977.37,
+    "sl": 3972.41,
+    "tp": 3982.33,
+    "expiration_ms": 1794480900000
+   },
+   "ticket": 10174474,
+   "position": 10174474,
+   "fill_price": 3977.35,
+   "close_price": 3972.4,
+   "outcome": "stop",
+   "r": -1.002,
+   "profit": -5.03,
+   "events": [
+    [
+     1794460220353,
+     "sending",
+     ""
+    ],
+    [
+     1794460220676,
+     "placed",
+     "limit ticket 10174474"
+    ],
+    [
+     1794460319849,
+     "filled",
+     "position 10174474"
+    ],
+    [
+     1794460667776,
+     "closed",
+     "stop at 3972.4"
+    ]
+   ],
+   "created_ms": 1794460220353,
+   "updated_ms": 1794460667776,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01,
+   "r_net": -1.018,
+   "exit_ms": 1794478665652
+  },
+  "XAUUSD.a:5m:ma_pullback:sell:1794478200000": {
+   "id": "XAUUSD.a:5m:ma_pullback:sell:1794478200000",
+   "tag": "DNX 422fd8501f",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3974.31,
+    "sl": 3982.22,
+    "tp": 3966.4,
+    "expiration_ms": 1794481500000
+   },
+   "ticket": 10174858,
+   "position": 10174858,
+   "fill_price": 3974.6,
+   "close_price": 3982.22,
+   "outcome": "stop",
+   "r": -1.0,
+   "profit": -7.7,
+   "events": [
+    [
+     1794461416142,
+     "sending",
+     ""
+    ],
+    [
+     1794461416499,
+     "placed",
+     "limit ticket 10174858"
+    ],
+    [
+     1794461502275,
+     "filled",
+     "position 10174858"
+    ],
+    [
+     1794462742408,
+     "closed",
+     "stop at 3982.22"
+    ]
+   ],
+   "created_ms": 1794461416142,
+   "updated_ms": 1794462742408,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01,
+   "r_net": -1.01,
+   "exit_ms": 1794462740852
+  },
+  "XAUUSD.a:15m:internal_structure_pullback:sell:1794460500000": {
+   "id": "XAUUSD.a:15m:internal_structure_pullback:sell:1794460500000",
+   "tag": "DNX dae83df300",
+   "state": "refused",
+   "attempts": 42,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3971.46,
+    "sl": 3981.25,
+    "tp": 3961.67,
+    "expiration_ms": 1794470400000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794461419361,
+     "sending",
+     ""
+    ],
+    [
+     1794461419434,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461450869,
+     "sending",
+     ""
+    ],
+    [
+     1794461450938,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461481909,
+     "sending",
+     ""
+    ],
+    [
+     1794461481966,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461514018,
+     "sending",
+     ""
+    ],
+    [
+     1794461514077,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461545368,
+     "sending",
+     ""
+    ],
+    [
+     1794461545430,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461576614,
+     "sending",
+     ""
+    ],
+    [
+     1794461576671,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461608530,
+     "sending",
+     ""
+    ],
+    [
+     1794461608584,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461639898,
+     "sending",
+     ""
+    ],
+    [
+     1794461639949,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461670714,
+     "sending",
+     ""
+    ],
+    [
+     1794461670779,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461702459,
+     "sending",
+     ""
+    ],
+    [
+     1794461702520,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461734316,
+     "sending",
+     ""
+    ],
+    [
+     1794461734347,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461765514,
+     "sending",
+     ""
+    ],
+    [
+     1794461765567,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461796764,
+     "sending",
+     ""
+    ],
+    [
+     1794461796817,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461828731,
+     "sending",
+     ""
+    ],
+    [
+     1794461828814,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461859623,
+     "sending",
+     ""
+    ],
+    [
+     1794461859703,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461891759,
+     "sending",
+     ""
+    ],
+    [
+     1794461891844,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461923370,
+     "sending",
+     ""
+    ],
+    [
+     1794461923430,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461953554,
+     "sending",
+     ""
+    ],
+    [
+     1794461953601,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794461984882,
+     "sending",
+     ""
+    ],
+    [
+     1794461984978,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462016862,
+     "sending",
+     ""
+    ],
+    [
+     1794462016925,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462046927,
+     "sending",
+     ""
+    ],
+    [
+     1794462046975,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462078078,
+     "sending",
+     ""
+    ],
+    [
+     1794462078161,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462109895,
+     "sending",
+     ""
+    ],
+    [
+     1794462109946,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462141329,
+     "sending",
+     ""
+    ],
+    [
+     1794462141379,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462173394,
+     "sending",
+     ""
+    ],
+    [
+     1794462173477,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462204925,
+     "sending",
+     ""
+    ],
+    [
+     1794462204959,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462236541,
+     "sending",
+     ""
+    ],
+    [
+     1794462236584,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462268638,
+     "sending",
+     ""
+    ],
+    [
+     1794462268675,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462300307,
+     "sending",
+     ""
+    ],
+    [
+     1794462300370,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462332490,
+     "sending",
+     ""
+    ],
+    [
+     1794462332522,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462364077,
+     "sending",
+     ""
+    ],
+    [
+     1794462364120,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462395524,
+     "sending",
+     ""
+    ],
+    [
+     1794462395572,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462426991,
+     "sending",
+     ""
+    ],
+    [
+     1794462427026,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462458255,
+     "sending",
+     ""
+    ],
+    [
+     1794462458314,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462490037,
+     "sending",
+     ""
+    ],
+    [
+     1794462490091,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462521779,
+     "sending",
+     ""
+    ],
+    [
+     1794462521906,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462553042,
+     "sending",
+     ""
+    ],
+    [
+     1794462553092,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462584658,
+     "sending",
+     ""
+    ],
+    [
+     1794462584706,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462616174,
+     "sending",
+     ""
+    ],
+    [
+     1794462616214,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462646689,
+     "sending",
+     ""
+    ],
+    [
+     1794462646744,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462678208,
+     "sending",
+     ""
+    ],
+    [
+     1794462678261,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794462709688,
+     "sending",
+     ""
+    ],
+    [
+     1794462709731,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794461419361,
+   "updated_ms": 1794462709731,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:false_break:buy:1794462600000": {
+   "id": "XAUUSD.a:5m:false_break:buy:1794462600000",
+   "tag": "DNX e10ccf39ac",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3981.24,
+    "sl": 3969.62,
+    "tp": 3992.86,
+    "expiration_ms": 1794465900000
+   },
+   "ticket": 10175284,
+   "position": 10175284,
+   "fill_price": 3981.27,
+   "close_price": 3969.47,
+   "outcome": "stop",
+   "r": -1.013,
+   "profit": -11.88,
+   "events": [
+    [
+     1794462932626,
+     "sending",
+     ""
+    ],
+    [
+     1794462932923,
+     "placed",
+     "stop ticket 10175284"
+    ],
+    [
+     1794463006010,
+     "filled",
+     "position 10175284"
+    ],
+    [
+     1794466003458,
+     "closed",
+     "stop at 3969.47"
+    ]
+   ],
+   "created_ms": 1794462932626,
+   "updated_ms": 1794466003458,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01,
+   "r_net": -1.02,
+   "exit_ms": 1794466002654
+  },
+  "XAUUSD.a:30m:bos_retest_pullback:sell:1794463200000": {
+   "id": "XAUUSD.a:30m:bos_retest_pullback:sell:1794463200000",
+   "tag": "DNX 772ffd611b",
+   "state": "refused",
+   "attempts": 22,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3977.9,
+    "sl": 3991.22,
+    "tp": 3964.58,
+    "expiration_ms": 1794486600000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794465033203,
+     "sending",
+     ""
+    ],
+    [
+     1794465033261,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465065000,
+     "sending",
+     ""
+    ],
+    [
+     1794465065055,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465096371,
+     "sending",
+     ""
+    ],
+    [
+     1794465096428,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465127716,
+     "sending",
+     ""
+    ],
+    [
+     1794465127777,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465159384,
+     "sending",
+     ""
+    ],
+    [
+     1794465159465,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465191129,
+     "sending",
+     ""
+    ],
+    [
+     1794465191194,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465221417,
+     "sending",
+     ""
+    ],
+    [
+     1794465221515,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465252531,
+     "sending",
+     ""
+    ],
+    [
+     1794465252611,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465283532,
+     "sending",
+     ""
+    ],
+    [
+     1794465283625,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465315289,
+     "sending",
+     ""
+    ],
+    [
+     1794465315372,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465347076,
+     "sending",
+     ""
+    ],
+    [
+     1794465347152,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465377498,
+     "sending",
+     ""
+    ],
+    [
+     1794465377589,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465408880,
+     "sending",
+     ""
+    ],
+    [
+     1794465409001,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465439926,
+     "sending",
+     ""
+    ],
+    [
+     1794465440009,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465469929,
+     "sending",
+     ""
+    ],
+    [
+     1794465470038,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465501585,
+     "sending",
+     ""
+    ],
+    [
+     1794465501704,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465533215,
+     "sending",
+     ""
+    ],
+    [
+     1794465533323,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465565298,
+     "sending",
+     ""
+    ],
+    [
+     1794465565394,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465595880,
+     "sending",
+     ""
+    ],
+    [
+     1794465595944,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465626989,
+     "sending",
+     ""
+    ],
+    [
+     1794465627124,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465659163,
+     "sending",
+     ""
+    ],
+    [
+     1794465659242,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794465690347,
+     "sending",
+     ""
+    ],
+    [
+     1794465690438,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794465033203,
+   "updated_ms": 1794465690438,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:false_break:sell:1794465660000": {
+   "id": "XAUUSD.a:1m:false_break:sell:1794465660000",
+   "tag": "DNX d44a29bedb",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3973.46,
+    "sl": 3976.28,
+    "tp": 3970.64,
+    "expiration_ms": 1794466320000
+   },
+   "ticket": 10175979,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794465783460,
+     "sending",
+     ""
+    ],
+    [
+     1794465783892,
+     "placed",
+     "limit ticket 10175979"
+    ],
+    [
+     1794465963266,
+     "reversed",
+     "opposite FINAL XAUUSD.a:1m:three_candle_reversal:buy:1794465900000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1794465783460,
+   "updated_ms": 1794465963266,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:displacement_breakout:sell:1794465960000": {
+   "id": "XAUUSD.a:1m:displacement_breakout:sell:1794465960000",
+   "tag": "DNX 75dd6021dc",
+   "state": "refused",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 3972.03,
+    "tp": 3967.55,
+    "expiration_ms": 0
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794466023489,
+     "sending",
+     ""
+    ],
+    [
+     1794466023566,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794466023489,
+   "updated_ms": 1794466023566,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:3m:choch_breakout:sell:1794465900000": {
+   "id": "XAUUSD.a:3m:choch_breakout:sell:1794465900000",
+   "tag": "DNX e9948a951f",
+   "state": "refused",
+   "attempts": 11,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "3m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3969.21,
+    "sl": 3984.0,
+    "tp": 3954.42,
+    "expiration_ms": 1794468240000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794466476816,
+     "sending",
+     ""
+    ],
+    [
+     1794466476908,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466508236,
+     "sending",
+     ""
+    ],
+    [
+     1794466508322,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466539851,
+     "sending",
+     ""
+    ],
+    [
+     1794466539932,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466571003,
+     "sending",
+     ""
+    ],
+    [
+     1794466571094,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466601705,
+     "sending",
+     ""
+    ],
+    [
+     1794466601762,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466633763,
+     "sending",
+     ""
+    ],
+    [
+     1794466633818,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466664955,
+     "sending",
+     ""
+    ],
+    [
+     1794466665004,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466696371,
+     "sending",
+     ""
+    ],
+    [
+     1794466696420,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466727620,
+     "sending",
+     ""
+    ],
+    [
+     1794466727736,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466758899,
+     "sending",
+     ""
+    ],
+    [
+     1794466758972,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466790355,
+     "sending",
+     ""
+    ],
+    [
+     1794466790431,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794466476816,
+   "updated_ms": 1794466790431,
+   "symbol": "XAUUSD.a",
+   "tf": "3m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:choch_breakout:sell:1794465900000": {
+   "id": "XAUUSD.a:15m:choch_breakout:sell:1794465900000",
+   "tag": "DNX c86f3fdc81",
+   "state": "filled",
+   "attempts": 79,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3965.75,
+    "sl": 3985.1,
+    "tp": 3946.4,
+    "expiration_ms": 1794477600000
+   },
+   "ticket": 10177326,
+   "position": 10177326,
+   "fill_price": 3966.23,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794466806227,
+     "sending",
+     ""
+    ],
+    [
+     1794466806434,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466837891,
+     "sending",
+     ""
+    ],
+    [
+     1794466837984,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466869020,
+     "sending",
+     ""
+    ],
+    [
+     1794466869231,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466899619,
+     "sending",
+     ""
+    ],
+    [
+     1794466899713,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466930682,
+     "sending",
+     ""
+    ],
+    [
+     1794466930783,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466961845,
+     "sending",
+     ""
+    ],
+    [
+     1794466961933,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466994071,
+     "sending",
+     ""
+    ],
+    [
+     1794466994167,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467025986,
+     "sending",
+     ""
+    ],
+    [
+     1794467026089,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467057174,
+     "sending",
+     ""
+    ],
+    [
+     1794467057250,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467089002,
+     "sending",
+     ""
+    ],
+    [
+     1794467089067,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467119427,
+     "sending",
+     ""
+    ],
+    [
+     1794467119474,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467149852,
+     "sending",
+     ""
+    ],
+    [
+     1794467149913,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467701909,
+     "sending",
+     ""
+    ],
+    [
+     1794467702036,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467733004,
+     "sending",
+     ""
+    ],
+    [
+     1794467733157,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467763183,
+     "sending",
+     ""
+    ],
+    [
+     1794467763374,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467794986,
+     "sending",
+     ""
+    ],
+    [
+     1794467795105,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467826046,
+     "sending",
+     ""
+    ],
+    [
+     1794467826159,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467857422,
+     "sending",
+     ""
+    ],
+    [
+     1794467857524,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467887888,
+     "sending",
+     ""
+    ],
+    [
+     1794467888010,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467919863,
+     "sending",
+     ""
+    ],
+    [
+     1794467919981,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467950662,
+     "sending",
+     ""
+    ],
+    [
+     1794467950846,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467981622,
+     "sending",
+     ""
+    ],
+    [
+     1794467981750,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468012041,
+     "sending",
+     ""
+    ],
+    [
+     1794468012211,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468043582,
+     "sending",
+     ""
+    ],
+    [
+     1794468043800,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468073959,
+     "sending",
+     ""
+    ],
+    [
+     1794468074074,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468104091,
+     "sending",
+     ""
+    ],
+    [
+     1794468104210,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468136206,
+     "sending",
+     ""
+    ],
+    [
+     1794468136325,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468168672,
+     "sending",
+     ""
+    ],
+    [
+     1794468168851,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468200173,
+     "sending",
+     ""
+    ],
+    [
+     1794468200385,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468232736,
+     "sending",
+     ""
+    ],
+    [
+     1794468232928,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468264528,
+     "sending",
+     ""
+    ],
+    [
+     1794468264651,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468295671,
+     "sending",
+     ""
+    ],
+    [
+     1794468295871,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468328012,
+     "sending",
+     ""
+    ],
+    [
+     1794468328224,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468358060,
+     "sending",
+     ""
+    ],
+    [
+     1794468358175,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468389402,
+     "sending",
+     ""
+    ],
+    [
+     1794468389532,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468420370,
+     "sending",
+     ""
+    ],
+    [
+     1794468420476,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468451424,
+     "sending",
+     ""
+    ],
+    [
+     1794468451565,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468483062,
+     "sending",
+     ""
+    ],
+    [
+     1794468483168,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468515721,
+     "sending",
+     ""
+    ],
+    [
+     1794468515934,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468546760,
+     "sending",
+     ""
+    ],
+    [
+     1794468546872,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468578365,
+     "sending",
+     ""
+    ],
+    [
+     1794468578474,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468608932,
+     "sending",
+     ""
+    ],
+    [
+     1794468609038,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468641277,
+     "sending",
+     ""
+    ],
+    [
+     1794468641456,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468672635,
+     "sending",
+     ""
+    ],
+    [
+     1794468672740,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468702961,
+     "sending",
+     ""
+    ],
+    [
+     1794468703074,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468735848,
+     "sending",
+     ""
+    ],
+    [
+     1794468735998,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468766119,
+     "sending",
+     ""
+    ],
+    [
+     1794468766500,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468798570,
+     "sending",
+     ""
+    ],
+    [
+     1794468799016,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468830534,
+     "sending",
+     ""
+    ],
+    [
+     1794468830944,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468861453,
+     "sending",
+     ""
+    ],
+    [
+     1794468861565,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468891507,
+     "sending",
+     ""
+    ],
+    [
+     1794468891615,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468922024,
+     "sending",
+     ""
+    ],
+    [
+     1794468922136,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468952062,
+     "sending",
+     ""
+    ],
+    [
+     1794468952165,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468983211,
+     "sending",
+     ""
+    ],
+    [
+     1794468983350,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469015186,
+     "sending",
+     ""
+    ],
+    [
+     1794469015294,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469046483,
+     "sending",
+     ""
+    ],
+    [
+     1794469046641,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469076772,
+     "sending",
+     ""
+    ],
+    [
+     1794469076906,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469107170,
+     "sending",
+     ""
+    ],
+    [
+     1794469107274,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469137359,
+     "sending",
+     ""
+    ],
+    [
+     1794469137473,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469168819,
+     "sending",
+     ""
+    ],
+    [
+     1794469168920,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469200008,
+     "sending",
+     ""
+    ],
+    [
+     1794469200126,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469230411,
+     "sending",
+     ""
+    ],
+    [
+     1794469230522,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469260523,
+     "sending",
+     ""
+    ],
+    [
+     1794469260636,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469292562,
+     "sending",
+     ""
+    ],
+    [
+     1794469292685,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469324027,
+     "sending",
+     ""
+    ],
+    [
+     1794469324481,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469356150,
+     "sending",
+     ""
+    ],
+    [
+     1794469356331,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469386759,
+     "sending",
+     ""
+    ],
+    [
+     1794469386869,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469418365,
+     "sending",
+     ""
+    ],
+    [
+     1794469418464,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469449416,
+     "sending",
+     ""
+    ],
+    [
+     1794469449807,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469480742,
+     "sending",
+     ""
+    ],
+    [
+     1794469480849,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469512336,
+     "sending",
+     ""
+    ],
+    [
+     1794469512480,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469543320,
+     "sending",
+     ""
+    ],
+    [
+     1794469543499,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469573557,
+     "sending",
+     ""
+    ],
+    [
+     1794469573671,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469603892,
+     "sending",
+     ""
+    ],
+    [
+     1794469604025,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469635430,
+     "sending",
+     ""
+    ],
+    [
+     1794469635539,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469667444,
+     "sending",
+     ""
+    ],
+    [
+     1794469667569,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469697880,
+     "sending",
+     ""
+    ],
+    [
+     1794469698077,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469729734,
+     "sending",
+     ""
+    ],
+    [
+     1794469729916,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469782716,
+     "sending",
+     ""
+    ],
+    [
+     1794469783183,
+     "placed",
+     "limit ticket 10177326"
+    ],
+    [
+     1794470114599,
+     "filled",
+     "position 10177326"
+    ]
+   ],
+   "created_ms": 1794466806227,
+   "updated_ms": 1794470114599,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:30m:trendline_bounce:sell:1794465000000": {
+   "id": "XAUUSD.a:30m:trendline_bounce:sell:1794465000000",
+   "tag": "DNX 88e5e9de1e",
+   "state": "filled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3965.75,
+    "sl": 3983.83,
+    "tp": 3947.67,
+    "expiration_ms": 1794488400000
+   },
+   "ticket": 10176383,
+   "position": 10176383,
+   "fill_price": 3965.86,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794466844627,
+     "sending",
+     ""
+    ],
+    [
+     1794466845021,
+     "placed",
+     "limit ticket 10176383"
+    ],
+    [
+     1794466872332,
+     "filled",
+     "position 10176383"
+    ]
+   ],
+   "created_ms": 1794466844627,
+   "updated_ms": 1794466872332,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:choch_reversal:sell:1794466200000": {
+   "id": "XAUUSD.a:1m:choch_reversal:sell:1794466200000",
+   "tag": "DNX 4b0158fce9",
+   "state": "refused",
+   "attempts": 4,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3968.47,
+    "sl": 3983.56,
+    "tp": 3953.38,
+    "expiration_ms": 1794466980000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794466861536,
+     "sending",
+     ""
+    ],
+    [
+     1794466861644,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466891873,
+     "sending",
+     ""
+    ],
+    [
+     1794466891966,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466922943,
+     "sending",
+     ""
+    ],
+    [
+     1794466923034,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794466953765,
+     "sending",
+     ""
+    ],
+    [
+     1794466953874,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794466861536,
+   "updated_ms": 1794466953874,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794466920000": {
+   "id": "XAUUSD.a:1m:liquidity_sweep_breakout:buy:1794466920000",
+   "tag": "DNX 5e5cebee49",
+   "state": "refused",
+   "attempts": 6,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1m",
+    "side": "buy",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3971.34,
+    "sl": 3963.81,
+    "tp": 3978.87,
+    "expiration_ms": 1794467700000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794466984210,
+     "sending",
+     ""
+    ],
+    [
+     1794466984345,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467016311,
+     "sending",
+     ""
+    ],
+    [
+     1794467016387,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467046870,
+     "sending",
+     ""
+    ],
+    [
+     1794467046940,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467078590,
+     "sending",
+     ""
+    ],
+    [
+     1794467078678,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467109843,
+     "sending",
+     ""
+    ],
+    [
+     1794467109909,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794467140461,
+     "sending",
+     ""
+    ],
+    [
+     1794467140509,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ]
+   ],
+   "created_ms": 1794466984210,
+   "updated_ms": 1794467140509,
+   "symbol": "XAUUSD.a",
+   "tf": "1m",
+   "side": "buy",
+   "kind": "limit",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:false_break:buy:1794466800000": {
+   "id": "XAUUSD.a:5m:false_break:buy:1794466800000",
+   "tag": "DNX 0524ead38f",
+   "state": "cancelled",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "buy",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3971.77,
+    "sl": 3961.12,
+    "tp": 3982.42,
+    "expiration_ms": 1794470100000
+   },
+   "ticket": 10176594,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794467414932,
+     "sending",
+     ""
+    ],
+    [
+     1794467415337,
+     "placed",
+     "stop ticket 10176594"
+    ],
+    [
+     1794467600148,
+     "cancelled",
+     "price went through the stop before the entry filled"
+    ]
+   ],
+   "created_ms": 1794467414932,
+   "updated_ms": 1794467600148,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "buy",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:5m:internal_structure_pullback:sell:1794467400000": {
+   "id": "XAUUSD.a:5m:internal_structure_pullback:sell:1794467400000",
+   "tag": "DNX 0aab22e2ce",
+   "state": "filled",
+   "attempts": 27,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "5m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 3973.86,
+    "tp": 3947.9,
+    "expiration_ms": 0
+   },
+   "ticket": 10177325,
+   "position": 10177325,
+   "fill_price": 3960.07,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794468936698,
+     "sending",
+     ""
+    ],
+    [
+     1794468936810,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794468968355,
+     "sending",
+     ""
+    ],
+    [
+     1794468968487,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469000182,
+     "sending",
+     ""
+    ],
+    [
+     1794469000291,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469032070,
+     "sending",
+     ""
+    ],
+    [
+     1794469032182,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469063886,
+     "sending",
+     ""
+    ],
+    [
+     1794469063996,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469094041,
+     "sending",
+     ""
+    ],
+    [
+     1794469094155,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469125344,
+     "sending",
+     ""
+    ],
+    [
+     1794469125460,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469156731,
+     "sending",
+     ""
+    ],
+    [
+     1794469156845,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469187746,
+     "sending",
+     ""
+    ],
+    [
+     1794469187854,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469220443,
+     "sending",
+     ""
+    ],
+    [
+     1794469220560,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469252304,
+     "sending",
+     ""
+    ],
+    [
+     1794469252515,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469282746,
+     "sending",
+     ""
+    ],
+    [
+     1794469282855,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469314415,
+     "sending",
+     ""
+    ],
+    [
+     1794469314612,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469345889,
+     "sending",
+     ""
+    ],
+    [
+     1794469345986,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469377066,
+     "sending",
+     ""
+    ],
+    [
+     1794469377172,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469408325,
+     "sending",
+     ""
+    ],
+    [
+     1794469408444,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469439566,
+     "sending",
+     ""
+    ],
+    [
+     1794469439676,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469471064,
+     "sending",
+     ""
+    ],
+    [
+     1794469471170,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469501983,
+     "sending",
+     ""
+    ],
+    [
+     1794469502091,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469533474,
+     "sending",
+     ""
+    ],
+    [
+     1794469533586,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469565387,
+     "sending",
+     ""
+    ],
+    [
+     1794469565540,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469597846,
+     "sending",
+     ""
+    ],
+    [
+     1794469597965,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469629867,
+     "sending",
+     ""
+    ],
+    [
+     1794469629982,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469660723,
+     "sending",
+     ""
+    ],
+    [
+     1794469660834,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469691977,
+     "sending",
+     ""
+    ],
+    [
+     1794469692096,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469723551,
+     "sending",
+     ""
+    ],
+    [
+     1794469723668,
+     "refused",
+     "MT5 rejected the request: (-2, 'Invalid \"comment\" argument')"
+    ],
+    [
+     1794469776848,
+     "sending",
+     ""
+    ],
+    [
+     1794469777779,
+     "placed",
+     "market ticket 10177325"
+    ],
+    [
+     1794469784606,
+     "filled",
+     "position 10177325"
+    ]
+   ],
+   "created_ms": 1794468936698,
+   "updated_ms": 1794469784606,
+   "symbol": "XAUUSD.a",
+   "tf": "5m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01
+  },
+  "XAUUSD.a:1h:ob_pullback:sell:1794466800000": {
+   "id": "XAUUSD.a:1h:ob_pullback:sell:1794466800000",
+   "tag": "DNX bb4de23b9e",
+   "state": "placed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "1h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3964.93,
+    "sl": 3999.62,
+    "tp": 3930.24,
+    "expiration_ms": 1794513600000
+   },
+   "ticket": 10177696,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1794470538389,
+     "sending",
+     ""
+    ],
+    [
+     1794470538744,
+     "placed",
+     "limit ticket 10177696"
+    ]
+   ],
+   "created_ms": 1794470538389,
+   "updated_ms": 1794470538744,
+   "symbol": "XAUUSD.a",
+   "tf": "1h",
+   "side": "sell",
+   "kind": "limit",
    "lots": 0.01
   }
  },
- "saved_ms": 1794455285690
+ "saved_ms": 1794470538744
 }

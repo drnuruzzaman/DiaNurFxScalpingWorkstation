@@ -86,7 +86,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
   const [snaps, setSnaps] = useState<LabSnap[]>([])
   const [tags, setTags] = useState<Record<string, { tag?: string; note?: string }>>({})
   const [playing, setPlaying] = useState(false)
-  const [speed, setSpeed] = useState(4)
+  const [speed, setSpeed] = useState(64)          // 'max bars/s' by default
   const [job, setJob] = useState<LabJob>(null)
   const [banner, setBanner] = useState<{ kind: 'ok' | 'warn' | 'err'; text: string } | null>(null)
   const [toast, setToast] = useState<string | null>(null)
@@ -264,6 +264,14 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
 
   // ------------------------------------------------------------ derived
   const cur = frame?.cursor ?? null
+  // The date box shows the bar being tested, and follows it as the replay
+  // moves - except while you are typing a date into it.
+  const gotoRef = useRef<HTMLInputElement>(null)
+  const curT = cur?.t
+  useEffect(() => {
+    if (curT == null || document.activeElement === gotoRef.current) return
+    setGotoText(toInput(curT))
+  }, [curT])
   const v = cur?.v ?? 0
   const digits = session?.spec.digits ?? 2
   const atFrontier = !!cur && cur.v === cur.k
@@ -528,7 +536,7 @@ export function LabView({ theme, onTheme, liveOverlays, layout: globalLayout, on
               )}
             </div>
             <div className="lab-goto">
-              <input type="datetime-local" value={gotoText} title="Go to a date/time (UTC)"
+              <input ref={gotoRef} type="datetime-local" value={gotoText} title="The bar being tested (UTC) - type a date/time and press Go to jump"
                 onChange={(e) => setGotoText(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter' && Number.isFinite(fromInput(gotoText))) seekTime(fromInput(gotoText)) }} />
               <button className="tool-btn" disabled={busy || !Number.isFinite(fromInput(gotoText))}

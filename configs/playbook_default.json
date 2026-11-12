@@ -1,5 +1,7 @@
 {
- "disabled_playbooks": [],
+ "disabled_playbooks": [
+  "trend_structure_pullback"
+ ],
  "playbook_timeframes": {
   "liquidity_sweep_reversal": [
    "1m",
@@ -42,7 +44,36 @@
   ],
   "range_breakout": [
    "1m",
-   "3m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "range_retest": [
+   "1m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "range_sweep": [
+   "1m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
+  "range_compression_breakout": [
+   "1m",
+   "5m",
+   "15m",
    "30m",
    "1h",
    "2h",
@@ -60,7 +91,6 @@
   ],
   "squeeze_breakout": [
    "1m",
-   "3m",
    "30m",
    "1h",
    "2h",
@@ -69,7 +99,6 @@
   ],
   "news_breakout": [
    "1m",
-   "3m",
    "5m",
    "15m",
    "30m",
@@ -102,6 +131,16 @@
    "4h",
    "1d"
   ],
+  "choch_reversal": [
+   "1m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "2h",
+   "4h",
+   "1d"
+  ],
   "fvg_reversal": [
    "1m",
    "3m",
@@ -113,7 +152,6 @@
    "1d"
   ],
   "engulfing_reversal": [
-   "1m",
    "3m",
    "30m",
    "4h",
@@ -121,7 +159,6 @@
   ],
   "rejection_wick_reversal": [
    "1m",
-   "3m",
    "5m",
    "30m",
    "2h",
@@ -130,7 +167,6 @@
   ],
   "three_candle_reversal": [
    "1m",
-   "3m",
    "5m",
    "15m",
    "30m",
@@ -148,12 +184,6 @@
    "4h",
    "1d"
   ],
-  "trend_structure_pullback": [
-   "1m",
-   "3m",
-   "30m",
-   "1d"
-  ],
   "bos_retest_pullback": [
    "1m",
    "3m",
@@ -165,8 +195,6 @@
    "1d"
   ],
   "internal_structure_pullback": [
-   "1m",
-   "3m",
    "5m",
    "15m",
    "30m",
@@ -180,6 +208,16 @@
    "15m",
    "30m",
    "1h",
+   "4h",
+   "1d"
+  ],
+  "fibonacci_pullback": [
+   "1m",
+   "5m",
+   "15m",
+   "30m",
+   "1h",
+   "2h",
    "4h",
    "1d"
   ]
@@ -225,5 +263,5 @@
   "ma_pullback",
   "volatility_pullback"
  ],
- "saved_ms": 1794448921559
+ "saved_ms": 1794466266772
 }

@@ -101,7 +101,7 @@ class Lab:
         self.sess: S.ReplaySession | None = None
         self.clients: dict = {}          # websocket -> {'ev': n sent, 'tr': n sent}
         self.playing = False
-        self.speed = 4
+        self.speed = max(SPEEDS)          # 'max bars/s' by default (2026-11-12)
         self.task: asyncio.Task | None = None
         self.job: dict | None = None     # {'label', 'done', 'total'}
         self.stop = False

@@ -36,9 +36,13 @@ from . import clock
 BLOCKING = ('sending', 'placed', 'unknown', 'filled', 'closed', 'cancelled', 'expired')
 
 
-# MT5 truncates an order comment at 31 characters. "DNX " plus 10 hex of the
-# signal id is 14, which leaves 17 - one separator and 16 for a playbook name.
-COMMENT_MAX = 31
+# MT5 documents 31 characters for an order comment, but the terminal REFUSES
+# a 31-character one: (-2, 'Invalid "comment" argument') - seen 2026-11-12 on
+# "DNX .. 15m CHOCHBREAKOU" (31) while "DNX .. 30m TLBOUNCE" (27) was filled.
+# Every taxonomy playbook filled the comment to 31 and was refused. 26 leaves
+# margin: "DNX " plus 10 hex of the signal id is 14, then the timeframe, then
+# the playbook in what is left.
+COMMENT_MAX = 26
 
 # Short forms for the names that do not fit. Only the long ones need an entry;
 # anything else is used as-is and truncated if it somehow overruns.

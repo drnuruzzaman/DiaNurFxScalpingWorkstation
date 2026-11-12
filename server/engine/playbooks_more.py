@@ -1225,6 +1225,31 @@ MORE = {
     'volatility_pullback': pb_volatility_pullback,
 }
 
+# Each family's HOME regimes (2026-11-12) - where qualify.py's regime gate
+# passes it; anywhere else it warns (-12 confidence), as it does for the
+# original playbooks through regime.py's table. Before this the taxonomy
+# playbooks were in no regime's list, so they warned in EVERY regime.
+GROUP_OF = {
+    **{k: 'range' for k in ('range_breakout', 'range_retest', 'range_sweep', 'mid_range_rotation',
+                            'range_compression_breakout', 'range_expansion', 'range_failure')},
+    **{k: 'breakout' for k in ('hz_resistance_breakout', 'hz_support_breakdown', 'trendline_breakout',
+                               'squeeze_breakout', 'news_breakout', 'displacement_breakout',
+                               'liquidity_sweep_breakout', 'bos_breakout', 'choch_breakout',
+                               'fvg_ob_breakout')},
+    **{k: 'reversal' for k in ('choch_reversal', 'ob_reversal', 'fvg_reversal', 'engulfing_reversal',
+                               'rejection_wick_reversal', 'three_candle_reversal',
+                               'double_top_bottom', 'divergence_reversal')},
+    **{k: 'pullback' for k in ('trend_structure_pullback', 'bos_retest_pullback',
+                               'internal_structure_pullback', 'fvg_pullback', 'ob_pullback',
+                               'fibonacci_pullback', 'ma_pullback', 'volatility_pullback')},
+}
+GROUP_HOMES = {
+    'range': ('range', 'squeeze'),        # inside a range, or the coil before it breaks
+    'breakout': ('trend', 'squeeze'),     # with a trend, or out of a squeeze
+    'reversal': ('range', 'transition'),  # where a move is losing control
+    'pullback': ('trend',),               # the trend is intact
+}
+
 MORE_LABELS = {k: k.replace('_', ' ').upper()
                .replace('HZ ', 'HORIZONTAL ').replace('OB ', 'ORDER BLOCK ')
                .replace('FVG OB', 'FVG / OB').replace('BOS', 'BOS').replace('CHOCH', 'CHoCH')
