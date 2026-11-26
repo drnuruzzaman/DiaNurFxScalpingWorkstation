@@ -59,6 +59,9 @@ class Pattern:
     age_bars: int = 0
     actionable: bool = False
     relevance: int = 0
+    # Stable identity: kind + the anchor swings' times. The same formation
+    # read on the next bar keeps its pid; a different formation gets a new one.
+    pid: str = ''
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -300,6 +303,8 @@ def head_and_shoulders(swings, h, l, c, t, atr_val) -> list:
             rr=_rr(neck_now, target, invalidation),
             start_t=int(ls.t), end_t=int(rs.t),
             start_idx=int(ls.idx), end_idx=int(rs.idx),
+            pid=f"{'inverse_head_shoulders' if direction == 'bullish' else 'head_shoulders'}"
+                f':{int(ls.t)}:{int(head.t)}:{int(rs.t)}',
             notes=[
                 f'shoulder symmetry {symmetry * 100:.0f}%',
                 f'head depth {head_depth:.1f} ATR',
@@ -313,7 +318,7 @@ def head_and_shoulders(swings, h, l, c, t, atr_val) -> list:
 # --------------------------------------------------------------------------- #
 # double / triple tops and bottoms                                            #
 # --------------------------------------------------------------------------- #
-def double_tops_bottoms(swings, h, l, c, t, atr_val) -> list:
+def double_tops_bottoms(swings, h, l, c, t, atr_val, v2: bool = False) -> list:
     out = []
     if len(swings) < 3 or atr_val <= 0:
         return out
@@ -338,8 +343,15 @@ def double_tops_bottoms(swings, h, l, c, t, atr_val) -> list:
         if i + 4 < len(swings):
             c4 = swings[i + 4]
             if c4.kind == a.kind and abs(c4.price - b.price) <= tol:
-                triple = True
-                b = c4
+                # patterns_v2: a neckline already broken between the second and
+                # third peak completed the DOUBLE top - the third peak is what
+                # came after it, not part of it.
+                seg_c = c[b.idx:c4.idx]
+                done = v2 and bool((seg_c < mid.price).any() if bearish
+                                   else (seg_c > mid.price).any())
+                if not done:
+                    triple = True
+                    b = c4
 
         neck = float(mid.price)
         peak = (a.price + b.price) / 2
@@ -378,6 +390,7 @@ def double_tops_bottoms(swings, h, l, c, t, atr_val) -> list:
             rr=_rr(neck, target, invalidation),
             start_t=int(a.t), end_t=int(b.t),
             start_idx=int(a.idx), end_idx=int(b.idx),
+            pid=f'{kind}:{int(a.t)}:{int(b.t)}',
             notes=[
                 f'peaks within {gap / atr_val:.2f} ATR',
                 f'depth {depth / atr_val:.1f} ATR',
@@ -481,6 +494,7 @@ def triangles_wedges(swings, h, l, c, t, atr_val) -> list:
             rr=_rr(break_level, target, invalidation),
             start_t=int(seg[0].t), end_t=int(seg[-1].t),
             start_idx=int(start_idx), end_idx=int(seg[-1].idx),
+            pid=f'{kind}:{int(seg[0].t)}:{int(seg[-1].t)}',
             notes=[
                 f'upper slope {hs_n:+.3f} ATR/bar',
                 f'lower slope {ls_n:+.3f} ATR/bar',
@@ -568,6 +582,7 @@ def flags(swings, h, l, c, t, atr_val) -> list:
             rr=_rr(break_level, target, invalidation),
             start_t=int(a.t), end_t=int(rest[-1].t),
             start_idx=int(a.idx), end_idx=int(rest[-1].idx),
+            pid=f"{'bull' if bullish else 'bear'}_flag:{int(a.t)}:{int(b.t)}",
             notes=[
                 f'pole {abs(pole) / atr_val:.1f} ATR in {pole_bars} bars',
                 f'flag retraces {retr * 100:.0f}% of pole',
@@ -577,6 +592,231 @@ def flags(swings, h, l, c, t, atr_val) -> list:
                   't1': int(rest[0].t), 't2': int(rest[-1].t)},
         ))
     return out
+
+
+# --------------------------------------------------------------------------- #
+# patterns_v2 (2026-11-13) - triangles / wedges and flags that END             #
+# --------------------------------------------------------------------------- #
+# The outcome test (runs/research/patterns/pat1_outcomes.txt, gold 15m-4h
+# 2018-2026) found two detector faults behind "rising wedge = a third of all
+# patterns" and "25-32% of confirmations are repeats":
+#   * triangles_wedges() projected each sloped boundary to TODAY's bar and asked
+#     whether any close since the last swing was beyond that one number. A rising
+#     lower line keeps rising, so old closes end up 'below' it and the wedge
+#     confirms without price breaking anything. Here each bar is compared with
+#     the line's value AT THAT BAR.
+#   * both detectors kept growing after the break: every new swing changed the
+#     points, so one formation was re-found and re-confirmed as a 'new' pattern.
+#     Here a formation ends at its break, and its pid stays the same.
+# Also required here: price stayed between the lines while the shape formed
+# (containment), and an unbroken shape whose apex has passed, or that has gone
+# TW_STALE_BARS past its last swing, is no longer reported.
+TW_CONTAIN_ATR = 0.5
+TW_FAIL_ATR = 0.3
+TW_STALE_BARS = 40
+TW_LOOKBACK_ENDS = 3          # also try shapes ending 1-3 swings back (broken ones)
+
+
+def _tw_kind(hs_n: float, ls_n: float, converging: bool):
+    flat = 0.02
+    if not converging:
+        return None
+    if abs(hs_n) < flat and ls_n > flat:
+        return 'ascending_triangle', 'Ascending Triangle', 'bullish'
+    if abs(ls_n) < flat and hs_n < -flat:
+        return 'descending_triangle', 'Descending Triangle', 'bearish'
+    if hs_n < -flat and ls_n > flat:
+        return 'symmetrical_triangle', 'Symmetrical Triangle', 'neutral'
+    if hs_n > flat and ls_n > flat and ls_n > hs_n:
+        return 'rising_wedge', 'Rising Wedge', 'bearish'
+    if hs_n < -flat and ls_n < -flat and hs_n > ls_n:
+        return 'falling_wedge', 'Falling Wedge', 'bullish'
+    return None
+
+
+def _first(mask: np.ndarray):
+    i = np.flatnonzero(mask)
+    return int(i[0]) if i.size else None
+
+
+def triangles_wedges_v2(swings, h, l, c, t, atr_val) -> list:
+    out = []
+    n = len(swings)
+    if n < 5 or atr_val <= 0:
+        return out
+    last_x = c.size - 1
+    xs = np.arange(c.size)
+    for end in range(n - 1, max(n - 2 - TW_LOOKBACK_ENDS, 3), -1):
+        for window in (6, 5):
+            if end + 1 < window:
+                continue
+            seg = swings[end + 1 - window:end + 1]
+            highs = [s for s in seg if s.kind == 'high']
+            lows = [s for s in seg if s.kind == 'low']
+            if len(highs) < 2 or len(lows) < 2:
+                continue
+            hs = (highs[-1].price - highs[0].price) / max(highs[-1].idx - highs[0].idx, 1)
+            ls = (lows[-1].price - lows[0].price) / max(lows[-1].idx - lows[0].idx, 1)
+            hs_n, ls_n = hs / atr_val, ls / atr_val
+            start_idx = int(min(seg[0].idx, highs[0].idx, lows[0].idx))
+            e_idx = int(seg[-1].idx)
+            upper = highs[-1].price + hs * (xs - highs[-1].idx)
+            lower = lows[-1].price + ls * (xs - lows[-1].idx)
+
+            # containment: closes stayed between the lines while it formed
+            tol = atr_val * TW_CONTAIN_ATR
+            cin = c[start_idx:e_idx + 1]
+            if ((cin > upper[start_idx:e_idx + 1] + tol).any() or
+                    (cin < lower[start_idx:e_idx + 1] - tol).any()):
+                continue
+            width_start = ((highs[0].price + highs[-1].price) / 2 -
+                           (lows[0].price + lows[-1].price) / 2)
+            width_end = upper[e_idx] - lower[e_idx]
+            if width_end <= atr_val * 0.4:
+                continue
+            got = _tw_kind(hs_n, ls_n, width_end < width_start * 0.85)
+            if got is None:
+                continue
+            kind, label, direction = got
+
+            # the break, bar by bar against the line at that bar
+            ca, ua, la = c[e_idx + 1:], upper[e_idx + 1:], lower[e_idx + 1:]
+            fail_tol = atr_val * TW_FAIL_ATR
+            if direction == 'bullish':
+                ib, i_f = _first(ca > ua), _first(ca < la - fail_tol)
+            elif direction == 'bearish':
+                ib, i_f = _first(ca < la), _first(ca > ua + fail_tol)
+            else:
+                ib, i_f = _first((ca > ua) | (ca < la)), None
+            if i_f is not None and (ib is None or i_f < ib):
+                continue                       # broke the wrong way first: failed
+            broke = ib is not None
+            if not broke:
+                if end != n - 1:
+                    continue                   # an older shape only counts once it broke
+                if last_x - e_idx > TW_STALE_BARS or upper[last_x] - lower[last_x] <= atr_val * 0.4:
+                    continue                   # stale, or the apex has passed
+            x = e_idx + 1 + ib if broke else last_x
+            up_x, lo_x = float(upper[x]), float(lower[x])
+            height = abs(width_start)
+            if direction == 'bullish' or (direction == 'neutral' and broke and c[x] > up_x):
+                break_level, target, invalidation = up_x, up_x + height, lo_x
+            elif direction == 'bearish' or (direction == 'neutral' and broke):
+                break_level, target, invalidation = lo_x, lo_x - height, up_x
+            else:
+                px = float(c[-1])
+                up_closer = abs(up_x - px) <= abs(px - lo_x)
+                break_level = up_x if up_closer else lo_x
+                target = break_level + (height if up_closer else -height)
+                invalidation = lo_x if up_closer else up_x
+            failed = False
+            if broke and direction != 'neutral':
+                post = c[x:]
+                failed = bool((post > invalidation + fail_tol).any() if direction == 'bearish'
+                              else (post < invalidation - fail_tol).any())
+
+            apex_gap = width_end / max(width_start, 1e-9)
+            quality = _q((1.0 - apex_gap) * 40 + min(len(seg) / 6.0, 1.0) * 20 +
+                         min(height / (atr_val * 5), 1.0) * 20 + 20)
+            out.append(Pattern(
+                kind=kind, label=label, direction=direction,
+                status=_status(broke, failed), quality=quality,
+                points=[{'t': int(s.t), 'price': float(s.price), 'role': s.kind} for s in seg],
+                break_level=rp(break_level), target=rp(target), invalidation=rp(invalidation),
+                rr=_rr(break_level, target, invalidation),
+                start_t=int(seg[0].t), end_t=int(seg[-1].t),
+                start_idx=start_idx, end_idx=e_idx,
+                pid=f'{kind}:{int(seg[0].t)}:{int(seg[-1].t)}',
+                notes=[
+                    f'upper slope {hs_n:+.3f} ATR/bar',
+                    f'lower slope {ls_n:+.3f} ATR/bar',
+                    f'compressed to {apex_gap * 100:.0f}% of starting width',
+                ],
+                zone={'upper_now': up_x, 'lower_now': lo_x,
+                      't1': int(seg[0].t), 't2': int(t[x])},
+            ))
+            return out                          # one triangle read, as before
+    return out
+
+
+def flags_v2(swings, h, l, c, t, atr_val) -> list:
+    out = []
+    if len(swings) < 4 or atr_val <= 0 or c.size < 20:
+        return out
+    for i in range(max(0, len(swings) - 8), len(swings) - 2):
+        a, b = swings[i], swings[i + 1]
+        pole = b.price - a.price
+        pole_bars = b.idx - a.idx
+        if pole_bars < 2 or abs(pole) < atr_val * 3.0:
+            continue
+        if abs(pole) / pole_bars < atr_val * 0.35:
+            continue
+        bullish = pole > 0
+        rest_all = swings[i + 2:]
+        # Grow the consolidation one swing at a time; stop at the swing that
+        # came after the breakout (it belongs to the move, not to the flag).
+        rest = None
+        for m in range(2, len(rest_all) + 1):
+            sub = rest_all[:m]
+            if rest is not None:
+                hi0 = max(s.price for s in rest)
+                lo0 = min(s.price for s in rest)
+                between = c[rest[-1].idx + 1:sub[-1].idx + 1]
+                if (bullish and (between > hi0).any()) or (not bullish and (between < lo0).any()):
+                    break
+            ps = [s.price for s in sub]
+            depth = max(ps) - min(ps)
+            retr = (b.price - min(ps)) / pole if bullish else (max(ps) - b.price) / abs(pole)
+            if depth > abs(pole) * 0.62 or retr > 0.62 or retr < 0.05:
+                break
+            rest = sub
+        if rest is None:
+            continue
+        seg_prices = [s.price for s in rest]
+        flag_hi, flag_lo = max(seg_prices), min(seg_prices)
+        flag_depth = flag_hi - flag_lo
+        retr = (b.price - flag_lo) / pole if bullish else (flag_hi - b.price) / abs(pole)
+        after = c[rest[0].idx:]
+        if bullish:
+            break_level, target, invalidation = flag_hi, flag_hi + abs(pole), flag_lo
+            ib, i_f = _first(after > flag_hi), _first(after < flag_lo - atr_val * 0.3)
+        else:
+            break_level, target, invalidation = flag_lo, flag_lo - abs(pole), flag_hi
+            ib, i_f = _first(after < flag_lo), _first(after > flag_hi + atr_val * 0.3)
+        broke = ib is not None
+        failed = i_f is not None
+        pennant = flag_depth < abs(pole) * 0.3 and len(rest) >= 4
+        quality = _q((1 - retr / 0.62) * 34 + min(abs(pole) / (atr_val * 8), 1.0) * 30 +
+                     min(len(rest) / 5.0, 1.0) * 16 + 20)
+        kind = ('bull_pennant' if bullish else 'bear_pennant') if pennant else \
+               ('bull_flag' if bullish else 'bear_flag')
+        out.append(Pattern(
+            kind=kind, label=kind.replace('_', ' ').title(),
+            direction='bullish' if bullish else 'bearish',
+            status=_status(broke, failed), quality=quality,
+            points=[{'t': int(a.t), 'price': float(a.price), 'role': 'pole start'},
+                    {'t': int(b.t), 'price': float(b.price), 'role': 'pole end'}] +
+                   [{'t': int(s.t), 'price': float(s.price), 'role': 'flag'} for s in rest],
+            break_level=rp(break_level), target=rp(target), invalidation=rp(invalidation),
+            rr=_rr(break_level, target, invalidation),
+            start_t=int(a.t), end_t=int(rest[-1].t),
+            start_idx=int(a.idx), end_idx=int(rest[-1].idx),
+            pid=f"{'bull' if bullish else 'bear'}_flag:{int(a.t)}:{int(b.t)}",
+            notes=[
+                f'pole {abs(pole) / atr_val:.1f} ATR in {pole_bars} bars',
+                f'flag retraces {retr * 100:.0f}% of pole',
+                f'flag depth {flag_depth / atr_val:.1f} ATR',
+            ],
+            zone={'price_top': float(flag_hi), 'price_bottom': float(flag_lo),
+                  't1': int(rest[0].t), 't2': int(rest[-1].t)},
+        ))
+    return out
+
+
+def _family(kind: str) -> str:
+    """patterns_v2 dedupe key: a triple top and the double top inside it, or a
+    flag and the pennant read of the same pole, are one formation."""
+    return (kind.replace('triple_', 'double_').replace('_pennant', '_flag'))
 
 
 # --------------------------------------------------------------------------- #
@@ -632,7 +872,8 @@ def rectangles(swings, h, l, c, t, atr_val) -> list:
 # orchestration                                                               #
 # --------------------------------------------------------------------------- #
 def detect_patterns(swings, h, l, c, t, atr_val, min_quality: int = 48,
-                    max_patterns: int = 8, max_age_bars: int = 150) -> list:
+                    max_patterns: int = 8, max_age_bars: int = 150,
+                    v2: bool = False) -> list:
     """
     Every detector, filtered down to what is still actionable.
 
@@ -645,8 +886,17 @@ def detect_patterns(swings, h, l, c, t, atr_val, min_quality: int = 48,
                   2R setup.
     """
     found: list = []
-    for fn in (head_and_shoulders, double_tops_bottoms, triangles_wedges,
-               flags, rectangles):
+    # v2 = CONFIG.engine.patterns_v2 (2026-11-13, off by default): the fixed
+    # triangle / wedge and flag detectors, no triple upgrade after a broken
+    # neckline, and duplicates merged per pattern family. See patterns_v2 above.
+    if v2:
+        fns = (head_and_shoulders,
+               lambda *a: double_tops_bottoms(*a, v2=True),
+               triangles_wedges_v2, flags_v2, rectangles)
+    else:
+        fns = (head_and_shoulders, double_tops_bottoms, triangles_wedges,
+               flags, rectangles)
+    for fn in fns:
         try:
             found.extend(fn(swings, h, l, c, t, atr_val))
         except Exception:                       # noqa: BLE001
@@ -687,7 +937,8 @@ def detect_patterns(swings, h, l, c, t, atr_val, min_quality: int = 48,
     found.sort(key=lambda p: (-p.quality, -p.end_idx))
     kept: list = []
     for p in found:
-        if any(k.kind == p.kind and _overlap(k, p) >= DUP_OVERLAP for k in kept):
+        key = _family if v2 else (lambda k: k)
+        if any(key(k.kind) == key(p.kind) and _overlap(k, p) >= DUP_OVERLAP for k in kept):
             continue
         kept.append(p)
 
@@ -709,4 +960,5 @@ def detect_patterns(swings, h, l, c, t, atr_val, min_quality: int = 48,
 
 
 __all__ = ['Pattern', 'detect_patterns', 'head_and_shoulders',
-           'double_tops_bottoms', 'triangles_wedges', 'flags', 'rectangles']
+           'double_tops_bottoms', 'triangles_wedges', 'flags', 'rectangles',
+           'triangles_wedges_v2', 'flags_v2']

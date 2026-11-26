@@ -40,7 +40,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from .config import CONFIG, MTF_LADDER, RUN_DIR, TF_SECONDS, TIMEFRAMES
+from .config import CONFIG, MTF_LADDER, RUN_DIR, TF_SECONDS, TIMEFRAMES, mtf_ladder  # noqa: F401
 from . import news as news_mod
 from .datafeed import (BRIDGE, FEED, available_symbols, available_timeframes,
                        broker_offset_ms, load_disk, on_live_clock)
@@ -670,7 +670,7 @@ def mtf_trendlines_route(symbol: str = None, tf: str = '5m'):
         # Everything above this chart's frame that the board actually holds -
         # what the source picker should offer rather than a hardcoded list.
         'sources': [x for x in BOARD_TFS if _tf_rank(x) > _tf_rank(tf)],
-        'ladder': [x for x in MTF_LADDER.get(tf, []) if _tf_rank(x) > _tf_rank(tf)],
+        'ladder': [x for x in mtf_ladder(tf) if _tf_rank(x) > _tf_rank(tf)],
         'server_ms': int(time.time() * 1000),
     }
 
@@ -1784,9 +1784,8 @@ def do_replay(symbol: str = Query(None), tf: str = '5m', at_ms: int = 0):
 
     import numpy as np
     from .engine.analysis import quick_trend
-    from .config import MTF_LADDER
     mtf = {}
-    for name in dict.fromkeys(MTF_LADDER.get(tf, [tf])):
+    for name in dict.fromkeys(mtf_ladder(tf)):
         if name == tf:
             continue
         s = load_disk(symbol, name, None, None, at_ms)
@@ -2070,6 +2069,8 @@ def _check_setting(group: str, key: str, v):
         return f'{group}.{key} must be between {lo_hi[0]} and {lo_hi[1]}'
     if (group, key) == ('risk', 'exit_mode') and v not in ('trail', 'partial'):
         return 'risk.exit_mode must be trail or partial'
+    if (group, key) == ('gates', 'scalp_htf') and v not in ('ladder', 'next', 'off'):
+        return 'gates.scalp_htf must be ladder, next or off'
     if (group, key) == ('risk', 'stop_mode') and v not in ('atr_floor', 'order_block'):
         return 'risk.stop_mode must be atr_floor or order_block'
     if (group, key) == ('risk', 'ob_stop_fallback') and v not in ('atr_floor', 'skip'):

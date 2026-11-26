@@ -410,6 +410,11 @@ const OPTION_LABELS: Record<string, Record<string, string>> = {
     atr_floor: 'Structure, min ATR',
     order_block: 'Order block',
   },
+  'gates.scalp_htf': {
+    ladder: 'Full ladder',
+    next: 'Next timeframe up',
+    off: 'Off',
+  },
   'risk.ob_stop_fallback': {
     atr_floor: 'Keep playbook stop',
     skip: 'Skip the trade',

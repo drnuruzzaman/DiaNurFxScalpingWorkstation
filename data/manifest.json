@@ -2,136 +2,93 @@
   "clock": {
     "offset_ms": 7200000,
     "offset_hours": 2.0,
-    "measured_at_ms": 1794471075178
+    "measured_at_ms": 1795654083678
   },
   "coverage": {
-    "audio": {},
-    "EURUSD.a": {
-      "1m": {
-        "first_year": 2020,
-        "last_ts": 1793979300
-      },
-      "3m": {
-        "first_year": 2020,
-        "last_ts": 1793979180
-      },
-      "5m": {
-        "first_year": 2020,
-        "last_ts": 1793979000
-      },
-      "15m": {
-        "first_year": 2020,
-        "last_ts": 1793978100
-      },
-      "30m": {
-        "first_year": 2020,
-        "last_ts": 1793977200
-      },
-      "1h": {
-        "first_year": 2020,
-        "last_ts": 1793973600
-      },
-      "2h": {
-        "first_year": 2020,
-        "last_ts": 1793966400
-      },
-      "4h": {
-        "first_year": 2020,
-        "last_ts": 1793952000
-      },
-      "1d": {
-        "first_year": 2020,
-        "last_ts": 1793836800
-      },
-      "1w": {
-        "first_year": 2020,
-        "last_ts": 1792886400
-      }
-    },
     "USDJPY.a": {
       "1m": {
         "first_year": 2016,
-        "last_ts": 1793979300
+        "last_ts": 1795218960
       },
       "3m": {
         "first_year": 1996,
-        "last_ts": 1793979180
+        "last_ts": 1795218840
       },
       "5m": {
         "first_year": 1996,
-        "last_ts": 1793979000
+        "last_ts": 1795218900
       },
       "15m": {
         "first_year": 1996,
-        "last_ts": 1793978100
+        "last_ts": 1795218300
       },
       "30m": {
         "first_year": 1996,
-        "last_ts": 1793977200
+        "last_ts": 1795217400
       },
       "1h": {
         "first_year": 1996,
-        "last_ts": 1793973600
+        "last_ts": 1795215600
       },
       "2h": {
         "first_year": 1996,
-        "last_ts": 1793966400
+        "last_ts": 1795212000
       },
       "4h": {
         "first_year": 1996,
-        "last_ts": 1793952000
+        "last_ts": 1795204800
       },
       "1d": {
         "first_year": 1996,
-        "last_ts": 1793836800
+        "last_ts": 1795132800
       },
       "1w": {
         "first_year": 1996,
-        "last_ts": 1792886400
+        "last_ts": 1794700800
       }
     },
     "XAUUSD.a": {
       "1m": {
         "first_year": 1998,
-        "last_ts": 1793979300
+        "last_ts": 1795218960
       },
       "3m": {
         "first_year": 1998,
-        "last_ts": 1793979180
+        "last_ts": 1795218840
       },
       "5m": {
         "first_year": 1998,
-        "last_ts": 1793979000
+        "last_ts": 1795218900
       },
       "15m": {
         "first_year": 1998,
-        "last_ts": 1793978100
+        "last_ts": 1795218300
       },
       "30m": {
         "first_year": 1998,
-        "last_ts": 1793977200
+        "last_ts": 1795217400
       },
       "1h": {
         "first_year": 1998,
-        "last_ts": 1793973600
+        "last_ts": 1795215600
       },
       "2h": {
         "first_year": 1998,
-        "last_ts": 1793966400
+        "last_ts": 1795212000
       },
       "4h": {
         "first_year": 1998,
-        "last_ts": 1793952000
+        "last_ts": 1795204800
       },
       "1d": {
         "first_year": 1998,
-        "last_ts": 1793836800
+        "last_ts": 1795132800
       },
       "1w": {
         "first_year": 2007,
-        "last_ts": 1792886400
+        "last_ts": 1794700800
       }
     }
   },
-  "coverage_ms": 1793972201314
+  "coverage_ms": 1795332836629
 }

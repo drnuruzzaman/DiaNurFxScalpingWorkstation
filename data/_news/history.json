@@ -1,15 +1,15 @@
 {
- "generated_ms": 1793972202033,
+ "generated_ms": 1795332837385,
  "start": "2017-01-01",
  "status": {
   "fred": {
-   "NFP": 119,
-   "CPI": 124,
-   "PPI": 124,
+   "NFP": 120,
+   "CPI": 125,
+   "PPI": 125,
    "GDP": 129,
    "PCE": 117,
-   "RETAIL": 125,
-   "CLAIMS": 511,
+   "RETAIL": 126,
+   "CLAIMS": 513,
    "JOLTS": 118
   },
   "fomc": {
@@ -15916,6 +15916,72 @@
   },
   {
    "ts": 1793885400000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1793971800000,
+   "currency": "USD",
+   "kind": "NFP",
+   "title": "Employment Situation",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1794317400000,
+   "currency": "USD",
+   "kind": "CPI",
+   "title": "Consumer Price Index",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1794490200000,
+   "currency": "USD",
+   "kind": "CLAIMS",
+   "title": "Unemployment Insurance Weekly Claims Report",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1794576600000,
+   "currency": "USD",
+   "kind": "PPI",
+   "title": "Producer Price Index",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1794922200000,
+   "currency": "USD",
+   "kind": "RETAIL",
+   "title": "Advance Monthly Sales for Retail and Food Services",
+   "impact": "high",
+   "source": "fred",
+   "time_known": true,
+   "time_inferred": true,
+   "scheduled": true
+  },
+  {
+   "ts": 1795095000000,
    "currency": "USD",
    "kind": "CLAIMS",
    "title": "Unemployment Insurance Weekly Claims Report",

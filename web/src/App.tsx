@@ -637,9 +637,13 @@ export default function App() {
     if (!signals.length) return null
     const exact = signals.find((s) => s.id === selectedId)
     if (exact) return exact
-    if (!selectedId) return signals.find((s) => s.status === 'qualified') ?? signals[0] ?? null
+    // The automatic pick only ever lands on a signal LIVE SIGNALS shows (it
+    // hides rejected ones) - otherwise, with that panel empty, the AI analyst
+    // briefed a rejected signal nobody could see (2026-11-13).
+    const live = signals.filter((s) => s.status !== 'rejected')
+    if (!selectedId) return live.find((s) => s.status === 'qualified') ?? live[0] ?? null
     const [pb, side] = selectedId.split(':')
-    return signals.find((s) => s.playbook === pb && s.side === side) ?? signals[0] ?? null
+    return live.find((s) => s.playbook === pb && s.side === side) ?? live[0] ?? null
   }, [signals, selectedId])
 
   // Signals on this chart the leg gate rejected - marked on the chart when

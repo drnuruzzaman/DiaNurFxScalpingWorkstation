@@ -47,7 +47,7 @@ import numpy as np
 
 from .. import clock
 from ..daily import day_start_ms, daily_pnl_pct, judging_context
-from ..config import CONFIG, MTF_LADDER, TF_SECONDS
+from ..config import CONFIG, MTF_LADDER, TF_SECONDS, mtf_ladder  # noqa: F401
 from ..datafeed import Series
 from ..engine.analysis import analyse, quick_trend
 from ..engine.qualify import fixed_lots, qualify, qualify_all
@@ -342,6 +342,8 @@ class ReplaySession:
             self.m1, _ = lab_data.load(sym, '1m', int(self.series.t[self.i0 - 1]),
                                        c['end'] + self.tf_ms, 2)
         self.htf = {}
+        # The FULL ladder is loaded whatever gates.scalp_htf says, so the
+        # setting can change mid-session; _mtf_reads() picks from it.
         for name in dict.fromkeys(MTF_LADDER.get(tf, [tf])):
             if name == tf:
                 continue
@@ -558,7 +560,7 @@ class ReplaySession:
             if val:
                 out[name] = val
         # Ladder order, as live: base first, then coarser.
-        order = [x for x in MTF_LADDER.get(self.cfg['tf'], [self.cfg['tf']])]
+        order = [x for x in mtf_ladder(self.cfg['tf'])]
         return {k2: out[k2] for k2 in dict.fromkeys(order) if k2 in out}
 
     def _analyse(self, k: int, memo: bool = True) -> dict:

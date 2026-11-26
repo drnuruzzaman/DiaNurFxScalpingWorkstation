@@ -102,6 +102,30 @@ def migrate_playbook_names(names) -> list:
     return out
 
 
+SCALP_TFS = ('1m', '3m', '5m')
+
+
+def mtf_ladder(tf: str) -> list:
+    """
+    The ladder `tf` is read against, after gates.scalp_htf. Every caller
+    that builds the higher-timeframe reads goes through this (live engine,
+    lab, backtest) so they cannot disagree. 'off' still returns the base
+    timeframe: analyse() is what turns the read off (scalp_htf_off()).
+    """
+    lad = list(MTF_LADDER.get(tf, [tf]))
+    mode = getattr(CONFIG.gates, 'scalp_htf', 'ladder') if tf in SCALP_TFS else 'ladder'
+    if mode == 'next':
+        up = [x for x in lad if x != tf]
+        return [tf] + up[:1]
+    if mode == 'off':
+        return [tf]
+    return lad
+
+
+def scalp_htf_off(tf: str) -> bool:
+    return tf in SCALP_TFS and getattr(CONFIG.gates, 'scalp_htf', 'ladder') == 'off'
+
+
 MTF_LADDER = {
     '1m':  ['1m', '5m', '15m', '1h'],
     '3m':  ['3m', '15m', '30m', '1h'],
@@ -236,6 +260,12 @@ class GateSettings:
     min_mtf_score: int = 25               # -100..100
     min_room_to_target_r: float = 1.0     # clear space before the first obstacle
     cooldown_bars: int = 5                # bars between signals on one playbook
+    # Which higher timeframes a SCALP chart (1m, 3m, 5m) is read against
+    # (2026-11-13). 'ladder' = the full MTF_LADDER, as every other timeframe;
+    # 'next' = only the first timeframe above it (1m->5m, 3m->15m, 5m->15m);
+    # 'off' = no higher-timeframe read at all - the mtf gate passes and no
+    # playbook gets 'higher timeframes agree / lean the other way'.
+    scalp_htf: str = 'ladder'
     # The room gate (qualify.py): the first unbroken scored level against the
     # trade between entry and TP1 BLOCKS it when it sits less than this % of
     # the way to TP1, and only warns beyond it. 0 = never block, just warn.
@@ -338,6 +368,10 @@ class EngineSettings:
     channel_min_containment: float = 0.72
     # Patterns
     pattern_min_quality: int = 48
+    # Fixed pattern detectors (2026-11-13, server/engine/patterns.py
+    # "patterns_v2"): wedges/triangles broken against the line AT each bar,
+    # formations that end at their break, family dedupe. Off = today's detector.
+    patterns_v2: bool = False
     # Events
     sweep_lookback: int = 60
     sweep_reclaim_bars: int = 4
@@ -440,6 +474,10 @@ class QualitySettings:
     pattern_classic_only: bool = False    # C1 H&S / double-triple top-bottom, quality >= 65
     pattern_need_confirm: bool = False    # C2 already broken, momentum + volume behind it
     pattern_trend_only: bool = False      # C3 regime must be 'trend'
+    # C4 (2026-11-13): >0 = pattern_break's pattern evidence weight is this,
+    # whatever the pattern's quality (today: 20 at quality >= 65, else 12).
+    # Quality was found not to predict outcomes (runs/research/patterns/).
+    pattern_quality_flat: int = 0
     # Filters on every playbook (qualify.py)
     htf_block: bool = False               # F1 opposed HTF blocks; pullback/flag need it aligned
     leg_fight_atr: float = 0.0            # F4 against a leg this long -> -10 (0 = off)

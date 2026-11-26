@@ -275,6 +275,10 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
     if strict and opposed:
         gates.append(_gate('mtf', 'BLOCK',
                            f'higher timeframes not with the trade ({mtf_score:+d})'))
+    elif mtf.get('verdict') == 'off on scalp timeframes':
+        gates.append(_gate('mtf', 'PASS',
+                           'higher timeframes not used on this timeframe '
+                           '(Settings -> Gates -> Scalp higher timeframes)'))
     elif mtf.get('verdict') == 'not evaluated':
         gates.append(_gate('mtf', 'WARN', 'higher timeframes not evaluated', 8))
     elif aligned:

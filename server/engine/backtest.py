@@ -358,8 +358,8 @@ def run(symbol: str, tf: str, start_ms: int = None, end_ms: int = None,
             m1 = None
 
     # Higher-timeframe series, preloaded once and indexed by timestamp.
-    from ..config import MTF_LADDER
-    ladder = [x for x in MTF_LADDER.get(tf, [tf]) if x != tf]
+    from ..config import mtf_ladder
+    ladder = [x for x in mtf_ladder(tf) if x != tf]
     htf: dict = {}
     for name in dict.fromkeys(ladder):
         s = load_disk(symbol, name, None, start_ms, end_ms)

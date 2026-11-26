@@ -680,7 +680,7 @@ def pb_pattern_break(snap: dict, series) -> list:
 
         ev_list = [
             _ev(f"{p['label']} ({p['status']}), quality {p['quality']}/100",
-                20 if p['quality'] >= 65 else 12, 'pattern'),
+                q.pattern_quality_flat or (20 if p['quality'] >= 65 else 12), 'pattern'),
         ]
         for note in p.get('notes', [])[:2]:
             ev_list.append(_ev(note, 5, 'pattern'))

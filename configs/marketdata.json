@@ -1,31 +1,7 @@
 {
  "auto": true,
- "last_ok_ms": 1792548205592,
+ "last_ok_ms": 1795332847456,
  "history": [
-  {
-   "at_ms": 1790380458556,
-   "reason": "manual",
-   "ok": true,
-   "error": null
-  },
-  {
-   "at_ms": 1790381193482,
-   "reason": "manual",
-   "ok": true,
-   "error": null
-  },
-  {
-   "at_ms": 1790382117003,
-   "reason": "manual",
-   "ok": true,
-   "error": null
-  },
-  {
-   "at_ms": 1790382466407,
-   "reason": "manual",
-   "ok": true,
-   "error": null
-  },
   {
    "at_ms": 1790386037885,
    "reason": "add symbol",
@@ -220,9 +196,44 @@
     "USDJPY.a",
     "XAUUSD.a"
    ]
+  },
+  {
+   "at_ms": 1795332782562,
+   "reason": "selected",
+   "ok": false,
+   "error": "cancelled",
+   "symbols": [
+    "XAUUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1795332786212,
+   "reason": "selected",
+   "ok": false,
+   "error": "cancelled",
+   "symbols": [
+    "XAUUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1795332810030,
+   "reason": "selected",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "XAUUSD.a"
+   ]
+  },
+  {
+   "at_ms": 1795332847456,
+   "reason": "monthly routine",
+   "ok": true,
+   "error": null,
+   "symbols": [
+    "USDJPY.a",
+    "XAUUSD.a"
+   ]
   }
  ],
- "forecast_symbols": [
-  "XAUUSD.a"
- ]
+ "forecast_symbols": []
 }

@@ -18,7 +18,8 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-from ..config import CONFIG, MTF_LADDER, TF_SECONDS, session_quality, sessions_at
+from ..config import (CONFIG, MTF_LADDER, TF_SECONDS, mtf_ladder, scalp_htf_off,  # noqa: F401
+                      session_quality, sessions_at)
 from ..datafeed import Series
 from . import events as ev
 from . import geometry as geo
@@ -291,7 +292,8 @@ def _analyse(series: Series, mtf_reads: dict = None,
     reg_channel = tl.regression_channel(c, t, cfg.regime_lookback, atr_now)
 
     # --- patterns ---------------------------------------------------------- #
-    found = pat.detect_patterns(swings, h, l, c, t, atr_now, cfg.pattern_min_quality)
+    found = pat.detect_patterns(swings, h, l, c, t, atr_now, cfg.pattern_min_quality,
+                                v2=bool(getattr(cfg, 'patterns_v2', False)))
 
     # --- events ------------------------------------------------------------ #
     sweeps = ev.detect_sweeps(h, l, c, o, t, swings, atr_now,
@@ -316,7 +318,13 @@ def _analyse(series: Series, mtf_reads: dict = None,
     ])))
 
     # --- multi-timeframe --------------------------------------------------- #
-    if mtf_reads:
+    if scalp_htf_off(series.tf):
+        # Settings -> gates.scalp_htf = 'off': a scalp chart is not read
+        # against any higher timeframe. No direction, so no playbook adds
+        # agree/against evidence, and the mtf gate passes (qualify.py).
+        mtf = {'score': 0, 'direction': None, 'verdict': 'off on scalp timeframes',
+               'agreement': 0.0, 'rows': [], 'base_tf': series.tf}
+    elif mtf_reads:
         mtf = rg.mtf_alignment(mtf_reads, series.tf)
     else:
         mtf = {'score': 0, 'direction': None, 'verdict': 'not evaluated',
@@ -437,7 +445,7 @@ def build_mtf(feed, symbol: str, base_tf: str, live: bool = True,
     """
     out = {}
     now_ms = time.time() * 1000
-    for tf in MTF_LADDER.get(base_tf, [base_tf]):
+    for tf in mtf_ladder(base_tf):
         if tf in out:
             continue
         s = feed.bars(symbol, tf, bars, live=live)

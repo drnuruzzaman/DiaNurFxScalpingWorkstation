@@ -1490,6 +1490,15 @@ export function Settings({ onClose, liveTf, watchlist = [], onWatchlist, mt5, in
                 <input type="number" min={0} max={95} step={5} defaultValue={g.room_block_pct ?? 55}
                   onBlur={(e) => saveGates({ room_block_pct: +e.target.value })} />
               </Field>
+              <Field label="Scalp higher timeframes"
+                hint="what 1m, 3m and 5m signals are checked against. Full ladder: 1m vs 5m/15m/1h, 3m vs 15m/30m/1h, 5m vs 15m/1h/4h. Next: only 5m / 15m / 15m. Off: no higher-timeframe check on those three">
+                <select value={g.scalp_htf ?? 'ladder'}
+                  onChange={(e) => saveGates({ scalp_htf: e.target.value })}>
+                  <option value="ladder">Full ladder</option>
+                  <option value="next">Next timeframe up</option>
+                  <option value="off">Off</option>
+                </select>
+              </Field>
               <Field label="Max spread (points)">
                 <input type="number" defaultValue={g.max_spread_points}
                   onBlur={(e) => saveGates({ max_spread_points: +e.target.value })} />

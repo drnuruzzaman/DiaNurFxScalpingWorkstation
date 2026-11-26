@@ -19,8 +19,7 @@
    "1h",
    "2h",
    "4h",
-   "1d",
-   "5m"
+   "1d"
   ],
   "auto": true,
   "max_per_symbol_tf": 5,
@@ -66,17 +65,21 @@
     "1d"
    ],
    "false_break": [
-    "1m",
-    "3m",
-    "5m",
     "15m",
     "30m",
     "1h",
     "2h",
     "4h"
    ],
+   "pattern_break": [
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "1d"
+   ],
    "trendline_bounce": [
-    "1m",
     "3m",
     "30m",
     "1h",
@@ -85,7 +88,6 @@
     "1d"
    ],
    "range_breakout": [
-    "1m",
     "30m",
     "1h",
     "2h",
@@ -93,7 +95,6 @@
     "1d"
    ],
    "range_retest": [
-    "1m",
     "5m",
     "15m",
     "30m",
@@ -103,7 +104,6 @@
     "1d"
    ],
    "range_sweep": [
-    "1m",
     "5m",
     "15m",
     "30m",
@@ -113,7 +113,6 @@
     "1d"
    ],
    "range_compression_breakout": [
-    "1m",
     "5m",
     "15m",
     "30m",
@@ -136,7 +135,6 @@
     "30m",
     "1h",
     "2h",
-    "4h",
     "1d"
    ],
    "news_breakout": [
@@ -148,16 +146,13 @@
     "1d"
    ],
    "displacement_breakout": [
-    "1m",
     "3m",
     "5m",
     "15m",
-    "30m",
-    "1d"
+    "30m"
    ],
    "liquidity_sweep_breakout": [
     "1m",
-    "3m",
     "30m",
     "1h",
     "4h",
@@ -170,8 +165,7 @@
     "15m",
     "30m",
     "1h",
-    "4h",
-    "1d"
+    "4h"
    ],
    "choch_reversal": [
     "1m",
@@ -194,13 +188,9 @@
     "1d"
    ],
    "engulfing_reversal": [
-    "3m",
-    "30m",
-    "4h",
-    "1d"
+    "30m"
    ],
    "rejection_wick_reversal": [
-    "1m",
     "5m",
     "30m",
     "2h",
@@ -208,7 +198,6 @@
     "1d"
    ],
    "three_candle_reversal": [
-    "1m",
     "5m",
     "15m",
     "30m",
@@ -227,8 +216,6 @@
     "1d"
    ],
    "bos_retest_pullback": [
-    "1m",
-    "3m",
     "5m",
     "15m",
     "30m",
@@ -244,27 +231,34 @@
     "1d"
    ],
    "fvg_pullback": [
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "4h"
+   ],
+   "fibonacci_pullback": [
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "1d"
+   ],
+   "volatility_pullback": [
     "1m",
     "3m",
     "5m",
     "15m",
     "30m",
     "1h",
-    "4h",
-    "1d"
-   ],
-   "fibonacci_pullback": [
-    "1m",
-    "5m",
-    "15m",
-    "30m",
-    "1h",
     "2h",
-    "4h",
-    "1d"
+    "4h"
    ]
   },
-  "room_block_pct": 50.0
+  "room_block_pct": 50.0,
+  "scalp_htf": "next"
  },
  "quality": {
   "pattern_classic_only": true,

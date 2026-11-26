@@ -30,6 +30,7 @@ import subprocess
 import sys
 import threading
 import time
+import urllib.error
 import urllib.request
 import webbrowser
 from pathlib import Path
@@ -116,13 +117,33 @@ def ensure_packages(say) -> bool:
     return True
 
 
+# Local-only opener: never route 127.0.0.1 through a system proxy.
+_OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+
+def _fetch(url: str, limit: int = 4096, tries: int = 3):
+    """
+    (status, body) or None if it never answered.
+
+    Retried: on 2026-11-17 something on this PC (AdGuard's filtering driver is
+    the suspect) reset most localhost connections from python.exe while curl
+    got through, and a single reset turned a healthy service amber.
+    """
+    for i in range(tries):
+        try:
+            with _OPENER.open(url, timeout=3) as r:
+                return r.status, r.read(limit).decode('utf-8', 'replace')
+        except urllib.error.HTTPError as e:
+            return e.code, ''
+        except Exception:                                     # noqa: BLE001
+            time.sleep(0.15 * (i + 1))
+    return None
+
+
 def http_body(url: str, limit: int = 4096) -> str:
     """The first few KB of a response, or '' if it did not answer."""
-    try:
-        with urllib.request.urlopen(url, timeout=1.5) as r:
-            return r.read(limit).decode('utf-8', 'replace')
-    except Exception:                                         # noqa: BLE001
-        return ''
+    got = _fetch(url, limit)
+    return got[1] if got else ''
 
 
 def listening_pid(port: int):
@@ -172,11 +193,8 @@ def port_open(port: int) -> bool:
 
 
 def http_ok(url: str) -> bool:
-    try:
-        with urllib.request.urlopen(url, timeout=1.5) as r:
-            return 200 <= r.status < 300
-    except Exception:                                         # noqa: BLE001
-        return False
+    got = _fetch(url, 1)
+    return bool(got) and 200 <= got[0] < 300
 
 
 def load_prefs() -> dict:
@@ -220,7 +238,10 @@ class Service:
         """
         if not self.health_url or not self.signature:
             return True           # nothing to check against; assume ours
-        return self.signature in http_body(self.health_url)
+        body = http_body(self.health_url)
+        # No answer is "unknown", not "someone else": a reset or a slow reply
+        # used to paint a healthy service as "not ours". healthy() reports it.
+        return not body or self.signature in body
 
     def squatter(self) -> str:
         """Who holds the port, for a message that can be acted on."""
@@ -298,7 +319,9 @@ SERVICES = [
     # The UI now has a health URL too. It had none, so `healthy()` fell back to
     # a bare port check - the weakest test of the three, on the process most
     # likely to be a leftover dev server from another project.
-    Service('UI', 5180, UI_URL,
+    # 127.0.0.1, not localhost: vite binds IPv4 only, and localhost tries ::1
+    # first - ~2 s, longer than the health timeout used to be.
+    Service('UI', 5180, 'http://127.0.0.1:5180/',
             lambda o: ['cmd', '/c', 'npm', 'run', 'dev'], ROOT / 'web',
             signature='DiaNurFx'),
 ]
@@ -436,8 +459,7 @@ def main() -> int:
                     detail = 'running'
                     if svc.name == 'Bridge':
                         try:
-                            with urllib.request.urlopen('http://127.0.0.1:8765/health', timeout=1.5) as r:
-                                h = json.loads(r.read().decode('utf-8'))
+                            h = json.loads(http_body('http://127.0.0.1:8765/health'))
                             armed = (h.get('execution') or {}).get('trading_enabled')
                             detail = (f'{h.get("account_type") or "?"} '
                                       f'{h.get("login") or ""}  '

@@ -251,9 +251,14 @@ export function AgentDock({ snap, signal, symbol, tf }: {
           : <span className="chip chip-mute">market read</span>}
       </div>
       <div className="agent-modes">
-        {MODES.map((m) => (
+        {/* ANALYSIS / CHALLENGE / RISK are about ONE signal. With none, they
+            all showed the same market read - so there is one MARKET READ tab
+            instead, and the chosen mode comes back with the next signal. */}
+        {(signal ? MODES : [{ key: 'analysis' as Mode, label: 'MARKET READ' },
+                            MODES.find((m) => m.key === 'ask')!]).map((m) => (
           <button key={m.key}
-            className={`agent-mode ${mode === m.key ? 'on' : ''}`}
+            className={`agent-mode ${(signal || mode === 'ask' ? mode === m.key
+              : m.key === 'analysis') ? 'on' : ''}`}
             onClick={() => setMode(m.key)}>{m.label}</button>
         ))}
       </div>
