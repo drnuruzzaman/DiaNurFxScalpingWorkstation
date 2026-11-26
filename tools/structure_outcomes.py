@@ -78,6 +78,32 @@ def first_passage(h, l, k: int, up: float, dn: float, horizon: int = HORIZON):
     return 1
 
 
+def short_passage(h, l, k: int, up: float, dn: float, horizon: int = HORIZON):
+    """
+    The short side of first_passage: +1 = `dn` (the short's target) reached first
+    after bar k, -1 = `up` first (or both in one bar), 0 = neither.
+
+    Not -first_passage(): that turns a bar hitting both barriers into a WIN for
+    shorts, against the module's rule that such a bar is a loss (fixed 2026-11-27;
+    reports written before then overstate short-side and short-random rates).
+    """
+    hs = h[k + 1:k + 1 + horizon]
+    ls = l[k + 1:k + 1 + horizon]
+    if not hs.size:
+        return 0
+    hu = np.flatnonzero(hs >= up)
+    ld = np.flatnonzero(ls <= dn)
+    iu = hu[0] if hu.size else None
+    idn = ld[0] if ld.size else None
+    if iu is None and idn is None:
+        return 0
+    if iu is None:
+        return 1
+    if idn is None or iu <= idn:
+        return -1
+    return 1
+
+
 def _random_rate(h, l, c, atr_at, ks, d_win_atr, d_loss_atr, long: bool):
     """Mean win rate from the bars `ks`, same direction, barriers in ATR of each bar."""
     w = n = 0
@@ -88,7 +114,7 @@ def _random_rate(h, l, c, atr_at, ks, d_win_atr, d_loss_atr, long: bool):
         if long:
             r = first_passage(h, l, j, c[j] + d_win_atr * a, c[j] - d_loss_atr * a)
         else:
-            r = -first_passage(h, l, j, c[j] + d_loss_atr * a, c[j] - d_win_atr * a)
+            r = short_passage(h, l, j, c[j] + d_loss_atr * a, c[j] - d_win_atr * a)
         if r:
             n += 1
             w += r > 0
@@ -150,7 +176,7 @@ def measure(rows: list, s, rng) -> dict:
                     res = first_passage(h, l, k, val + a, val - a)
                     dw, dl = (val + a - c[k]) / a, (c[k] - (val - a)) / a
                 else:
-                    res = -first_passage(h, l, k, val + a, val - a)
+                    res = short_passage(h, l, k, val + a, val - a)
                     dw, dl = (c[k] - (val - a)) / a, (val + a - c[k]) / a
                 if dw <= 0 or dl <= 0:
                     continue
@@ -165,7 +191,7 @@ def measure(rows: list, s, rng) -> dict:
                 if long:
                     res = first_passage(h, l, k, c[k] + a, c[k] - a)
                 else:
-                    res = -first_passage(h, l, k, c[k] + a, c[k] - a)
+                    res = short_passage(h, l, k, c[k] + a, c[k] - a)
                 bw, bn = base(long, 1.0, 1.0)
                 out['break'].append({'res': res, 'bw': bw, 'bn': bn, 'kind': x[0]})
         # mark lines touched on this bar so the next bar does not count them again
@@ -198,7 +224,7 @@ def measure(rows: list, s, rng) -> dict:
                 if not (tgt < c[k] < inv):
                     out['target_skipped'].append({'res': 0})
                     continue
-                res = -first_passage(h, l, k, inv, tgt)
+                res = short_passage(h, l, k, inv, tgt)
                 dw, dl = (c[k] - tgt) / a, (inv - c[k]) / a
             bw, bn = base(long, dw, dl)
             out['target'].append({'res': res, 'bw': bw, 'bn': bn, 'kind': p[0],

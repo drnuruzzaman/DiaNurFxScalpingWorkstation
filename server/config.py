@@ -512,6 +512,43 @@ class AppConfig:
 
 CONFIG = AppConfig()
 
+# The currency instrument.commission_per_lot_side is quoted in (the broker's
+# raw-spread commission is a USD figure per lot per side).
+COMMISSION_CURRENCY = 'USD'
+
+
+def commission_side_account(spec: dict, per_side: float | None = None) -> float:
+    """
+    Commission per lot per side in the ACCOUNT's currency.
+
+    commission_per_lot_side is a USD figure, but every money sum it joins
+    (tick_value, balance, risk budget) is in the account's currency. Until
+    2026-11-27 it was added as-is, so on the AUD account USD 3 was charged as
+    AUD 3 - about 0.04 price per round trip on gold instead of ~0.06 (live AUD
+    trades imply ~AUD 0.09 per 0.01-lot round trip, i.e. USD 3 converted).
+
+    The rate comes from the spec itself: tick_value is account money per tick
+    per lot, tick_size x contract_size is the same move in the PROFIT currency,
+    so their ratio converts profit currency -> account currency. Used only when
+    the profit currency is the commission's (XAUUSD, EURUSD ...); otherwise, or
+    if the spec lacks the facts, the figure is returned unchanged as before.
+    On a USD account the rate is 1.0 and nothing changes.
+    """
+    side = float(per_side if per_side is not None else
+                 (spec.get('commission_per_lot_side')
+                  or CONFIG.instrument.commission_per_lot_side))
+    if str(spec.get('currency_profit') or '').upper() != COMMISSION_CURRENCY:
+        return side
+    try:
+        tick = float(spec.get('tick_size') or spec.get('point') or 0.0)
+        tv = float(spec.get('tick_value') or 0.0)
+        cs = float(spec.get('contract_size') or 0.0)
+    except (TypeError, ValueError):
+        return side
+    if tick <= 0 or tv <= 0 or cs <= 0:
+        return side
+    return side * tv / (tick * cs)
+
 # --------------------------------------------------------------------------- #
 # Sessions, in UTC. Gold's character changes hard across these, and a scalping
 # signal that ignores them will happily fire into the Sydney dead zone.

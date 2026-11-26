@@ -32,7 +32,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from ..config import CONFIG, session_quality
+from ..config import CONFIG, commission_side_account, session_quality
 from .precision import rp, using
 
 
@@ -88,8 +88,7 @@ def size_position(entry: float, stop: float, spec: dict, risk: dict,
     if value_per_lot <= 0:
         return {'lots': 0.0, 'risk_cash': 0.0, 'error': 'cannot value the stop'}
 
-    commission = float(spec.get('commission_per_lot_side')
-                       or CONFIG.instrument.commission_per_lot_side)
+    commission = commission_side_account(spec)
     # Round trip: entry + exit.
     cost_per_lot = commission * 2.0
 
@@ -140,8 +139,7 @@ def _net_rr(entry: float, stop: float, target: float, spec: dict,
     tick_value = float(spec.get('tick_value') or 1.0)
     per_price_unit = (1.0 / tick_size) * tick_value * lots
 
-    commission = float(spec.get('commission_per_lot_side')
-                       or CONFIG.instrument.commission_per_lot_side) * 2.0 * lots
+    commission = commission_side_account(spec) * 2.0 * lots
     slip = float(CONFIG.instrument.default_slippage_points) * \
         float(spec.get('point') or 0.01)
 
@@ -212,8 +210,7 @@ def _qualify(sig, snap: dict, spec: dict, context: dict = None):
     vol = (snap.get('regime') or {}).get('volatility') or {}
     atr_pct = float(vol.get('atr_percentile') or 50.0)
 
-    commission = float(spec.get('commission_per_lot_side')
-                       or CONFIG.instrument.commission_per_lot_side)
+    commission = commission_side_account(spec)
     # Commission expressed in price points: $/lot / (value of one point per lot)
     tick_size = float(spec.get('tick_size') or point)
     tick_value = float(spec.get('tick_value') or 1.0)

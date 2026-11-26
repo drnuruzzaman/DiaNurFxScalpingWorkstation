@@ -81887,7 +81887,208 @@
    "side": "sell",
    "kind": "limit",
    "lots": 0.01
+  },
+  "XAUUSD.a:15m:pattern_break:sell:1795684500000": {
+   "id": "XAUUSD.a:15m:pattern_break:sell:1795684500000",
+   "tag": "DNX 568f1b35ee",
+   "state": "reversed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "sell",
+    "kind": "stop",
+    "lots": 0.01,
+    "price": 3562.41,
+    "sl": 3579.63,
+    "tp": 3545.19,
+    "expiration_ms": 1795703400000
+   },
+   "ticket": 10533989,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1795685402351,
+     "sending",
+     ""
+    ],
+    [
+     1795685402733,
+     "placed",
+     "stop ticket 10533989"
+    ],
+    [
+     1795686303810,
+     "reversed",
+     "opposite FINAL XAUUSD.a:15m:false_break:buy:1795685400000 - pending order cancelled"
+    ]
+   ],
+   "created_ms": 1795685402351,
+   "updated_ms": 1795686303810,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "sell",
+   "kind": "stop",
+   "lots": 0.01
+  },
+  "XAUUSD.a:15m:false_break:buy:1795685400000": {
+   "id": "XAUUSD.a:15m:false_break:buy:1795685400000",
+   "tag": "DNX f477287bea",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "15m",
+    "side": "buy",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 3562.66,
+    "tp": 3589.84,
+    "expiration_ms": 0
+   },
+   "ticket": 10534127,
+   "position": 10534127,
+   "fill_price": 3576.36,
+   "close_price": 3562.59,
+   "outcome": "stop",
+   "r": -1.005,
+   "profit": -13.85,
+   "events": [
+    [
+     1795686303950,
+     "sending",
+     ""
+    ],
+    [
+     1795686304307,
+     "placed",
+     "market ticket 10534127"
+    ],
+    [
+     1795686306553,
+     "filled",
+     "position 10534127"
+    ],
+    [
+     1795688233672,
+     "closed",
+     "stop at 3562.59"
+    ]
+   ],
+   "created_ms": 1795686303950,
+   "updated_ms": 1795688233672,
+   "symbol": "XAUUSD.a",
+   "tf": "15m",
+   "side": "buy",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.011,
+   "exit_ms": 1795688232650
+  },
+  "XAUUSD.a:30m:false_break:sell:1795687200000": {
+   "id": "XAUUSD.a:30m:false_break:sell:1795687200000",
+   "tag": "DNX 266c9758b4",
+   "state": "closed",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "30m",
+    "side": "sell",
+    "kind": "market",
+    "lots": 0.01,
+    "price": 0.0,
+    "sl": 3585.05,
+    "tp": 3538.75,
+    "expiration_ms": 0
+   },
+   "ticket": 10535433,
+   "position": 10535433,
+   "fill_price": 3562.77,
+   "close_price": 3585.23,
+   "outcome": "stop",
+   "r": -1.008,
+   "profit": -22.54,
+   "events": [
+    [
+     1795689075431,
+     "sending",
+     ""
+    ],
+    [
+     1795689075801,
+     "placed",
+     "market ticket 10535433"
+    ],
+    [
+     1795689078007,
+     "filled",
+     "position 10535433"
+    ],
+    [
+     1795731849957,
+     "closed",
+     "stop at 3585.23"
+    ]
+   ],
+   "created_ms": 1795689075431,
+   "updated_ms": 1795731849957,
+   "symbol": "XAUUSD.a",
+   "tf": "30m",
+   "side": "sell",
+   "kind": "market",
+   "lots": 0.01,
+   "r_net": -1.012,
+   "exit_ms": 1795703628257
+  },
+  "XAUUSD.a:2h:fibonacci_pullback:sell:1795644000000": {
+   "id": "XAUUSD.a:2h:fibonacci_pullback:sell:1795644000000",
+   "tag": "DNX 9e176f64f0",
+   "state": "refused",
+   "attempts": 1,
+   "request": {
+    "symbol": "XAUUSD.a",
+    "tf": "2h",
+    "side": "sell",
+    "kind": "limit",
+    "lots": 0.01,
+    "price": 3576.49,
+    "sl": 3657.84,
+    "tp": 3495.14,
+    "expiration_ms": 1795737600000
+   },
+   "ticket": null,
+   "position": null,
+   "fill_price": null,
+   "close_price": null,
+   "outcome": null,
+   "r": null,
+   "profit": null,
+   "events": [
+    [
+     1795734052033,
+     "sending",
+     ""
+    ],
+    [
+     1795734052361,
+     "refused",
+     "broker returned 10018: Market closed"
+    ]
+   ],
+   "created_ms": 1795734052033,
+   "updated_ms": 1795734052361,
+   "symbol": "XAUUSD.a",
+   "tf": "2h",
+   "side": "sell",
+   "kind": "limit",
+   "lots": 0.01
   }
  },
- "saved_ms": 1795512480466
+ "saved_ms": 1795734052361
 }

@@ -108404,3 +108404,27 @@ C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1140: 
 DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
   bridge  : http://127.0.0.1:8765
   symbol  : XAUUSD.a
+
+===== 2026-11-27 09:24:03 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1140: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a
+
+===== 2026-11-27 09:50:09 started by launcher =====
+C:\workspace-ml-ausloans\Forex\DiaNurFxScalpingWorkstation\server\main.py:1140: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event('startup')
+DiaNurFx 1.0.0  ->  http://127.0.0.1:8770
+  bridge  : http://127.0.0.1:8765
+  symbol  : XAUUSD.a

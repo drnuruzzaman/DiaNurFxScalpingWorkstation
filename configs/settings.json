@@ -23,7 +23,7 @@
   ],
   "auto": true,
   "max_per_symbol_tf": 5,
-  "broker_tp": "tp1",
+  "broker_tp": "tp2",
   "lots_gold": 0.01,
   "lots_non_gold": 0.05,
   "auto_symbols": [

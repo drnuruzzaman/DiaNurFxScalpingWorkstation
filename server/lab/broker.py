@@ -81,7 +81,10 @@ class SimBroker:
         self.digits = int(spec.get('digits') or 2)
         # Account currency per 1.0 of price per lot: tick_value / tick_size.
         self.vpu = float(spec.get('tick_value') or 1.0) / self.tick
-        self.comm_side = float(spec.get('commission_per_lot_side') or 0.0)
+        # Per lot per side in the ACCOUNT's currency (the configured figure is USD).
+        from ..config import commission_side_account
+        self.comm_side = commission_side_account(
+            spec, float(spec.get('commission_per_lot_side') or 0.0))
         self.slip = float(slippage_points or 0.0) * self.point
         self.balance = float(balance)
         self._pos: list = []

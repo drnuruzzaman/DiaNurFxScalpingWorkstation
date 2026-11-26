@@ -32,7 +32,7 @@ from dataclasses import dataclass, field, asdict
 
 import numpy as np
 
-from ..config import CONFIG, TF_SECONDS, session_quality
+from ..config import CONFIG, TF_SECONDS, commission_side_account, session_quality
 from ..datafeed import Series, load_disk, resample
 from .analysis import analyse, quick_trend
 from .qualify import qualify_all
@@ -180,8 +180,7 @@ def _resolve_exit(series: Series, start_idx: int, trade: Trade, spec: dict,
 
     # --- money --------------------------------------------------------------- #
     vpu = _value_per_price_unit(spec, trade.lots)
-    commission = float(spec.get('commission_per_lot_side')
-                       or CONFIG.instrument.commission_per_lot_side) * 2.0 * trade.lots
+    commission = commission_side_account(spec) * 2.0 * trade.lots
     trade.costs = round(commission, 2)
     trade.r_multiple = round(realised_r, 3)
     trade.pnl = round(realised_r * risk * vpu - commission, 2)
@@ -286,8 +285,7 @@ def _resolve_exit_trail(series: Series, start_idx: int, trade: Trade, spec: dict
             trade.bars_held = i - start_idx + 1
 
     vpu = _value_per_price_unit(spec, trade.lots)
-    commission = float(spec.get('commission_per_lot_side')
-                       or CONFIG.instrument.commission_per_lot_side) * 2.0 * trade.lots
+    commission = commission_side_account(spec) * 2.0 * trade.lots
     trade.costs = round(commission, 2)
     trade.r_multiple = round(realised_r, 3)
     trade.pnl = round(realised_r * risk * vpu - commission, 2)

@@ -5,11 +5,6 @@
     "id": "tmwah4mth",
     "symbol": "XAUUSD.a",
     "tf": "15m"
-   },
-   {
-    "id": "tmwvvmb97",
-    "symbol": "USDJPY.a",
-    "tf": "1h"
    }
   ],
   "dianur.activeTab": "tmwah4mth",
@@ -49,16 +44,17 @@
   "dianur.watchlist": [
    "XAUUSD.a"
   ],
-  "dianur.theme": "midnight",
+  "dianur.theme": "glossy",
   "dianur.snapPanels.v2": [
    "gauge",
    "trend",
    "evidence",
-   "patterns"
+   "patterns",
+   "signal"
   ],
   "dianur.panels": {
    "left": false,
-   "right": false,
+   "right": true,
    "bottom": false
   },
   "dianur.dockTab": "calendar",
@@ -475,5 +471,5 @@
   "dianur.lab.dockH": 374,
   "dianur.lab.cone": false
  },
- "saved_ms": 1795676084085
+ "saved_ms": 1795733822301
 }
